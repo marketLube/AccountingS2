@@ -1,0 +1,43 @@
+@use "../abstract/variables";
+@use "../abstract/mixins";
+
+.table {
+  @include mixins.fillArea;
+  display: grid;
+  grid-template-rows: 2rem repeat(8, 1fr);
+
+  // Style for even children
+  & > div:nth-child(even) {
+    background-color: rgb(204, 222, 228);
+  }
+
+  // Style for odd children
+  & > div:nth-child(odd) {
+    background-color: variables.$color-white; // Color for odd items
+  }
+
+  &-head {
+    border-radius: variables.$large-radius;
+    background-color: variables.$color-primary !important;
+    margin-bottom: -0.3rem;
+    z-index: 2;
+    font-size: 0.9rem;
+    width: 100%;
+    @include mixins.flex(center);
+  }
+
+  &-col {
+    padding-right: 2rem;
+    padding-left: 1rem;
+    flex: 1;
+    color: variables.$color-white;
+    overflow: hidden;
+  }
+}
+
+.particular {
+  flex: 2;
+}
+.remark {
+  flex: 2;
+}

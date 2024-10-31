@@ -2,14 +2,9 @@
 @use "../abstract/mixins";
 
 .daybook {
-  &-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    font-weight: 600;
-  }
-  &-head-left {
-    display: flex;
-    gap: 0.4rem;
+  &-table {
+    background-color: green;
+    @include mixins.fillArea;
+
   }
 }

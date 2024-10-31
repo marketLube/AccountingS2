@@ -64,12 +64,10 @@ body {
   gap: 1.2rem;
 }
 .layout-body {
-  background-color: yellow;
   display: grid;
-  grid-template-rows: 4rem 1fr 3.5rem;
+  grid-template-rows: 3rem 1fr 3.5rem;
 }
 .layout-head {
-  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: start;
@@ -79,11 +77,23 @@ body {
   display: flex;
   gap: 0.4rem;
 }
-.layout-table {
-  background-color: black;
+.layout-head-right {
+  display: flex;
+  gap: 0.4rem;
 }
 .layout-footer {
-  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.layout-footer-left {
+  display: flex;
+  gap: 0.5rem;
+}
+.layout-footer-bottom {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 @keyframes navText {
@@ -109,7 +119,7 @@ body {
 .nav-ul {
   width: 100%;
   height: fit-content;
-  margin-top: 8.2rem;
+  margin-top: 7.45rem;
   transition: 0.5s all ease;
 }
 .nav-ul-li {
@@ -155,15 +165,10 @@ body {
     transform: scaleX(1);
   }
 }
-.daybook-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  font-weight: 600;
-}
-.daybook-head-left {
-  display: flex;
-  gap: 0.4rem;
+.daybook-table {
+  background-color: green;
+  width: 100%;
+  height: 100%;
 }
 
 .dashboard {
@@ -227,6 +232,72 @@ body {
   background-color: #fff;
   color: gray;
   border: 0.3px solid gray;
+}
+
+.filterbtn {
+  padding: 0.5rem;
+  border-radius: 3rem;
+  background-color: rgb(28, 101, 126);
+  color: #fff;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 2rem repeat(8, 1fr);
+}
+.table > div:nth-child(even) {
+  background-color: rgb(204, 222, 228);
+}
+.table > div:nth-child(odd) {
+  background-color: #fff;
+}
+.table-head {
+  border-radius: 1rem;
+  background-color: rgb(28, 101, 126) !important;
+  margin-bottom: -0.3rem;
+  z-index: 2;
+  font-size: 0.9rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-col {
+  padding-right: 2rem;
+  padding-left: 1rem;
+  flex: 1;
+  color: #fff;
+  overflow: hidden;
+}
+
+.particular {
+  flex: 2;
+}
+
+.remark {
+  flex: 2;
+}
+
+.search {
+  background-color: #fff;
+  width: 17rem;
+  height: 2.4rem;
+  border-radius: 2rem;
+  padding-left: 1rem;
+  font-weight: 300;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.search:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(28, 101, 126);
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

@@ -1,0 +1,19 @@
+@use "../abstract/variables";
+@use "../abstract/mixins";
+
+.search {
+  background-color: variables.$color-white;
+  width: 17rem;
+  height: 2.4rem;
+  border-radius: 2rem;
+  padding-left: 1rem;
+  font-weight: 300;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:focus {
+    // Add your focus styles here
+    outline: none; // example focus style to remove default outline
+    box-shadow: 0 0 0 2px variables.$color-primary; // or add a shadow or border color
+  }
+}
