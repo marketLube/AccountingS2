@@ -1,0 +1,38 @@
+@use "../abstract/variables";
+.stats-box {
+  background-color: variables.$color-white;
+  border-radius: variables.$large-radius;
+  padding: 1rem;
+  transition: 0.3s all ease;
+}
+
+.icons {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: variables.$color-white;
+}
+
+.active {
+  background-color: variables.$color-white;
+  transition: 0.5s all ease;
+  color: variables.$color-dark;
+}
+.active .icons {
+  color: variables.$color-primary;
+  transition: 0.5s all ease;
+}
+.active p {
+  color: variables.$color-dark;
+  transition: 0.5s all ease;
+}
+
+.hide {
+  opacity: 0;
+  transform: 0.5s all ease;
+  display: none;
+}
+.visible {
+  opacity: 1;
+  transform: 0.5s all ease;
+  display: block;
+}

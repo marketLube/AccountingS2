@@ -1,0 +1,35 @@
+@use "../abstract/variables";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  //   transition: 0.5s all ease;
+}
+
+body {
+  background: linear-gradient(
+    to top,
+    variables.$color-sec,
+    rgba(variables.$color-sec, 0.8) 40%,
+    rgba(variables.$color-sec, 0.6) 60%,
+    rgba(variables.$color-sec, 0.3) 80%,
+    variables.$color-white
+  );
+}
+.main {
+}
+.app {
+  display: grid;
+  grid-template-columns: variables.$sidebar-width 1fr;
+  transition: 0.5s grid ease;
+}
+.layout {
+  padding: variables.$layout-padding;
+  padding-bottom: 4rem;
+  height: 100%;
+  display: grid;
+  grid-template-rows: variables.$head-width 1fr;
+  grid-template-rows: variables.$head-width 1fr;
+  gap: variables.$general-gap;
+}

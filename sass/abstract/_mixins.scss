@@ -1,0 +1,10 @@
+@mixin flex($prop) {
+  display: flex;
+  align-items: center;
+
+  @if $prop == "center" {
+    justify-content: center;
+  } @else {
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,45 @@
+@use "../abstract/variables";
+
+.dashboard {
+  grid-template-columns: 2fr 1fr;
+
+  &-head {
+    grid-column: span 2; // Corrected for full-width span
+  }
+
+  &-left {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$general-gap;
+  }
+
+  &-right {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$general-gap;
+  }
+
+  &-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    flex: 1;
+    gap: variables.$general-gap;
+
+    & > :first-child {
+      grid-row: span 2;
+    }
+  }
+
+  &-chart {
+    flex: 1;
+  }
+
+  &-curbalance {
+    flex: 0.5;
+  }
+  &-reminder {
+    flex: 1;
+  }
+}
