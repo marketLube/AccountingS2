@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
+import { MdDateRange } from "react-icons/md";
+import { BsBarChartFill } from "react-icons/bs";
+import { FaPhoneAlt } from "react-icons/fa";
+import { SiBlockchaindotcom } from "react-icons/si";
 
 function Navigation({ onSetHover, isHover }) {
   const pathName = usePathname();
@@ -50,7 +54,7 @@ function Navigation({ onSetHover, isHover }) {
                 Daybook
               </p>
             ) : (
-              <GoHomeFill className={`icons`} />
+              <MdDateRange className={`icons`} />
             )}
           </Link>
         </li>
@@ -69,7 +73,7 @@ function Navigation({ onSetHover, isHover }) {
                 Balance Sheet
               </p>
             ) : (
-              <GoHomeFill className={`icons`} />
+              <BsBarChartFill className={`icons`} />
             )}
           </Link>
         </li>
@@ -88,7 +92,7 @@ function Navigation({ onSetHover, isHover }) {
                 Outstanding
               </p>
             ) : (
-              <GoHomeFill className={`icons`} />
+              <FaPhoneAlt className={`icons`} />
             )}
           </Link>
         </li>
@@ -107,7 +111,7 @@ function Navigation({ onSetHover, isHover }) {
                 Liability
               </p>
             ) : (
-              <GoHomeFill className={`icons`} />
+              <SiBlockchaindotcom className={`icons`} />
             )}
           </Link>
         </li>
