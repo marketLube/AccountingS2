@@ -208,6 +208,25 @@ body {
   flex: 1;
 }
 
+.balance-sheet-body {
+  display: grid;
+  grid-template-columns: 2fr 0.7fr;
+  grid-template-rows: 4rem 1fr 6rem;
+}
+.balance-sheet-head {
+  grid-column: span 2;
+}
+.balance-sheet .table {
+  grid-template-rows: 2rem repeat(12, 1fr);
+}
+.balance-sheet-bank {
+  background-color: rgb(212, 212, 212);
+}
+.balance-sheet-footer {
+  background-color: black;
+  grid-column: span 2;
+}
+
 .btn {
   background-color: transparent;
   border: none;

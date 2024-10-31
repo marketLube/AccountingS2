@@ -14,9 +14,7 @@ function Page() {
       <h1 className={`main-head`}>Daybook</h1>
       <div className={`layout-body`}>
         <DaybookHead />
-        <div className={`layout-table`}>
-          <DaybookTable />
-        </div>
+        <DaybookTable />
         <DaybookFooter />
       </div>
     </div>
