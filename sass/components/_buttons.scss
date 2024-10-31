@@ -1,0 +1,14 @@
+@use "../abstract/variables";
+.btn {
+  background-color: transparent;
+  border: none;
+  padding: 1rem 2rem;
+}
+.primary {
+  background-color: variables.$color-primary;
+  color: variables.$color-white;
+}
+.secondary {
+  background-color: variables.$color-primary;
+  color: variables.$color-white;
+}

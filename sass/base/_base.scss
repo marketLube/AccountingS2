@@ -30,6 +30,21 @@ body {
   height: 100%;
   display: grid;
   grid-template-rows: variables.$head-width 1fr;
-  grid-template-rows: variables.$head-width 1fr;
   gap: variables.$general-gap;
+
+  &-body {
+    background-color: yellow;
+    display: grid;
+    grid-template-rows: variables.$table-header 1fr variables.$table-footer;
+  }
+
+  &-head {
+    background-color: white;
+  }
+  &-table {
+    background-color: black;
+  }
+  &-footer {
+    background-color: red;
+  }
 }

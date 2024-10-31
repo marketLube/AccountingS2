@@ -1,3 +1,6 @@
+export const metadata = {
+  title: "Dashboard",
+};
 function Page() {
   return (
     <div className={`layout dashboard`}>

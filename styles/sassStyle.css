@@ -61,8 +61,21 @@ body {
   height: 100%;
   display: grid;
   grid-template-rows: 4rem 1fr;
-  grid-template-rows: 4rem 1fr;
   gap: 1.2rem;
+}
+.layout-body {
+  background-color: yellow;
+  display: grid;
+  grid-template-rows: 3.5rem 1fr 3.5rem;
+}
+.layout-head {
+  background-color: white;
+}
+.layout-table {
+  background-color: black;
+}
+.layout-footer {
+  background-color: red;
 }
 
 @keyframes navText {
@@ -168,6 +181,22 @@ body {
 }
 .dashboard-reminder {
   flex: 1;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  padding: 1rem 2rem;
+}
+
+.primary {
+  background-color: rgb(28, 101, 126);
+  color: #fff;
+}
+
+.secondary {
+  background-color: rgb(28, 101, 126);
+  color: #fff;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */
