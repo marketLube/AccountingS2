@@ -40,6 +40,15 @@ body {
 
   &-head {
     background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    font-weight: 600;
+
+    &-left {
+      display: flex;
+      gap: 0.4rem;
+    }
   }
   &-table {
     background-color: black;

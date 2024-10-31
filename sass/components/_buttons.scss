@@ -2,13 +2,22 @@
 .btn {
   background-color: transparent;
   border: none;
-  padding: 1rem 2rem;
+  border-radius: variables.$small-radius;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-wrap: nowrap;
 }
 .primary {
   background-color: variables.$color-primary;
   color: variables.$color-white;
+  width: 8rem;
 }
 .secondary {
-  background-color: variables.$color-primary;
+  background-color: variables.$color-gray;
   color: variables.$color-white;
+}
+.thertiary {
+  background-color: variables.$color-white;
+  color: variables.$color-gray;
+  border: 0.3px solid variables.$color-gray;
 }

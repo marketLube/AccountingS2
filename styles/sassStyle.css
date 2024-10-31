@@ -66,10 +66,18 @@ body {
 .layout-body {
   background-color: yellow;
   display: grid;
-  grid-template-rows: 3.5rem 1fr 3.5rem;
+  grid-template-rows: 4rem 1fr 3.5rem;
 }
 .layout-head {
   background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  font-weight: 600;
+}
+.layout-head-left {
+  display: flex;
+  gap: 0.4rem;
 }
 .layout-table {
   background-color: black;
@@ -120,12 +128,13 @@ body {
   justify-content: center;
   border-radius: 50%;
   transition: 0.5s all ease;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .nav-ul-li-a p {
   text-wrap: nowrap;
   text-align: left;
   transform-origin: center;
+  font-weight: 600;
 }
 
 .isHoverHyper {
@@ -146,6 +155,17 @@ body {
     transform: scaleX(1);
   }
 }
+.daybook-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  font-weight: 600;
+}
+.daybook-head-left {
+  display: flex;
+  gap: 0.4rem;
+}
+
 .dashboard {
   grid-template-columns: 2fr 1fr;
 }
@@ -186,17 +206,27 @@ body {
 .btn {
   background-color: transparent;
   border: none;
-  padding: 1rem 2rem;
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-wrap: nowrap;
 }
 
 .primary {
   background-color: rgb(28, 101, 126);
   color: #fff;
+  width: 8rem;
 }
 
 .secondary {
-  background-color: rgb(28, 101, 126);
+  background-color: gray;
   color: #fff;
+}
+
+.thertiary {
+  background-color: #fff;
+  color: gray;
+  border: 0.3px solid gray;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */
