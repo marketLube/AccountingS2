@@ -10,7 +10,10 @@ const bankSchema = mongoose.Schema(
     },
     balance: {
       type: Number,
-      // min: [0, "Account balance is Low"],
+    },
+    isActive: {
+      type: Boolean,
+      default: false,
     },
     lastMonthBalance: {
       type: Number,

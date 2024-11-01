@@ -1,4 +1,4 @@
-import LiabilityHead from "@/components/liability/liabiliityhead/LiabilityHead";
+import LiabilityHead from "@/app/_components/liability/liabiliityhead/LiabilityHead";
 
 export const metadata = {
   title: "Liability",

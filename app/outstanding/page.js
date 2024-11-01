@@ -1,4 +1,4 @@
-import OutstandingHead from "@/components/outstanding/outstandingHead/OutstandingHead";
+import OutstandingHead from "../_components/outstanding/outstandingHead/OutstandingHead";
 
 export const metadata = {
   title: "Outstanding",

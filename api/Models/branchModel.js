@@ -1,47 +1,49 @@
 import mongoose from "mongoose";
+import Bank from "./bankModel.js";
+import AppError from "../Utilities/appError.js";
 
 const branchSchema = mongoose.Schema(
   {
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
       required: [true, "Branch must have a name"],
     },
-    balance: {
+    totalBranchBalance: {
       type: Number,
       default: 0,
     },
-    RAK: {
-      type: Number,
-      required: [true, "Need to mention RAK Bank balance"],
-    },
-    RBL: {
-      type: Number,
-      required: [true, "Need to mention RBL Bank balance"],
-    },
-    ICICI: {
-      type: Number,
-      required: [true, "Need to mention ICICI Bank balance"],
-    },
-    HDFC: {
-      type: Number,
-      required: [true, "Need to mention HDFC Bank balance"],
-    },
-    CASH: {
-      type: Number,
-      required: [true, "Need to mention CASH balance"],
-    },
-    BANDAN: {
-      type: Number,
-      required: [true, "Need to mention BANDAN balance"],
-    },
+    accounts: [
+      {
+        bank: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Bank",
+        },
+        branchBalance: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
-
-branchSchema.pre("save", function (next) {
-  this.balance =
-    this.CASH + this.HDFC + this.RBL + this.ICICI + this.RAK + this.BANDAN;
-  next();
+//Only for newly created branches its adding all bank accounts to this branch
+branchSchema.pre("save", async function (next) {
+  if (!this.isNew) return next(); // Only run this on new documents
+  try {
+    const banks = await Bank.find({});
+    this.accounts = banks.map((bank) => ({
+      bank: bank._id,
+      branchBalance: 0,
+    }));
+    next();
+  } catch (err) {
+    return next(new AppError("Something went wrong while adding banks"));
+  }
 });
 
 const Branch = mongoose.model("Branch", branchSchema);

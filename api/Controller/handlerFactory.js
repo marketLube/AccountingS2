@@ -7,52 +7,48 @@ import Particulars from "../Models/particularsModel.js";
 
 export const getAll = (Model) => {
   return catchAsync(async (req, res, next) => {
-    try {
-      let filter = {};
-      const features = new APIFeatures(Model, Model.find(filter), req.query);
+    let filter = {};
+    const features = new APIFeatures(Model, Model.find(filter), req.query);
 
-      features
-        .filter()
-        .sort()
-        .limitFields()
-        .paginate(await Model.countDocuments())
-        .filterByBranch()
-        .filterByDateRange()
-        .search();
+    features
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate(await Model.countDocuments())
+      .filterByBranch()
+      .filterByDateRange()
+      .search();
 
-      if (req.query.catagory) {
-        const catagoryDoc = await Catagory.findOne({
-          name: req.query.catagory,
-        }).select("_id");
+    if (req.query.catagory) {
+      const catagoryDoc = await Catagory.findOne({
+        name: req.query.catagory,
+      }).select("_id");
 
-        if (!catagoryDoc) {
-          features.query = features.query.find({ _id: { $in: [] } });
-        } else {
-          features.query = features.query.find({ catagory: catagoryDoc._id });
+      if (!catagoryDoc) {
+        features.query = features.query.find({ _id: { $in: [] } });
+      } else {
+        features.query = features.query.find({ catagory: catagoryDoc._id });
 
-          if (req.query.particular) {
-            const particular = await Particulars.findOne({
-              catagory: catagoryDoc._id,
-              name: req.query.particular,
-            });
+        if (req.query.particular) {
+          const particular = await Particulars.findOne({
+            catagory: catagoryDoc._id,
+            name: req.query.particular,
+          });
 
-            features.query = particular
-              ? features.query.find({ particular: particular._id })
-              : features.query.find({ _id: { $in: [] } });
-          }
+          features.query = particular
+            ? features.query.find({ particular: particular._id })
+            : features.query.find({ _id: { $in: [] } });
         }
       }
-
-      const docs = await features.query;
-
-      res.status(200).json({
-        status: "success",
-        results: docs.length,
-        data: docs,
-      });
-    } catch (error) {
-      return next(new AppError(`Error fetching data: ${error.message}`, 500));
     }
+
+    const docs = await features.query;
+
+    res.status(200).json({
+      status: "success",
+      results: docs.length,
+      data: docs,
+    });
   });
 };
 

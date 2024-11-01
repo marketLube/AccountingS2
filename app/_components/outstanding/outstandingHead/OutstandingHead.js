@@ -1,7 +1,7 @@
-import LayoutHead from "@/components/layouts/LayoutHead";
-import Button from "@/components/utils/Button";
+import LayoutHead from "../../layouts/LayoutHead";
+import Button from "../../utils/Button";
 
-function LiabilityHead() {
+function OutstandingHead() {
   return (
     <LayoutHead>
       <>
@@ -13,4 +13,4 @@ function LiabilityHead() {
   );
 }
 
-export default LiabilityHead;
+export default OutstandingHead;

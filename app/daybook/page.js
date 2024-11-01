@@ -1,6 +1,6 @@
-import DaybookFooter from "@/components/daybook/daybookFooter/DaybookFooter";
-import DaybookHead from "@/components/daybook/daybookhead/DaybookHead";
-import DaybookTable from "@/components/daybook/daybookTable/DaybookTable";
+import DaybookFooter from "../_components/daybook/daybookFooter/DaybookFooter";
+import DaybookHead from "../_components/daybook/daybookhead/DaybookHead";
+import DaybookTable from "../_components/daybook/daybookTable/DaybookTable";
 
 export const metadata = {
   title: "Daybook",

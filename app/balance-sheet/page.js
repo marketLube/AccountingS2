@@ -1,6 +1,5 @@
-import BalanceSheetTable from "@/components/balance-sheet/balancesheetTable/BalanceSheetTable";
-import LayoutHead from "@/components/layouts/LayoutHead";
-import Button from "@/components/utils/Button";
+import BalanceSheetTable from "../_components/balance-sheet/balancesheetTable/BalanceSheetTable";
+import Button from "../_components/utils/Button";
 
 export const metadata = {
   title: "Balance Sheet",

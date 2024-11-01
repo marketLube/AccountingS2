@@ -1,4 +1,4 @@
-import AppLayout from "@/components/layouts/AppLayout";
+import AppLayout from "@/app/_components/layouts/AppLayout";
 import "@/styles/globals.css";
 import "@/styles/sassStyle.css";
 

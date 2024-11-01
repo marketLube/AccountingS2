@@ -1,4 +1,4 @@
-import Button from "@/components/utils/Button";
+import Button from "@/app/_components/utils/Button";
 import DaybookFooterBtns from "./DaybookFooterBtns";
 
 function DaybookFooter() {

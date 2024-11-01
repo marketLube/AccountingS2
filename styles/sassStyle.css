@@ -338,4 +338,34 @@ body {
   box-shadow: 0 0 0 2px rgb(28, 101, 126);
 }
 
+.table-loader {
+  grid-row: span 8; /* Span 8 rows in the grid */
+  background-color: rgba(28, 101, 126, 0.3) !important; /* Black background color */
+  display: flex; /* Enable flexbox */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  color: white; /* Text color for visibility */
+  font-size: 1.5rem; /* Font size */
+  position: relative; /* For absolute positioning of spinner */
+}
+
+.spinner {
+  border: 0.8rem solid rgba(255, 255, 255, 0.3); /* Light border for spinner */
+  border-top: 0.8rem solid white; /* White top border for spinner effect */
+  border-radius: 50%; /* Make it a circle */
+  width: 10rem; /* Width of the spinner */
+  height: 10rem; /* Height of the spinner */
+  animation: spin 1s linear infinite; /* Animation for spinning effect */
+  margin-left: 10px; /* Spacing between text and spinner */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Initial state */
+  }
+  100% {
+    transform: rotate(360deg); /* Final state */
+  }
+}
+
 /*# sourceMappingURL=sassStyle.css.map */
