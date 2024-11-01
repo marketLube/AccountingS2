@@ -11,9 +11,9 @@ function DaybookHead() {
   useEffect(() => {
     const fetchBanks = async () => {
       try {
-        const response = await fetch("/v1/banks");
+        const response = await fetch("http://localhost:3000/api/v2/bank");
         const data = await response.json();
-        setBanks(data.docs);
+        setBanks(data.data);
       } catch (error) {
         console.error("Error fetching banks:", error);
       }
@@ -23,6 +23,7 @@ function DaybookHead() {
   }, []);
 
   console.log(banks, "banks");
+
   return (
     <LayoutHead>
       <>

@@ -15,7 +15,7 @@ import { protect } from "../Controller/authController.js";
 const router = express.Router();
 
 router.use("/user", userRoute);
-router.use(protect);
+// router.use(protect);
 router.use("/logs", logRoute);
 
 router.use("/bank", bankRoute);
