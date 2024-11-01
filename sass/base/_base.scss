@@ -36,6 +36,8 @@ body {
   &-body {
     display: grid;
     grid-template-rows: variables.$table-header 1fr variables.$table-footer;
+    border-radius: variables.$general-gap;
+    gap: variables.$general-gap;
   }
 
   &-head {
@@ -43,7 +45,6 @@ body {
     justify-content: space-between;
     align-items: start;
     font-weight: 600;
-
     &-left {
       display: flex;
       gap: 0.4rem;
@@ -58,7 +59,6 @@ body {
   }
   &-footer {
     @include mixins.flex(between);
-
     &-left {
       display: flex;
       gap: 0.5rem;
@@ -67,7 +67,6 @@ body {
     &-bottom {
       display: flex;
       gap: 0.5rem;
-      margin-top: 0.5rem;
     }
   }
 }

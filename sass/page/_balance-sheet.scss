@@ -1,18 +1,22 @@
+@use "../abstract/variables";
+
 .balance-sheet {
   &-body {
     display: grid;
     grid-template-columns: 2fr 0.7fr;
-    grid-template-rows: 4rem 1fr 6rem;
+    grid-template-rows: variables.$table-header 1fr 5.7rem;
+    gap: variables.$general-gap;
   }
 
   &-head {
     grid-column: span 2;
   }
   & .table {
-    grid-template-rows: 2rem repeat(12, 1fr);
+    grid-template-rows: 1rem 1.2fr repeat(11, 1fr);
   }
   &-bank {
     background-color: rgb(212, 212, 212);
+    border-radius: variables.$large-radius;
   }
   &-footer {
     background-color: black;

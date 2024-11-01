@@ -1,8 +1,6 @@
 import DaybookFooter from "@/components/daybook/daybookFooter/DaybookFooter";
-import DaybookFooterBtns from "@/components/daybook/daybookFooter/DaybookFooterBtns";
 import DaybookHead from "@/components/daybook/daybookhead/DaybookHead";
 import DaybookTable from "@/components/daybook/daybookTable/DaybookTable";
-import Button from "@/components/utils/Button";
 
 export const metadata = {
   title: "Daybook",

@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "server": "nodemon api/index.js",
     "sass": "sass --watch sass/main.scss:styles/sassStyle.css -w",
     "build": "next build",
     "start": "next start",
@@ -12,8 +11,6 @@
   },
   "dependencies": {
     "cron": "^3.1.8",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
     "mongoose": "^8.8.0",
     "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",

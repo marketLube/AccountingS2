@@ -4,7 +4,9 @@
 .table {
   @include mixins.fillArea;
   display: grid;
-  grid-template-rows: 2rem repeat(8, 1fr);
+  grid-template-rows: 1rem 1.2fr repeat(7, 1fr);
+  border-radius: variables.$large-radius;
+  overflow: hidden;
 
   // Style for even children
   & > div:nth-child(even) {
@@ -19,9 +21,10 @@
   &-head {
     border-radius: variables.$large-radius;
     background-color: variables.$color-primary !important;
-    margin-bottom: -0.3rem;
+    margin-bottom: -1rem;
     z-index: 2;
     font-size: 0.9rem;
+    font-weight: 600;
     width: 100%;
     @include mixins.flex(center);
   }
@@ -32,6 +35,9 @@
     flex: 1;
     color: variables.$color-white;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 }
 
@@ -40,4 +46,11 @@
 }
 .remark {
   flex: 2;
+}
+.table-check {
+  width: variables.$checkbox-w;
+  height: 100%;
+  background-color: transparent;
+  @include mixins.flex(center);
+  cursor: pointer;
 }

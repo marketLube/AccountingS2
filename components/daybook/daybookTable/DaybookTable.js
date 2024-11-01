@@ -1,6 +1,8 @@
+import connectDB from "@/lib/mongoose";
 import DaybookTableHead from "./DaybookTableHead";
 
-function DaybookTable() {
+async function DaybookTable() {
+  await connectDB();
   return (
     <div className="table">
       <DaybookTableHead />
