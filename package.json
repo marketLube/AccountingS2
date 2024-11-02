@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server.mjs",
+    "dev": "nodemon server.mjs",
     "build": "next build",
     "start": "NODE_ENV=production node server.mjs",
     "lint": "next lint",

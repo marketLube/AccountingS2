@@ -31,3 +31,21 @@
   height: 2.5rem;
   @include mixins.flex(center);
 }
+.arrow {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: x-large;
+  border-radius: 5px;
+}
+.arrowsmall {
+  width: 35px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.arrowlarge {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+}
