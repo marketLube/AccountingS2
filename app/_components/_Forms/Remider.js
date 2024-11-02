@@ -1,21 +1,21 @@
 function Remider() {
   return (
     <div>
-      <div className="reminder-card">
-        <h2 className="reminder-title">New Reminder</h2>
+      <div className="remindercard">
+        <h2 className="remindertitle">New Reminder</h2>
 
         <form>
-          <div className="form-row">
-            <div className="form-group">
-              <select className="form-select">
+          <div className="formrow">
+            <div className="formgroup">
+              <select className="formselect">
                 <option value="">Select category</option>
                 <option value="personal">ooo</option>
                 <option value="work">ccc</option>
               </select>
             </div>
 
-            <div className="form-group">
-              <select className="form-select">
+            <div className="formgroup">
+              <select className="formselect">
                 <option value="">Select Particular</option>
                 <option value="option1">Option 1</option>
                 <option value="option2">Option 2</option>
@@ -23,12 +23,12 @@ function Remider() {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <input type="text" placeholder="Purpose" className="form-input" />
+          <div className="formrow">
+            <div className="formgroup">
+              <input type="text" placeholder="Purpose" className="forminput" />
             </div>
 
-            <div className="form-group">
+            <div className="formgroup">
               <input
                 type="number"
                 placeholder="Amount"
