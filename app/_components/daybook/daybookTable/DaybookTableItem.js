@@ -1,3 +1,4 @@
+"use client";
 function DaybookTableItem({ transaction }) {
   return (
     <div className="table-col">

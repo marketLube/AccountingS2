@@ -1,10 +1,11 @@
+"use client";
 import DaybookFooter from "../_components/daybook/daybookFooter/DaybookFooter";
 import DaybookHead from "../_components/daybook/daybookhead/DaybookHead";
 import DaybookTable from "../_components/daybook/daybookTable/DaybookTable";
 
-export const metadata = {
-  title: "Daybook",
-};
+// export const metadata = {
+//   title: "Daybook",
+// };
 
 function Page() {
   return (

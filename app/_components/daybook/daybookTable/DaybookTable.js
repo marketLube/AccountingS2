@@ -5,6 +5,7 @@ import apiClient from "@/lib/axiosInstance";
 import FullPageLoader from "../../_loader/FullPageLoader";
 import TableLoader from "../../_loader/TableLoader";
 import DaybookTableItem from "./DaybookTableItem";
+import { useSelector } from "react-redux";
 
 function DaybookTable() {
   const {
@@ -27,7 +28,7 @@ function DaybookTable() {
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
       ) : (
-        viewSix.map((trans, i) => (
+        viewSix?.map((trans, i) => (
           <DaybookTableItem key={i} transaction={trans} />
         ))
       )}

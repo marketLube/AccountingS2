@@ -306,6 +306,7 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
+  font-size: 0.9rem;
 }
 .table-body-col {
   color: rgb(54, 50, 50);
