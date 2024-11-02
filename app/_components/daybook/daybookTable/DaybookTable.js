@@ -27,7 +27,7 @@ function DaybookTable() {
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
       ) : (
-        viewSix.map((trans, i) => (
+        viewSix?.map((trans, i) => (
           <DaybookTableItem key={i} transaction={trans} />
         ))
       )}
