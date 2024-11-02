@@ -275,6 +275,7 @@ body {
   grid-template-rows: 1rem 1.2fr repeat(7, 1fr);
   border-radius: 1rem;
   overflow: hidden;
+  width: 100%;
 }
 .table > div:nth-child(even) {
   background-color: rgb(204, 222, 228);
@@ -293,6 +294,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 1rem;
+  padding-right: 2rem;
 }
 .table-col {
   padding-right: 2rem;
@@ -303,6 +306,10 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
+}
+.table-body-col {
+  color: rgb(54, 50, 50);
+  border: 1px solid gray;
 }
 
 .particular {

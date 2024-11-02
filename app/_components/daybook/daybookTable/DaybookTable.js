@@ -17,7 +17,7 @@ function DaybookTable() {
     queryFn: () => apiClient.get(`/transaction`).then((res) => res.data.data),
   });
 
-  const viewSix = transactions.slice(0, 6);
+  const viewSix = transactions?.slice(0, 6);
 
   return (
     <div className="table">
