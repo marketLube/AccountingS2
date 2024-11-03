@@ -8,7 +8,7 @@ function Main({ children }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCategory());
-  }, []);
+  }, [dispatch]);
 
   return <main className="main">{children}</main>;
 }

@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
-const dev = process.env.ENV !== "production";
+const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 

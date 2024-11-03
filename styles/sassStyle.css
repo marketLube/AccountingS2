@@ -416,6 +416,11 @@ body {
   justify-content: center;
 }
 
+.gst,
+.tds {
+  flex: 0.5;
+}
+
 .table-check {
   width: 2.5rem;
   height: 100%;
