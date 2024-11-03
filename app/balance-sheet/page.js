@@ -1,9 +1,10 @@
+"use client";
 import BalanceSheetTable from "../_components/balance-sheet/balancesheetTable/BalanceSheetTable";
 import Button from "../_components/utils/Button";
 
-export const metadata = {
-  title: "Balance Sheet",
-};
+// export const metadata = {
+//   title: "Balance Sheet",
+// };
 function Page() {
   return (
     <div className={`layout balance-sheet`}>

@@ -1,5 +1,4 @@
 // main.scss
-
 @use "./utils/utils";
 @use "./base/base";
 @use "./abstract/animations";
@@ -12,3 +11,5 @@
 @use "./components/table";
 @use "./components/smallUtils";
 @use "./components/loading";
+@use "./components/cards";
+@use "./forms/remider";

@@ -1,8 +1,9 @@
+"use client";
 import OutstandingHead from "../_components/outstanding/outstandingHead/OutstandingHead";
 
-export const metadata = {
-  title: "Outstanding",
-};
+// export const metadata = {
+//   title: "Outstanding",
+// };
 function Page() {
   return (
     <div className={`layout outstanding`}>

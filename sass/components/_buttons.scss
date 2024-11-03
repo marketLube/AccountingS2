@@ -31,3 +31,41 @@
   height: 2.5rem;
   @include mixins.flex(center);
 }
+.arrow {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: x-large;
+  border-radius: 5px;
+}
+.arrowsmall {
+  width: 35px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.arrowlarge {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+}
+.bluebutton {
+  background-color: rgb(10, 22, 133);
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 3rem;
+  border-radius: 5px;
+  border: none;
+}
+.redbutton {
+  background-color: brown;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 3rem;
+  border-radius: 5px;
+  border: none;
+}

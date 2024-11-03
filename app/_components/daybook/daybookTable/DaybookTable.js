@@ -2,16 +2,15 @@
 import { useQuery } from "@tanstack/react-query";
 import DaybookTableHead from "./DaybookTableHead";
 import apiClient from "@/lib/axiosInstance";
-import FullPageLoader from "../../_loader/FullPageLoader";
 import TableLoader from "../../_loader/TableLoader";
 import DaybookTableItem from "./DaybookTableItem";
-import { useSelector } from "react-redux";
 
 function DaybookTable() {
   const {
     data: transactions,
     isLoading,
     isError,
+    error,
     refetch,
   } = useQuery({
     queryKey: ["transactions"],

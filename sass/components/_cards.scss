@@ -1,0 +1,114 @@
+.dashbordBalancecard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.long {
+  width: 100%;
+  height: 100%;
+}
+.dashbordCurrenttext {
+  color: gray;
+}
+.dashbordCurrentfirst {
+  display: flex;
+  justify-content: space-between;
+}
+.dashbordCurrentamount {
+  font-size: 3rem;
+  font-weight: 900;
+}
+.dashbordBalancecard span {
+  color: rgb(38, 145, 109);
+}
+
+// income
+.incomecard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.incomefirsthead {
+  display: flex;
+  justify-content: space-between;
+}
+.incometext {
+  color: gray;
+}
+.incomeamount {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+// expense
+.expensecard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.expensefirsthead {
+  display: flex;
+  justify-content: space-between;
+}
+.expensetext {
+  color: gray;
+}
+.expenseamount {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+// Outstandingpayment
+.outstandingcard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.outstandingtext {
+  color: gray;
+  font-size: medium;
+}
+.outstandingamount {
+  font-weight: 700;
+  font-size: 2rem;
+}
+.outstandingoctober {
+  color: gray;
+}
+
+// top performer
+.topperformercard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.topperformerhead {
+  color: gray;
+  font-size: medium;
+}
+.topperformerdistrict {
+  font-weight: 700;
+  font-size: 2rem;
+}
+.topperformerprofit {
+  color: gray;
+}
+.topperformerprofit span {
+  color: aquamarine;
+}

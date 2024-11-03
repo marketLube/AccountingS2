@@ -5,6 +5,7 @@ import { Manrope } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "@/lib/store";
+import Main from "./Main";
 
 const manropeFont = Manrope({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ function AppLayout({ children }) {
           style={isHover ? { gridTemplateColumns: "13rem 1fr" } : {}}
         >
           <Navigation onSetHover={setIsHover} isHover={isHover} />
-          <main className="main">{children}</main>
+          <Main>{children}</Main>
         </div>
       </QueryClientProvider>
     </Provider>
