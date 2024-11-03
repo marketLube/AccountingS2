@@ -7,22 +7,15 @@ import DaybookTableItem from "./DaybookTableItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setBtnDisable } from "@/lib/slices/daybookSlice";
+import useTransactions from "@/app/_hooks/useTransactions";
 
 function DaybookTable() {
-  const { startPage } = useSelector((state) => state.daybook);
-  const {
-    data: transactions,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => apiClient.get(`/transaction`).then((res) => res.data.data),
-  });
-  const dispatch = useDispatch();
-  const veiwEight = transactions?.slice(startPage, startPage + 8);
+  const { isLoading, isError, error, transactions } = useTransactions();
 
+  const { startPage } = useSelector((state) => state.daybook);
+  const dispatch = useDispatch();
+
+  const veiwEight = transactions?.slice(startPage, startPage + 8);
   useEffect(() => {
     console.log(veiwEight?.length < 8, "l");
     if (veiwEight?.length < 8) {

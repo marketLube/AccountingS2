@@ -92,6 +92,7 @@ body {
 .layout-footer-left {
   display: flex;
   gap: 0.5rem;
+  transform: 0.5s all ease;
 }
 .layout-footer-right {
   background-color: green;
