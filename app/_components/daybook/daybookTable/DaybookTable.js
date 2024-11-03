@@ -4,8 +4,12 @@ import DaybookTableHead from "./DaybookTableHead";
 import apiClient from "@/lib/axiosInstance";
 import TableLoader from "../../_loader/TableLoader";
 import DaybookTableItem from "./DaybookTableItem";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setBtnDisable } from "@/lib/slices/daybookSlice";
 
 function DaybookTable() {
+  const { startPage } = useSelector((state) => state.daybook);
   const {
     data: transactions,
     isLoading,
@@ -16,8 +20,17 @@ function DaybookTable() {
     queryKey: ["transactions"],
     queryFn: () => apiClient.get(`/transaction`).then((res) => res.data.data),
   });
+  const dispatch = useDispatch();
+  const veiwEight = transactions?.slice(startPage, startPage + 8);
 
-  const viewSix = transactions?.slice(0, 6);
+  useEffect(() => {
+    console.log(veiwEight?.length < 8, "l");
+    if (veiwEight?.length < 8) {
+      dispatch(setBtnDisable(true));
+    } else {
+      dispatch(setBtnDisable(false));
+    }
+  }, [dispatch, veiwEight?.length]);
 
   return (
     <div className="table">
@@ -27,7 +40,7 @@ function DaybookTable() {
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
       ) : (
-        viewSix?.map((trans, i) => (
+        veiwEight?.map((trans, i) => (
           <DaybookTableItem key={i} transaction={trans} />
         ))
       )}

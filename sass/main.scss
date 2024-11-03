@@ -8,8 +8,9 @@
 @use "./page/dashboard";
 @use "./page/balance-sheet";
 @use "./components/buttons";
-@use "./components/table";
 @use "./components/smallUtils";
+@use "./components/table";
 @use "./components/loading";
 @use "./components/cards";
+@use "./components/pagenavigate";
 @use "./forms/remider";

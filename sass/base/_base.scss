@@ -5,7 +5,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  //   transition: 0.5s all ease;
+  transition: 0.15s all ease;
 }
 
 body {
@@ -62,6 +62,9 @@ body {
     &-left {
       display: flex;
       gap: 0.5rem;
+    }
+    &-right {
+      background-color: green;
     }
 
     &-bottom {

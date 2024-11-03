@@ -20,6 +20,7 @@ function Navigation({ onSetHover, isHover }) {
       <ul className="nav-ul">
         <li className="nav-ul-li">
           <Link
+            prefetch={true}
             href="/dashboard"
             className={`nav-ul-li-a ${
               pathName === "/dashboard" ? "active" : ""
@@ -39,6 +40,7 @@ function Navigation({ onSetHover, isHover }) {
         </li>
         <li className="nav-ul-li">
           <Link
+            prefetch={true}
             href="/daybook"
             className={`nav-ul-li-a ${
               pathName === "/daybook" ? "active" : ""
@@ -60,6 +62,7 @@ function Navigation({ onSetHover, isHover }) {
         </li>
         <li className="nav-ul-li">
           <Link
+            prefetch={true}
             href="/balance-sheet"
             className={`nav-ul-li-a ${
               pathName === "/balance-sheet" ? "active" : ""
@@ -79,6 +82,7 @@ function Navigation({ onSetHover, isHover }) {
         </li>
         <li className="nav-ul-li">
           <Link
+            prefetch={true}
             href="/outstanding"
             className={`nav-ul-li-a ${
               pathName === "/outstanding" ? "active" : ""
@@ -98,6 +102,7 @@ function Navigation({ onSetHover, isHover }) {
         </li>
         <li className="nav-ul-li">
           <Link
+            prefetch={true}
             href="/liability"
             className={`nav-ul-li-a ${
               pathName === "/liability" ? "active" : ""
