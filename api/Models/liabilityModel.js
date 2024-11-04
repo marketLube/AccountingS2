@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 import { combineDateWithCurrentTime } from "../Utilities/helper.js";
 
-const liabilitySchema = mongoose.Schema(
+const liabilityAndOutstandingSchema = mongoose.Schema(
   {
     catagory: {
       type: mongoose.Schema.ObjectId,
       ref: "Catagory",
-      required: [true, "Liability Must have a Catagory"],
+      required: [true, "Liability/Outstanding Must have a Catagory"],
     },
 
     particular: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Particulars",
-      required: [true, "Transaction Must have a Particular"],
+      required: [true, "Liability/Outstanding Must have a Particular"],
     },
     type: {
       type: String,
@@ -25,14 +25,13 @@ const liabilitySchema = mongoose.Schema(
 
     purpose: {
       type: String,
-      required: [true, "Transaction must have a purpose"],
+      required: [true, "Liability/Outstanding must have a purpose"],
       minlength: [3, "Purpose must be at least 3 characters long"],
       maxlength: [60, "Purpose must be less than 20 characters long"],
     },
 
     amount: {
       type: Number,
-      required: [true, "Transaction must have an amount"],
       min: [0, "Amount must be a positive number"],
     },
 
@@ -50,24 +49,38 @@ const liabilitySchema = mongoose.Schema(
         "Liability/Outstanding must have a status ('Paid', 'Unpaid', 'Postponed', or 'Pending')",
       ],
     },
-
-    branches: [
-      {
-        amount: {
-          type: Number,
-          required: [true, "Branch amount must be specified"],
-          min: [0, "Amount must be a positive number"],
+    branches: {
+      type: [
+        {
+          branch: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Branch",
+            required: [
+              true,
+              "Liability/Outstanding must have at least one branch",
+            ],
+          },
+          amount: {
+            type: Number,
+            required: [
+              true,
+              "Liability/Outstanding must have at least one branch and amount",
+            ],
+          },
         },
-        branchName: {
-          type: String,
-          required: [true, "Branch must have a name"],
-        },
+      ],
+      required: [
+        true,
+        "Liability/Outstanding must have at least one branch entry",
+      ],
+      validate: {
+        validator: (arr) => arr.length > 0,
+        message: "Liability/Outstanding must contain at least one branch entry",
       },
-    ],
+    },
     formattedDate: {
       type: String,
     },
-
     date: {
       type: Date,
       default: Date.now,
@@ -75,7 +88,7 @@ const liabilitySchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-liabilitySchema.pre(/^find/, function (next) {
+liabilityAndOutstandingSchema.pre(/^find/, function (next) {
   this.populate({
     path: "particular",
     select: "name",
@@ -83,30 +96,20 @@ liabilitySchema.pre(/^find/, function (next) {
   next();
 });
 
-liabilitySchema.pre("save", function (next) {
+liabilityAndOutstandingSchema.pre("save", function (next) {
+  this.amount = this.branches.reduce((acc, val) => val.amount + acc, 0);
+  next();
+});
+liabilityAndOutstandingSchema.pre("save", function (next) {
   const combinedDateTime = combineDateWithCurrentTime(this.date);
   this.date = combinedDateTime.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   this.formattedDate = combinedDateTime.format("YYYY-MM-DD");
-
-  next();
-});
-liabilitySchema.pre("findOneAndUpdate", async function (next) {
-  // Get the update object
-  const update = this.getUpdate();
-
-  // Check if the 'date' field exists in the update object
-  if (update.date) {
-    // Combine date with the current time
-    const combinedDateTime = combineDateWithCurrentTime(update.date);
-
-    // Update the date fields
-    update.date = combinedDateTime.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
-    update.formattedDate = combinedDateTime.format("YYYY-MM-DD");
-  }
-
   next();
 });
 
-const Liablity = mongoose.model("Liability and outstanding", liabilitySchema);
+const LiabilityAndOutstanding = mongoose.model(
+  "Liability and outstanding",
+  liabilityAndOutstandingSchema
+);
 
-export default Liablity;
+export default LiabilityAndOutstanding;
