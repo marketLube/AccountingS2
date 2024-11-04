@@ -10,7 +10,7 @@ export default function useTransactions() {
   if (type !== "All Status") {
     endpoint += `type=${type}`;
   }
-  console.log(endpoint, "enpoint");
+
   const {
     data: transactions,
     isLoading,
@@ -21,6 +21,5 @@ export default function useTransactions() {
     queryKey: ["transactions", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
   });
-  console.log(transactions, "trans");
   return { isLoading, isError, error, refetch, transactions };
 }

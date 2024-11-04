@@ -8,6 +8,11 @@
   border-radius: variables.$large-radius;
   overflow: hidden;
   width: 100%;
+  transition: 1s all ease;
+
+  & > div:hover {
+    transform: scale(1.2);
+  }
 
   // Style for even children
   & > div:nth-child(even) {

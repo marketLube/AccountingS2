@@ -120,6 +120,26 @@ function Navigation({ onSetHover, isHover }) {
             )}
           </Link>
         </li>
+        <li className="nav-ul-li">
+          <Link
+            prefetch={true}
+            href="/assets"
+            className={`nav-ul-li-a ${pathName === "/assets" ? "active" : ""} ${
+              isHover ? "isHoverHyper" : ""
+            }`}
+          >
+            {isHover ? (
+              <p
+                className="font-medium text-left"
+                style={{ animation: "navText .5s ease forwards" }}
+              >
+                Liability
+              </p>
+            ) : (
+              <SiBlockchaindotcom className={`icons`} />
+            )}
+          </Link>
+        </li>
       </ul>
     </nav>
   );

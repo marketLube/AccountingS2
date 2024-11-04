@@ -354,6 +354,10 @@ body {
   border-radius: 1rem;
   overflow: hidden;
   width: 100%;
+  transition: 1s all ease;
+}
+.table > div:hover {
+  transform: scale(1.2);
 }
 .table > div:nth-child(even) {
   background-color: rgb(204, 222, 228);
