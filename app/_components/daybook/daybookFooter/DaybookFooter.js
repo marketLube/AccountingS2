@@ -7,7 +7,6 @@ import { setDaybookCurrentPage } from "@/lib/slices/daybookSlice";
 
 function DaybookFooter() {
   const { currentPage, btnDisable } = useSelector((state) => state.daybook);
-  console.log(btnDisable, "btn disables");
   return (
     <>
       <div className={`layout-footer`}>

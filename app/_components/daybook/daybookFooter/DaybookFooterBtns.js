@@ -7,8 +7,6 @@ function DaybookFooterBtns() {
   const dispatch = useDispatch();
   const { type } = useSelector((state) => state.daybook);
 
-  console.log(type, "type");
-
   return (
     <>
       <Button
