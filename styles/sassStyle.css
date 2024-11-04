@@ -595,7 +595,7 @@ body {
   display: flex;
   justify-content: start;
   align-items: center;
-  gap: 1;
+  gap: 7px;
 }
 .pagination .button {
   border: 1px solid rgb(204, 204, 204);
@@ -622,7 +622,6 @@ body {
 }
 .pagination .button .next-icon-span {
   margin-left: 0.8rem;
-  background-color: aquamarine;
 }
 .pagination .button .prev-icon-span {
   margin-right: 0.8rem;
@@ -634,6 +633,8 @@ body {
   display: flex;
   border-radius: 7px;
   color: #333;
+  height: 2.5rem;
+  gap: 7px;
   align-items: center;
 }
 .pagination .page-numbers li {
@@ -641,13 +642,13 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 4rem;
+  width: 3rem;
   height: 100%;
-  gap: 2rem;
-  border: 2px solid #333;
+  border: 1px solid rgb(28, 101, 126);
+  border-radius: 7px;
 }
 .pagination .page-numbers .current {
-  background-color: rgb(5, 64, 153);
+  background-color: rgb(28, 101, 126);
   color: white;
   width: 4rem;
   border-radius: 7px;
