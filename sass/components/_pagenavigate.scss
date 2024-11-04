@@ -62,10 +62,12 @@ $cash-tag: black;
   display: flex;
   justify-content: start;
   align-items: center;
+  gap: 1;
 
   .button {
     border: 1px solid $light-gray;
     border-radius: 7px;
+    padding: 0.7rem;
     background-color: $white;
     cursor: pointer;
     letter-spacing: 0.5px;
@@ -89,8 +91,11 @@ $cash-tag: black;
     }
 
     .next-icon-span {
+      margin-left: 0.8rem;
+      background-color: aquamarine;
     }
     .prev-icon-span {
+      margin-right: 0.8rem;
     }
     .icons {
       font-size: 1.7rem;
@@ -99,11 +104,10 @@ $cash-tag: black;
 
   .page-numbers {
     display: flex;
-    background-color: $pagination-bg;
+    // background-color: $pagination-bg;
     border-radius: 7px;
     color: #333;
     align-items: center;
-    border: 1px solid $primary-color;
 
     li {
       display: flex;
@@ -112,10 +116,12 @@ $cash-tag: black;
       cursor: pointer;
       width: 4rem;
       height: 100%;
+      gap: 2rem;
+      border: 2px solid #333;
     }
 
     .current {
-      background-color: $primary-color;
+      background-color: $secondary-color;
       color: $white;
       width: 4rem;
       border-radius: 7px;
