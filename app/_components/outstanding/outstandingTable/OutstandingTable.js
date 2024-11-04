@@ -9,7 +9,7 @@ function OutstandingTable() {
   const { outstandings, isLoading, isError, error, refetch } = useOutstanding();
   const { startPage } = useSelector((state) => state.outstanding);
   const veiwEight = useViewEight(outstandings, startPage, setOutBtnDisable);
-  console.log(veiwEight, "view eight");
+
   return (
     <div className="table">
       <OutstandingTableHead />
