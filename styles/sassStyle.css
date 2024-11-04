@@ -94,9 +94,6 @@ body {
   gap: 0.5rem;
   transform: 0.5s all ease;
 }
-.layout-footer-right {
-  background-color: green;
-}
 .layout-footer-bottom {
   display: flex;
   gap: 0.5rem;
@@ -598,10 +595,12 @@ body {
   display: flex;
   justify-content: start;
   align-items: center;
+  gap: 1;
 }
 .pagination .button {
   border: 1px solid rgb(204, 204, 204);
   border-radius: 7px;
+  padding: 0.7rem;
   background-color: white;
   cursor: pointer;
   letter-spacing: 0.5px;
@@ -621,16 +620,21 @@ body {
   cursor: not-allowed;
   border-color: rgb(204, 204, 204);
 }
+.pagination .button .next-icon-span {
+  margin-left: 0.8rem;
+  background-color: aquamarine;
+}
+.pagination .button .prev-icon-span {
+  margin-right: 0.8rem;
+}
 .pagination .button .icons {
   font-size: 1.7rem;
 }
 .pagination .page-numbers {
   display: flex;
-  background-color: #ded3dd;
   border-radius: 7px;
   color: #333;
   align-items: center;
-  border: 1px solid rgb(39, 1, 100);
 }
 .pagination .page-numbers li {
   display: flex;
@@ -639,9 +643,11 @@ body {
   cursor: pointer;
   width: 4rem;
   height: 100%;
+  gap: 2rem;
+  border: 2px solid #333;
 }
 .pagination .page-numbers .current {
-  background-color: rgb(39, 1, 100);
+  background-color: rgb(5, 64, 153);
   color: white;
   width: 4rem;
   border-radius: 7px;
@@ -716,16 +722,6 @@ body {
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
-}
-
-.clearbutton,
-.submitbutton {
-  padding: 0.5rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 @media (max-width: 600px) {

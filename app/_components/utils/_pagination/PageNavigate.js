@@ -4,6 +4,8 @@ import PagesNumbers from "./PagesNumbers";
 import { useDispatch } from "react-redux";
 import { TbPlayerTrackNext, TbPlayerTrackPrev } from "react-icons/tb";
 import { useKey } from "@/app/_hooks/useKey";
+import { SlArrowLeft } from "react-icons/sl";
+import { BsChevronRight } from "react-icons/bs";
 
 function PageNavigate({
   style,
@@ -76,7 +78,7 @@ function PageNavigate({
         }}
       >
         <span className="prev-icon-span">
-          <TbPlayerTrackPrev color="red" />
+          <SlArrowLeft color="gray" />
         </span>
       </button>
       <PagesNumbers
@@ -95,7 +97,7 @@ function PageNavigate({
         }}
       >
         <span className="next-icon-span">
-          <TbPlayerTrackNext color="red" />
+          <BsChevronRight color="gray" />
         </span>
       </button>
     </div>
