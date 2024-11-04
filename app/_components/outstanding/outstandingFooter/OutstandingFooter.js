@@ -1,4 +1,8 @@
 "use clients";
+
+import { useDispatch, useSelector } from "react-redux";
+import Button from "../../utils/Button";
+
 function OutstandingFooter() {
   const dispatch = useDispatch();
   const { type } = useSelector((state) => state.outstanding);
