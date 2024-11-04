@@ -1,3 +1,4 @@
+"use client";
 import Arrow from "../utils/Arrow";
 
 function DashboardCurrentbalance() {

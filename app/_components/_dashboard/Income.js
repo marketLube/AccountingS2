@@ -10,10 +10,9 @@ function Income() {
             <Arrow color={"#00ba9d"} size="small" />
           </div>
         </div>
-        <div className="incomeamount">$ 12,33,87,775,89</div>
+        <div className="incomeamount">$ 12,33,87,89</div>
       </div>
     </div>
   );
 }
-
 export default Income;

@@ -19,7 +19,10 @@ const transactionSchema = mongoose.Schema(
       type: String,
       required: [true, "Transaction Must hava a purpose"],
       minlength: [3, "Purpose name must be at least 3 characters long"],
-      maxlength: [30, "Purpose name must be less than 50 characters long"],
+      maxlength: [160, "Purpose name must be less than 50 characters long"],
+    },
+    amount: {
+      type: Number,
     },
     bank: {
       type: mongoose.Schema.Types.ObjectId,
@@ -106,6 +109,7 @@ transactionSchema.pre("save", async function (next) {
 
     // 3. Update bank balance
     bank.balance += totalAmount;
+    this.amount = Math.abs(totalAmount);
 
     // Save bank updates
     await bank.save();

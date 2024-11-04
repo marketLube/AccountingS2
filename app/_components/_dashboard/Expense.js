@@ -1,5 +1,4 @@
 import Arrow from "../utils/Arrow";
-
 function Expense() {
   return (
     <div>
@@ -10,7 +9,7 @@ function Expense() {
             <Arrow color={"#0040ff"} size="small" />
           </div>
         </div>
-        <div className="expenseamount">$ 12,33,87,775,89</div>
+        <div className="expenseamount">$ 12,33,875,89</div>
       </div>
     </div>
   );

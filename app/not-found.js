@@ -13,10 +13,11 @@ export default function NotFound() {
           It seems the page you&apos;re looking for doesn&apos;t exist or has
           been moved.
         </p>
-        <Link href="/">
-          <a className="mt-8 inline-block rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
-            Return to Home
-          </a>
+        <Link
+          href="/"
+          className="mt-8 inline-block rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl"
+        >
+          Return to Home
         </Link>
       </div>
     </div>

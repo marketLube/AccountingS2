@@ -2,22 +2,28 @@
 import { useQuery } from "@tanstack/react-query";
 import DaybookTableHead from "./DaybookTableHead";
 import apiClient from "@/lib/axiosInstance";
-import FullPageLoader from "../../_loader/FullPageLoader";
 import TableLoader from "../../_loader/TableLoader";
 import DaybookTableItem from "./DaybookTableItem";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setBtnDisable } from "@/lib/slices/daybookSlice";
+import useTransactions from "@/app/_hooks/useTransactions";
 
 function DaybookTable() {
-  const {
-    data: transactions,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: () => apiClient.get(`/transaction`).then((res) => res.data.data),
-  });
+  const { isLoading, isError, error, transactions } = useTransactions();
 
-  const viewSix = transactions?.slice(0, 6);
+  const { startPage } = useSelector((state) => state.daybook);
+  const dispatch = useDispatch();
+
+  const veiwEight = transactions?.slice(startPage, startPage + 8);
+  useEffect(() => {
+    console.log(veiwEight?.length < 8, "l");
+    if (veiwEight?.length < 8) {
+      dispatch(setBtnDisable(true));
+    } else {
+      dispatch(setBtnDisable(false));
+    }
+  }, [dispatch, veiwEight?.length]);
 
   return (
     <div className="table">
@@ -27,7 +33,7 @@ function DaybookTable() {
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
       ) : (
-        viewSix?.map((trans, i) => (
+        veiwEight?.map((trans, i) => (
           <DaybookTableItem key={i} transaction={trans} />
         ))
       )}

@@ -17,3 +17,19 @@
     box-shadow: 0 0 0 2px variables.$color-primary; // or add a shadow or border color
   }
 }
+
+.tooltip {
+  padding: 1rem;
+  color: variables.$color-white;
+  background-color: rgba(variables.$color-dark, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: fixed;
+  font-size: 0.6rem;
+  border-radius: variables.$small-radius;
+  z-index: 1000;
+  pointer-events: none;
+  transition: 0.25s opacity ease;
+  max-width: 25rem;
+}

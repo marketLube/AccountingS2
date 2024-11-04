@@ -1,3 +1,5 @@
+"use client";
+
 function DaybookTableHead() {
   return (
     <div className="table-head">

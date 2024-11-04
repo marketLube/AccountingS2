@@ -1,12 +1,13 @@
+"use client";
 import DashboardCurrentbalance from "../_components/_dashboard/DashboardCurrentbalance";
 import Expense from "../_components/_dashboard/Expense";
 import Income from "../_components/_dashboard/Income";
 import Oustandingpay from "../_components/_dashboard/Oustandingpay";
 import { TopPerformer } from "../_components/_dashboard/TopPerformer";
 
-export const metadata = {
-  title: "Dashboard",
-};
+// export const metadata = {
+//   title: "Dashboard",
+// };
 function Page() {
   return (
     <div className={`layout dashboard`}>
