@@ -1,19 +1,42 @@
-/* Error: Can't find stylesheet to import.
- *    ,
- * 15 | @use "./components/pagenavigate";
- *    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- *    '
- *   sass/main.scss 15:1  root stylesheet */
+.stats-box {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: 0.3s all ease;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-    "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
+.icons {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #fff;
+}
+
+.active {
+  background-color: #fff;
+  transition: 0.5s all ease;
+  color: rgb(54, 50, 50);
+}
+
+.active .icons {
+  color: rgb(28, 101, 126);
+  transition: 0.5s all ease;
+}
+
+.active p {
+  color: rgb(54, 50, 50);
+  transition: 0.5s all ease;
+}
+
+.hide {
+  opacity: 0;
+  transform: 0.5s all ease;
+  display: none;
+}
+
+.visible {
+  opacity: 1;
+  transform: 0.5s all ease;
   display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: 'Error: Can\'t find stylesheet to import.\a    \2577 \a 15 \2502  @use "./components/pagenavigate";\a    \2502  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   sass/main.scss 15:1  root stylesheet';
 }
 
 * {
@@ -24,14 +47,7 @@ body::before {
 }
 
 body {
-  background: linear-gradient(
-    to top,
-    rgb(201, 234, 251),
-    rgba(201, 234, 251, 0.8) 40%,
-    rgba(201, 234, 251, 0.6) 60%,
-    rgba(201, 234, 251, 0.3) 80%,
-    #fff
-  );
+  background: linear-gradient(to top, rgb(201, 234, 251), rgba(201, 234, 251, 0.8) 40%, rgba(201, 234, 251, 0.6) 60%, rgba(201, 234, 251, 0.3) 80%, #fff);
 }
 
 .app {
@@ -415,12 +431,7 @@ body {
 
 .table-loader {
   grid-row: span 8; /* Span 8 rows in the grid */
-  background-color: rgba(
-    28,
-    101,
-    126,
-    0.3
-  ) !important; /* Black background color */
+  background-color: rgba(28, 101, 126, 0.3) !important; /* Black background color */
   display: flex; /* Enable flexbox */
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
@@ -599,8 +610,7 @@ body {
 .pagination .button:hover {
   background-color: #f0f0f0;
 }
-.pagination .button.disabled,
-.pagination .button:disabled {
+.pagination .button.disabled, .pagination .button:disabled {
   background-color: rgb(204, 204, 204);
   color: white;
   cursor: not-allowed;
