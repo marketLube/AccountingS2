@@ -1,6 +1,5 @@
 "use client";
 import OutstandingFooter from "../_components/outstanding/outstandingFooter/OutstandingFooter";
-import OutstandingFooterBtns from "../_components/outstanding/outstandingFooter/OutstandingFooterBtns";
 import OutstandingHead from "../_components/outstanding/outstandingHead/OutstandingHead";
 import OutstandingTable from "../_components/outstanding/outstandingTable/OutstandingTable";
 

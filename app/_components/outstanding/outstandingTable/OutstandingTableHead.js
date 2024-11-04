@@ -9,7 +9,7 @@ function OutstandingTableHead() {
       <span className="table-col amount">Amount</span>
       <span className="table-col remark">Remark</span>
       <span className="table-col branch">Branch</span>
-      <span className="table-col branch">Status</span>
+      <span className="table-col status">Status</span>
     </div>
   );
 }
