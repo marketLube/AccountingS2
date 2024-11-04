@@ -1,9 +1,9 @@
-import DaybookComponent from "./_FormComponents/DaybookComponent";
+import BudgetPlannerNewPropertyForm from "./_FormComponents/BudgetPlannerNewPropertyForm";
 
 function DaybookSelf() {
   return (
     <div className="remindercontainer">
-      <DaybookComponent />
+      <BudgetPlannerNewPropertyForm />
     </div>
   );
 }

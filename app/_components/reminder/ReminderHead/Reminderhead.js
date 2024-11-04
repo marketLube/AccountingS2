@@ -1,8 +1,8 @@
 "use client";
-import LayoutHead from "@/app/_components/layouts/LayoutHead";
-import Button from "@/app/_components/utils/Button";
+import LayoutHead from "../../layouts/LayoutHead";
+import Button from "../../utils/Button";
 
-function LiabilityHead() {
+function Reminderhead() {
   return (
     <LayoutHead>
       <>
@@ -14,4 +14,4 @@ function LiabilityHead() {
   );
 }
 
-export default LiabilityHead;
+export default Reminderhead;

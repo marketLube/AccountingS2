@@ -83,26 +83,6 @@ function Navigation({ onSetHover, isHover }) {
         <li className="nav-ul-li">
           <Link
             prefetch={true}
-            href="/outstanding"
-            className={`nav-ul-li-a ${
-              pathName === "/outstanding" ? "active" : ""
-            } ${isHover ? "isHoverHyper" : ""}`}
-          >
-            {isHover ? (
-              <p
-                className="font-medium text-left"
-                style={{ animation: "navText .5s ease forwards" }}
-              >
-                Outstanding
-              </p>
-            ) : (
-              <FaPhoneAlt className={`icons`} />
-            )}
-          </Link>
-        </li>
-        <li className="nav-ul-li">
-          <Link
-            prefetch={true}
             href="/liability"
             className={`nav-ul-li-a ${
               pathName === "/liability" ? "active" : ""
@@ -120,20 +100,63 @@ function Navigation({ onSetHover, isHover }) {
             )}
           </Link>
         </li>
+
         <li className="nav-ul-li">
           <Link
             prefetch={true}
-            href="/assets"
-            className={`nav-ul-li-a ${pathName === "/assets" ? "active" : ""} ${
-              isHover ? "isHoverHyper" : ""
-            }`}
+            href="/outstanding"
+            className={`nav-ul-li-a ${
+              pathName === "/outstanding" ? "active" : ""
+            } ${isHover ? "isHoverHyper" : ""}`}
           >
             {isHover ? (
               <p
                 className="font-medium text-left"
                 style={{ animation: "navText .5s ease forwards" }}
               >
-                Liability
+                Outstanding
+              </p>
+            ) : (
+              <FaPhoneAlt className={`icons`} />
+            )}
+          </Link>
+        </li>
+
+        <li className="nav-ul-li">
+          <Link
+            prefetch={true}
+            href="/reminder"
+            className={`nav-ul-li-a ${
+              pathName === "/reminder" ? "active" : ""
+            } ${isHover ? "isHoverHyper" : ""}`}
+          >
+            {isHover ? (
+              <p
+                className="font-medium text-left"
+                style={{ animation: "navText .5s ease forwards" }}
+              >
+                Reminder
+              </p>
+            ) : (
+              <SiBlockchaindotcom className={`icons`} />
+            )}
+          </Link>
+        </li>
+
+        <li className="nav-ul-li">
+          <Link
+            prefetch={true}
+            href="/branchwise"
+            className={`nav-ul-li-a ${
+              pathName === "/branchwise" ? "active" : ""
+            } ${isHover ? "isHoverHyper" : ""}`}
+          >
+            {isHover ? (
+              <p
+                className="font-medium text-left"
+                style={{ animation: "navText .5s ease forwards" }}
+              >
+                BranchwisePNL
               </p>
             ) : (
               <SiBlockchaindotcom className={`icons`} />
