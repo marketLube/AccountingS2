@@ -5,22 +5,37 @@ import { MdDateRange } from "react-icons/md";
 import { BsBarChartFill } from "react-icons/bs";
 import { FaPhoneAlt } from "react-icons/fa";
 import { SiBlockchaindotcom } from "react-icons/si";
+import { SiWindows } from "react-icons/si";
+import { BsFillBellFill } from "react-icons/bs";
+import { GiShirtButton } from "react-icons/gi";
+import { FaHandHoldingUsd } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa";
+import { PiNotebookFill } from "react-icons/pi";
+import { BsPlusSquareFill } from "react-icons/bs";
+import { RiMoneyDollarBoxFill } from "react-icons/ri";
+import { PiNotebookBold } from "react-icons/pi";
+import { PiFilesDuotone } from "react-icons/pi";
+import { IoWalletOutline } from "react-icons/io5";
+import { BiSolidPlusSquare } from "react-icons/bi";
+import { MdLocalPhone } from "react-icons/md";
+import { BiSolidBarChartAlt2 } from "react-icons/bi";
+import { AiFillBell } from "react-icons/ai";
 import NavItem from "./NavItem";
 
 const routes = [
   { path: "/dashboard", icon: GoHomeFill, name: "Dashboard" },
   { path: "/daybook", icon: MdDateRange, name: "Daybook" },
-  { path: "/balance-sheet", icon: BsBarChartFill, name: "Balance Sheet" },
-  { path: "/liability", icon: SiBlockchaindotcom, name: "Liability" },
-  { path: "/outstanding", icon: FaPhoneAlt, name: "Outstanding" },
-  { path: "/reminder", icon: SiBlockchaindotcom, name: "Reminder" },
-  { path: "/branchwise", icon: SiBlockchaindotcom, name: "Branch Wise Pnl" },
-  { path: "/assets", icon: SiBlockchaindotcom, name: "Assets" },
-  { path: "/capital", icon: SiBlockchaindotcom, name: "Capital" },
-  { path: "/ledger", icon: SiBlockchaindotcom, name: "Ledger" },
-  { path: "/planner", icon: SiBlockchaindotcom, name: "Budget Planner" },
-  { path: "/invoice", icon: SiBlockchaindotcom, name: "Invoice" },
-  { path: "/commition", icon: SiBlockchaindotcom, name: "Commition" },
+  { path: "/balance-sheet", icon: BiSolidBarChartAlt2, name: "Balance Sheet" },
+  { path: "/liability", icon: MdLocalPhone, name: "Liability" },
+  { path: "/outstanding", icon: SiBlockchaindotcom, name: "Outstanding" },
+  { path: "/reminder", icon: AiFillBell, name: "Reminder" },
+  { path: "/branchwise", icon: GiShirtButton, name: "Branch Wise Pnl" },
+  { path: "/assets", icon: FaHandHoldingUsd, name: "Assets" },
+  { path: "/capital", icon: IoWalletOutline, name: "Capital" },
+  { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
+  { path: "/planner", icon: BiSolidPlusSquare, name: "Budget Planner" },
+  { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
+  { path: "/commition", icon: RiMoneyDollarBoxFill, name: "Commition" },
 ];
 
 function Navigation({ onSetHover, isHover }) {

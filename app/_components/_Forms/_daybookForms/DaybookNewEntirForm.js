@@ -14,6 +14,8 @@ import {
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
+import CatagorySelector from "../../utils/CatagorySelector";
+import ParticularSelector from "../../utils/ParticularSelector";
 
 function DaybookNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -38,6 +40,10 @@ function DaybookNewEntirForm() {
   return (
     <form className="form">
       <div className="form-section">
+        <div className="form-row">
+          <CatagorySelector />
+          <ParticularSelector />
+        </div>
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Remark register={register} errors={errors} />

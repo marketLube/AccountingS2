@@ -2,20 +2,18 @@
 import { useSelector } from "react-redux";
 
 function CatagorySelector() {
-  const { catagories, particulars } = useSelector((state) => state.general);
-  if (!catagories || !particulars) return null;
+  const { categories } = useSelector((state) => state.general);
+
   return (
-    <div>
-      <div className="formgroup">
-        <select className="formselect">
-          <option value="">Select Catagory</option>
-          {catagories.map((cat) => (
-            <option value={cat.name} key={cat._id}>
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="catagory-selector">
+      <select className="catagory-selector-select">
+        <option value="">Select Catagory</option>
+        {categories?.map((cat) => (
+          <option value={cat.name} key={cat._id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

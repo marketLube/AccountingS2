@@ -750,4 +750,14 @@ body {
   justify-content: center;
 }
 
+.catagory-selector {
+  flex: 1;
+}
+.catagory-selector-select {
+  background-color: rgb(226, 225, 225);
+  padding: 0.9rem 1rem;
+  width: 100%;
+  border-radius: 0.3rem;
+}
+
 /*# sourceMappingURL=sassStyle.css.map */
