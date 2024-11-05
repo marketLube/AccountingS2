@@ -17,10 +17,10 @@ function Page() {
       <div className={`dashboard-left`}>
         <div className={`dashboard-stats`}>
           <div className={`stats-box`}></div>
-          <div className={`stats-box`}>
+          <div className={`first-section`}>
             <Income />
           </div>
-          <div className={`stats-box`}>
+          <div className={`first-section`}>
             <Expense />
           </div>
           <div className={`stats-box`}>
@@ -33,7 +33,7 @@ function Page() {
         <div className={`stats-box dashboard-chart`}></div>
       </div>
       <div className={`dashboard-right`}>
-        <div className={`stats-box dashboard-curbalance`}>
+        <div className={`first-section dashboard-curbalance`}>
           <DashboardCurrentbalance />
         </div>
         <div className={`stats-box dashboard-reminder`}></div>

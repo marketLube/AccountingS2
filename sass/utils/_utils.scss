@@ -1,10 +1,4 @@
 @use "../abstract/variables";
-.stats-box {
-  background-color: variables.$color-white;
-  border-radius: variables.$large-radius;
-  padding: 1rem;
-  transition: 0.3s all ease;
-}
 
 .icons {
   width: 1.5rem;
