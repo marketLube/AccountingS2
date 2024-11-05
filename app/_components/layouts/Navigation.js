@@ -30,7 +30,7 @@ const routes = [
   { path: "/outstanding", icon: SiBlockchaindotcom, name: "Outstanding" },
   { path: "/reminder", icon: AiFillBell, name: "Reminder" },
   { path: "/branchwise", icon: GiShirtButton, name: "Branch Wise Pnl" },
-  { path: "/assets", icon: FaHandHoldingUsd, name: "Assets" },
+  { path: "/assetes", icon: FaHandHoldingUsd, name: "Assets" },
   { path: "/capital", icon: IoWalletOutline, name: "Capital" },
   { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
   { path: "/planner", icon: BiSolidPlusSquare, name: "Budget Planner" },

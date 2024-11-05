@@ -4,17 +4,14 @@ import {
   useCategoryFinder,
   useParticularFinder,
 } from "@/app/_services/finders";
-import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 
-function OutstandingTableItems({ item }) {
+function CapitalTableItems({ item }) {
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
-  console.log(item, "item");
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
-
   return (
     <>
       <div className="table-col">
@@ -26,21 +23,12 @@ function OutstandingTableItems({ item }) {
           onMouseEnter={() => setIsPartooltip(true)}
           onMouseLeave={() => setIsPartooltip(false)}
         >
-          {truncate(particular?.name)}
+          invested by
         </span>
-        <span className="table-col date table-body-col">
-          {item?.formattedDate}
-        </span>
-        <span className="table-col amount table-body-col">{item?.amount}</span>
-        <span
-          className="table-col remark table-body-col"
-          onMouseEnter={() => setIsRemarkTooltip(true)}
-          onMouseLeave={() => setIsRemarkTooltip(false)}
-        >
-          {truncate(item?.remark)}
-        </span>
+        <span className="table-col date table-body-col">date</span>
+        <span className="table-col amount table-body-col">amount</span>
+        <span className="table-col remark table-body-col">Remark</span>
         <span className="table-col branch table-body-col">Branch</span>
-        <span className="table-col status table-body-col">{item?.status}</span>
       </div>
       <Tooltip
         isVisible={isParTooltip}
@@ -57,4 +45,4 @@ function OutstandingTableItems({ item }) {
   );
 }
 
-export default OutstandingTableItems;
+export default CapitalTableItems;
