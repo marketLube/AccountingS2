@@ -7,9 +7,13 @@ import {
   Purpose,
   Radio,
   Remark,
+  Gst,
+  Tds,
+  GstPercent,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
+import Button from "../../utils/Button";
 
 function DaybookNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -36,8 +40,7 @@ function DaybookNewEntirForm() {
       <div className="form-section">
         <div className="form-row">
           <Purpose register={register} errors={errors} />
-          <Purpose register={register} errors={errors} />
-          {/* <Remark register={register} errors={errors} /> */}
+          <Remark register={register} errors={errors} />
         </div>
 
         <div className="form-row">
@@ -53,19 +56,21 @@ function DaybookNewEntirForm() {
         errors={errors}
         register={register}
       />
-
+      <div className="form-row">
+        <Tds register={register} errors={errors} />
+        <Gst register={register} errors={errors} />
+        <GstPercent register={register} errors={errors} />
+      </div>
       <div className="form-btn-group form-submit-btns">
-        <button type="button" className="btn delete-btn">
-          Clear
-        </button>
-        <button
+        <Button type="clear">Clear</Button>
+        <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}
           className={`btn primary-blue-btn form-submit`}
           disabled={loading}
         >
           {loading ? "Submitting..." : "Submit"}
-        </button>
+        </Button>
       </div>
     </form>
   );

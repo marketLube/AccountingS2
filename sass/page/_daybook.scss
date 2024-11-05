@@ -7,11 +7,13 @@
   }
 }
 .form {
+  margin: 2rem;
+  font-size: 0.9rem;
   .type-options {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0rem;
+    gap: 1.5rem;
     width: 100%;
   }
   .type-option-label {
@@ -41,16 +43,48 @@
     gap: 0.3rem;
 
     & label {
-      margin: 0 1rem;
+      // margin: 0 1rem;
     }
     & input,
     select {
-      padding: 0.8rem;
-      border: 2px solid variables.$color-mid-gray;
+      padding: 0.6rem;
+      border: 1px solid variables.$color-mid-gray;
       border-radius: variables.$small-radius;
     }
-    // select {
-    //   padding: 0.8rem 0;
-    // }
+    & textarea {
+      border: 1px solid variables.$color-mid-gray;
+      border-radius: variables.$small-radius;
+    }
   }
+  &-branch-section {
+    margin-top: 1rem;
+  }
+
+  &-amt-grid-container {
+    display: flex;
+    gap: 0.8rem;
+  }
+  &-amount-container {
+    font-size: 1rem;
+    & input {
+      padding: 0.3rem;
+      margin: 0.5rem 0;
+      border: 1px solid variables.$color-mid-gray;
+      border-radius: variables.$small-radius;
+    }
+  }
+}
+.branch-group {
+  display: flex;
+  gap: 0.8rem;
+
+  & .active {
+    background-color: variables.$color-primary;
+    color: variables.$color-white;
+  }
+}
+.branches-selector {
+  padding: 0.5rem 1rem;
+  border: 1px solid variables.$color-mid-gray;
+  border-radius: variables.$small-radius;
 }

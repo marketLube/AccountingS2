@@ -53,7 +53,50 @@ export function Bank({ register, errors }) {
     </div>
   );
 }
+// Tds Component for TDS Percent Selection
+export function Tds({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="tds">TDS</label>
+      <select id="tds" {...register("tds", { required: "TDS is required" })}>
+        <option value="">Select TDS Percent %</option>
+        <option value="0%">0%</option>
+        <option value="5%">5%</option>
+        <option value="10%">10%</option>
+        <option value="15%">15%</option>
+        <option value="20%">20%</option>
+      </select>
+      {errors.tds && (
+        <span className="form-group-error">{errors.tds.message}</span>
+      )}
+    </div>
+  );
+}
 
+// GstPercent Component for GST Percent Selection
+export function GstPercent({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="gstPercent">GST Percent</label>
+      <select
+        id="gstPercent"
+        {...register("gstPercent", { required: "GST Percent is required" })}
+      >
+        <option value="">Select GST Percent %</option>
+        <option value="0%">0%</option>
+        <option value="5%">5%</option>
+        <option value="12%">12%</option>
+        <option value="18%">18%</option>
+        <option value="28%">28%</option>
+      </select>
+      {errors.gstPercent && (
+        <span className="form-group-error">{errors.gstPercent.message}</span>
+      )}
+    </div>
+  );
+}
+
+// Radio Component for "Type" Selection
 export function Radio({ register, errors }) {
   return (
     <div className="form-group">
@@ -84,6 +127,42 @@ export function Radio({ register, errors }) {
       </div>
       {errors.type && (
         <span className="form-group-error">{errors.type.message}</span>
+      )}
+    </div>
+  );
+}
+
+// Gst Component for "GST Type" Selection
+export function Gst({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="GstType" className="type-option-label">
+        Gst
+      </label>
+      <div className="type-options">
+        <label className="type-option">
+          <input
+            type="radio"
+            value="incl"
+            {...register("gstType", {
+              required: "Select a GST type",
+            })}
+          />
+          Inclusive
+        </label>
+        <label className="type-option">
+          <input
+            type="radio"
+            value="excl"
+            {...register("gstType", {
+              required: "Select a GST type",
+            })}
+          />
+          Exclusive
+        </label>
+      </div>
+      {errors.gstType && (
+        <span className="form-group-error">{errors.gstType.message}</span>
       )}
     </div>
   );
@@ -134,7 +213,7 @@ export function BranchComponent({
   register,
 }) {
   return (
-    <div className="form-section">
+    <div className="form-section form-branch-section">
       <div className="form-row">
         <BranchGroup
           setSelectedBranches={setSelectedBranches}
@@ -149,7 +228,7 @@ export function BranchComponent({
         {selectedBranches.length > 0 && (
           <>
             <h5>Selected Branches and Amounts</h5>
-            <div className="grid-container">
+            <div className="form-amt-grid-container">
               {selectedBranches.map((branch) => (
                 <Branches
                   key={branch}
