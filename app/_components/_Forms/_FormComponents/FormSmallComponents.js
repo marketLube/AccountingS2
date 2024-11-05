@@ -43,7 +43,9 @@ export function Bank({ register, errors }) {
       <select id="bank" {...register("bank", { required: "Bank is required" })}>
         <option value="">Select Bank</option>
         {banks?.map((bank) => (
-          <option value={bank.name}>{bank.name}</option>
+          <option value={bank.name} key={bank._id}>
+            {bank.name}
+          </option>
         ))}
       </select>
       {errors.bank && (

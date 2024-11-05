@@ -18,11 +18,23 @@ import CatagorySelector from "../../utils/CatagorySelector";
 import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
+import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
+import toast from "react-hot-toast";
+import { queryClient } from "../../layouts/AppLayout";
+import { refreshTransaction } from "@/app/_hooks/useTransactions";
 
 function DaybookNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const { categories, particulars, banks } = useSelector(
+    (state) => state.general
+  );
   const { branches } = useSelector((state) => state.general);
+
+  const [catagory, setCatagory] = useState("Select Catagory");
+  const [particular, setParticular] = useState("Select Particular");
+
   const {
     register,
     handleSubmit,
@@ -56,10 +68,19 @@ function DaybookNewEntirForm() {
     });
 
     data.branches = branchObjects;
+    data.catagory = catIdFinder(categories, catagory);
+    data.particular = parIdFinder(particulars, particular);
+    data.bank = bankIdFiner(banks, data.bank);
 
     try {
-      const res = await apiClient.post("/transaction");
-    } catch (e) {}
+      await apiClient.post("/transaction", data);
+      toast.success("Successfully created new Transaction");
+      refreshTransaction();
+      reset();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    }
 
     return;
   };
@@ -67,8 +88,11 @@ function DaybookNewEntirForm() {
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
         <div className="form-row">
-          <CatagorySelector />
-          <ParticularSelector />
+          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
+          <ParticularSelector
+            particular={particular}
+            setParticular={setParticular}
+          />
         </div>
         <div className="form-row">
           <Purpose register={register} errors={errors} />
@@ -95,7 +119,6 @@ function DaybookNewEntirForm() {
       </div>
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
-
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

@@ -1,4 +1,11 @@
+@use "../abstract/variables";
+
 .main-head {
   font-size: 1.825rem;
   font-weight: 600;
+}
+.small-text {
+  font-size: 0.8rem;
+  color: variables.$color-dark;
+  font-weight: 500;
 }

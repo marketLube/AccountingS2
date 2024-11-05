@@ -1,13 +1,17 @@
 "use client";
 import { useSelector } from "react-redux";
 
-function ParticularSelector() {
+function ParticularSelector({ particular, setParticular }) {
   const { particulars } = useSelector((state) => state.general);
   if (!particulars) return null;
 
   return (
     <div className="catagory-selector">
-      <select className="catagory-selector-select">
+      <select
+        className="catagory-selector-select"
+        value={particular}
+        onChange={(e) => setParticular(e.target.value)}
+      >
         <option value="">Select Particular</option>
         {particulars?.map((cat) => (
           <option value={cat.name} key={cat._id}>

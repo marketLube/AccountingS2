@@ -105,6 +105,12 @@ body {
   font-weight: 600;
 }
 
+.small-text {
+  font-size: 0.8rem;
+  color: rgb(54, 50, 50);
+  font-weight: 500;
+}
+
 .nav {
   background-color: rgb(28, 101, 126);
   width: 5rem;
@@ -466,15 +472,8 @@ body {
 .table > div:hover {
   transform: scale(1.2);
 }
-.table > div:nth-child(even) {
-  background-color: rgb(204, 222, 228);
-}
-.table > div:nth-child(odd) {
-  background-color: #fff;
-}
 .table-head {
   border-radius: 1rem;
-  background-color: rgb(28, 101, 126) !important;
   margin-bottom: -1rem;
   z-index: 2;
   font-size: 0.9rem;
@@ -485,6 +484,7 @@ body {
   justify-content: center;
   padding-left: 1rem;
   padding-right: 2rem;
+  color: #fff !important;
 }
 .table-col {
   padding-right: 2rem;
@@ -500,13 +500,25 @@ body {
   text-wrap: nowrap;
 }
 .table-body-col {
-  color: rgb(54, 50, 50);
+  color: rgb(28, 101, 126);
   transition: all 0.5s ease;
+  font-weight: 500;
   min-height: 100%;
-  word-wrap: break-word;
-  word-break: break-word;
   overflow: hidden;
   text-wrap: nowrap;
+}
+.table-small-text {
+  display: block;
+  margin-top: 0.2rem;
+}
+.table > div:nth-child(even) {
+  background-color: rgb(204, 222, 228);
+}
+.table > div:nth-child(odd) {
+  background-color: #fff;
+}
+.table > div:nth-child(1) {
+  background-color: rgb(28, 101, 126);
 }
 .table > div:nth-child(2) {
   padding-top: 1rem;
@@ -514,20 +526,21 @@ body {
 
 .particular {
   flex: 2;
-  position: relative;
-  overflow: visible !important;
 }
 
 .remark {
   flex: 2;
+  color: rgb(54, 50, 50);
 }
 
 .debit {
   justify-content: center;
+  color: rgb(54, 50, 50);
 }
 
 .credit {
   justify-content: center;
+  color: rgb(54, 50, 50);
 }
 
 .gst,
@@ -543,6 +556,10 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.table-head > * {
+  color: #fff;
 }
 
 .table-loader {

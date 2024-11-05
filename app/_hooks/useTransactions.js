@@ -1,6 +1,7 @@
 import apiClient from "@/lib/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
+import { queryClient } from "../_components/layouts/AppLayout";
 
 export default function useTransactions() {
   const { type } = useSelector((state) => state.daybook);
@@ -21,5 +22,14 @@ export default function useTransactions() {
     queryKey: ["transactions", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
   });
+
   return { isLoading, isError, error, refetch, transactions };
+}
+
+export function refreshTransaction() {
+  queryClient.invalidateQueries("transactions");
+}
+
+export function transactionRefreshers() {
+  refreshTransaction();
 }

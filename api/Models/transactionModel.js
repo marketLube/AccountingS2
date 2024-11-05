@@ -50,7 +50,7 @@ const transactionSchema = mongoose.Schema(
       type: String,
       required: [true, "Transaction must have tds"],
     },
-    gst: {
+    gstPercent: {
       type: String,
       required: [true, "Transaction must have gst percentage"],
     },
@@ -74,7 +74,10 @@ const transactionSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-
+transactionSchema.pre(/^find/, function (next) {
+  this.populate({ path: "branches.branch", select: "name" });
+  next();
+});
 // Pre-save middleware
 transactionSchema.pre("save", async function (next) {
   try {
@@ -102,12 +105,13 @@ transactionSchema.pre("save", async function (next) {
         totalAmount += amount;
 
         // Find and update the branch's bank account
+        console.log(branch.accounts);
         const bankAccount = branch.accounts.find(
           (account) => account.bank.toString() === this.bank.toString()
         );
 
         if (!bankAccount)
-          return next(new AppError("Failed to fetch Bank Account", 404));
+          return next(new AppError("Failed to fetch Bank Accounts", 404));
 
         // Update existing bank account balance
         bankAccount.branchBalance += amount;

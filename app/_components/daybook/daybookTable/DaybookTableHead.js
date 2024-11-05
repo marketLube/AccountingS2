@@ -4,17 +4,17 @@ function DaybookTableHead() {
   return (
     <div className="table-head">
       <span className="table-check">
-        <input type="checkbox" style={{ opacity: "1" }} />
+        <input type="checkbox" style={{ opacity: "0" }} />
       </span>
       <span className="table-col particular">Particular</span>
-      <span className="table-col date">Date</span>
-      <span className="table-col amount">Amount</span>
-      <span className="table-col remark">Remark</span>
-      <span className="table-col branch">Branch</span>
-      <span className="table-col debit">Debit</span>
-      <span className="table-col credit">Credit</span>
-      <span className="table-col gst">GST</span>
-      <span className="table-col tds">TDS</span>
+      <span className="table-col date table-col-head">Date</span>
+      <span className="table-col amount table-col-head">Amount</span>
+      <span className="table-col remark table-col-head">Remark</span>
+      <span className="table-col branch table-col-head">Branch</span>
+      <span className="table-col debit table-col-head">Debit</span>
+      <span className="table-col credit table-col-head">Credit</span>
+      <span className="table-col gst table-col-head">GST</span>
+      <span className="table-col tds table-col-head">TDS</span>
     </div>
   );
 }

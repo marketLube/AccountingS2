@@ -8,6 +8,7 @@ function Tooltip({
   remark,
   purpose,
   isVisible,
+  branches,
 }) {
   const [tooltipPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
 
@@ -27,7 +28,23 @@ function Tooltip({
     };
   }, []);
 
-  if (type === "remark")
+  // if (type === "branches") {
+  //   return (
+  //     <span
+  //       className="tooltip"
+  //       style={{
+  //         left: `${tooltipPosition.left}px`,
+  //         top: `${tooltipPosition.top}px`,
+  //         position: "fixed",
+  //         opacity: isVisible ? "1" : "0",
+  //       }}
+  //     >
+  //       {branches?.join(", ") || "--"}
+  //     </span>
+  //   );
+  // }
+
+  if (type === "remark" || type === "branches")
     return (
       <span
         className="tooltip"
@@ -38,7 +55,7 @@ function Tooltip({
           opacity: isVisible ? "1" : "0",
         }}
       >
-        <span>{remark}</span>
+        {type === "remark" ? <span>{remark}</span> : branches?.join(", ")}
       </span>
     );
 

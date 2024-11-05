@@ -14,19 +14,8 @@
     transform: scale(1.2);
   }
 
-  // Style for even children
-  & > div:nth-child(even) {
-    background-color: rgb(204, 222, 228);
-  }
-
-  // Style for odd children
-  & > div:nth-child(odd) {
-    background-color: variables.$color-white; // Color for odd items
-  }
-
   &-head {
     border-radius: variables.$large-radius;
-    background-color: variables.$color-primary !important;
     margin-bottom: -1rem;
     z-index: 2;
     font-size: 0.9rem;
@@ -35,6 +24,7 @@
     @include mixins.flex(center);
     padding-left: 1rem;
     padding-right: 2rem;
+    color: variables.$color-white !important;
   }
   //colum items like particular in the body and the head
   &-col {
@@ -52,16 +42,32 @@
   }
 
   &-body-col {
-    color: variables.$color-dark;
+    color: variables.$color-primary;
     transition: all 0.5s ease;
+    font-weight: 500;
     min-height: 100%;
-    word-wrap: break-word; // Enable word wrapping
-    word-break: break-word; // Better word breaking
-    overflow: hidden; // Ensure content doesn't spill
+    overflow: hidden;
     text-wrap: nowrap;
   }
 
+  &-small-text {
+    display: block;
+    margin-top: 0.2rem;
+  }
+
   // Style for even children
+  & > div:nth-child(even) {
+    background-color: rgb(204, 222, 228);
+  }
+
+  // Style for odd children
+  & > div:nth-child(odd) {
+    background-color: variables.$color-white; // Color for odd items
+  }
+  // Style for even children
+  & > div:nth-child(1) {
+    background-color: variables.$color-primary;
+  }
   & > div:nth-child(2) {
     padding-top: 1rem;
   }
@@ -69,17 +75,18 @@
 
 .particular {
   flex: 2;
-  position: relative;
-  overflow: visible !important;
 }
 .remark {
   flex: 2;
+  color: variables.$color-dark;
 }
 .debit {
   justify-content: center;
+  color: variables.$color-dark;
 }
 .credit {
   justify-content: center;
+  color: variables.$color-dark;
 }
 .gst,
 .tds {
@@ -91,4 +98,7 @@
   background-color: transparent;
   @include mixins.flex(center);
   cursor: pointer;
+}
+.table-head > * {
+  color: variables.$color-white;
 }

@@ -87,6 +87,7 @@ export const getOne = (Model, type = "id") => {
 
 export const createOne = (Model) => {
   return catchAsync(async (req, res, next) => {
+    console.log(req.body, "req.body");
     const doc = await Model.create(req.body);
 
     if (!doc) {
