@@ -5,10 +5,10 @@ function Branches({ branch, register, errors, defaultValue = "" }) {
       <div className="amount-field ">
         <input
           type="number"
-          id={`amount_${branch}`}
+          id={`${branch}`}
           step="any"
           defaultValue={defaultValue}
-          {...register(`amount_${branch}`, {
+          {...register(`${branch}`, {
             required: "Amount is required",
             min: {
               value: 0,
@@ -17,10 +17,8 @@ function Branches({ branch, register, errors, defaultValue = "" }) {
           })}
         />
       </div>
-      {errors[`amount_${branch}`] && (
-        <span className="form-group-error">
-          {errors[`amount_${branch}`].message}
-        </span>
+      {errors[`${branch}`] && (
+        <span className="form-group-error">{errors[`${branch}`].message}</span>
       )}
     </div>
   );

@@ -16,3 +16,6 @@ export const useBranchIdFinder = (branchName) => {
   const { branches } = useSelector((state) => state.general);
   return branches?.find((branch) => branch.name === branchName);
 };
+export const branchFinder = (branchName, branches) => {
+  return branches?.find((branch) => branch.name === branchName);
+};

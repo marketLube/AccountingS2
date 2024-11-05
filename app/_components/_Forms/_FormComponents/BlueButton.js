@@ -1,9 +1,5 @@
 function BlueButton() {
-  return (
-    <div>
-      <button className="bluebutton">Submit</button>
-    </div>
-  );
+  return <button className="bluebutton">Submit</button>;
 }
 
 export default BlueButton;

@@ -46,6 +46,19 @@ const transactionSchema = mongoose.Schema(
     formattedDate: {
       type: String,
     },
+    tds: {
+      type: String,
+      required: [true, "Transaction must have tds"],
+    },
+    gst: {
+      type: String,
+      required: [true, "Transaction must have gst percentage"],
+    },
+    gstType: {
+      type: String,
+      enum: ["incl", "excl", "no-gst"],
+      default: "no-gst",
+    },
     branches: [
       {
         branch: {

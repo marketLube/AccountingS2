@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Branches from "./Branches";
 import BranchGroup from "./BranchGroup";
 
@@ -35,17 +36,15 @@ export function Remark({ register, errors }) {
 }
 
 export function Bank({ register, errors }) {
+  const { banks } = useSelector((state) => state.general);
   return (
     <div className="form-group">
       <label htmlFor="bank">Bank</label>
       <select id="bank" {...register("bank", { required: "Bank is required" })}>
         <option value="">Select Bank</option>
-        <option value="HDFC">HDFC</option>
-        <option value="RAK">RAK</option>
-        <option value="ICICI">ICICI</option>
-        <option value="RBL">RBL</option>
-        <option value="CASH">CASH</option>
-        <option value="BANDAN">BANDAN</option>
+        {banks?.map((bank) => (
+          <option value={bank.name}>{bank.name}</option>
+        ))}
       </select>
       {errors.bank && (
         <span className="form-group-error">{errors.bank.message}</span>
