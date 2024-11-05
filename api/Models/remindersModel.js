@@ -35,9 +35,9 @@ const reminderSchema = mongoose.Schema(
       enum: ["Paid", "Unpaid", "Postponed"],
       required: [true, "Reminder must have a Status (Paid, Unpaid, Postponed)"],
     },
-    branchName: {
-      type: String,
-      required: [true, "Branch must have a name"],
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, "Reminder must have a branch"],
     },
     date: {
       type: Date,
@@ -49,14 +49,6 @@ const reminderSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-
-reminderSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "particular",
-    select: "name",
-  });
-  next();
-});
 
 reminderSchema.pre("save", async function (next) {
   const combinedDateTime = combineDateWithCurrentTime(this.date);

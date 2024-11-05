@@ -5,6 +5,7 @@ import { useLiability } from "@/app/_hooks/useLiability";
 import { setLiabBtnDisable } from "@/lib/slices/liabilitySlice";
 import OutstandingTableItems from "../../outstanding/outstandingTable/OutstandingTableItems";
 import { useViewEight } from "@/app/_services/helpers";
+import TableLoader from "../../_loader/TableLoader";
 
 function LiabilityTable() {
   const { startPage } = useSelector((state) => state.liability);
@@ -15,9 +16,15 @@ function LiabilityTable() {
   return (
     <div className="table">
       <LiabilityTableHead />
-      {veiwEight?.map((liab, i) => (
-        <OutstandingTableItems key={i} item={liab}></OutstandingTableItems>
-      ))}
+      {isLoading ? (
+        <TableLoader />
+      ) : isError ? (
+        <TableLoader error="Something Went Wrong..." />
+      ) : (
+        veiwEight?.map((liab, i) => (
+          <OutstandingTableItems key={i} item={liab}></OutstandingTableItems>
+        ))
+      )}
     </div>
   );
 }
