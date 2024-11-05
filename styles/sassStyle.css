@@ -1,10 +1,3 @@
-.stats-box {
-  background-color: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
-  transition: 0.3s all ease;
-}
-
 .icons {
   width: 1.5rem;
   height: 1.5rem;
@@ -291,6 +284,24 @@ body {
   flex: 1;
 }
 
+.stats-box {
+  background-color: #fff;
+  border-radius: 1rem;
+  transition: 0.3s all ease;
+  display: flex;
+  padding-left: 1.5rem;
+  align-items: center;
+}
+
+.first-section {
+  background-color: #fff;
+  border-radius: 1rem;
+  transition: 0.3s all ease;
+  display: flex;
+  padding-left: 1.5rem;
+  padding: 1rem;
+}
+
 .balance-sheet-body {
   display: grid;
   grid-template-columns: 2fr 0.7fr;
@@ -564,11 +575,12 @@ body {
 .dashbordBalancecard {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   height: 100%;
   width: 100%;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding: 1rem;
+  padding-left: 2rem;
 }
 
 .long {
@@ -597,7 +609,7 @@ body {
 .incomecard {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   height: 100%;
   width: 100%;
   border-radius: 1rem;
@@ -615,14 +627,13 @@ body {
 
 .incomeamount {
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .expensecard {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  height: 100%;
+  gap: 1rem;
   width: 100%;
   border-radius: 1rem;
   padding: 1rem;
@@ -639,7 +650,7 @@ body {
 
 .expenseamount {
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .outstandingcard {
@@ -657,7 +668,7 @@ body {
 
 .outstandingamount {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .outstandingoctober {
@@ -679,7 +690,7 @@ body {
 
 .topperformerdistrict {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .topperformerprofit {

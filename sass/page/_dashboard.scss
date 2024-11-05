@@ -43,3 +43,19 @@
     flex: 1;
   }
 }
+.stats-box {
+  background-color: variables.$color-white;
+  border-radius: variables.$large-radius;
+  transition: 0.3s all ease;
+  display: flex;
+  padding-left: 1.5rem;
+  align-items: center;
+}
+.first-section {
+  background-color: variables.$color-white;
+  border-radius: variables.$large-radius;
+  transition: 0.3s all ease;
+  display: flex;
+  padding-left: 1.5rem;
+  padding: 1rem;
+}
