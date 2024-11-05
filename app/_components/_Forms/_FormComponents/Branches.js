@@ -1,6 +1,6 @@
 function Branches({ branch, register, errors, defaultValue = "" }) {
   return (
-    <div key={branch} className="grid-item">
+    <div key={branch} className="form-amount-container">
       <label htmlFor={`amount_${branch}`}>{branch}</label>
       <div className="amount-field ">
         <input

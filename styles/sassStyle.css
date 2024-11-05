@@ -166,11 +166,15 @@ body {
   height: 100%;
 }
 
+.form {
+  margin: 2rem;
+  font-size: 0.9rem;
+}
 .form .type-options {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0rem;
+  gap: 1.5rem;
   width: 100%;
 }
 .form .type-option-label {
@@ -201,13 +205,45 @@ body {
   flex-direction: column;
   gap: 0.3rem;
 }
-.form-group label {
-  margin: 0 1rem;
-}
 .form-group input,
 .form-group select {
-  padding: 0.8rem;
-  border: 2px solid rgb(193, 193, 193);
+  padding: 0.6rem;
+  border: 1px solid rgb(193, 193, 193);
+  border-radius: 0.3rem;
+}
+.form-group textarea {
+  border: 1px solid rgb(193, 193, 193);
+  border-radius: 0.3rem;
+}
+.form-branch-section {
+  margin-top: 1rem;
+}
+.form-amt-grid-container {
+  display: flex;
+  gap: 0.8rem;
+}
+.form-amount-container {
+  font-size: 1rem;
+}
+.form-amount-container input {
+  padding: 0.3rem;
+  margin: 0.5rem 0;
+  border: 1px solid rgb(193, 193, 193);
+  border-radius: 0.3rem;
+}
+
+.branch-group {
+  display: flex;
+  gap: 0.8rem;
+}
+.branch-group .active {
+  background-color: rgb(28, 101, 126);
+  color: #fff;
+}
+
+.branches-selector {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgb(193, 193, 193);
   border-radius: 0.3rem;
 }
 
@@ -311,6 +347,25 @@ body {
   background-color: #fff;
   color: gray;
   border: 0.3px solid gray;
+}
+
+.clear-btn,
+.submit-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-top: 1.5rem;
+  width: 7rem;
+  margin-right: 1.2rem;
+  color: #fff;
+}
+
+.clear-btn {
+  background-color: rgb(126, 25, 25);
+}
+
+.submit-btn {
+  background-color: rgb(28, 101, 126);
 }
 
 .filterbtn {
@@ -704,6 +759,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.catagory-selector {
+  flex: 1;
+}
+.catagory-selector-select {
+  background-color: rgb(226, 225, 225);
+  padding: 0.9rem 1rem;
+  width: 100%;
+  border-radius: 0.3rem;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

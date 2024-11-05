@@ -1,0 +1,12 @@
+@use "../abstract/variables";
+@use "../abstract/mixins";
+
+.catagory-selector {
+  flex: 1;
+  &-select {
+    background-color: variables.$color-light-gray;
+    padding: 0.9rem 1rem;
+    width: 100%;
+    border-radius: variables.$small-radius;
+  }
+}
