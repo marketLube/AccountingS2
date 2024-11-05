@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import LiabilityTableHead from "./LiabilityTableHead";
 import { useLiability } from "@/app/_hooks/useLiability";
 import { setLiabBtnDisable } from "@/lib/slices/liabilitySlice";
-import OutstandingTableItems from "../../outstanding/outstandingTable/OutstandingTableItems";
 import { useViewEight } from "@/app/_services/helpers";
 import TableLoader from "../../_loader/TableLoader";
+import OutstandingTableItems from "../../outstanding/outstandingTable/OutstandingTableItems";
 
 function LiabilityTable() {
   const { startPage } = useSelector((state) => state.liability);

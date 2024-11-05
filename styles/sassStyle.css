@@ -497,6 +497,7 @@ body {
   font-size: 0.9rem;
   transition: all 0.5s ease;
   line-height: 1.2;
+  text-wrap: nowrap;
 }
 .table-body-col {
   color: rgb(54, 50, 50);
@@ -505,6 +506,7 @@ body {
   word-wrap: break-word;
   word-break: break-word;
   overflow: hidden;
+  text-wrap: nowrap;
 }
 .table > div:nth-child(2) {
   padding-top: 1rem;
