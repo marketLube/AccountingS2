@@ -7,25 +7,47 @@ import {
 } from "@/app/_services/finders";
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ParticularNameShower from "./ParticularNameShower";
 import BranchShower from "./BranchShower";
+import { useDispatch, useSelector } from "react-redux";
+import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
 
 function DaybookTableItem({ transaction }) {
+  const { selectedItems } = useSelector((state) => state.daybook);
+
   const particular = useParticularFinder(transaction.particular);
   const category = useCategoryFinder(transaction.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
-
   const branchNames = getBranchNames(transaction?.branches);
-  console.log(particular, "particular");
+
+  const dispatch = useDispatch();
+
+  const [isChecked, setIsChecked] = useState(selectedItems.length === 1);
+
+  useEffect(() => {
+    if (isChecked) {
+      dispatch(setDaybookSelectedItems([transaction]));
+    } else {
+      dispatch(setDaybookSelectedItems([]));
+    }
+  }, [isChecked]);
+
+  const toggleChecked = () => {
+    if (isChecked) {
+      dispatch(setDaybookSelectedItems([transaction]));
+    } else {
+      dispatch(setDaybookSelectedItems([]));
+    }
+  };
 
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input type="checkbox" checked={isChecked} onChange={toggleChecked} />
         </span>
         <span
           className="table-col particular table-body-col"
