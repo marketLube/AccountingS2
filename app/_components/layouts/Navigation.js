@@ -33,9 +33,9 @@ const routes = [
   { path: "/assetes", icon: FaHandHoldingUsd, name: "Assets" },
   { path: "/capital", icon: IoWalletOutline, name: "Capital" },
   { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
-  { path: "/planner", icon: BiSolidPlusSquare, name: "Budget Planner" },
+  { path: "/budgetplanner", icon: BiSolidPlusSquare, name: "Budget Planner" },
   { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
-  { path: "/commition", icon: RiMoneyDollarBoxFill, name: "Commition" },
+  { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
 ];
 
 function Navigation({ onSetHover, isHover }) {
