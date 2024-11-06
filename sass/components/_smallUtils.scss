@@ -29,7 +29,7 @@
   font-size: 0.6rem;
   border-radius: variables.$small-radius;
   z-index: 1000;
-  pointer-events: none;
   transition: 0.25s opacity ease;
   max-width: 25rem;
+  isolation: isolate;
 }

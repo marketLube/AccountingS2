@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  branchNameFinder,
   getBranchNames,
   useCategoryFinder,
   useParticularFinder,
@@ -20,7 +19,7 @@ function DaybookTableItem({ transaction }) {
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
 
   const branchNames = getBranchNames(transaction?.branches);
-  console.log(branchNames, "branchNames");
+  console.log(particular, "particular");
 
   return (
     <>
@@ -34,6 +33,12 @@ function DaybookTableItem({ transaction }) {
           onMouseLeave={() => setIsPartooltip(false)}
         >
           <ParticularNameShower particular={particular} data={transaction} />
+          <Tooltip
+            isVisible={isParTooltip}
+            parName={particular?.name}
+            catName={category?.name}
+            purpose={transaction?.purpose}
+          />
         </span>
         <span className="table-col date table-body-col">
           {transaction?.formattedDate}
@@ -47,6 +52,11 @@ function DaybookTableItem({ transaction }) {
           onMouseLeave={() => setIsRemarkTooltip(false)}
         >
           {truncate(transaction?.remark)}
+          <Tooltip
+            type="remark"
+            isVisible={isRemarkTooltip}
+            remark={transaction?.remark}
+          />
         </span>
         <span
           className="table-col branch table-body-col"
@@ -54,6 +64,12 @@ function DaybookTableItem({ transaction }) {
           onMouseLeave={() => setIsBranchesTooltip(false)}
         >
           <BranchShower branches={branchNames} />
+
+          <Tooltip
+            type="branches"
+            isVisible={isBranchesTooltip}
+            branches={branchNames}
+          />
         </span>
         <span className="table-col debit table-body-col">
           {transaction?.type === "Debit" ? "Debit" : "--"}
@@ -66,23 +82,6 @@ function DaybookTableItem({ transaction }) {
         </span>
         <span className="table-col tds table-body-col">{transaction?.tds}</span>
       </div>
-
-      <Tooltip
-        isVisible={isParTooltip}
-        parName={particular?.name}
-        catName={category?.name}
-        purpose={transaction?.purpose}
-      />
-      <Tooltip
-        type="remark"
-        isVisible={isRemarkTooltip}
-        remark={transaction?.remark}
-      />
-      <Tooltip
-        type="branches"
-        isVisible={isBranchesTooltip}
-        branches={branchNames}
-      />
     </>
   );
 }

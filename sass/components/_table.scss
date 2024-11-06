@@ -10,10 +10,6 @@
   width: 100%;
   transition: 1s all ease;
 
-  & > div:hover {
-    transform: scale(1.2);
-  }
-
   &-head {
     border-radius: variables.$large-radius;
     margin-bottom: -1rem;

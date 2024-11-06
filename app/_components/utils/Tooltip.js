@@ -28,23 +28,23 @@ function Tooltip({
     };
   }, []);
 
-  // if (type === "branches") {
-  //   return (
-  //     <span
-  //       className="tooltip"
-  //       style={{
-  //         left: `${tooltipPosition.left}px`,
-  //         top: `${tooltipPosition.top}px`,
-  //         position: "fixed",
-  //         opacity: isVisible ? "1" : "0",
-  //       }}
-  //     >
-  //       {branches?.join(", ") || "--"}
-  //     </span>
-  //   );
-  // }
+  if (type === "branches") {
+    return (
+      <span
+        className="tooltip"
+        style={{
+          left: `${tooltipPosition.left}px`,
+          top: `${tooltipPosition.top}px`,
+          position: "fixed",
+          opacity: isVisible ? "1" : "0",
+        }}
+      >
+        {branches?.join(", ") || "--"}
+      </span>
+    );
+  }
 
-  if (type === "remark" || type === "branches")
+  if (type === "remark")
     return (
       <span
         className="tooltip"
@@ -66,6 +66,7 @@ function Tooltip({
         left: `${tooltipPosition.left}px`,
         top: `${tooltipPosition.top}px`,
         position: "fixed",
+        backgroundColor: "transaparant",
         opacity: isVisible ? "1" : "0",
       }}
     >

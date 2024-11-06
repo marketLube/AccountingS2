@@ -454,9 +454,9 @@ body {
   font-size: 0.6rem;
   border-radius: 0.3rem;
   z-index: 1000;
-  pointer-events: none;
   transition: 0.25s opacity ease;
   max-width: 25rem;
+  isolation: isolate;
 }
 
 .table {
@@ -468,9 +468,6 @@ body {
   overflow: hidden;
   width: 100%;
   transition: 1s all ease;
-}
-.table > div:hover {
-  transform: scale(1.2);
 }
 .table-head {
   border-radius: 1rem;
