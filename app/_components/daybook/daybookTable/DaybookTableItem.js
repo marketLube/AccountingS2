@@ -20,7 +20,7 @@ function DaybookTableItem({ transaction }) {
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
 
   const branchNames = getBranchNames(transaction?.branches);
-  console.log(branchNames, "branchNames");
+  console.log(branchNames);
 
   return (
     <>

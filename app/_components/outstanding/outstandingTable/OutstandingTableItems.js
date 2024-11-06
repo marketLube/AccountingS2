@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  getBranchNames,
   useCategoryFinder,
   useParticularFinder,
 } from "@/app/_services/finders";
@@ -15,6 +16,8 @@ function OutstandingTableItems({ item }) {
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
 
+  const branchNames = getBranchNames(item?.branches);
+
   return (
     <>
       <div className="table-col">
@@ -26,7 +29,7 @@ function OutstandingTableItems({ item }) {
           onMouseEnter={() => setIsPartooltip(true)}
           onMouseLeave={() => setIsPartooltip(false)}
         >
-          {truncate(particular?.name)}
+          {truncate(item?.name)}
         </span>
         <span className="table-col date table-body-col">
           {item?.formattedDate}
