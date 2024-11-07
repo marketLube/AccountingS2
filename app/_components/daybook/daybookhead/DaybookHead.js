@@ -15,8 +15,9 @@ import DaybookEditForm from "../../_Forms/_daybookForms/DaybookEditForm";
 
 function DaybookHead() {
   const dispatch = useDispatch();
-  const { isNewEntry } = useSelector((state) => state.daybook);
+  const { isNewEntry, selectedItems } = useSelector((state) => state.daybook);
   const { isEdit } = useSelector((state) => state.daybook);
+
   return (
     <>
       <LayoutHead>
@@ -27,7 +28,8 @@ function DaybookHead() {
           <Button>+ Bank to Bank</Button>
           <Button
             onClick={() => dispatch(setDaybookIsEdit(true))}
-            type="secondary"
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={selectedItems?._id}
           >
             Edit
           </Button>

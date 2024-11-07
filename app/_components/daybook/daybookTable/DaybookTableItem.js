@@ -5,16 +5,14 @@ import {
   useCategoryFinder,
   useParticularFinder,
 } from "@/app/_services/finders";
+
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
 import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setDaybookIsChecked,
-  setDaybookSelectedItems,
-} from "@/lib/slices/daybookSlice";
+import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
 import GstShower from "../../utils/_tooltipComponents/GstShower";
 
 function DaybookTableItem({ transaction }) {
@@ -27,19 +25,14 @@ function DaybookTableItem({ transaction }) {
   const branchNames = getBranchNames(transaction?.branches);
 
   const dispatch = useDispatch();
-  const [isChecked, setIsChecked] = useState(false);
 
-  useEffect(() => {
-    if (isChecked) {
+  const handleCheckboxChange = () => {
+    if (selectedItems?._id === transaction?._id) {
+      dispatch(setDaybookSelectedItems({}));
+    } else {
       dispatch(setDaybookSelectedItems(transaction));
     }
-  }, [isChecked]);
-
-  useEffect(() => {
-    if (selectedItems?._id !== transaction?._id) {
-      setIsChecked(false);
-    }
-  }, [selectedItems]);
+  };
 
   return (
     <>
@@ -47,8 +40,8 @@ function DaybookTableItem({ transaction }) {
         <span className="table-check">
           <input
             type="checkbox"
-            checked={isChecked}
-            onChange={() => setIsChecked((val) => !val)}
+            checked={selectedItems?._id === transaction?._id}
+            onChange={handleCheckboxChange}
           />
         </span>
         <span

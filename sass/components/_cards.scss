@@ -1,3 +1,6 @@
+@use "../abstract/variables";
+@use "../abstract/mixins";
+
 .dashbordBalancecard {
   display: flex;
   flex-direction: column;
@@ -24,7 +27,7 @@
   font-weight: 900;
 }
 .dashbordBalancecard span {
-  color: rgb(38, 145, 109);
+  color: variables.$color-green;
 }
 
 // income
@@ -112,5 +115,15 @@
   color: gray;
 }
 .topperformerprofit span {
-  color: aquamarine;
+  color: variables.$color-green;
+}
+.dashboard-yearly-card.stats-box {
+  display: block !important;
+  padding: 1.5rem;
+}
+.yearly-card {
+  height: 15rem;
+  overflow: visible;
+  text-align: center;
+  margin: 0 auto;
 }

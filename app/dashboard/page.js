@@ -1,4 +1,5 @@
 "use client";
+import CurrentYearCard from "../_components/_cards/_yearly-card/CurrentYearCard";
 import DashboardCurrentbalance from "../_components/_dashboard/DashboardCurrentbalance";
 import Expense from "../_components/_dashboard/Expense";
 import Income from "../_components/_dashboard/Income";
@@ -16,7 +17,9 @@ function Page() {
       </div>
       <div className={`dashboard-left`}>
         <div className={`dashboard-stats`}>
-          <div className={`stats-box`}></div>
+          <div className={`stats-box dashboard-yearly-card`}>
+            <CurrentYearCard />
+          </div>
           <div className={`first-section`}>
             <Income />
           </div>

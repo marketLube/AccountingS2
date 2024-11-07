@@ -11,7 +11,7 @@ import {
   Tds,
   GstPercent,
 } from "../_FormComponents/FormSmallComponents";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
 import ParticularSelector from "../../utils/ParticularSelector";
@@ -27,7 +27,6 @@ import {
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshTransaction } from "@/app/_hooks/useTransactions";
-import { useFormReset } from "../_form-helpers/formHelpers";
 
 function DaybookEditForm() {
   const { selectedItems } = useSelector((state) => state.daybook);
@@ -45,12 +44,23 @@ function DaybookEditForm() {
     (state) => state.general
   );
 
-  const curCat = useCategoryFinder(selectedItems?._id);
-  const curPart = useParticularFinder(selectedItems?._id);
+  const curCat = useCategoryFinder(selectedItems?.catagory)?.name;
+  const curPart = useParticularFinder(selectedItems?.particular)?.name;
   const curBank = bankFinder(selectedItems?.bank, banks);
 
   const [catagory, setCatagory] = useState(curCat);
   const [particular, setParticular] = useState(curPart);
+
+  const defaultValues = {
+    date: selectedItems?.date,
+    remark: selectedItems?.remark,
+    bank: curBank,
+    type: selectedItems?.type,
+    purpose: selectedItems?.purpose,
+    tds: selectedItems?.tds,
+    gstPercent: selectedItems?.gstPercent,
+    gstType: selectedItems?.gstType,
+  };
 
   const {
     register,
@@ -59,20 +69,26 @@ function DaybookEditForm() {
     reset,
     setError,
     clearErrors,
-  } = useForm({
-    defaultValues: {
-      date: selectedItems?.date,
-      remark: selectedItems?.remark,
-      bank: curBank,
-      type: selectedItems?.type,
-      purpose: selectedItems?.purpose,
-      tds: selectedItems?.tds,
-      gstPercent: selectedItems?.gstPercent,
-      gstType: selectedItems?.gstType,
-    },
-  });
+  } = useForm();
 
-  //   useFormReset(selectedItems, reset);
+  useEffect(() => {
+    // Reset form values based on the latest selectedItems
+    reset({
+      date: new Date(selectedItems?.date) || "",
+      remark: selectedItems?.remark || "",
+      bank: curBank || "",
+      type: selectedItems?.type || "",
+      purpose: selectedItems?.purpose || "",
+      tds: selectedItems?.tds || "",
+      gstPercent: selectedItems?.gstPercent || "",
+      gstType: selectedItems?.gstType || "",
+    });
+    setCatagory(curCat);
+    setParticular(curPart);
+    setSelectedBranches(
+      selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
+    );
+  }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
     const branchObjects = selectedBranches.map((branch) => {
@@ -97,7 +113,6 @@ function DaybookEditForm() {
       refreshTransaction();
       reset();
     } catch (e) {
-      console.log(e);
       toast.error(e.response.data.message);
     }
 

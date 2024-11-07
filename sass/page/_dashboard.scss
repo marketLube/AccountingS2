@@ -48,8 +48,11 @@
   border-radius: variables.$large-radius;
   transition: 0.3s all ease;
   display: flex;
-  padding-left: 1.5rem;
+  overflow: hidden;
   align-items: center;
+}
+.stats-box:not(:first-child) {
+  padding-left: 1.5rem;
 }
 .first-section {
   background-color: variables.$color-white;
