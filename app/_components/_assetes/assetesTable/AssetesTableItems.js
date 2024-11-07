@@ -19,23 +19,17 @@ function AssetesTableItems({ item }) {
         <span className="table-check">
           <input type="checkbox" />
         </span>
-        <span
-          className="table-col particular table-body-col"
-          onMouseEnter={() => setIsPartooltip(true)}
-          onMouseLeave={() => setIsPartooltip(false)}
-        >
+        <span className="table-col particular table-body-col">
           {item?.item}
         </span>
         <span className="table-col date table-body-col">{item?.date}</span>
         <span className="table-col amount table-body-col">{item?.amount}</span>
-        <span
-          className="table-col purchased table-body-col"
-          onMouseEnter={() => setIsRemarkTooltip(true)}
-          onMouseLeave={() => setIsRemarkTooltip(false)}
-        >
-          {item?.purchased}
+        <span className="table-col purchased table-body-col">
+          {item?.purchasedby}
         </span>
-        <span className="table-col remark table-body-col">{item?.remark}</span>
+        <span className="table-col remark table-body-col">
+          {truncate(item?.remark)}
+        </span>
         <span className="table-col branch table-body-col">{item?.branch}</span>
       </div>
       <Tooltip
