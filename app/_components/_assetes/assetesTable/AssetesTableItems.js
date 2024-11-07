@@ -13,6 +13,7 @@ function AssetesTableItems({ item }) {
   const category = useCategoryFinder(item?.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
+
   return (
     <>
       <div className="table-col">

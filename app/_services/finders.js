@@ -1,5 +1,6 @@
 "use client";
 
+import { SiNamemc } from "react-icons/si";
 import { useSelector } from "react-redux";
 
 export const useParticularFinder = (id) => {
@@ -28,6 +29,10 @@ export const parIdFinder = (particulars, name) => {
 };
 export const bankIdFiner = (banks, bankName) => {
   return banks.find((bank) => bank.name === bankName)?._id;
+};
+export const useBranchNameFinder = (id) => {
+  const { branches } = useSelector((state) => state.general);
+  return branches.find((branch) => branch._id === id)?.name;
 };
 
 export const getBranchNames = (branches) => {
