@@ -2,16 +2,18 @@
 import { useSelector } from "react-redux";
 import { useViewEight } from "@/app/_services/helpers";
 import TableLoader from "../../_loader/TableLoader";
-import useReminders from "@/app/_hooks/useReminders";
 import { setAssetsBtnDisable } from "@/lib/slices/assetsSlice";
 import AssetesTableItems from "./AssetesTableItems";
 import AssetesTableHead from "./AssetesTableHead";
+import useAssets from "@/app/_hooks/useAssets";
 
 function AssetsTable() {
   const { startPage } = useSelector((state) => state.assets);
 
-  const { refetch, reminders, isError, isLoading, error } = useReminders();
-  const veiwEight = useViewEight(reminders, startPage, setAssetsBtnDisable);
+  const { assets, isError, isLoading, error } = useAssets();
+  const veiwEight = useViewEight(assets, startPage, setAssetsBtnDisable);
+
+  console.log(assets, "assets");
 
   return (
     <div className="table">
