@@ -17,29 +17,40 @@ import CatagorySelector from "../../utils/CatagorySelector";
 import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
+import {
+  bankFinder,
+  bankIdFiner,
+  catIdFinder,
+  parIdFinder,
+  useCategoryFinder,
+  useParticularFinder,
+} from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import { useFormReset } from "../_form-helpers/formHelpers";
 
 function DaybookEditForm() {
   const { selectedItems } = useSelector((state) => state.daybook);
 
   const [selectedBranches, setSelectedBranches] = useState(
-    selectedItems.branches.map((branch) => branch.branch.name)
+    selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
-
-  console.log(selectedItems, "sl");
-  console.log(selectedBranches, "sl");
+  const defaultAmounts = selectedItems?.branches?.map(
+    (branch) => branch?.amount
+  );
 
   const [loading, setLoading] = useState(false);
 
-  const { categories, particulars, banks } = useSelector(
+  const { categories, particulars, banks, branches } = useSelector(
     (state) => state.general
   );
-  const { branches } = useSelector((state) => state.general);
 
-  const [catagory, setCatagory] = useState("Select Catagory");
-  const [particular, setParticular] = useState("Select Particular");
+  const curCat = useCategoryFinder(selectedItems?._id);
+  const curPart = useParticularFinder(selectedItems?._id);
+  const curBank = bankFinder(selectedItems?.bank, banks);
+
+  const [catagory, setCatagory] = useState(curCat);
+  const [particular, setParticular] = useState(curPart);
 
   const {
     register,
@@ -52,7 +63,7 @@ function DaybookEditForm() {
     defaultValues: {
       date: selectedItems?.date,
       remark: selectedItems?.remark,
-      bank: selectedItems?.bank,
+      bank: curBank,
       type: selectedItems?.type,
       purpose: selectedItems?.purpose,
       tds: selectedItems?.tds,
@@ -60,6 +71,8 @@ function DaybookEditForm() {
       gstType: selectedItems?.gstType,
     },
   });
+
+  //   useFormReset(selectedItems, reset);
 
   const onSubmit = async (data) => {
     const branchObjects = selectedBranches.map((branch) => {
@@ -117,9 +130,7 @@ function DaybookEditForm() {
         selectedBranches={selectedBranches}
         errors={errors}
         register={register}
-        defaultValues={selectedItems.branches.map(
-          (branch) => branch.branch.name
-        )}
+        defaultAmounts={defaultAmounts}
       />
       <div className="form-row">
         <Tds register={register} errors={errors} />

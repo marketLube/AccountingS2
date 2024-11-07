@@ -212,6 +212,7 @@ export function BranchComponent({
   selectedBranches,
   errors,
   register,
+  defaultAmounts,
 }) {
   return (
     <div className="form-section form-branch-section">
@@ -230,8 +231,9 @@ export function BranchComponent({
           <>
             <h5>Selected Branches and Amounts</h5>
             <div className="form-amt-grid-container">
-              {selectedBranches?.map((branch) => (
+              {selectedBranches?.map((branch, i) => (
                 <Branches
+                  defaultAmount={defaultAmounts[i]}
                   key={branch}
                   branch={branch}
                   register={register}

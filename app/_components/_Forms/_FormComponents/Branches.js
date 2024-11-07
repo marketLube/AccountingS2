@@ -1,5 +1,5 @@
-function Branches({ branch, register, errors, defaultValue = "" }) {
-  console.log(branch, "branch");
+function Branches({ branch, register, errors, defaultAmount = 0 }) {
+  console.log(defaultAmount, "branch");
   return (
     <div key={branch} className="form-amount-container">
       <label htmlFor={`amount_${branch}`}>{branch}</label>
@@ -8,7 +8,7 @@ function Branches({ branch, register, errors, defaultValue = "" }) {
           type="number"
           id={`${branch}`}
           step="any"
-          defaultValue={defaultValue}
+          defaultValue={defaultAmount}
           {...register(`${branch}`, {
             required: "Amount is required",
             min: {

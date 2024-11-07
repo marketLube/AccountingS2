@@ -17,6 +17,9 @@ export const useBranchIdFinder = (branchName) => {
   const { branches } = useSelector((state) => state.general);
   return branches?.find((branch) => branch.name === branchName);
 };
+export const bankFinder = (id, banks) => {
+  return banks?.find((bank) => bank._id === id)?.name;
+};
 export const branchFinder = (branchName, branches) => {
   return branches?.find((branch) => branch.name === branchName);
 };
@@ -28,7 +31,7 @@ export const parIdFinder = (particulars, name) => {
   return particulars.find((par) => par.name === name)?._id;
 };
 export const bankIdFiner = (banks, bankName) => {
-  return banks.find((bank) => bank.name === bankName)?._id;
+  return banks?.find((bank) => bank.name === bankName)?._id;
 };
 export const useBranchNameFinder = (id) => {
   const { branches } = useSelector((state) => state.general);
