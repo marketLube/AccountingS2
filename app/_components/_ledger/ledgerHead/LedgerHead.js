@@ -1,7 +1,7 @@
 import { GiSettingsKnobs } from "react-icons/gi";
 import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
-import { Search } from "lucide-react";
+import Search from "../../utils/Search";
 
 function LedgerHead() {
   return (

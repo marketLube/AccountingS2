@@ -2,7 +2,7 @@
 import { GiSettingsKnobs } from "react-icons/gi";
 import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
-import { Search } from "lucide-react";
+import Search from "../../utils/Search";
 import { setIsCommissionNewEntry } from "@/lib/slices/CommissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FsModal from "../../utils/FsModal";
