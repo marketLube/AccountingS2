@@ -69,7 +69,7 @@ function DaybookTableItem({ transaction }) {
           onMouseEnter={() => setIsRemarkTooltip(true)}
           onMouseLeave={() => setIsRemarkTooltip(false)}
         >
-          {truncate(transaction?.remark)}
+          {truncate(transaction?.remark, 20)}
           <Tooltip
             type="remark"
             isVisible={isRemarkTooltip}

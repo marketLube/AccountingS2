@@ -11,6 +11,7 @@ import particularRoute from "../Routes/particularRoutes.js";
 import logRoute from "../Routes/logRoutes.js";
 import universityRoute from "../Routes/universityRoutes.js";
 import assetsRoute from "../Routes/assetRouters.js";
+import capitalRoute from "../Routes/capitalRoutes.js";
 import { protect } from "../Controller/authController.js";
 
 const router = express.Router();
@@ -24,11 +25,11 @@ router.use("/branch", branchRoute);
 router.use("/event", eventRoute);
 router.use("/catagory", catagoryRoute);
 router.use("/particular", particularRoute);
-
 router.use("/transaction", transactionRoute);
 router.use("/reminders", reminderRoute);
 router.use("/liability", liabilityRoute);
 router.use("/university", universityRoute);
 router.use("/assets", assetsRoute);
+router.use("/capital", capitalRoute);
 
 export default router;
