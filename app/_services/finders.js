@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 export const useParticularFinder = (id) => {
   const { particulars } = useSelector((state) => state.general);
-  console.log(particulars, "particulars");
   return particulars?.find((par) => {
     return par._id === id;
   });

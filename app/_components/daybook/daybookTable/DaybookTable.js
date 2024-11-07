@@ -1,7 +1,5 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
 import DaybookTableHead from "./DaybookTableHead";
-import apiClient from "@/lib/axiosInstance";
 import TableLoader from "../../_loader/TableLoader";
 import DaybookTableItem from "./DaybookTableItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +15,6 @@ function DaybookTable() {
 
   const veiwEight = transactions?.slice(startPage, startPage + 8);
   useEffect(() => {
-    console.log(veiwEight?.length < 8, "l");
     if (veiwEight?.length < 8) {
       dispatch(setBtnDisable(true));
     } else {

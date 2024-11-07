@@ -8,14 +8,15 @@ import {
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
+import BranchShower from "../../utils/_tooltipComponents/BranchShower";
+import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
 
 function OutstandingTableItems({ item }) {
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
-  console.log(item, "item");
+  const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
-
   const branchNames = getBranchNames(item?.branches);
 
   return (
@@ -29,7 +30,13 @@ function OutstandingTableItems({ item }) {
           onMouseEnter={() => setIsPartooltip(true)}
           onMouseLeave={() => setIsPartooltip(false)}
         >
-          {truncate(item?.name)}
+          <ParticularNameShower particular={particular} data={item} />
+          <Tooltip
+            isVisible={isParTooltip}
+            parName={particular?.name}
+            catName={category?.name}
+            purpose={item?.purpose}
+          />
         </span>
         <span className="table-col date table-body-col">
           {item?.formattedDate}
@@ -41,21 +48,26 @@ function OutstandingTableItems({ item }) {
           onMouseLeave={() => setIsRemarkTooltip(false)}
         >
           {truncate(item?.remark)}
+          <Tooltip
+            type="remark"
+            isVisible={isRemarkTooltip}
+            remark={item?.remark}
+          />
         </span>
-        <span className="table-col branch table-body-col">Branch</span>
+        <span
+          className="table-col branch table-body-col"
+          onMouseEnter={() => setIsBranchesTooltip(true)}
+          onMouseLeave={() => setIsBranchesTooltip(false)}
+        >
+          <BranchShower branches={branchNames} />
+          <Tooltip
+            type="branches"
+            isVisible={isBranchesTooltip}
+            branches={branchNames}
+          />
+        </span>
         <span className="table-col status table-body-col">{item?.status}</span>
       </div>
-      <Tooltip
-        isVisible={isParTooltip}
-        parName={particular?.name}
-        catName={category?.name}
-        purpose={item?.purpose}
-      />
-      <Tooltip
-        type="remark"
-        isVisible={isRemarkTooltip}
-        remark={item?.remark}
-      />
     </>
   );
 }

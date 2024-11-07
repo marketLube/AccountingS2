@@ -8,8 +8,8 @@ import {
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
 import { useEffect, useState } from "react";
-import ParticularNameShower from "./ParticularNameShower";
-import BranchShower from "./BranchShower";
+import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
+import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import { useDispatch, useSelector } from "react-redux";
 import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
 
@@ -25,29 +25,25 @@ function DaybookTableItem({ transaction }) {
 
   const dispatch = useDispatch();
 
-  const [isChecked, setIsChecked] = useState(selectedItems.length === 1);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     if (isChecked) {
-      dispatch(setDaybookSelectedItems([transaction]));
+      dispatch(setDaybookSelectedItems(transaction));
     } else {
-      dispatch(setDaybookSelectedItems([]));
+      dispatch(setDaybookSelectedItems({}));
     }
   }, [isChecked]);
-
-  const toggleChecked = () => {
-    if (isChecked) {
-      dispatch(setDaybookSelectedItems([transaction]));
-    } else {
-      dispatch(setDaybookSelectedItems([]));
-    }
-  };
 
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" checked={isChecked} onChange={toggleChecked} />
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={() => setIsChecked((checked) => !checked)}
+          />
         </span>
         <span
           className="table-col particular table-body-col"

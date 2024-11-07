@@ -88,6 +88,10 @@ const liabilityAndOutstandingSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+liabilityAndOutstandingSchema.pre(/^find/, function (next) {
+  this.populate({ path: "branches.branch", select: "name" });
+  next();
+});
 
 liabilityAndOutstandingSchema.pre("save", function (next) {
   this.amount = this.branches.reduce((acc, val) => val.amount + acc, 0);
