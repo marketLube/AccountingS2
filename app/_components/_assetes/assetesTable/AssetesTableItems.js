@@ -24,19 +24,19 @@ function AssetesTableItems({ item }) {
           onMouseEnter={() => setIsPartooltip(true)}
           onMouseLeave={() => setIsPartooltip(false)}
         >
-          item
+          {item?.item}
         </span>
-        <span className="table-col date table-body-col">date</span>
-        <span className="table-col amount table-body-col">amount</span>
+        <span className="table-col date table-body-col">{item?.date}</span>
+        <span className="table-col amount table-body-col">{item?.amount}</span>
         <span
           className="table-col purchased table-body-col"
           onMouseEnter={() => setIsRemarkTooltip(true)}
           onMouseLeave={() => setIsRemarkTooltip(false)}
         >
-          Purchased by
+          {item?.purchased}
         </span>
-        <span className="table-col remark table-body-col">Remark</span>
-        <span className="table-col branch table-body-col">Branch</span>
+        <span className="table-col remark table-body-col">{item?.remark}</span>
+        <span className="table-col branch table-body-col">{item?.branch}</span>
       </div>
       <Tooltip
         isVisible={isParTooltip}
