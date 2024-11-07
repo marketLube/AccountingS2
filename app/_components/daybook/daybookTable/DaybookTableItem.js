@@ -11,11 +11,14 @@ import { useEffect, useState } from "react";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
 import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import { useDispatch, useSelector } from "react-redux";
-import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
+import {
+  setDaybookIsChecked,
+  setDaybookSelectedItems,
+} from "@/lib/slices/daybookSlice";
+import GstShower from "../../utils/_tooltipComponents/GstShower";
 
 function DaybookTableItem({ transaction }) {
   const { selectedItems } = useSelector((state) => state.daybook);
-
   const particular = useParticularFinder(transaction.particular);
   const category = useCategoryFinder(transaction.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
@@ -24,16 +27,19 @@ function DaybookTableItem({ transaction }) {
   const branchNames = getBranchNames(transaction?.branches);
 
   const dispatch = useDispatch();
-
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     if (isChecked) {
       dispatch(setDaybookSelectedItems(transaction));
-    } else {
-      dispatch(setDaybookSelectedItems({}));
     }
   }, [isChecked]);
+
+  useEffect(() => {
+    if (selectedItems?._id !== transaction?._id) {
+      setIsChecked(false);
+    }
+  }, [selectedItems]);
 
   return (
     <>
@@ -42,7 +48,7 @@ function DaybookTableItem({ transaction }) {
           <input
             type="checkbox"
             checked={isChecked}
-            onChange={() => setIsChecked((checked) => !checked)}
+            onChange={() => setIsChecked((val) => !val)}
           />
         </span>
         <span
@@ -96,7 +102,7 @@ function DaybookTableItem({ transaction }) {
           {transaction?.type === "Credit" ? "Credit" : "--"}
         </span>
         <span className="table-col gst table-body-col">
-          {transaction?.gstPercent}
+          <GstShower data={transaction} />
         </span>
         <span className="table-col tds table-body-col">{transaction?.tds}</span>
       </div>

@@ -12,6 +12,7 @@ import DaybookNewEntirForm from "../../_Forms/_daybookForms/DaybookNewEntirForm"
 function DaybookHead() {
   const dispatch = useDispatch();
   const { isNewEntry } = useSelector((state) => state.daybook);
+  const { isEdit } = useSelector((state) => state.daybook);
   return (
     <>
       <LayoutHead>
