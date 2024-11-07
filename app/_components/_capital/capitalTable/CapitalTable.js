@@ -1,6 +1,5 @@
 "use client";
 
-import useReminders from "@/app/_hooks/useReminders";
 import CapitalTableHead from "./CapitalTableHead";
 import CapitalTableItems from "./CapitalTableItems";
 import { useSelector } from "react-redux";
