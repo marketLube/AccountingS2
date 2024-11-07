@@ -226,11 +226,11 @@ export function BranchComponent({
         <span className="form-group-error">{errors.branches.message}</span>
       )}
       <div className="form-section">
-        {selectedBranches.length > 0 && (
+        {selectedBranches?.length > 0 && (
           <>
             <h5>Selected Branches and Amounts</h5>
             <div className="form-amt-grid-container">
-              {selectedBranches.map((branch) => (
+              {selectedBranches?.map((branch) => (
                 <Branches
                   key={branch}
                   branch={branch}

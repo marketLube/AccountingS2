@@ -15,13 +15,13 @@ function BranchGroup({ setSelectedBranches, clearErrors, selectedBranches }) {
         {branches?.map(({ name: branch }) => (
           <BranchesSelector
             key={branch}
-            isActive={selectedBranches.includes(branch)}
+            isActive={selectedBranches?.includes(branch)}
             onClick={() =>
               toggleBranch(
                 branch,
                 setSelectedBranches,
                 clearErrors,
-                selectedBranches.length
+                selectedBranches?.length
               )
             }
           >
