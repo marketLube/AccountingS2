@@ -195,6 +195,7 @@ body {
   width: 100%;
   flex: 1;
   gap: 1.2rem;
+  overflow: hidden;
 }
 .dashboard-stats > :first-child {
   grid-row: span 2;
@@ -207,6 +208,7 @@ body {
 }
 .dashboard-reminder {
   flex: 1;
+  background-color: rgb(204, 222, 228) !important;
 }
 
 .stats-box {
@@ -228,6 +230,80 @@ body {
   transition: 0.3s all ease;
   display: flex;
   padding-left: 1.5rem;
+  padding: 1rem;
+}
+
+.dashboard-reminder-container {
+  border-radius: 4px;
+  width: 100%;
+  padding: 1rem;
+  background-color: transparent;
+}
+.dashboard-reminder-container > div:nth-child(even) {
+  background-color: #fff;
+}
+.dashboard-reminder-container > div:nth-child(odd) {
+  background-color: rgb(204, 222, 228);
+}
+.dashboard-reminder-container > div:nth-child(1) {
+  background-color: transparent;
+}
+.dashboard-reminder-container .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+}
+.dashboard-reminder-container .head .title {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(7, 6, 6);
+}
+.dashboard-reminder-container .head .set-reminder {
+  font-size: 14px;
+  color: gray;
+}
+.dashboard-reminder-container .head .plus-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgb(197, 195, 195);
+}
+.dashboard-reminder-container .payment-item {
+  border-radius: 8px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding: 8px;
+}
+.dashboard-reminder-container .payment-item-detail {
+  display: flex;
+  align-items: center;
+}
+.dashboard-reminder-container .payment-item-detail .clock {
+  margin-right: 8px;
+}
+.dashboard-reminder-container .payment-item-detail .clock .clockset {
+  font-size: 2rem;
+  color: rgb(114, 112, 112);
+}
+.dashboard-reminder-container .payment-item-detail .amount {
+  font-size: 17px;
+  font-weight: bold;
+}
+.dashboard-reminder-container .payment-item-detail .descripton {
+  font-size: 15px;
+  color: rgb(171, 167, 167);
+}
+.dashboard-reminder-container .payment-item .payment-date {
+  font-size: 15px;
+}
+
+.stats-box.dashboard-reminder {
   padding: 1rem;
 }
 

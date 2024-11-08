@@ -4,6 +4,7 @@ import DashboardCurrentbalance from "../_components/_dashboard/DashboardCurrentb
 import Expense from "../_components/_dashboard/Expense";
 import Income from "../_components/_dashboard/Income";
 import Oustandingpay from "../_components/_dashboard/Oustandingpay";
+import ReminderContainer from "../_components/_dashboard/ReminderContainer";
 import { TopPerformer } from "../_components/_dashboard/TopPerformer";
 
 // export const metadata = {
@@ -39,7 +40,9 @@ function Page() {
         <div className={`first-section dashboard-curbalance`}>
           <DashboardCurrentbalance />
         </div>
-        <div className={`stats-box dashboard-reminder`}></div>
+        <div className={`stats-box dashboard-reminder`}>
+          <ReminderContainer />
+        </div>
       </div>
     </div>
   );

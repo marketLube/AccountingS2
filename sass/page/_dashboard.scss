@@ -26,6 +26,7 @@
     width: 100%;
     flex: 1;
     gap: variables.$general-gap;
+    overflow: hidden;
 
     & > :first-child {
       grid-row: span 2;
@@ -41,6 +42,7 @@
   }
   &-reminder {
     flex: 1;
+    background-color: rgb(204, 222, 228) !important;
   }
 }
 .stats-box {
@@ -60,5 +62,86 @@
   transition: 0.3s all ease;
   display: flex;
   padding-left: 1.5rem;
+  padding: 1rem;
+}
+
+.dashboard-reminder-container {
+  border-radius: 4px;
+  width: 100%;
+  padding: 1rem;
+
+  background-color: transparent;
+
+  & > div:nth-child(even) {
+    background-color: variables.$color-white;
+  }
+
+  & > div:nth-child(odd) {
+    background-color: rgb(204, 222, 228);
+  }
+  & > div:nth-child(1) {
+    background-color: transparent;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      color: rgb(7, 6, 6);
+    }
+    .set-reminder {
+      font-size: 14px;
+      color: gray;
+    }
+    .plus-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgb(197, 195, 195);
+    }
+  }
+  .payment-item {
+    border-radius: 8px;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    padding: 8px;
+    // display: none;
+
+    &-detail {
+      display: flex;
+      align-items: center;
+
+      .clock {
+        margin-right: 8px;
+
+        .clockset {
+          font-size: 2rem;
+          color: rgb(114, 112, 112);
+        }
+      }
+      .amount {
+        font-size: 17px;
+        font-weight: bold;
+      }
+      .descripton {
+        font-size: 15px;
+        color: rgb(171, 167, 167);
+      }
+    }
+    .payment-date {
+      font-size: 15px;
+    }
+  }
+}
+.stats-box.dashboard-reminder {
   padding: 1rem;
 }
