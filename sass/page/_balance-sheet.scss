@@ -17,6 +17,7 @@
   &-bank {
     background-color: rgb(212, 212, 212);
     border-radius: variables.$large-radius;
+    overflow: hidden;
   }
   &-footer {
     background-color: black;

@@ -25,6 +25,10 @@ export const today = () =>
     .toISOString()
     .split("T")[0];
 
+export const thisYear = () => {
+  return new Date().getFullYear();
+};
+
 export function toggleBranch(branch, setSelectedBranches, clearErrors, length) {
   setSelectedBranches((prev) =>
     prev.includes(branch) ? prev.filter((b) => b !== branch) : [...prev, branch]
