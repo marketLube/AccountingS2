@@ -2,10 +2,10 @@
 import DashboardReminderItems from "./DashboardReminderItems";
 
 const paymentitem = [
-  { amount: "1000", description: "Marketing expense", date: "25/9/22" },
-  { amount: "1000", description: "Marketing expense", date: "25/9/22" },
-  { amount: "1000", description: "Marketing expense", date: "25/9/22" },
-  { amount: "1000", description: "Marketing expense", date: "25/9/22" },
+  { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
+  { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
+  { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
+  { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
 ];
 function ReminderContainer() {
   return (

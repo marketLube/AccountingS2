@@ -69,7 +69,7 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
         categoryPercentage: 0.5, // Adjust to control spacing between bars
 
         // Optionally, set `barThickness` to enforce a fixed width for bars
-        barThickness: 20, // Set a fixed width (e.g., 10, 15, or 20)
+        barThickness: 10, // Set a fixed width (e.g., 10, 15, or 20)
       },
       y: {
         beginAtZero: false,

@@ -7,6 +7,7 @@ import OutstandingTableItems from "../../outstanding/outstandingTable/Outstandin
 import { useSelector } from "react-redux";
 import { useViewEight } from "@/app/_services/helpers";
 import { setRemBtnDiable } from "@/lib/slices/reminderSlice";
+import ReminderTableItems from "./ReminderTableItems";
 
 function ReminderTable() {
   const { reminders, isLoading, isError, error, refetch } = useReminders();
@@ -22,7 +23,7 @@ function ReminderTable() {
         <TableLoader error="Something Went Wrong..." />
       ) : (
         veiwEight?.map((rem, i) => (
-          <OutstandingTableItems key={i} item={rem}></OutstandingTableItems>
+          <ReminderTableItems key={i} item={rem}></ReminderTableItems>
         ))
       )}
     </div>

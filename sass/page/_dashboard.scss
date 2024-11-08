@@ -69,7 +69,6 @@
 .dashboard-reminder-container {
   border-radius: 4px;
   width: 100%;
-  padding: 1rem;
 
   background-color: transparent;
 
@@ -88,6 +87,7 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 2rem;
+    padding: 2rem;
 
     .title {
       font-size: 18px;
@@ -109,12 +109,11 @@
     }
   }
   .payment-item {
-    border-radius: 8px;
     display: flex;
     align-items: start;
     justify-content: space-between;
     margin-bottom: 6px;
-    padding: 8px;
+    padding: 8px 22px;
     // display: none;
 
     &-detail {
@@ -144,5 +143,5 @@
   }
 }
 .stats-box.dashboard-reminder {
-  padding: 1rem;
+  padding: 0rem;
 }
