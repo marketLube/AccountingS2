@@ -1,4 +1,5 @@
 import Arrow from "../utils/Arrow";
+
 function Expense() {
   return (
     <div className="expensecard">

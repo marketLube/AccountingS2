@@ -111,6 +111,12 @@ body {
   font-weight: 500;
 }
 
+.text-small-bold {
+  font-weight: 600;
+  color: rgb(54, 50, 50);
+  font-size: 1.3rem;
+}
+
 .nav {
   background-color: rgb(28, 101, 126);
   width: 5rem;
@@ -201,6 +207,7 @@ body {
 }
 .dashboard-chart {
   flex: 1;
+  padding: 1rem;
 }
 .dashboard-curbalance {
   flex: 0.5;
@@ -640,6 +647,18 @@ body {
   color: #2eb629;
 }
 
+.current-year-box {
+  text-align: center;
+}
+.current-year-box-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem;
+}
+
 .dashboard-yearly-card.stats-box {
   display: block !important;
   padding: 1.5rem;
@@ -650,6 +669,11 @@ body {
   overflow: visible;
   text-align: center;
   margin: 0 auto;
+}
+
+.monthly-chart-container {
+  width: 100%;
+  height: 100%;
 }
 
 .pagination {
