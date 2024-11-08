@@ -1,4 +1,5 @@
 "use client";
+import TotalBalanceCard from "../_components/_cards/_balance-card/TotalBalanceCard";
 import BalanceSheetTable from "../_components/balance-sheet/balancesheetTable/BalanceSheetTable";
 import Button from "../_components/utils/Button";
 
@@ -14,7 +15,9 @@ function Page() {
           <Button type="thertiary">All Month</Button>
         </div>
         <BalanceSheetTable />
-        <div className="balance-sheet-bank"></div>
+        <div className="balance-sheet-bank">
+          <TotalBalanceCard />
+        </div>
         <div className="balance-sheet-footer"></div>
       </div>
     </div>
