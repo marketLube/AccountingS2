@@ -65,8 +65,6 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
         grid: {
           display: false,
         },
-        barPercentage: 0.5, // Adjust as needed (e.g., try 0.5 or 0.3)
-        categoryPercentage: 0.5, // Adjust to control spacing between bars
 
         // Optionally, set `barThickness` to enforce a fixed width for bars
         barThickness: 10, // Set a fixed width (e.g., 10, 15, or 20)
@@ -80,8 +78,16 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
         },
       },
     },
-  };
 
+    layout: {
+      padding: {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      },
+    },
+  };
   return (
     <div className="monthly-chart-container">
       <Bar data={data} options={options} />

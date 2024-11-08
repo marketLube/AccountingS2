@@ -53,7 +53,7 @@
 
   // Style for even children
   & > div:nth-child(even) {
-    background-color: rgb(204, 222, 228);
+    background-color: variables.$color-table-col;
   }
 
   // Style for odd children

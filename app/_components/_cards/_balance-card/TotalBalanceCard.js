@@ -1,9 +1,20 @@
+import { IoEyeSharp } from "react-icons/io5";
+import { useSelector } from "react-redux";
 function TotalBalanceCard() {
+  const { banks } = useSelector((state) => state.general);
   return (
     <div className="balance-card">
-      <div className="balance-card-header"></div>
+      <div className="balance-card-header">
+        <div className="small-text">Total Available balance</div>
+        <IoEyeSharp className="icons" />
+      </div>
       <div className="balance-card-body">
-        <div className="balance-card-item-box"></div>
+        {banks?.map((bank, i) => (
+          <div key={i} className="balance-card-item-box">
+            <span className="balance-card-name-box">{bank?.name}</span>
+            <span className="balance-card-balance"> {bank?.balance} $</span>
+          </div>
+        ))}
       </div>
     </div>
   );

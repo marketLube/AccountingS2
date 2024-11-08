@@ -1,14 +1,83 @@
+@use "../abstract/variables";
+@use "../abstract/mixins";
+
+$padding: 0 1.5rem;
+
 .balance-card {
   width: 100%;
   height: 100%;
-  background-color: yellow;
+  background-color: variables.$color-table-col;
+  overflow-y: scroll;
 
   &-header {
-    background-color: blue;
+    border-bottom: 0.2px solid variables.$color-gray;
     height: 3rem;
     width: 100%;
+    @include mixins.flex(between);
+    padding: $padding;
+
+    & .icons {
+      color: variables.$color-gray;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+    & .small-text {
+      font-weight: 600;
+      opacity: 0.5;
+    }
   }
+
+  &-body {
+    & > div:nth-child(even) {
+      background-color: rgba(variables.$color-table-col, 0.8);
+    }
+
+    // Style for odd children
+    & > div:nth-child(odd) {
+      background-color: rgba(variables.$color-white, 0.8);
+    }
+    & > div:nth-child(1) {
+      & .balance-card-name-box {
+        background-color: rgb(10, 5, 109);
+      }
+    }
+    & > div:nth-child(2) {
+      & .balance-card-name-box {
+        background-color: rgb(14, 55, 179);
+      }
+    }
+    & > div:nth-child(3) {
+      & .balance-card-name-box {
+        background-color: rgb(49, 128, 196);
+      }
+    }
+    & > div:nth-child(4) {
+      & .balance-card-name-box {
+        background-color: rgb(92, 97, 92);
+      }
+    }
+    & > div:nth-child(5) {
+      & .balance-card-name-box {
+        background-color: rgb(49, 49, 49);
+      }
+    }
+  }
+
   &-item-box {
-    background-color: greenyellow;
+    height: 3rem;
+    padding: $padding;
+    @include mixins.flex(between);
+    font-size: 0.8rem;
+  }
+
+  &-name-box {
+    padding: 0.3rem 1rem;
+    background-color: black;
+    color: variables.$color-white;
+    @include mixins.flex(center);
+    justify-content: start;
+    font-weight: 600;
+    border-radius: variables.$small-radius;
+    min-width: 8rem;
   }
 }
