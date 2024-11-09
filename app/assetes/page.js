@@ -7,17 +7,10 @@ function page() {
     <div className={`layout assetes`}>
       <h1 className={`main-head`}>Assets</h1>
 
-      {/* <Remider /> */}
-      {/* <AssetsForm /> */}
-      {/* <DaybookSelf /> */}
-
       <div className={`layout-body`}>
         <Assetshead />
         <AssetsTable />
         <AssetsFooter />
-
-        {/* <div className={`layout-table`}>table</div>
-<div className={`layout-footer`}>Footer</div> */}
       </div>
     </div>
   );

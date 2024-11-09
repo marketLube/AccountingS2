@@ -2,12 +2,9 @@ import apiClient from "@/lib/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { queryClient } from "../_components/layouts/AppLayout";
-import { useBranchIdFinder } from "../_services/finders";
 
 export default function useTransactions() {
   const { type } = useSelector((state) => state.daybook);
-  const { curBranch } = useSelector((state) => state.branchwise);
-
   let endpoint = `/transaction?`;
 
   if (type !== "All Status") {

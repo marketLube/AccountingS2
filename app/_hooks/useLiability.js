@@ -1,5 +1,6 @@
 import apiClient from "@/lib/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "../_components/layouts/AppLayout";
 
 export function useLiability() {
   let endpoint = `/liability?type=liability`;
@@ -15,4 +16,7 @@ export function useLiability() {
     queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
   });
   return { isLoading, isError, error, refetch, liabilities };
+}
+export function refreshLiability() {
+  queryClient.invalidateQueries("liability");
 }

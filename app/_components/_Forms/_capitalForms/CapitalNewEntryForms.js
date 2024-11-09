@@ -10,6 +10,10 @@ import {
   Gst,
   Tds,
   GstPercent,
+  Invested,
+  AssetsType,
+  Amount,
+  BranchSelector,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
@@ -18,10 +22,14 @@ import CatagorySelector from "../../utils/CatagorySelector";
 import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
+import {
+  bankIdFiner,
+  branchFinder,
+  catIdFinder,
+  parIdFinder,
+} from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { queryClient } from "../../layouts/AppLayout";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import { refreshCapital } from "@/app/_hooks/useCapital";
 
 function CapitalNewEntryForms() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -46,76 +54,44 @@ function CapitalNewEntryForms() {
     defaultValues: {
       date: today(),
       remark: "",
-      bank: "",
+      invested: "",
+      branch: "",
+      amount: "",
       type: "",
-      purpose: "",
-      tds: "",
-      gstPercent: "",
-      gstType: "",
     },
   });
 
   const onSubmit = async (data) => {
-    const branchObjects = selectedBranches.map((branch) => {
-      const branchObj = branches.find(
-        (branchObjs) => branchObjs.name === branch
-      );
-
-      return {
-        branch: branchObj._id,
-        amount: parseFloat(data[branchObj.name]),
-      };
-    });
-
-    data.branches = branchObjects;
-    data.catagory = catIdFinder(categories, catagory);
-    data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
+    const branch = branchFinder(data.branch, branches);
+    if (!branch) return toast.error("Something went wrong..");
+    data.branch = branch?._id;
 
     try {
-      await apiClient.post("/transaction", data);
-      toast.success("Successfully created new Transaction");
-      refreshTransaction();
+      await apiClient.post("/capital", data);
+      toast.success("Successfully created new Capital");
+      refreshCapital();
       reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
     }
-
-    return;
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
         <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
-        </div>
-        <div className="form-row">
-          <Purpose register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
+          <Invested register={register} errors={errors} />
+          <DateSel register={register} errors={errors} />
         </div>
 
         <div className="form-row">
-          <Bank register={register} errors={errors} />
-          <Radio register={register} errors={errors} />
-          <DateSel register={register} errors={errors} />
+          <Amount register={register} errors={errors} />
+          <AssetsType register={register} errors={errors} />
         </div>
-      </div>
-      <BranchComponent
-        setSelectedBranches={setSelectedBranches}
-        clearErrors={clearErrors}
-        selectedBranches={selectedBranches}
-        errors={errors}
-        register={register}
-      />
-      <div className="form-row">
-        <Tds register={register} errors={errors} />
-        <Gst register={register} errors={errors} />
-        <GstPercent register={register} errors={errors} />
+        <div className="form-row">
+          <BranchSelector register={register} errors={errors} />
+          <Remark register={register} errors={errors} />
+        </div>
       </div>
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>

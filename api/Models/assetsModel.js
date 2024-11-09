@@ -3,12 +3,6 @@ import { combineDateWithCurrentTime } from "../Utilities/helper.js";
 
 const assetsSchema = mongoose.Schema(
   {
-    purpose: {
-      type: String,
-      required: [true, "Asset must have a purpose"],
-      minlength: [3, "Purpose must be at least 3 characters long"],
-      maxlength: [50, "Purpose must be less than 50 characters long"],
-    },
     item: {
       type: String,
       required: [true, "Assets must have item name"],
@@ -30,7 +24,6 @@ const assetsSchema = mongoose.Schema(
     },
     purchasedBy: {
       type: String,
-      enum: ["Credit", "Debit"],
       required: [true, "Asset must have a type (Credit, Debit)"],
     },
     branch: {

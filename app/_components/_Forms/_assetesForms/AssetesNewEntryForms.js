@@ -1,39 +1,31 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
-  Bank,
-  BranchComponent,
+  Amount,
+  AssetsType,
+  BranchSelector,
   DateSel,
+  Item,
+  PurchasedBy,
   Purpose,
   Radio,
   Remark,
-  Gst,
-  Tds,
-  GstPercent,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
-import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
+import { branchFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { queryClient } from "../../layouts/AppLayout";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import { refreshAssets } from "@/app/_hooks/useAssets";
 
 function AssetesNewEntryForms() {
   const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { categories, particulars, banks } = useSelector(
-    (state) => state.general
-  );
   const { branches } = useSelector((state) => state.general);
-
-  const [catagory, setCatagory] = useState("Select Catagory");
-  const [particular, setParticular] = useState("Select Particular");
 
   const {
     register,
@@ -46,76 +38,52 @@ function AssetesNewEntryForms() {
     defaultValues: {
       date: today(),
       remark: "",
-      bank: "",
-      type: "",
+      branch: "",
+      purchaseby: "",
       purpose: "",
-      tds: "",
-      gstPercent: "",
-      gstType: "",
+      item: "",
+      amount: "",
+      type: "",
     },
   });
 
   const onSubmit = async (data) => {
-    const branchObjects = selectedBranches.map((branch) => {
-      const branchObj = branches.find(
-        (branchObjs) => branchObjs.name === branch
-      );
-
-      return {
-        branch: branchObj._id,
-        amount: parseFloat(data[branchObj.name]),
-      };
-    });
-
-    data.branches = branchObjects;
-    data.catagory = catIdFinder(categories, catagory);
-    data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
-
+    const branch = branchFinder(data.branch, branches);
+    if (!branch) return toast.error("Something went wrong..");
+    data.branch = branch?._id;
     try {
-      await apiClient.post("/transaction", data);
-      toast.success("Successfully created new Transaction");
-      refreshTransaction();
+      setLoading(true);
+      await apiClient.post("/assets", data);
+      toast.success("Successfully created new Asset");
+      refreshAssets();
       reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
-
-    return;
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
         <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
-        </div>
-        <div className="form-row">
-          <Purpose register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
+          <Item register={register} errors={errors} />
+          <Amount register={register} errors={errors} />
         </div>
 
         <div className="form-row">
-          <Bank register={register} errors={errors} />
-          <Radio register={register} errors={errors} />
           <DateSel register={register} errors={errors} />
+          <BranchSelector register={register} errors={errors} />
         </div>
-      </div>
-      <BranchComponent
-        setSelectedBranches={setSelectedBranches}
-        clearErrors={clearErrors}
-        selectedBranches={selectedBranches}
-        errors={errors}
-        register={register}
-      />
-      <div className="form-row">
-        <Tds register={register} errors={errors} />
-        <Gst register={register} errors={errors} />
-        <GstPercent register={register} errors={errors} />
+
+        <div className="form-row">
+          <PurchasedBy register={register} errors={errors} />
+          <AssetsType register={register} errors={errors} />
+        </div>
+        <div className="form-row">
+          <Remark register={register} errors={errors} />
+        </div>
       </div>
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>

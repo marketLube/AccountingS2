@@ -19,6 +19,74 @@ export function Purpose({ register, errors }) {
     </div>
   );
 }
+export function Invested({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="invested">Invested</label>
+      <input
+        type="text"
+        id="invested"
+        {...register("invested", {
+          required: "invested is required",
+        })}
+      />
+      {errors.invested && (
+        <span className="form-group-error">{errors.invested.message}</span>
+      )}
+    </div>
+  );
+}
+export function Item({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="item">Item</label>
+      <input
+        type="text"
+        id="item"
+        {...register("item", {
+          required: "Item is required",
+        })}
+      />
+      {errors.item && (
+        <span className="form-group-error">{errors.item.message}</span>
+      )}
+    </div>
+  );
+}
+export function Amount({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="item">Amount</label>
+      <input
+        type="number"
+        id="amouont"
+        {...register("amount", {
+          required: "Amount is required",
+        })}
+      />
+      {errors.item && (
+        <span className="form-group-error">{errors.amount.message}</span>
+      )}
+    </div>
+  );
+}
+export function PurchasedBy({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="item">Purchased By</label>
+      <input
+        type="text"
+        id="purchasedBy"
+        {...register("purchasedBy", {
+          required: "Purchased by is required",
+        })}
+      />
+      {errors.item && (
+        <span className="form-group-error">{errors.purchasedBy.message}</span>
+      )}
+    </div>
+  );
+}
 
 export function Remark({ register, errors }) {
   return (
@@ -74,6 +142,29 @@ export function Tds({ register, errors }) {
   );
 }
 
+export function BranchSelector({ register, errors }) {
+  const { branchNames } = useSelector((state) => state.general);
+  return (
+    <div className="form-group">
+      <label htmlFor="branchselector">Branch</label>
+      <select
+        id="branch"
+        {...register("branch", { required: "GST Percent is required" })}
+      >
+        <option value="">Select a branch</option>
+        {branchNames?.map((branch, i) => (
+          <option key={i} value={branch}>
+            {branch}
+          </option>
+        ))}
+      </select>
+      {errors.gstPercent && (
+        <span className="form-group-error">{errors.branch.message}</span>
+      )}
+    </div>
+  );
+}
+
 // GstPercent Component for GST Percent Selection
 export function GstPercent({ register, errors }) {
   return (
@@ -98,11 +189,19 @@ export function GstPercent({ register, errors }) {
 }
 
 // Radio Component for "Type" Selection
-export function Radio({ register, errors }) {
+export function Radio({ register, errors, label = "Type" }) {
   return (
     <div className="form-group">
-      <label htmlFor="Type" className="type-option-label">
-        Type
+      <label
+        htmlFor="Type"
+        className="type-option-label"
+        style={{
+          textWrap: "nowrap",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        {label}
       </label>
       <div className="type-options">
         <label className="type-option">
@@ -124,6 +223,49 @@ export function Radio({ register, errors }) {
             })}
           />
           Credited
+        </label>
+      </div>
+      {errors.type && (
+        <span className="form-group-error">{errors.type.message}</span>
+      )}
+    </div>
+  );
+}
+// Radio Component for "Type" Selection
+export function AssetsType({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label
+        htmlFor="Type"
+        className="type-option-label"
+        style={{
+          textWrap: "nowrap",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        Type
+      </label>
+      <div className="type-options">
+        <label className="type-option">
+          <input
+            type="radio"
+            value="Fixed"
+            {...register("type", {
+              required: "Select a type",
+            })}
+          />
+          Fixed
+        </label>
+        <label className="type-option">
+          <input
+            type="radio"
+            value="Temp"
+            {...register("type", {
+              required: "Select a type",
+            })}
+          />
+          Temp
         </label>
       </div>
       {errors.type && (

@@ -3,12 +3,6 @@ import { combineDateWithCurrentTime } from "../Utilities/helper.js";
 
 const capitalSchema = mongoose.Schema(
   {
-    purpose: {
-      type: String,
-      required: [true, "Capital must have a purpose"],
-      minlength: [3, "Purpose must be at least 3 characters long"],
-      maxlength: [50, "Purpose must be less than 50 characters long"],
-    },
     invested: {
       type: String,
       required: [true, "Capital must have Invested property name"],

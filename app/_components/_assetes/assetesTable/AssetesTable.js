@@ -13,8 +13,6 @@ function AssetsTable() {
   const { assets, isError, isLoading, error } = useAssets();
   const veiwEight = useViewEight(assets, startPage, setAssetsBtnDisable);
 
-  console.log(assets, "assets");
-
   return (
     <div className="table">
       <AssetesTableHead />

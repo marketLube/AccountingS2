@@ -17,6 +17,7 @@ export const useBranchIdFinder = (branchName) => {
   const { branches } = useSelector((state) => state.general);
   return branches?.find((branch) => branch.name === branchName);
 };
+
 export const bankFinder = (id, banks) => {
   return banks?.find((bank) => bank._id === id)?.name;
 };
