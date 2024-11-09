@@ -7,8 +7,6 @@ import {
   DateSel,
   Item,
   PurchasedBy,
-  Purpose,
-  Radio,
   Remark,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
@@ -18,13 +16,10 @@ import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { branchFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { queryClient } from "../../layouts/AppLayout";
 import { refreshAssets } from "@/app/_hooks/useAssets";
 
 function AssetesNewEntryForms() {
-  const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const { branches } = useSelector((state) => state.general);
 
   const {

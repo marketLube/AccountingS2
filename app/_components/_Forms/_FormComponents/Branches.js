@@ -1,5 +1,4 @@
 function Branches({ branch, register, errors, defaultAmount = 0 }) {
-  console.log(defaultAmount, "branch");
   return (
     <div key={branch} className="form-amount-container">
       <label htmlFor={`amount_${branch}`}>{branch}</label>

@@ -20,7 +20,6 @@ import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { queryClient } from "../../layouts/AppLayout";
 import { refreshTransaction } from "@/app/_hooks/useTransactions";
 
 function InvoiceNewEntryForm() {

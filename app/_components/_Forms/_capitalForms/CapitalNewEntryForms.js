@@ -1,15 +1,8 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
-  Bank,
-  BranchComponent,
   DateSel,
-  Purpose,
-  Radio,
   Remark,
-  Gst,
-  Tds,
-  GstPercent,
   Invested,
   AssetsType,
   Amount,
@@ -18,38 +11,21 @@ import {
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
-import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import {
-  bankIdFiner,
-  branchFinder,
-  catIdFinder,
-  parIdFinder,
-} from "@/app/_services/finders";
+import { branchFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshCapital } from "@/app/_hooks/useCapital";
 
 function CapitalNewEntryForms() {
-  const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const { categories, particulars, banks } = useSelector(
-    (state) => state.general
-  );
   const { branches } = useSelector((state) => state.general);
-
-  const [catagory, setCatagory] = useState("Select Catagory");
-  const [particular, setParticular] = useState("Select Particular");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    setError,
-    clearErrors,
   } = useForm({
     defaultValues: {
       date: today(),
@@ -67,6 +43,7 @@ function CapitalNewEntryForms() {
     data.branch = branch?._id;
 
     try {
+      setLoading(true);
       await apiClient.post("/capital", data);
       toast.success("Successfully created new Capital");
       refreshCapital();
@@ -74,6 +51,8 @@ function CapitalNewEntryForms() {
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
