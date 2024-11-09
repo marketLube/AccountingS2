@@ -1,0 +1,81 @@
+@use "../abstract/mixins";
+@use "../abstract/variables";
+
+.branchwise {
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+
+  & .layout-body {
+    min-height: 75vh;
+  }
+
+  &-cards-container {
+    height: 70vh;
+    margin: calc(variables.$general-gap * 5) 0;
+    @include mixins.flex(between);
+    gap: variables.$general-gap;
+  }
+  &-chart,
+  &-total-bal {
+    flex: 1;
+    height: 100%;
+    border-radius: variables.$large-radius;
+    overflow: hidden;
+  }
+
+  &-chart {
+    flex: 1.5;
+    background-color: rgba(variables.$color-white, 0.3);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.3fr 1fr;
+    padding: 2rem;
+    padding-bottom: 4rem;
+    row-gap: variables.$general-gap;
+    &-details {
+      @include mixins.flex(center);
+      flex-direction: column;
+
+      & h4 {
+        font-size: 1rem;
+      }
+      & span {
+        font-size: 1.1rem;
+        color: rgba(variables.$color-gray, 0.8);
+        margin-bottom: 1rem;
+      }
+    }
+    &-current-year {
+      @include mixins.flex(center);
+      & .current-year-box {
+        width: 80%;
+        height: 80%;
+      }
+      & .yearly-card {
+        width: 90%;
+        height: 85%;
+      }
+    }
+    &-past-years {
+      @include mixins.flex(center);
+
+      & .current-year-box {
+        width: 80%;
+        height: 80%;
+      }
+      & .yearly-card {
+        width: 80%;
+        height: 80%;
+      }
+    }
+  }
+
+  &-monthly-chart {
+    @include mixins.flex(center);
+    height: 40rem;
+    background-color: rgba(variables.$color-white, 0.5);
+
+    border-radius: variables.$large-radius;
+  }
+}

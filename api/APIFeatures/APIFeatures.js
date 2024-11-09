@@ -27,7 +27,7 @@ class APIFeatures {
       "sort",
       "limit",
       "field",
-      "branch",
+      "branchId",
       "startDate",
       "endDate",
       "catagory",
@@ -167,16 +167,18 @@ class APIFeatures {
     return this;
   }
 
-  // New method to filter by branch
   filterByBranch() {
-    if (this.queryStr.branch) {
-      const branchName = this.queryStr.branch;
+    if (this.queryStr.branchId) {
+      console.log("working"); // this log is working
+      const branchId = this.queryStr.branchId;
+
       this.query = this.query.find({
-        branches: { $elemMatch: { branchName } },
+        "branches.branch": branchId,
       });
     }
     return this;
   }
+
   filterByDateRange() {
     if (this.queryStr.startDate || this.queryStr.endDate) {
       let dateFilter = {};

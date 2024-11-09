@@ -4,34 +4,30 @@ import { useSelector } from "react-redux";
 import { queryClient } from "../_components/layouts/AppLayout";
 import { useBranchIdFinder } from "../_services/finders";
 
-export default function useTransactions() {
-  const { type } = useSelector((state) => state.daybook);
+export default function useBranchWise() {
   const { curBranch } = useSelector((state) => state.branchwise);
+  const branchWiseCurBranch = useBranchIdFinder(curBranch);
 
   let endpoint = `/transaction?`;
 
-  if (type !== "All Status") {
-    endpoint += `type=${type}`;
+  if (branchWiseCurBranch) {
+    endpoint += `branchId=${branchWiseCurBranch?._id}`;
   }
 
   const {
-    data: transactions,
+    data: branchwiseTrans,
     isLoading,
     isError,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["transactions", endpoint],
+    queryKey: ["branchwise", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
   });
 
-  return { isLoading, isError, error, refetch, transactions };
+  return { isLoading, isError, error, refetch, branchwiseTrans };
 }
 
-export function refreshTransaction() {
-  queryClient.invalidateQueries("transactions");
-}
-
-export function transactionRefreshers() {
-  refreshTransaction();
+export function refreshBranchwise() {
+  queryClient.invalidateQueries("branchwise");
 }

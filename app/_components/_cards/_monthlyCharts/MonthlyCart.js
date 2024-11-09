@@ -21,7 +21,7 @@ ChartJS.register(
 
 const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
   const maxValue = Math.max(...datasets.flatMap((dataset) => dataset.data));
-  const max = Math.ceil(maxValue / stepSize) * stepSize;
+  const max = (maxValue * 3) / 2;
 
   const data = {
     labels: labels,
@@ -53,9 +53,6 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
         mode: "index",
         intersect: false,
       },
-      legend: {
-        display: true,
-      },
     },
     responsive: true,
     maintainAspectRatio: false,
@@ -65,9 +62,8 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
         grid: {
           display: false,
         },
-
-        // Optionally, set `barThickness` to enforce a fixed width for bars
-        barThickness: 10, // Set a fixed width (e.g., 10, 15, or 20)
+        barPercentage: 0.1,
+        categoryPercentage: 0.2,
       },
       y: {
         beginAtZero: false,
@@ -78,13 +74,12 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
         },
       },
     },
-
     layout: {
       padding: {
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
+        top: 10,
+        bottom: 10,
+        left: 10,
+        right: 10,
       },
     },
   };
