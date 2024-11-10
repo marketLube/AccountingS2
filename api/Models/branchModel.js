@@ -11,6 +11,7 @@ const branchSchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, "Branch must have a name"],
+      unique: [true, "Branch Names must be unique"],
     },
     totalBranchBalance: {
       type: Number,

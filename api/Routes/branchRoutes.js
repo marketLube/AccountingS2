@@ -9,14 +9,14 @@ import {
   monthWiseBranchPnl,
   yearlyPnl,
   allMonthBranchPnl,
-  branchWiseBalance,
 } from "../Controller/branchController.js";
+import { getTotals } from "../Aggregation/dashbordAggregate.js";
 
 const router = express.Router();
 
+router.get("/totals", getTotals);
 router.get("/month-wise-pnl", monthWiseBranchPnl);
 router.get("/all-month-pnl", allMonthBranchPnl);
-router.get("/branch-wise-balance", branchWiseBalance);
 router.get("/yearly-pnl", yearlyPnl);
 
 router.get("/", getAllBranch);

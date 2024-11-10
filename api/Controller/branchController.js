@@ -12,40 +12,6 @@ import {
   deleteOne,
 } from "./handlerFactory.js";
 
-export const branchWiseBalance = catchAsync(async (req, res, next) => {
-  const { branchName } = req.query;
-
-  const transaction = await Transaction.find({
-    "branches.branchName": branchName,
-  });
-  const banks = {
-    HDFC: 0,
-    ICICI: 0,
-    RBL: 0,
-    CASH: 0,
-    RAK: 0,
-    BANDAN: 0,
-  };
-  const balance = transaction.reduce((acc, curr) => {
-    if (curr.type === "Credit") {
-      const amt = curr.branches.find((b) => b.branchName === branchName).amount;
-      banks[curr.bank] += amt;
-      return acc + amt;
-    } else {
-      const amt = curr.branches.find((b) => b.branchName === branchName).amount;
-      banks[curr.bank] -= amt;
-      return acc - amt;
-    }
-  }, 0);
-
-  res.status(200).json({
-    status: "Success",
-    message: "Successfully fetched",
-    balance,
-    banks,
-  });
-});
-
 export const allMonthBranchPnl = catchAsync(async (req, res, next) => {
   const { branch } = req.query;
 

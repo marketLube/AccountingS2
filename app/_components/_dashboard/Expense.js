@@ -1,6 +1,6 @@
 import Arrow from "../utils/Arrow";
 
-function Expense() {
+function Expense({ expense, isLoading, isError }) {
   return (
     <div className="expensecard">
       <div className="expensefirsthead">
@@ -8,7 +8,7 @@ function Expense() {
 
         <Arrow color={"#0040ff"} size="small" />
       </div>
-      <div className="expenseamount">$ 12,33,875,89</div>
+      <div className="expenseamount">$ {expense}</div>
     </div>
   );
 }

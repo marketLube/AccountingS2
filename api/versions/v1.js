@@ -12,14 +12,17 @@ import logRoute from "../Routes/logRoutes.js";
 import universityRoute from "../Routes/universityRoutes.js";
 import assetsRoute from "../Routes/assetRouters.js";
 import capitalRoute from "../Routes/capitalRoutes.js";
+import statsRoute from "../Routes/statsRouters.js";
+
 import { protect } from "../Controller/authController.js";
 
 const router = express.Router();
 
 router.use("/user", userRoute);
 // router.use(protect);
-router.use("/logs", logRoute);
 
+router.use("/stats", statsRoute);
+router.use("/logs", logRoute);
 router.use("/bank", bankRoute);
 router.use("/branch", branchRoute);
 router.use("/event", eventRoute);

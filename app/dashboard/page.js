@@ -8,22 +8,21 @@ import Oustandingpay from "../_components/_dashboard/Oustandingpay";
 import ReminderContainer from "../_components/_dashboard/ReminderContainer";
 import { TopPerformer } from "../_components/_dashboard/TopPerformer";
 import MonthlyPNLChart from "../_components/_cards/_monthlyCharts/MonthlyCart";
+import ToggleSwitch from "../_components/utils/ToggleSwitch/ToggleSwitch";
+import { getCurrentMonthName } from "../_services/helpers";
+import useDashboardTotals from "../_hooks/useDashboard";
 
 // export const metadata = {
 //   title: "Dashboard",
 // };
 function Page() {
+  const { isAllTime } = useSelector((state) => state.dashboard);
   const { branchNames } = useSelector((state) => state.general);
+  const { isLoading, isError, totals } = useDashboardTotals();
+  const { liabilityAndOutstanding, transactions } = totals || {};
 
-  const labels = [
-    "Kochi",
-    "Kozhikode",
-    "Kannur",
-    "Palakkad",
-    "Kottayam",
-    "Corporate",
-    "Hilite",
-  ];
+  const labels = branchNames || ["Loading..", "Loading.."];
+
   const datasets = [
     {
       label: "Expense",
@@ -48,7 +47,14 @@ function Page() {
   return (
     <div className={`layout dashboard`}>
       <div className={`dashboard-head`}>
-        <h1 className={`main-head`}>Dashboard</h1>
+        <h1 className={`main-head`}>
+          {isAllTime ? (
+            <span>All Time</span>
+          ) : (
+            <span>{getCurrentMonthName()}</span>
+          )}
+          <ToggleSwitch />
+        </h1>
       </div>
       <div className={`dashboard-left`}>
         <div className={`dashboard-stats`}>
@@ -56,17 +62,28 @@ function Page() {
             <CurrentYearBox />
           </div>
           <div className={`first-section`}>
-            <Income />
+            <Income
+              income={transactions?.totalCredit}
+              isError={isError}
+              isLoading={isLoading}
+            />
           </div>
-
           <div className={`first-section`}>
-            <Expense />
+            <Expense
+              expense={transactions?.totalDebit}
+              isError={isError}
+              isLoading={isLoading}
+            />
           </div>
           <div className={`stats-box`}>
             <TopPerformer />
           </div>
           <div className={`stats-box`}>
-            <Oustandingpay />
+            <Oustandingpay
+              outstanding={liabilityAndOutstanding?.totalOutstanding}
+              isLoading={isLoading}
+              isError={isError}
+            />
           </div>
         </div>
         <div className={`stats-box dashboard-chart`}>

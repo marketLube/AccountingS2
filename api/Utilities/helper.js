@@ -7,6 +7,7 @@ export const getMonth = (monthBack) => {
   );
   return [startOfMonth, startOfNextMonth];
 };
+
 export const currentDateFormatter = (date) => {
   // If no date is passed, use the current date in IST
   if (!date) {
