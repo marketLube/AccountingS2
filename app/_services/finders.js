@@ -1,6 +1,5 @@
 "use client";
 
-import { SiNamemc } from "react-icons/si";
 import { useSelector } from "react-redux";
 
 export const useParticularFinder = (id) => {

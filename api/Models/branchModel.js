@@ -6,7 +6,7 @@ const branchSchema = mongoose.Schema(
   {
     isActive: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     name: {
       type: String,

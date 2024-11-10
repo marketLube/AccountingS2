@@ -6,17 +6,29 @@ import Button from "@/app/_components/utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setDaybookCurBranch,
+  setDaybookCurCat,
   setDaybookIsEdit,
   setIsDaybookNewEntri,
 } from "@/lib/slices/daybookSlice";
 import FsModal from "../../utils/FsModal";
 import DaybookNewEntirForm from "../../_Forms/_daybookForms/DaybookNewEntirForm";
 import DaybookEditForm from "../../_Forms/_daybookForms/DaybookEditForm";
+import Selector from "../../utils/Selector";
 
 function DaybookHead() {
   const dispatch = useDispatch();
-  const { isNewEntry, selectedItems } = useSelector((state) => state.daybook);
-  const { isEdit } = useSelector((state) => state.daybook);
+  const { isNewEntry, selectedItems, isEdit, curCat } = useSelector(
+    (state) => state.daybook
+  );
+  const { branchNames, categoryNames } = useSelector((state) => state.general);
+
+  const handleBranchChange = (e) => {
+    dispatch(setDaybookCurBranch(e.target.value));
+  };
+  const handleCatChange = (e) => {
+    dispatch(setDaybookCurCat(e.target.value));
+  };
 
   return (
     <>
@@ -36,6 +48,14 @@ function DaybookHead() {
           <Button type="thertiary">Log</Button>
         </>
         <>
+          <Selector
+            options={["Select a Category", ...categoryNames]}
+            callback={handleCatChange}
+          />
+          <Selector
+            options={["All Branches", ...branchNames]}
+            callback={handleBranchChange}
+          />
           <Search />
           <Button type="filter">
             <GiSettingsKnobs />

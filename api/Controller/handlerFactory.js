@@ -19,29 +19,6 @@ export const getAll = (Model) => {
       .filterByDateRange()
       .search();
 
-    if (req.query.catagory) {
-      const catagoryDoc = await Catagory.findOne({
-        name: req.query.catagory,
-      }).select("_id");
-
-      if (!catagoryDoc) {
-        features.query = features.query.find({ _id: { $in: [] } });
-      } else {
-        features.query = features.query.find({ catagory: catagoryDoc._id });
-
-        if (req.query.particular) {
-          const particular = await Particulars.findOne({
-            catagory: catagoryDoc._id,
-            name: req.query.particular,
-          });
-
-          features.query = particular
-            ? features.query.find({ particular: particular._id })
-            : features.query.find({ _id: { $in: [] } });
-        }
-      }
-    }
-
     const docs = await features.query;
 
     res.status(200).json({

@@ -1,6 +1,7 @@
 import Transaction from "../Models/transactionModel.js";
 import LiabilityAndOutstanding from "../Models/liabilityModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
+import Branch from "../Models/branchModel.js";
 
 export const getTotals = catchAsync(async (req, res, next) => {
   const { thisMonth } = req.query;
@@ -107,4 +108,159 @@ export const getTotals = catchAsync(async (req, res, next) => {
   res
     .status(200)
     .json({ status: "Success", message: "Successfully fetched", result });
+});
+
+export const getBranchTotalsForChart = catchAsync(async (req, res, next) => {
+  const { thisMonth } = req.query;
+
+  // Calculate current month's date range if needed
+  let dateFilter = {};
+  if (thisMonth?.toLowerCase() === "yes") {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    dateFilter = {
+      date: {
+        $gte: startOfMonth,
+        $lte: endOfMonth,
+      },
+    };
+  }
+
+  const branchTotals = await Branch.aggregate([
+    // First match active branches
+    {
+      $match: {
+        isActive: true,
+      },
+    },
+    // Lookup transactions for each branch
+    {
+      $lookup: {
+        from: "transactions",
+        let: { branchId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $and: [
+                {
+                  $expr: {
+                    $in: ["$$branchId", "$branches.branch"],
+                  },
+                },
+                dateFilter, // This will be empty if isMonthAll is not "yes"
+              ],
+            },
+          },
+          {
+            $unwind: "$branches",
+          },
+          {
+            $match: {
+              $expr: {
+                $eq: ["$branches.branch", "$$branchId"],
+              },
+            },
+          },
+        ],
+        as: "branchTransactions",
+      },
+    },
+    // Calculate totals for each branch
+    {
+      $project: {
+        name: 1,
+        totalBranchBalance: 1,
+        totalCredit: {
+          $reduce: {
+            input: {
+              $filter: {
+                input: "$branchTransactions",
+                as: "transaction",
+                cond: { $eq: ["$$transaction.type", "Credit"] },
+              },
+            },
+            initialValue: 0,
+            in: { $add: ["$$value", "$$this.branches.amount"] },
+          },
+        },
+        totalExpense: {
+          $reduce: {
+            input: {
+              $filter: {
+                input: "$branchTransactions",
+                as: "transaction",
+                cond: { $eq: ["$$transaction.type", "Debit"] },
+              },
+            },
+            initialValue: 0,
+            in: { $add: ["$$value", "$$this.branches.amount"] },
+          },
+        },
+      },
+    },
+    // Add calculated profit field
+    {
+      $addFields: {
+        profit: {
+          $subtract: ["$totalCredit", "$totalExpense"],
+        },
+      },
+    },
+    // Sort by branch name
+    {
+      $sort: {
+        name: 1,
+      },
+    },
+    // Calculate grand totals
+    {
+      $group: {
+        _id: null,
+        branches: {
+          $push: {
+            name: "$name",
+            totalCredit: "$totalCredit",
+            totalExpense: "$totalExpense",
+            profit: "$profit",
+            totalBranchBalance: "$totalBranchBalance",
+          },
+        },
+        grandTotalCredit: { $sum: "$totalCredit" },
+        grandTotalExpense: { $sum: "$totalExpense" },
+        grandTotalProfit: { $sum: "$profit" },
+      },
+    },
+    // Final project to structure the response
+    {
+      $project: {
+        _id: 0,
+        branches: 1,
+        summary: {
+          grandTotalCredit: "$grandTotalCredit",
+          grandTotalExpense: "$grandTotalExpense",
+          grandTotalProfit: "$grandTotalProfit",
+        },
+      },
+    },
+  ]);
+
+  const result = branchTotals[0] || {
+    branches: [],
+    summary: {
+      grandTotalCredit: 0,
+      grandTotalExpense: 0,
+      grandTotalProfit: 0,
+    },
+  };
+
+  res.status(200).json({
+    status: "success",
+    message:
+      thisMonth?.toLowerCase() === "yes"
+        ? "Current month totals fetched successfully"
+        : "All time totals fetched successfully",
+    data: result,
+  });
 });

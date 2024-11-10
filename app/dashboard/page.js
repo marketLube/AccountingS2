@@ -10,15 +10,18 @@ import { TopPerformer } from "../_components/_dashboard/TopPerformer";
 import MonthlyPNLChart from "../_components/_cards/_monthlyCharts/MonthlyCart";
 import ToggleSwitch from "../_components/utils/ToggleSwitch/ToggleSwitch";
 import { getCurrentMonthName } from "../_services/helpers";
-import useDashboardTotals from "../_hooks/useDashboard";
+import useDashboardTotals, { useDashboardChart } from "../_hooks/useDashboard";
 
 // export const metadata = {
 //   title: "Dashboard",
 // };
 function Page() {
-  const { isAllTime } = useSelector((state) => state.dashboard);
-  const { branchNames } = useSelector((state) => state.general);
+  const { isAllTime, debits, credits, branchNames } = useSelector(
+    (state) => state.dashboard
+  );
   const { isLoading, isError, totals } = useDashboardTotals();
+  const { isLoading: chartLoading, isError: chartError } = useDashboardChart();
+
   const { liabilityAndOutstanding, transactions } = totals || {};
 
   const labels = branchNames || ["Loading..", "Loading.."];
@@ -26,19 +29,13 @@ function Page() {
   const datasets = [
     {
       label: "Expense",
-      data: [
-        100000, 130000, 160000, 140000, 180000, 220000, 210000, 200000, 230000,
-        240000, 260000, 290000,
-      ],
+      data: debits,
       gradientStart: "rgb(28, 101, 126)",
       gradientEnd: "#0c2d48",
     },
     {
       label: "Income",
-      data: [
-        150000, 180000, 220000, 200000, 250000, 300000, 280000, 270000, 290000,
-        310000, 350000, 370000,
-      ],
+      data: credits,
       gradientStart: "#2eb629",
       gradientEnd: "#1b5e20",
     },

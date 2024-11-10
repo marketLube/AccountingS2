@@ -1,5 +1,4 @@
 import Catagory from "../Models/catagoryModel.js";
-import Log from "../Models/logModel.js";
 import Particulars from "../Models/particularsModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
