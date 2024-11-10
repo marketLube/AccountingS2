@@ -1,22 +1,18 @@
 "use client";
 
-import useReminders from "@/app/_hooks/useReminders";
 import { useSelector } from "react-redux";
 import { useViewEight } from "@/app/_services/helpers";
 import TableLoader from "../../_loader/TableLoader";
 import { setBudgetplannerBtnDisable } from "@/lib/slices/budgetplannerSlice";
 import BudgetPlannerTableHead from "./BudegetplannerTableHead";
 import BudgetplannerTableItems from "./BudgetplannerTableItems";
+import useBudgetPlanner from "@/app/_hooks/useBudgetPlanner";
 
 function BudgetplannerTable() {
   const { startPage } = useSelector((state) => state.budgetplanner);
 
-  const { refetch, reminders, isError, isLoading, error } = useReminders();
-  const veiwEight = useViewEight(
-    reminders,
-    startPage,
-    setBudgetplannerBtnDisable
-  );
+  const { refetch, events, isError, isLoading, error } = useBudgetPlanner();
+  const veiwEight = useViewEight(events, startPage, setBudgetplannerBtnDisable);
 
   return (
     <div className="table">
@@ -26,10 +22,10 @@ function BudgetplannerTable() {
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
       ) : (
-        veiwEight?.map((liab, i) => (
+        veiwEight?.map((event, i) => (
           <BudgetplannerTableItems
             key={i}
-            item={liab}
+            item={event}
           ></BudgetplannerTableItems>
         ))
       )}

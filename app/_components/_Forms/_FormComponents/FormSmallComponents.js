@@ -19,6 +19,72 @@ export function Purpose({ register, errors }) {
     </div>
   );
 }
+export function Property({ register, errors, isDisabled }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="property">Create Property</label>
+      <input
+        type="text"
+        id="property"
+        disabled={isDisabled}
+        {...register("property", {
+          onChange: (e) => {
+            // Clear existingProperty when property is being typed
+            if (e.target.value) {
+              const existingPropertyField =
+                document.getElementById("existingProperty");
+              if (existingPropertyField) {
+                existingPropertyField.value = "";
+              }
+            }
+          },
+        })}
+      />
+      {errors.property && (
+        <span className="form-group-error">{errors.property.message}</span>
+      )}
+    </div>
+  );
+}
+
+// ExistingProperty Component
+export function ExistingProperty({ register, errors, isDisabled }) {
+  const { propertyNames } = useSelector((state) => state.budgetplanner);
+
+  return (
+    <div className="form-group">
+      <label htmlFor="existingProperty">Select Property</label>
+      <select
+        id="existingProperty"
+        disabled={isDisabled}
+        {...register("existingProperty", {
+          onChange: (e) => {
+            // Clear property input when existingProperty is selected
+            if (e.target.value) {
+              const propertyField = document.getElementById("property");
+              if (propertyField) {
+                propertyField.value = "";
+              }
+            }
+          },
+        })}
+      >
+        <option value="">Select a Property</option>
+        {propertyNames?.map((property, i) => (
+          <option key={i} value={property}>
+            {property}
+          </option>
+        ))}
+      </select>
+      {errors.existingProperty && (
+        <span className="form-group-error">
+          {errors.existingProperty.message}
+        </span>
+      )}
+    </div>
+  );
+}
+
 export function Invested({ register, errors }) {
   return (
     <div className="form-group">
@@ -158,7 +224,7 @@ export function BranchSelector({ register, errors }) {
           </option>
         ))}
       </select>
-      {errors.gstPercent && (
+      {errors.branch && (
         <span className="form-group-error">{errors.branch.message}</span>
       )}
     </div>

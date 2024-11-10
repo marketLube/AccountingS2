@@ -22,17 +22,14 @@ import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
-  bankIdFiner,
   branchFinder,
   catIdFinder,
   parIdFinder,
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
 import { refreshReminders } from "@/app/_hooks/useReminders";
 
 function ReminderNewEntryForm() {
-  const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { categories, particulars, banks } = useSelector(

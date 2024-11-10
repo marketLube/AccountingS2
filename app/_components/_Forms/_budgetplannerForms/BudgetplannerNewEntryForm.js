@@ -1,122 +1,97 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
-  Bank,
-  BranchComponent,
-  DateSel,
-  Purpose,
-  Radio,
-  Remark,
-  Gst,
-  Tds,
-  GstPercent,
+  Amount,
+  Property,
+  BranchSelector,
+  ExistingProperty,
 } from "../_FormComponents/FormSmallComponents";
-import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
-import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
-import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { queryClient } from "../../layouts/AppLayout";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import { refreshBudgetPlanner } from "@/app/_hooks/useBudgetPlanner";
+import { branchFinder } from "@/app/_services/finders";
+import { useSelector } from "react-redux";
 
+// Main Form Component
 function BudgetplannerNewEntryForm() {
-  const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const { categories, particulars, banks } = useSelector(
-    (state) => state.general
-  );
   const { branches } = useSelector((state) => state.general);
-
-  const [catagory, setCatagory] = useState("Select Catagory");
-  const [particular, setParticular] = useState("Select Particular");
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset,
-    setError,
-    clearErrors,
   } = useForm({
     defaultValues: {
-      date: today(),
-      remark: "",
-      bank: "",
-      type: "",
-      purpose: "",
-      tds: "",
-      gstPercent: "",
-      gstType: "",
+      property: "",
+      existingProperty: "",
+      amount: "",
+      branch: "",
     },
   });
 
+  // Watch both property fields
+  const propertyValue = watch("property");
+  const existingPropertyValue = watch("existingProperty");
+
+  // Determine which field should be disabled
+  const isPropertyDisabled = !!existingPropertyValue;
+  const isExistingPropertyDisabled = !!propertyValue;
+
   const onSubmit = async (data) => {
-    const branchObjects = selectedBranches.map((branch) => {
-      const branchObj = branches.find(
-        (branchObjs) => branchObjs.name === branch
-      );
+    // Use either property or existingProperty
+    const propertyToUse = data.property || data.existingProperty;
 
-      return {
-        branch: branchObj._id,
-        amount: parseFloat(data[branchObj.name]),
-      };
-    });
+    const branch = branchFinder(data.branch, branches);
+    if (!branch) return toast.error("Something went wrong..");
+    data.branch = branch?._id;
 
-    data.branches = branchObjects;
-    data.catagory = catIdFinder(categories, catagory);
-    data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
+    if (!propertyToUse) {
+      return toast.error("Please select or enter a property");
+    }
 
     try {
-      await apiClient.post("/transaction", data);
-      toast.success("Successfully created new Transaction");
-      refreshTransaction();
+      setLoading(true);
+      await apiClient.post("/event", {
+        ...data,
+        property: propertyToUse,
+      });
+      toast.success("Successfully created new Event");
+      refreshBudgetPlanner();
       reset();
     } catch (e) {
       console.log(e);
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data?.message || "An error occurred");
+    } finally {
+      setLoading(false);
     }
-
-    return;
   };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
         <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
+          <Property
+            register={register}
+            errors={errors}
+            isDisabled={isPropertyDisabled}
+          />
+          <ExistingProperty
+            register={register}
+            errors={errors}
+            isDisabled={isExistingPropertyDisabled}
           />
         </div>
         <div className="form-row">
-          <Purpose register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
+          <Amount register={register} errors={errors} />
+          <BranchSelector register={register} errors={errors} />
         </div>
+      </div>
 
-        <div className="form-row">
-          <Bank register={register} errors={errors} />
-          <Radio register={register} errors={errors} />
-          <DateSel register={register} errors={errors} />
-        </div>
-      </div>
-      <BranchComponent
-        setSelectedBranches={setSelectedBranches}
-        clearErrors={clearErrors}
-        selectedBranches={selectedBranches}
-        errors={errors}
-        register={register}
-      />
-      <div className="form-row">
-        <Tds register={register} errors={errors} />
-        <Gst register={register} errors={errors} />
-        <GstPercent register={register} errors={errors} />
-      </div>
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
         <Button
