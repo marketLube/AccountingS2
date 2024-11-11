@@ -2,6 +2,7 @@
 
 import {
   getBranchNames,
+  useBankFinder,
   useCategoryFinder,
   useParticularFinder,
 } from "@/app/_services/finders";
@@ -23,6 +24,7 @@ function DaybookTableItem({ transaction }) {
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
   const branchNames = getBranchNames(transaction?.branches);
+  const bank = useBankFinder(transaction?.bank);
 
   const dispatch = useDispatch();
 
@@ -88,6 +90,8 @@ function DaybookTableItem({ transaction }) {
             branches={branchNames}
           />
         </span>
+        <span className="table-col bank table-body-col">{bank?.name}</span>
+
         <span className="table-col debit table-body-col">
           {transaction?.type === "Debit" ? "Debit" : "--"}
         </span>

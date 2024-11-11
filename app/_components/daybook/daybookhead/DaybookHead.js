@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setDaybookCurBranch,
   setDaybookCurCat,
+  setDaybookCurParticular,
   setDaybookIsEdit,
+  setDaybookParticular,
   setIsDaybookNewEntri,
 } from "@/lib/slices/daybookSlice";
 import FsModal from "../../utils/FsModal";
@@ -18,9 +20,14 @@ import Selector from "../../utils/Selector";
 
 function DaybookHead() {
   const dispatch = useDispatch();
-  const { isNewEntry, selectedItems, isEdit, curCat } = useSelector(
-    (state) => state.daybook
-  );
+  const {
+    isNewEntry,
+    selectedItems,
+    isEdit,
+    particulars,
+    curCat,
+    curParticular,
+  } = useSelector((state) => state.daybook);
   const { branchNames, categoryNames } = useSelector((state) => state.general);
 
   const handleBranchChange = (e) => {
@@ -28,6 +35,9 @@ function DaybookHead() {
   };
   const handleCatChange = (e) => {
     dispatch(setDaybookCurCat(e.target.value));
+  };
+  const handleParticularChange = (e) => {
+    dispatch(setDaybookCurParticular(e.target.value));
   };
 
   return (
@@ -49,8 +59,14 @@ function DaybookHead() {
         </>
         <>
           <Selector
-            options={["Select a Category", ...categoryNames]}
+            options={["All Categories", ...categoryNames]}
             callback={handleCatChange}
+          />
+          <Selector
+            options={["All Particulars", ...particulars]}
+            callback={handleParticularChange}
+            disabled={curCat?.startsWith("All")}
+            curValue={curParticular}
           />
           <Selector
             options={["All Branches", ...branchNames]}

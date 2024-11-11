@@ -8,18 +8,22 @@ import {
   useParticularNameFinder,
 } from "../_services/finders";
 
-import { setDaybookParticular } from "@/lib/slices/daybookSlice";
+import {
+  setDaybookCurParticular,
+  setDaybookParticular,
+} from "@/lib/slices/daybookSlice";
 import useCatToParticular from "./useCatToParticular";
 
 export default function useTransactions() {
-  const { type, curBranch, curCat, curPar } = useSelector(
+  const { type, curBranch, curCat, curParticular } = useSelector(
     (state) => state.daybook
   );
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
-  const particular = useParticularNameFinder(curPar);
 
-  useCatToParticular(catagory, setDaybookParticular);
+  const particular = useParticularNameFinder(curParticular);
+
+  useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
   let endpoint = `/transaction?`;
 

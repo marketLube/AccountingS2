@@ -41,6 +41,11 @@ export const parIdFinder = (particulars, name) => {
 export const bankIdFiner = (banks, bankName) => {
   return banks?.find((bank) => bank.name === bankName)?._id;
 };
+export const useBankFinder = (bankId) => {
+  const { banks } = useSelector((state) => state.general);
+  return banks?.find((bank) => bank._id === bankId);
+};
+
 export const useBranchNameFinder = (id) => {
   const { branches } = useSelector((state) => state.general);
   return branches.find((branch) => branch._id === id)?.name;
