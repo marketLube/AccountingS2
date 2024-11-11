@@ -1026,6 +1026,10 @@ body {
   height: 100%;
   background-color: rgba(204, 222, 228, 0.8);
   overflow-y: scroll;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: column;
 }
 .balance-card-header {
   border-bottom: 0.2px solid gray;
@@ -1101,7 +1105,6 @@ body {
   align-items: center;
   justify-content: center;
   height: 2.5rem;
-  margin-top: 17rem;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

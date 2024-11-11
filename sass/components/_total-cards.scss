@@ -8,6 +8,10 @@ $padding: 0 1.5rem;
   height: 100%;
   background-color: variables.$color-table-col;
   overflow-y: scroll;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: column;
 
   &-header {
     border-bottom: 0.2px solid variables.$color-gray;
@@ -95,6 +99,6 @@ $padding: 0 1.5rem;
     align-items: center;
     justify-content: center;
     height: 2.5rem;
-    margin-top: 17rem;
+    // margin-top: 17rem;
   }
 }
