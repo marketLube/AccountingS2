@@ -12,6 +12,14 @@ export const useCategoryFinder = (id) => {
   const { categories } = useSelector((state) => state.general);
   return categories?.find((cat) => cat._id === id);
 };
+export const useCategoryNameFinder = (name) => {
+  const { categories } = useSelector((state) => state.general);
+  return categories?.find((cat) => cat?.name === name);
+};
+export const useParticularNameFinder = (name) => {
+  const { particulars } = useSelector((state) => state.general);
+  return particulars?.find((par) => par?.name === name);
+};
 export const useBranchIdFinder = (branchName) => {
   const { branches } = useSelector((state) => state.general);
   return branches?.find((branch) => branch.name === branchName);

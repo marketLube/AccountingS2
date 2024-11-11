@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { idChecker } from "./idChecker.js";
 
 const multipleKeywords = [
   "Mult",
@@ -32,26 +33,13 @@ class APIFeatures {
       "branchId",
       "startDate",
       "endDate",
-      "particular",
       "search",
     ];
 
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    console.log("Before category conversion:", queryObj);
-
     // Convert category ID to ObjectId if present
-    if (queryObj.catagory) {
-      try {
-        queryObj.catagory = mongoose.Types.ObjectId.createFromHexString(
-          queryObj.catagory
-        );
-      } catch (error) {
-        console.error("Invalid category ID format:", error.message);
-      }
-    }
-
-    console.log("After category conversion:", queryObj);
+    idChecker(queryObj);
 
     this.query = this.query.find(queryObj);
 

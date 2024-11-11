@@ -2,13 +2,25 @@ import apiClient from "@/lib/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { queryClient } from "../_components/layouts/AppLayout";
-import { useBranchIdFinder } from "../_services/finders";
+import {
+  useBranchIdFinder,
+  useCategoryNameFinder,
+  useParticularNameFinder,
+} from "../_services/finders";
+
+import { setDaybookParticular } from "@/lib/slices/daybookSlice";
+import useCatToParticular from "./useCatToParticular";
 
 export default function useTransactions() {
-  const { type, curBranch } = useSelector((state) => state.daybook);
+  const { type, curBranch, curCat, curPar } = useSelector(
+    (state) => state.daybook
+  );
   const branchId = useBranchIdFinder(curBranch)?._id;
-  console.log(curBranch, "curbranch");
-  console.log(branchId, "brachId");
+  const catagory = useCategoryNameFinder(curCat);
+  const particular = useParticularNameFinder(curPar);
+
+  useCatToParticular(catagory, setDaybookParticular);
+
   let endpoint = `/transaction?`;
 
   if (type !== "All Status") {
@@ -16,6 +28,12 @@ export default function useTransactions() {
   }
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
+  }
+  if (catagory?._id) {
+    endpoint += `&catagory=${catagory?._id}`;
+  }
+  if (particular?._id) {
+    endpoint += `&particular=${particular?._id}`;
   }
 
   const {
