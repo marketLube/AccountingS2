@@ -43,7 +43,7 @@
   }
   &-reminder {
     flex: 1;
-    background-color: rgb(204, 222, 228) !important;
+    background-color: white !important;
   }
 }
 .stats-box {
@@ -72,12 +72,12 @@
 
   background-color: transparent;
 
-  & > div:nth-child(even) {
+  & > div:nth-child(odd) {
     background-color: variables.$color-white;
   }
 
-  & > div:nth-child(odd) {
-    background-color: rgb(204, 222, 228);
+  & > div:nth-child(even) {
+    background-color: rgba(204, 222, 228, 0.4);
   }
   & > div:nth-child(1) {
     background-color: transparent;
@@ -87,16 +87,16 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 2rem;
-    padding: 2rem;
+    padding: 2rem 3rem;
 
     .title {
       font-size: 18px;
       font-weight: bold;
-      color: rgb(7, 6, 6);
+      color: variables.$color-dark;
     }
     .set-reminder {
       font-size: 14px;
-      color: gray;
+      color: variables.$color-mid-gray;
     }
     .plus-icon {
       display: flex;
@@ -105,16 +105,18 @@
       border-radius: 50%;
       width: 40px;
       height: 40px;
-      border: 2px solid rgb(197, 195, 195);
+      font-size: 2rem;
+      font-weight: 100;
+      border: 0.5px solid rgb(197, 195, 195);
+      color: variables.$color-gray;
     }
   }
   .payment-item {
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 6px;
-    padding: 8px 22px;
-    // display: none;
+    padding: 8px 38px;
 
     &-detail {
       display: flex;
@@ -130,7 +132,7 @@
       }
       .amount {
         font-size: 17px;
-        font-weight: bold;
+        font-weight: 500;
       }
       .descripton {
         font-size: 15px;
@@ -139,9 +141,14 @@
     }
     .payment-date {
       font-size: 15px;
+      display: flex;
+      justify-content: end;
+      align-items: end;
     }
   }
 }
 .stats-box.dashboard-reminder {
-  padding: 0rem;
+  padding: 0px;
+  display: flex;
+  align-items: start;
 }

@@ -218,7 +218,7 @@ body {
 }
 .dashboard-reminder {
   flex: 1;
-  background-color: rgb(204, 222, 228) !important;
+  background-color: white !important;
 }
 
 .stats-box {
@@ -248,11 +248,11 @@ body {
   width: 100%;
   background-color: transparent;
 }
-.dashboard-reminder-container > div:nth-child(even) {
+.dashboard-reminder-container > div:nth-child(odd) {
   background-color: #fff;
 }
-.dashboard-reminder-container > div:nth-child(odd) {
-  background-color: rgb(204, 222, 228);
+.dashboard-reminder-container > div:nth-child(even) {
+  background-color: rgba(204, 222, 228, 0.4);
 }
 .dashboard-reminder-container > div:nth-child(1) {
   background-color: transparent;
@@ -262,16 +262,16 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 2rem;
-  padding: 2rem;
+  padding: 2rem 3rem;
 }
 .dashboard-reminder-container .head .title {
   font-size: 18px;
   font-weight: bold;
-  color: rgb(7, 6, 6);
+  color: rgb(54, 50, 50);
 }
 .dashboard-reminder-container .head .set-reminder {
   font-size: 14px;
-  color: gray;
+  color: rgb(193, 193, 193);
 }
 .dashboard-reminder-container .head .plus-icon {
   display: flex;
@@ -280,14 +280,17 @@ body {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  border: 2px solid rgb(197, 195, 195);
+  font-size: 2rem;
+  font-weight: 100;
+  border: 0.5px solid rgb(197, 195, 195);
+  color: gray;
 }
 .dashboard-reminder-container .payment-item {
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
-  padding: 8px 22px;
+  padding: 8px 38px;
 }
 .dashboard-reminder-container .payment-item-detail {
   display: flex;
@@ -302,7 +305,7 @@ body {
 }
 .dashboard-reminder-container .payment-item-detail .amount {
   font-size: 17px;
-  font-weight: bold;
+  font-weight: 500;
 }
 .dashboard-reminder-container .payment-item-detail .descripton {
   font-size: 15px;
@@ -310,10 +313,15 @@ body {
 }
 .dashboard-reminder-container .payment-item .payment-date {
   font-size: 15px;
+  display: flex;
+  justify-content: end;
+  align-items: end;
 }
 
 .stats-box.dashboard-reminder {
-  padding: 0rem;
+  padding: 0px;
+  display: flex;
+  align-items: start;
 }
 
 .balance-sheet-body {
@@ -1037,6 +1045,11 @@ body {
   font-weight: 600;
   opacity: 0.5;
 }
+.balance-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .balance-card-body > div:nth-child(even) {
   background-color: rgba(204, 222, 228, 0.8);
 }
@@ -1077,6 +1090,18 @@ body {
   font-weight: 600;
   border-radius: 0.3rem;
   min-width: 8rem;
+}
+.balance-card-balance-total {
+  background-color: rgb(49, 128, 196);
+  width: 100%;
+  color: white;
+  font-weight: 700;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  margin-top: 17rem;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */
