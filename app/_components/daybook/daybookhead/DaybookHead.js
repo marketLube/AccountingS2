@@ -6,6 +6,7 @@ import Button from "@/app/_components/utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setDaybookCurBank,
   setDaybookCurBranch,
   setDaybookCurCat,
   setDaybookCurParticular,
@@ -28,7 +29,9 @@ function DaybookHead() {
     curCat,
     curParticular,
   } = useSelector((state) => state.daybook);
-  const { branchNames, categoryNames } = useSelector((state) => state.general);
+  const { branchNames, categoryNames, bankNames, curBank } = useSelector(
+    (state) => state.general
+  );
 
   const handleBranchChange = (e) => {
     dispatch(setDaybookCurBranch(e.target.value));
@@ -38,6 +41,10 @@ function DaybookHead() {
   };
   const handleParticularChange = (e) => {
     dispatch(setDaybookCurParticular(e.target.value));
+  };
+
+  const handlebankChange = (e) => {
+    dispatch(setDaybookCurBank(e.target.value));
   };
 
   return (
@@ -71,6 +78,11 @@ function DaybookHead() {
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
+          />
+          <Selector
+            options={["All Banks", ...bankNames]}
+            callback={handlebankChange}
+            curValue={curBank}
           />
           <Search />
           <Button type="filter">

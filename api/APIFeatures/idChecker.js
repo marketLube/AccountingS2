@@ -20,6 +20,15 @@ export function idChecker(queryObj) {
       console.error("Invalid category ID format:", error.message);
     }
   }
+  if (queryObj.bank) {
+    try {
+      queryObj.bank = mongoose.Types.ObjectId.createFromHexString(
+        queryObj.bank
+      );
+    } catch (error) {
+      console.error("Invalid category ID format:", error.message);
+    }
+  }
 
   return queryObj;
 }

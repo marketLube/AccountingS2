@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { queryClient } from "../_components/layouts/AppLayout";
 import {
+  useBankIdFinder,
   useBranchIdFinder,
   useCategoryNameFinder,
   useParticularNameFinder,
@@ -15,13 +16,17 @@ import {
 import useCatToParticular from "./useCatToParticular";
 
 export default function useTransactions() {
-  const { type, curBranch, curCat, curParticular } = useSelector(
+  const { type, curBranch, curCat, curParticular, curBank } = useSelector(
     (state) => state.daybook
   );
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
-
   const particular = useParticularNameFinder(curParticular);
+
+  const bank = useBankIdFinder(curBank);
+
+  console.log(curBank, "curbank");
+  console.log(bank, "bank");
 
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
@@ -38,6 +43,9 @@ export default function useTransactions() {
   }
   if (particular?._id) {
     endpoint += `&particular=${particular?._id}`;
+  }
+  if (bank?._id) {
+    endpoint += `&bank=${bank?._id}`;
   }
 
   const {
