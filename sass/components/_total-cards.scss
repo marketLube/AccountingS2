@@ -28,6 +28,10 @@ $padding: 0 1.5rem;
   }
 
   &-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     & > div:nth-child(even) {
       background-color: rgba(variables.$color-table-col, 0.8);
     }
@@ -79,5 +83,18 @@ $padding: 0 1.5rem;
     font-weight: 600;
     border-radius: variables.$small-radius;
     min-width: 8rem;
+  }
+
+  &-balance-total {
+    background-color: rgb(49, 128, 196);
+    width: 100%;
+    color: white;
+    font-weight: 700;
+    font-size: medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    margin-top: 17rem;
   }
 }
