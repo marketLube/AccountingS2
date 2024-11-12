@@ -4,13 +4,19 @@ import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsInvoiceNewEntry } from "@/lib/slices/invoiceSlice";
+import {
+  setInvoiceIsEdit,
+  setIsInvoiceNewEntry,
+} from "@/lib/slices/invoiceSlice";
 import FsModal from "../../utils/FsModal";
 import InvoiceNewEntryForm from "../../_Forms/_invoiceForms/InvoiceNewEntryForm";
+import InvoiceEditForm from "../../_Forms/_invoiceForms/InvoiceEditForm";
 
 function Invoicehead() {
   const dispatch = useDispatch();
-  const { isNewEntry } = useSelector((state) => state.invoice);
+  const { isNewEntry, selectedItems, isEdit } = useSelector(
+    (state) => state.invoice
+  );
   return (
     <>
       <LayoutHead>
@@ -18,7 +24,13 @@ function Invoicehead() {
           <Button onClick={() => dispatch(setIsInvoiceNewEntry(true))}>
             + New Entri
           </Button>
-          <Button type="secondary">Edit</Button>
+          <Button
+            onClick={() => dispatch(setInvoiceIsEdit(true))}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={selectedItems?._id}
+          >
+            Edit
+          </Button>
         </>
         <>
           <Search />
@@ -29,6 +41,9 @@ function Invoicehead() {
       </LayoutHead>
       <FsModal isOpen={isNewEntry} setIsCancel={setIsInvoiceNewEntry}>
         <InvoiceNewEntryForm />
+      </FsModal>
+      <FsModal isOpen={isEdit} setIsCancel={setInvoiceIsEdit}>
+        <InvoiceEditForm />
       </FsModal>
     </>
   );

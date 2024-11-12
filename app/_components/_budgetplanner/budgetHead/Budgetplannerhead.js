@@ -3,14 +3,20 @@ import { GiSettingsKnobs } from "react-icons/gi";
 import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
 import Search from "../../utils/Search";
-import { setIsBudgetplannerNewEntry } from "@/lib/slices/budgetplannerSlice";
+import {
+  setBudgetplannerIsEdit,
+  setIsBudgetplannerNewEntry,
+} from "@/lib/slices/budgetplannerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FsModal from "../../utils/FsModal";
 import BudgetplannerNewEntryForm from "../../_Forms/_budgetplannerForms/BudgetplannerNewEntryForm";
+import BudgetplannerEditForm from "../../_Forms/_budgetplannerForms/BudgetplannerEditForm";
 
 function Budgetplannerhead() {
   const dispatch = useDispatch();
-  const { isNewEntry } = useSelector((state) => state.budgetplanner);
+  const { isNewEntry, selectedItems, isEdit } = useSelector(
+    (state) => state.budgetplanner
+  );
   return (
     <>
       <LayoutHead>
@@ -18,7 +24,13 @@ function Budgetplannerhead() {
           <Button onClick={() => dispatch(setIsBudgetplannerNewEntry(true))}>
             + New Entri
           </Button>
-          <Button type="secondary">Edit</Button>
+          <Button
+            onClick={() => dispatch(setBudgetplannerIsEdit(true))}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={selectedItems?._id}
+          >
+            Edit
+          </Button>
         </>
         <>
           <Search />
@@ -30,6 +42,9 @@ function Budgetplannerhead() {
 
       <FsModal isOpen={isNewEntry} setIsCancel={setIsBudgetplannerNewEntry}>
         <BudgetplannerNewEntryForm />
+      </FsModal>
+      <FsModal isOpen={isEdit} setIsCancel={setBudgetplannerIsEdit}>
+        <BudgetplannerEditForm />
       </FsModal>
     </>
   );

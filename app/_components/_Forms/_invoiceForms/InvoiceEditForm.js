@@ -1,11 +1,15 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
+  Bank,
   BranchComponent,
   DateSel,
   Purpose,
+  Radio,
   Remark,
-  StatusSel,
+  Gst,
+  Tds,
+  GstPercent,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
@@ -15,19 +19,18 @@ import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
+  bankFinder,
   bankIdFiner,
   catIdFinder,
   parIdFinder,
   useCategoryFinder,
   useParticularFinder,
-  useStatusFinder,
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
+import { refreshTransaction } from "@/app/_hooks/useTransactions";
 
-import { refreshLiability } from "@/app/_hooks/useLiability";
-
-function LiabilityEditForm() {
-  const { selectedItems } = useSelector((state) => state.liability);
+function InvoiceEditForm() {
+  const { selectedItems } = useSelector((state) => state.invoice);
 
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
@@ -38,41 +41,50 @@ function LiabilityEditForm() {
 
   const [loading, setLoading] = useState(false);
 
-  const { categories, particulars, branches } = useSelector(
+  const { categories, particulars, banks } = useSelector(
     (state) => state.general
   );
 
+  const { branches } = useSelector((state) => state.general);
+
   const curCat = useCategoryFinder(selectedItems?.catagory)?.name;
   const curPart = useParticularFinder(selectedItems?.particular)?.name;
+  const curBank = bankFinder(selectedItems?.bank, banks);
 
-  const [catagory, setCatagory] = useState("Select Catagory");
-  const [particular, setParticular] = useState("Select Particular");
+  const [catagory, setCatagory] = useState(curCat);
+  const [particular, setParticular] = useState(curPart);
 
   const defaultValues = {
     date: selectedItems?.date,
     remark: selectedItems?.remark,
+    bank: curBank,
     type: selectedItems?.type,
     purpose: selectedItems?.purpose,
-    status: selectedItems?.status,
+    tds: selectedItems?.tds,
+    gstPercent: selectedItems?.gstPercent,
+    gstType: selectedItems?.gstType,
   };
 
   const {
     register,
     handleSubmit,
-    formState: { errors },       
+    formState: { errors },
     reset,
     setError,
     clearErrors,
-  } = useForm();
+  } = useForm({ defaultValues });
 
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
       date: new Date(selectedItems?.date) || "",
       remark: selectedItems?.remark || "",
+      bank: curBank || "",
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
-      status: selectedItems?.status || "",
+      tds: selectedItems?.tds || "",
+      gstPercent: selectedItems?.gstPercent || "",
+      gstType: selectedItems?.gstType || "",
     });
     setCatagory(curCat);
     setParticular(curPart);
@@ -97,12 +109,11 @@ function LiabilityEditForm() {
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
     data.bank = bankIdFiner(banks, data.bank);
-    data.type = "liability";
 
     try {
-      await apiClient.patch("/liability", data);
-      toast.success("Successfully created new Liability");
-      refreshLiability();
+      await apiClient.post("/transaction", data);
+      toast.success("Successfully created new Transaction");
+      refreshTransaction();
       reset();
     } catch (e) {
       console.log(e);
@@ -123,12 +134,13 @@ function LiabilityEditForm() {
         </div>
         <div className="form-row">
           <Purpose register={register} errors={errors} />
-          <StatusSel register={register} errors={errors} />
+          <Remark register={register} errors={errors} />
         </div>
 
         <div className="form-row">
+          <Bank register={register} errors={errors} />
+          <Radio register={register} errors={errors} />
           <DateSel register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
         </div>
       </div>
       <BranchComponent
@@ -137,8 +149,12 @@ function LiabilityEditForm() {
         selectedBranches={selectedBranches}
         errors={errors}
         register={register}
-        defaultAmounts={defaultAmounts}
       />
+      <div className="form-row">
+        <Tds register={register} errors={errors} />
+        <Gst register={register} errors={errors} />
+        <GstPercent register={register} errors={errors} />
+      </div>
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
         <Button
@@ -154,4 +170,4 @@ function LiabilityEditForm() {
   );
 }
 
-export default LiabilityEditForm;
+export default InvoiceEditForm;

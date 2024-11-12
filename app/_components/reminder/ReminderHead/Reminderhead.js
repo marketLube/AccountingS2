@@ -4,13 +4,19 @@ import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsReminderNewEntry } from "@/lib/slices/reminderSlice";
+import {
+  setIsReminderNewEntry,
+  setReminderIsEdit,
+} from "@/lib/slices/reminderSlice";
 import FsModal from "../../utils/FsModal";
 import ReminderNewEntryForm from "../../_Forms/_reminderForms/ReminderNewEntryForm";
+import ReminderEditForm from "../../_Forms/_reminderForms/ReminderEditForm";
 
 function Reminderhead() {
   const dispatch = useDispatch();
-  const { isNewEntry } = useSelector((state) => state.reminder);
+  const { isNewEntry, selectedItems, isEdit } = useSelector(
+    (state) => state.reminder
+  );
   return (
     <>
       <LayoutHead>
@@ -18,7 +24,13 @@ function Reminderhead() {
           <Button onClick={() => dispatch(setIsReminderNewEntry(true))}>
             + New Entri
           </Button>
-          <Button type="secondary">Edit</Button>
+          <Button
+            onClick={() => dispatch(setReminderIsEdit(true))}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={selectedItems?._id}
+          >
+            Edit
+          </Button>
           <Button type="thertiary">Log</Button>
         </>
         <>
@@ -30,6 +42,9 @@ function Reminderhead() {
       </LayoutHead>
       <FsModal isOpen={isNewEntry} setIsCancel={setIsReminderNewEntry}>
         <ReminderNewEntryForm />
+      </FsModal>
+      <FsModal isOpen={isEdit} setIsCancel={setReminderIsEdit}>
+        <ReminderEditForm />
       </FsModal>
     </>
   );

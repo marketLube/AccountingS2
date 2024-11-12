@@ -26,7 +26,7 @@ import toast from "react-hot-toast";
 
 import { refreshLiability } from "@/app/_hooks/useLiability";
 
-function LiabilityEditForm() {
+function OutstandingEditForm() {
   const { selectedItems } = useSelector((state) => state.liability);
 
   const [selectedBranches, setSelectedBranches] = useState(
@@ -59,7 +59,7 @@ function LiabilityEditForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },       
+    formState: { errors },
     reset,
     setError,
     clearErrors,
@@ -154,4 +154,4 @@ function LiabilityEditForm() {
   );
 }
 
-export default LiabilityEditForm;
+export default OutstandingEditForm;

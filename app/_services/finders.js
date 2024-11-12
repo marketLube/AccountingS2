@@ -12,6 +12,10 @@ export const useCategoryFinder = (id) => {
   const { categories } = useSelector((state) => state.general);
   return categories?.find((cat) => cat._id === id);
 };
+export const useStatusFinder = (id) => {
+  const { status } = useSelector((state) => state.general);
+  return status?.find((stat) => stat._id === id);
+};
 export const useCategoryNameFinder = (name) => {
   const { categories } = useSelector((state) => state.general);
   return categories?.find((cat) => cat?.name === name);

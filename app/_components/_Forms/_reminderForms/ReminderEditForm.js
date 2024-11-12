@@ -1,11 +1,12 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
-  BranchComponent,
   DateSel,
   Purpose,
   Remark,
+  BranchSelector,
   StatusSel,
+  Amount,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
@@ -15,32 +16,29 @@ import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
-  bankIdFiner,
+  branchFinder,
   catIdFinder,
+  getBranchNames,
   parIdFinder,
+  useBranchNameFinder,
   useCategoryFinder,
   useParticularFinder,
   useStatusFinder,
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
+import { refreshReminders } from "@/app/_hooks/useReminders";
 
-import { refreshLiability } from "@/app/_hooks/useLiability";
-
-function LiabilityEditForm() {
-  const { selectedItems } = useSelector((state) => state.liability);
-
-  const [selectedBranches, setSelectedBranches] = useState(
-    selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
-  );
-  const defaultAmounts = selectedItems?.branches?.map(
-    (branch) => branch?.amount
-  );
-
+function ReminderEditForm() {
+  const { selectedItems } = useSelector((state) => state.reminder);
   const [loading, setLoading] = useState(false);
 
-  const { categories, particulars, branches } = useSelector(
+  const { categories, particulars, banks } = useSelector(
     (state) => state.general
   );
+  const { branches } = useSelector((state) => state.general);
+
+  const branch = useBranchNameFinder(selectedItems?.branch);
+  console.log(branch, "branch");
 
   const curCat = useCategoryFinder(selectedItems?.catagory)?.name;
   const curPart = useParticularFinder(selectedItems?.particular)?.name;
@@ -54,16 +52,20 @@ function LiabilityEditForm() {
     type: selectedItems?.type,
     purpose: selectedItems?.purpose,
     status: selectedItems?.status,
+    branch: branch,
+    amount: selectedItems?.amount,
+    banks: selectedItems?.bank,
   };
+  console.log(selectedItems);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },       
+    formState: { errors },
     reset,
     setError,
     clearErrors,
-  } = useForm();
+  } = useForm({ defaultValues });
 
   useEffect(() => {
     // Reset form values based on the latest selectedItems
@@ -73,43 +75,34 @@ function LiabilityEditForm() {
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
       status: selectedItems?.status || "",
+      branch: branch || "",
+      amount: selectedItems?.amount || "",
+      bank: selectedItems?.amount || "",
     });
     setCatagory(curCat);
     setParticular(curPart);
-    setSelectedBranches(
-      selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
-    );
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
-    const branchObjects = selectedBranches.map((branch) => {
-      const branchObj = branches.find(
-        (branchObjs) => branchObjs.name === branch
-      );
-
-      return {
-        branch: branchObj._id,
-        amount: parseFloat(data[branchObj.name]),
-      };
-    });
-
-    data.branches = branchObjects;
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
-    data.type = "liability";
+
+    const branch = branchFinder(data.branch, branches);
+    if (!branch) return toast.error("Something went wrong..");
+    data.branch = branch?._id;
 
     try {
-      await apiClient.patch("/liability", data);
-      toast.success("Successfully created new Liability");
-      refreshLiability();
+      setLoading(true);
+      await apiClient.patch("/reminders", data);
+      toast.success("Successfully created new Reminder");
+      refreshReminders();
       reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
-
-    return;
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
@@ -123,22 +116,20 @@ function LiabilityEditForm() {
         </div>
         <div className="form-row">
           <Purpose register={register} errors={errors} />
-          <StatusSel register={register} errors={errors} />
+          <Amount register={register} errors={errors} />
         </div>
 
         <div className="form-row">
-          <DateSel register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
+          <BranchSelector register={register} errors={errors} />
+          <StatusSel register={register} errors={errors} />
         </div>
       </div>
-      <BranchComponent
-        setSelectedBranches={setSelectedBranches}
-        clearErrors={clearErrors}
-        selectedBranches={selectedBranches}
-        errors={errors}
-        register={register}
-        defaultAmounts={defaultAmounts}
-      />
+
+      <div className="form-row">
+        <DateSel register={register} errors={errors} />
+        <Remark register={register} errors={errors} />
+      </div>
+
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
         <Button
@@ -154,4 +145,4 @@ function LiabilityEditForm() {
   );
 }
 
-export default LiabilityEditForm;
+export default ReminderEditForm;
