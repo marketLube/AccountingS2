@@ -108,7 +108,7 @@ function DaybookEditForm() {
     data.bank = bankIdFiner(banks, data.bank);
 
     try {
-      await apiClient.post("/transaction", data);
+      await apiClient.patch("/transaction", data);
       toast.success("Successfully created new Transaction");
       refreshTransaction();
       reset();

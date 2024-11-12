@@ -6,17 +6,34 @@ import {
 } from "@/app/_services/finders";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setInvoiceSelectedItems } from "@/lib/slices/invoiceSlice";
 
 function InvoiceTableItems({ item }) {
+  const { selectedItems } = useSelector((state) => state.invoice);
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = () => {
+    if (selectedItems?._id === item?._id) {
+      dispatch(setInvoiceSelectedItems({}));
+    } else {
+      dispatch(setInvoiceSelectedItems(item));
+    }
+  };
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={selectedItems?._id === item?._id}
+            onChange={handleCheckboxChange}
+          />
         </span>
         <span
           className="table-col particular table-body-col"
