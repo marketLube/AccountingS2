@@ -5,13 +5,19 @@ import Button from "@/app/_components/utils/Button";
 import { GiSettingsKnobs } from "react-icons/gi";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsLiabilityNewEntry } from "@/lib/slices/liabilitySlice";
+import {
+  setIsLiabilityNewEntry,
+  setLiabilityIsEdit,
+} from "@/lib/slices/liabilitySlice";
 import LiabilityNewEntirForm from "../../_Forms/_liabilityForms/LiabilityNewEntirForm";
 import FsModal from "../../utils/FsModal";
+import LiabilityEditForm from "../../_Forms/_liabilityForms/LiabilityEditForm";
 
 function LiabilityHead() {
   const dispatch = useDispatch();
-  const { isNewEntry } = useSelector((state) => state.liability);
+  const { isNewEntry, selectedItems, isEdit } = useSelector(
+    (state) => state.liability
+  );
   return (
     <>
       <LayoutHead>
@@ -19,7 +25,13 @@ function LiabilityHead() {
           <Button onClick={() => dispatch(setIsLiabilityNewEntry(true))}>
             + New Entri
           </Button>
-          <Button type="secondary">Edit</Button>
+          <Button
+            onClick={() => dispatch(setLiabilityIsEdit(true))}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={selectedItems?._id}
+          >
+            Edit
+          </Button>
           <Button type="thertiary">Log</Button>
         </>
         <>
@@ -32,6 +44,9 @@ function LiabilityHead() {
 
       <FsModal isOpen={isNewEntry} setIsCancel={setIsLiabilityNewEntry}>
         <LiabilityNewEntirForm />
+      </FsModal>
+      <FsModal isOpen={isEdit} setIsCancel={setLiabilityIsEdit}>
+        <LiabilityEditForm />
       </FsModal>
     </>
   );

@@ -28,8 +28,9 @@ function DaybookHead() {
     particulars,
     curCat,
     curParticular,
+    curBank,
   } = useSelector((state) => state.daybook);
-  const { branchNames, categoryNames, bankNames, curBank } = useSelector(
+  const { branchNames, categoryNames, bankNames } = useSelector(
     (state) => state.general
   );
 
