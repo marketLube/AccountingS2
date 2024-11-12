@@ -4,12 +4,16 @@ import AppError from "../Utilities/appError.js";
 import APIFeatures from "../APIFeatures/APIFeatures.js";
 import Catagory from "../Models/catagoryModel.js";
 import Particulars from "../Models/particularsModel.js";
+import { idChecker } from "../APIFeatures/idChecker.js";
+import { getTransactionTotal } from "../Aggregation/transactionGrandTotal.js";
 
 export const getAll = (Model) => {
   return catchAsync(async (req, res, next) => {
+    idChecker(req.query);
+
     let filter = {};
     const features = new APIFeatures(Model, Model.find(filter), req.query);
-
+    console.log(req.query, "query");
     features
       .filter()
       .sort()
@@ -20,6 +24,9 @@ export const getAll = (Model) => {
       .search();
 
     const docs = await features.query;
+
+    const total = await getTransactionTotal(req);
+    console.log(total, "total");
 
     res.status(200).json({
       status: "success",

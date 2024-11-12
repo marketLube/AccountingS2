@@ -11,7 +11,6 @@ import {
   setDaybookCurCat,
   setDaybookCurParticular,
   setDaybookIsEdit,
-  setDaybookParticular,
   setIsDaybookNewEntri,
 } from "@/lib/slices/daybookSlice";
 import FsModal from "../../utils/FsModal";
@@ -28,8 +27,9 @@ function DaybookHead() {
     particulars,
     curCat,
     curParticular,
+    curBank,
   } = useSelector((state) => state.daybook);
-  const { branchNames, categoryNames, bankNames, curBank } = useSelector(
+  const { branchNames, categoryNames, bankNames } = useSelector(
     (state) => state.general
   );
 

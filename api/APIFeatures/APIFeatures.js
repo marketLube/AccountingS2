@@ -39,7 +39,7 @@ class APIFeatures {
     excludedFields.forEach((el) => delete queryObj[el]);
 
     // Convert category ID to ObjectId if present
-    idChecker(queryObj);
+    // idChecker(queryObj);
 
     this.query = this.query.find(queryObj);
 
