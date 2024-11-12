@@ -69,7 +69,19 @@ body {
 
     &-bottom {
       display: flex;
+      justify-content: space-between;
       gap: 0.5rem;
+
+      &-left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+        & button {
+          width: fit-content;
+        }
+      }
     }
   }
 }
