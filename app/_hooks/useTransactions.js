@@ -1,6 +1,6 @@
 import apiClient from "@/lib/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { queryClient } from "../_components/layouts/AppLayout";
 import {
   useBankIdFinder,
@@ -12,10 +12,13 @@ import {
 import {
   setDaybookCurParticular,
   setDaybookParticular,
+  setDaybookSummery,
 } from "@/lib/slices/daybookSlice";
 import useCatToParticular from "./useCatToParticular";
+import { useEffect } from "react";
 
 export default function useTransactions() {
+  const dispatch = useDispatch();
   const { type, curBranch, curCat, curParticular, curBank, page } = useSelector(
     (state) => state.daybook
   );
@@ -30,8 +33,9 @@ export default function useTransactions() {
   let endpoint = `/transaction?page=${page}`;
 
   if (type !== "All Status") {
-    endpoint += `type=${type}`;
+    endpoint += `&type=${type}`;
   }
+  console.log(type);
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
   }
@@ -44,7 +48,7 @@ export default function useTransactions() {
   if (bank?._id) {
     endpoint += `&bank=${bank?._id}`;
   }
-
+  console.log(endpoint, "enpoint");
   const {
     data: transactions,
     isLoading,
@@ -53,10 +57,20 @@ export default function useTransactions() {
     refetch,
   } = useQuery({
     queryKey: ["transactions", endpoint],
-    queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data),
   });
 
-  return { isLoading, isError, error, refetch, transactions };
+  useEffect(() => {
+    dispatch(setDaybookSummery(transactions?.summery));
+  }, [transactions]);
+
+  return {
+    isLoading,
+    isError,
+    error,
+    refetch,
+    transactions: transactions?.data,
+  };
 }
 
 export function refreshTransaction() {

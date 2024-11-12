@@ -5,6 +5,9 @@ export const getTransactionTotal = async (req) => {
   const query = { ...req.query };
   const branchId = req.query.branchId;
 
+  delete query.page;
+  delete query.limit;
+
   // Base pipeline for filtering
   const pipeline = [];
 
