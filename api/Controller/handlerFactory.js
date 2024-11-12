@@ -31,6 +31,7 @@ export const getAll = (Model) => {
     res.status(200).json({
       status: "success",
       results: docs.length,
+      summery: total,
       data: docs,
     });
   });
