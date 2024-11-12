@@ -9,19 +9,36 @@ import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 import Log from "@/api/Models/logModel";
+import { useDispatch, useSelector } from "react-redux";
+import { setAssetsSelectedItems } from "@/lib/slices/assetsSlice";
 
 function AssetesTableItems({ item }) {
+  const { selectedItems } = useSelector((state) => state.assets);
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const branch = useBranchNameFinder(item.branch);
 
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = () => {
+    if (selectedItems?._id === item?._id) {
+      dispatch(setAssetsSelectedItems({}));
+    } else {
+      dispatch(setAssetsSelectedItems(item));
+    }
+  };
+
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={selectedItems?._id === item?._id}
+            onChange={handleCheckboxChange}
+          />
         </span>
         <span className="table-col particular table-body-col">
           {item?.item}

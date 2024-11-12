@@ -11,10 +11,10 @@ import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
 import { useDispatch, useSelector } from "react-redux";
-import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
+import { setBranchwiseSelectedItems } from "@/lib/slices/branchwiseSlice";
 
 function BranchwiseTableItems({ transaction }) {
-  const { selectedItems } = useSelector((state) => state.daybook);
+  const { selectedItems } = useSelector((state) => state.branchwise);
   const particular = useParticularFinder(transaction.particular);
   const category = useCategoryFinder(transaction.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
@@ -25,9 +25,9 @@ function BranchwiseTableItems({ transaction }) {
 
   const handleCheckboxChange = () => {
     if (selectedItems?._id === transaction?._id) {
-      dispatch(setDaybookSelectedItems({}));
+      dispatch(setBranchwiseSelectedItems({}));
     } else {
-      dispatch(setDaybookSelectedItems(transaction));
+      dispatch(setBranchwiseSelectedItems(transaction));
     }
   };
 

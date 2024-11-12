@@ -8,19 +8,36 @@ import {
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 import { truncate } from "@/app/_services/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { setCapitalSelectedItems } from "@/lib/slices/capitalSlice";
 
 function CapitalTableItems({ item }) {
+  const { selectedItems } = useSelector((state) => state.capital);
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const branch = useBranchNameFinder(item.branch);
 
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = () => {
+    if (selectedItems?._id === item?._id) {
+      dispatch(setCapitalSelectedItems({}));
+    } else {
+      dispatch(setCapitalSelectedItems(item));
+    }
+  };
+
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={selectedItems?._id === item?._id}
+            onChange={handleCheckboxChange}
+          />
         </span>
         <span className="table-col particular table-body-col">
           {item?.invested}

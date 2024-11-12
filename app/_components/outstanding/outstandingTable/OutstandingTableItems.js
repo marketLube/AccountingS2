@@ -10,8 +10,11 @@ import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
+import { useDispatch, useSelector } from "react-redux";
+import { setLiabilitySelectedItems } from "@/lib/slices/liabilitySlice";
 
 function OutstandingTableItems({ item }) {
+  const { selectedItems } = useSelector((state) => state.liability);
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
@@ -19,11 +22,25 @@ function OutstandingTableItems({ item }) {
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const branchNames = getBranchNames(item?.branches);
 
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = () => {
+    if (selectedItems?._id === item?._id) {
+      dispatch(setLiabilitySelectedItems({}));
+    } else {
+      dispatch(setLiabilitySelectedItems(item));
+    }
+  };
+
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={selectedItems?._id === item?._id}
+            onChange={handleCheckboxChange}
+          />
         </span>
         <span
           className="table-col particular table-body-col"

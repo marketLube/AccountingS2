@@ -10,8 +10,11 @@ import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
+import { setReminderSelectedItems } from "@/lib/slices/reminderSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function ReminderTableItems({ item }) {
+  const { selectedItems } = useSelector((state) => state.reminder);
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
@@ -19,11 +22,25 @@ function ReminderTableItems({ item }) {
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const branch = useBranchNameFinder(item.branch);
 
+  const dispatch = useDispatch();
+
+  const handleCheckboxChange = () => {
+    if (selectedItems?._id === item?._id) {
+      dispatch(setReminderSelectedItems({}));
+    } else {
+      dispatch(setReminderSelectedItems(item));
+    }
+  };
+
   return (
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={selectedItems?._id === item?._id}
+            onChange={handleCheckboxChange}
+          />
         </span>
         <span
           className="table-col particular table-body-col"
