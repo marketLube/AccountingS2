@@ -89,7 +89,17 @@ body {
 }
 .layout-footer-bottom {
   display: flex;
+  justify-content: space-between;
   gap: 0.5rem;
+}
+.layout-footer-bottom-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.layout-footer-bottom-left button {
+  width: fit-content;
 }
 
 @keyframes navText {

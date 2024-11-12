@@ -6,7 +6,9 @@ import PageNavigate from "../../utils/_pagination/PageNavigate";
 import { setDaybookCurrentPage } from "@/lib/slices/daybookSlice";
 
 function DaybookFooter() {
-  const { currentPage, btnDisable } = useSelector((state) => state.daybook);
+  const { currentPage, btnDisable, curCat, curParticular } = useSelector(
+    (state) => state.daybook
+  );
   return (
     <>
       <div className={`layout-footer`}>
@@ -22,8 +24,19 @@ function DaybookFooter() {
         </div>
       </div>
       <div className="layout-footer-bottom">
+        <div className="layout-footer-bottom-left">
+          <Button>
+            {curCat?.startsWith("All") ? `Total : ${"000"}` : `${curCat} : 000`}
+          </Button>
+          {!curParticular?.startsWith("All") && (
+            <Button>
+              {curParticular?.startsWith("All")
+                ? `Total: ${"000"}`
+                : `${curParticular} : 000`}
+            </Button>
+          )}
+        </div>
         <Button>Download Report</Button>
-        <Button>Total</Button>
       </div>
     </>
   );

@@ -11,7 +11,6 @@ import {
   setDaybookCurCat,
   setDaybookCurParticular,
   setDaybookIsEdit,
-  setDaybookParticular,
   setIsDaybookNewEntri,
 } from "@/lib/slices/daybookSlice";
 import FsModal from "../../utils/FsModal";

@@ -16,7 +16,7 @@ import {
 import useCatToParticular from "./useCatToParticular";
 
 export default function useTransactions() {
-  const { type, curBranch, curCat, curParticular, curBank } = useSelector(
+  const { type, curBranch, curCat, curParticular, curBank, page } = useSelector(
     (state) => state.daybook
   );
   const branchId = useBranchIdFinder(curBranch)?._id;
@@ -25,12 +25,9 @@ export default function useTransactions() {
 
   const bank = useBankIdFinder(curBank);
 
-  console.log(curBank, "curbank");
-  console.log(bank, "bank");
-
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
-  let endpoint = `/transaction?`;
+  let endpoint = `/transaction?page=${page}`;
 
   if (type !== "All Status") {
     endpoint += `type=${type}`;

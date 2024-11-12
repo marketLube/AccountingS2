@@ -15,6 +15,9 @@ function DaybookTable() {
 
   const veiwEight = transactions?.slice(startPage, startPage + 8);
 
+  console.log(startPage, "page");
+  console.log(transactions, "trans");
+
   useEffect(() => {
     if (veiwEight?.length < 8) {
       dispatch(setBtnDisable(true));
