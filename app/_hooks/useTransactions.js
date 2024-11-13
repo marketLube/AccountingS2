@@ -48,6 +48,7 @@ export default function useTransactions() {
   if (bank?._id) {
     endpoint += `&bank=${bank?._id}`;
   }
+
   const {
     data: transactions,
     isLoading,
