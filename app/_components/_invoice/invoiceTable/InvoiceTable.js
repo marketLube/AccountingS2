@@ -13,8 +13,14 @@ import InvoiceTableItems from "./InvoiceTableItems";
 function InvoiceTable() {
   const { startPage } = useSelector((state) => state.invoice);
 
-  const { refetch, reminders, isError, isLoading, error } = useReminders();
-  const veiwEight = useViewEight(reminders, startPage, setInvoiceBtnDisable);
+  const {
+    refetch,
+    reminders: invoice,
+    isError,
+    isLoading,
+    error,
+  } = useReminders();
+  const veiwEight = useViewEight(invoice, startPage, setInvoiceBtnDisable);
 
   return (
     <div className="table">

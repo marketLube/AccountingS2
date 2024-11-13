@@ -540,6 +540,29 @@ export function Gst({ register, errors }) {
   );
 }
 
+export function TdsPercent({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="TdsPercentType" className="type-option-label">
+        TDS
+      </label>
+      <div className="type-options">
+        <label className="type-option">
+          <input type="radio" value="incl" {...register("tdsType")} />
+          Payable
+        </label>
+        <label className="type-option">
+          <input type="radio" value="excl" {...register("tdsType")} />
+          Receivable
+        </label>
+      </div>
+      {errors.tdsType && (
+        <span className="form-group-error">{errors.tdsType.message}</span>
+      )}
+    </div>
+  );
+}
+
 export function DateSel({ register, errors }) {
   return (
     <div className="form-group">

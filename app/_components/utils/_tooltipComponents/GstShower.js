@@ -14,8 +14,9 @@ function GstShower({ data, amount }) {
   }
   return (
     <div>
-      <span>{data.gstType === "incl" ? "Incl" : "Excl"}</span>
-      <span className="small-text table-small-text">{gstPercent}%</span>
+      <span className="small-text table-small-text">
+        {data.gstType === "incl" ? "Incl" : "Excl"} {gstPercent}%
+      </span>
       <span className="small-text table-small-text">
         {gstAmount.toFixed(2)}
       </span>

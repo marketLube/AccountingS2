@@ -10,6 +10,7 @@ import {
   Gst,
   Tds,
   GstPercent,
+  TdsPercent,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
@@ -51,6 +52,7 @@ function DaybookNewEntirForm() {
       tds: "",
       gstPercent: "",
       gstType: "",
+      tdsType: "",
     },
   });
 
@@ -86,13 +88,8 @@ function DaybookNewEntirForm() {
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
-        <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
-        </div>
+        <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
+
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Remark register={register} errors={errors} />
@@ -113,6 +110,7 @@ function DaybookNewEntirForm() {
       />
       <div className="form-row">
         <Tds register={register} errors={errors} />
+        <TdsPercent register={register} errors={errors} />
         <Gst register={register} errors={errors} />
         <GstPercent register={register} errors={errors} />
       </div>

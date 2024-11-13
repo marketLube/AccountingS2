@@ -15,6 +15,9 @@ function LedgerTableItems({ item }) {
   const category = useCategoryFinder(item?.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
+  console.log(item, "dataasssssss");
+
+  const particularObj = useParticularFinder(item?.particular);
 
   const dispatch = useDispatch();
 
@@ -41,18 +44,26 @@ function LedgerTableItems({ item }) {
           onMouseEnter={() => setIsPartooltip(true)}
           onMouseLeave={() => setIsPartooltip(false)}
         >
-          Particular
+          {particularObj?.name}
         </span>
-        <span className="table-col date table-body-col">date</span>
-        <span className="table-col amount table-body-col">amount</span>
-        <span className="table-col debit table-body-col">debited</span>
-        <span className="table-col credit table-body-col">Credited</span>
-        <span className="table-col liability table-body-col">liability</span>
+        <span className="table-col date table-body-col">
+          {item?.formattedDate}
+        </span>
+        <span className="table-col amount table-body-col">{item?.amount}</span>
+        <span className="table-col debit table-body-col">{item?.debited}</span>
+        <span className="table-col credit table-body-col">
+          {item?.credited}
+        </span>
+        <span className="table-col liability table-body-col">
+          {item?.liability}
+        </span>
         <span className="table-col outstanding table-body-col">
-          outstanding
+          {item?.outstanding}
         </span>
-        <span className="table-col tds table-body-col">Tds paid</span>
-        <span className="table-col tds table-body-col">Tds Recieved</span>
+        <span className="table-col tds table-body-col">{item?.Tdspaid}</span>
+        <span className="table-col tds table-body-col">
+          {item?.TdsRecieved}
+        </span>
       </div>
       <Tooltip
         isVisible={isParTooltip}
