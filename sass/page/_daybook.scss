@@ -5,4 +5,19 @@
   &-table {
     @include mixins.fillArea;
   }
+
+  &__datePopup {
+    @include mixins.flex(center);
+    width: 50%;
+    height: 40rem;
+  }
+}
+.popupContainer {
+  @include mixins.flex(between);
+}
+
+.setDate_daybook {
+  width: 100%;
+  @include mixins.flex(center);
+  gap: 1rem;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSelector } from "react-redux";
+import { calculateDateRange } from "./helpers";
 
 export const useParticularFinder = (id) => {
   const { particulars } = useSelector((state) => state.general);
@@ -61,4 +62,41 @@ export const useBranchNameFinder = (id) => {
 export const getBranchNames = (branches) => {
   if (!branches) return [];
   return branches.map((branch) => branch?.branch?.name);
+};
+
+export const dateFinder = (selectedDate) => {
+  const date = today();
+  let startDate = new Date(date);
+  let endDate = new Date(date);
+
+  switch (selectedDate) {
+    case "Today":
+      break;
+    case "Yesterday": {
+      const { startDate: yesterday } = calculateDateRange(1);
+      startDate = new Date(yesterday);
+      endDate = new Date(yesterday);
+      break;
+    }
+    case "Last 30 Days": {
+      const { startDate: thirtyDays } = calculateDateRange(30);
+      startDate = new Date(thirtyDays);
+      break;
+    }
+    case "Last 60 Days": {
+      const { startDate: sixty } = calculateDateRange(60);
+      startDate = new Date(sixty);
+      break;
+    }
+    case "All": {
+      startDate = new Date(new Date().getFullYear(), 0, 1);
+      endDate = new Date(today());
+      break;
+    }
+    default: {
+      startDate = new Date(new Date().getFullYear(), 0, 1);
+      endDate = new Date(new Date(new Date().getFullYear(), 0, 1));
+    }
+  }
+  return { startDate, endDate };
 };

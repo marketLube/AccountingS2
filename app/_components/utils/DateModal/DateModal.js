@@ -1,5 +1,5 @@
+import { Modal } from "antd";
 import Button from "../Button";
-import QuickDateFilters from "./QuickDateFilters";
 
 function DateModal({
   handleSelectChange = "",
@@ -7,17 +7,16 @@ function DateModal({
   selectedDate = "2024",
   children = "",
   isOpen = false,
-  handleCancel,
+  handleDateModal,
 }) {
   return (
     <Modal
       open={isOpen}
       confirmLoading={true}
-      onCancel={handleCancel}
+      onCancel={handleDateModal}
       footer={null}
       width={"60%"}
     >
-      <QuickDateFilters dateOptions={dateOptions} selectedDate={selectedDate} />
       <h4 className="form-head">Select Date</h4>
       {children}
       <div className="setDate_daybook">
