@@ -10,6 +10,7 @@ import {
   Gst,
   Tds,
   GstPercent,
+  BranchSelector,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
@@ -88,7 +89,8 @@ function CommissionNewEntryForm() {
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
         <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
+          <DateSel register={register} errors={errors} />
+          <BranchSelector register={register} errors={errors} />
           <ParticularSelector
             particular={particular}
             setParticular={setParticular}
@@ -97,12 +99,12 @@ function CommissionNewEntryForm() {
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Remark register={register} errors={errors} />
+          <Remark register={register} errors={errors} />
         </div>
 
         <div className="form-row">
           <Bank register={register} errors={errors} />
           <Radio register={register} errors={errors} />
-          <DateSel register={register} errors={errors} />
         </div>
       </div>
       <BranchComponent

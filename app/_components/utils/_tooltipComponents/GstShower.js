@@ -1,16 +1,24 @@
-function GstShower({ data }) {
-  if (!data) return;
+"use client";
+function GstShower({ data, amount }) {
+  if (!data || !amount) return null;
 
-  let type = "No Gst";
+  const validAmount = parseFloat(amount) || 0;
+  const gstPercent = parseFloat(data.gstPercent) || 0;
+
+  let gstAmount = 0;
+
   if (data?.gstType === "incl") {
-    type = "Incl" + ". " + data?.gstPercent;
-  } else if (type === "excl") {
-    type = "Exc" + ". " + data?.gstPercent;
+    gstAmount = (validAmount * gstPercent) / (100 + gstPercent);
+  } else if (data?.gstType === "excl") {
+    gstAmount = (validAmount * gstPercent) / 100;
   }
   return (
     <div>
-      <span>{type}</span>
-      <span className="small-text table-small-text">{data?.gstPercent}</span>
+      <span>{data.gstType === "incl" ? "Incl" : "Excl"}</span>
+      <span className="small-text table-small-text">{gstPercent}%</span>
+      <span className="small-text table-small-text">
+        {gstAmount.toFixed(2)}
+      </span>
     </div>
   );
 }
