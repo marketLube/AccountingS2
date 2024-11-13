@@ -35,7 +35,7 @@ export default function useTransactions() {
   if (type !== "All Status") {
     endpoint += `&type=${type}`;
   }
-  console.log(type);
+
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
   }
@@ -48,7 +48,6 @@ export default function useTransactions() {
   if (bank?._id) {
     endpoint += `&bank=${bank?._id}`;
   }
-  console.log(endpoint, "enpoint");
   const {
     data: transactions,
     isLoading,

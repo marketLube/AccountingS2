@@ -1,9 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../_components/layouts/AppLayout";
 import apiClient from "@/lib/axiosInstance";
+import { useSelector } from "react-redux";
+import { useBranchIdFinder } from "../_services/finders";
 
 export default function useAssets() {
   let endpoint = `/assets?`;
+  const { curBranch } = useSelector((state) => state.branchwise);
+  const assetsCurbranch = useBranchIdFinder(curBranch);
+  console.log(curBranch, "ufkfg");
+
+  if (assetsCurbranch) {
+    endpoint += `branchId=${assetsCurbranch?._id}`;
+  }
   const {
     data: assets,
     isLoading,
@@ -11,10 +20,10 @@ export default function useAssets() {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["assets"],
+    queryKey: ["assets", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
   });
-  console.log(assets, "assets");
+
   return { isLoading, isError, error, refetch, assets };
 }
 export function refreshAssets() {
