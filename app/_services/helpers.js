@@ -69,4 +69,18 @@ export function getCurrentMonthName() {
   return monthNames[currentMonthIndex];
 }
 
-console.log(getCurrentMonthName()); // Output will be "November" if run in November
+export default function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const day = String(date.getDate()).padStart(2, "0"); // Ensure two digits
+
+  return `${year}-${month}-${day}`;
+}
+
+export const calculateDateRange = (daysAgo) => {
+  const startDate = formatDate(
+    new Date(new Date().setDate(new Date().getDate() - daysAgo))
+  );
+  const endDate = formatDate(new Date());
+  return { startDate, endDate };
+};

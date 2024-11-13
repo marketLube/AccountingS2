@@ -1,30 +1,17 @@
-import Button from "../Button";
-import QuickDateFilters from "./QuickDateFilters";
+import { Modal } from "antd";
 
-function DateModal({
-  handleSelectChange = "",
-  dateOptions = [],
-  selectedDate = "2024",
-  children = "",
-  isOpen = false,
-  handleCancel,
-}) {
+function DateModal({ children = "", isOpen = false, handleDateModal }) {
   return (
     <Modal
       open={isOpen}
       confirmLoading={true}
-      onCancel={handleCancel}
+      onCancel={handleDateModal}
+      className="date-modal"
       footer={null}
-      width={"60%"}
+      width={"70%"}
     >
-      <QuickDateFilters dateOptions={dateOptions} selectedDate={selectedDate} />
-      <h4 className="form-head">Select Date</h4>
+      {/* <h4 className="date-title">Select Date</h4> */}
       {children}
-      <div className="setDate_daybook">
-        <Button style={{ backgroundColor: "rgb(39, 1, 100)" }}>Download</Button>
-        <Button>Clear</Button>
-        <Button>Set Date</Button>
-      </div>
     </Modal>
   );
 }
