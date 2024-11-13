@@ -74,6 +74,7 @@ function DaybookHead() {
   };
 
   const handleSelectChange = (range) => {
+    console.log(range, "select");
     return () => dispatch(setDayBookSelectedDate(range));
   };
 
