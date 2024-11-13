@@ -1,10 +1,7 @@
 "use client";
 import { useSelector } from "react-redux";
 
-function ParticularSelector({ particular, setParticular }) {
-  const { particulars } = useSelector((state) => state.general);
-  if (!particulars) return null;
-
+function ParticularSelector({ particular, setParticular, particulars }) {
   return (
     <div className="catagory-selector">
       <select

@@ -16,6 +16,7 @@ function InvoiceTableItems({ item }) {
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
 
+  console.log(item, "kkkkkkkkk");
   const dispatch = useDispatch();
 
   const handleCheckboxChange = () => {
@@ -25,6 +26,7 @@ function InvoiceTableItems({ item }) {
       dispatch(setInvoiceSelectedItems(item));
     }
   };
+
   return (
     <>
       <div className="table-col">
@@ -42,12 +44,20 @@ function InvoiceTableItems({ item }) {
         >
           invoice No.
         </span>
-        <span className="table-col date table-body-col">Bill to</span>
-        <span className="table-col amount table-body-col">Description</span>
-        <span className="table-col remark table-body-col">billed by</span>
-        <span className="table-col branch table-body-col">Quantity</span>
-        <span className="table-col branch table-body-col">Unit price</span>
-        <span className="table-col branch table-body-col">Total</span>
+        <span className="table-col date table-body-col">{item?.Billto}</span>
+        <span className="table-col amount table-body-col">
+          {item?.Description}
+        </span>
+        <span className="table-col remark table-body-col">
+          {item?.billedby}
+        </span>
+        <span className="table-col branch table-body-col">
+          {item?.Quantity}
+        </span>
+        <span className="table-col branch table-body-col">
+          {item?.Unitprice}
+        </span>
+        <span className="table-col branch table-body-col">{item?.Total}</span>
       </div>
       <Tooltip
         isVisible={isParTooltip}

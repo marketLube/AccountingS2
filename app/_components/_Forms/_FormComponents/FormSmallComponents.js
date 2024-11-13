@@ -19,6 +19,130 @@ export function Purpose({ register, errors }) {
     </div>
   );
 }
+export function Student({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="student">Student</label>
+      <input
+        type="text"
+        id="student"
+        {...register("student", {
+          required: "Stuent is required",
+        })}
+      />
+      {errors.student && (
+        <span className="form-group-error">{errors.student.message}</span>
+      )}
+    </div>
+  );
+}
+export function Country({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="Country">Country</label>
+      <input
+        type="text"
+        id="Country"
+        {...register("Country", {
+          required: "Country is required",
+        })}
+      />
+      {errors.country && (
+        <span className="form-group-error">{errors.country.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function University({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="University">University</label>
+      <input
+        type="text"
+        id="University"
+        {...register("University", {
+          required: "University is required",
+        })}
+      />
+      {errors.university && (
+        <span className="form-group-error">{errors.university.message}</span>
+      )}
+    </div>
+  );
+}
+export function Commission({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="Commission">Commission</label>
+      <input
+        type="text"
+        id="Commission"
+        {...register("Commission", {
+          required: "Commission is required",
+        })}
+      />
+      {errors.commission && (
+        <span className="form-group-error">{errors.commission.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function INR({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="INR">INR</label>
+      <input
+        type="number"
+        id="INR"
+        {...register("INR", {
+          required: "INR is required",
+        })}
+      />
+      {errors.inr && (
+        <span className="form-group-error">{errors.inr.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function Agent({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="Agent">Agent</label>
+      <input
+        type="text"
+        id="Agent"
+        {...register("Agent", {
+          required: "Agent is required",
+        })}
+      />
+      {errors.agent && (
+        <span className="form-group-error">{errors.agent.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function Counsillor({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="counsillor">Counsillor</label>
+      <input
+        type="text"
+        id="counsillor"
+        {...register("counsillor", {
+          required: "counsillor is required",
+        })}
+      />
+      {errors.counsillor && (
+        <span className="form-group-error">{errors.counsillor.message}</span>
+      )}
+    </div>
+  );
+}
+
 export function Property({ register, errors, isDisabled }) {
   return (
     <div className="form-group">
@@ -231,6 +355,45 @@ export function BranchSelector({ register, errors }) {
   );
 }
 
+export function IntakeSelector({ register, errors }) {
+  const { intake } = useSelector((state) => state.general);
+  return (
+    <div className="form-group">
+      <label htmlFor="intakeselector">Intake</label>
+      <select id="intake" {...register("intake", { required: " required" })}>
+        <option value="">Select intake</option>
+        {intake?.map((intake, i) => (
+          <option key={i} value={intake}>
+            {intake}
+          </option>
+        ))}
+      </select>
+      {errors.intake && (
+        <span className="form-group-error">{errors.intake.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function MonthSelector({ register, errors }) {
+  const { month } = useSelector((state) => state.general);
+  return (
+    <div className="form-group">
+      <label htmlFor="monthselector">Intake Month</label>
+      <select id="month" {...register("month", { required: " required" })}>
+        <option value="">Select Intake Month</option>
+        {month?.map((month, i) => (
+          <option key={i} value={month}>
+            {month}
+          </option>
+        ))}
+      </select>
+      {errors.month && (
+        <span className="form-group-error">{errors.month.message}</span>
+      )}
+    </div>
+  );
+}
 // GstPercent Component for GST Percent Selection
 export function GstPercent({ register, errors }) {
   return (
@@ -372,6 +535,29 @@ export function Gst({ register, errors }) {
       </div>
       {errors.gstType && (
         <span className="form-group-error">{errors.gstType.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function TdsPercent({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="TdsPercentType" className="type-option-label">
+        TDS
+      </label>
+      <div className="type-options">
+        <label className="type-option">
+          <input type="radio" value="incl" {...register("tdsType")} />
+          Payable
+        </label>
+        <label className="type-option">
+          <input type="radio" value="excl" {...register("tdsType")} />
+          Receivable
+        </label>
+      </div>
+      {errors.tdsType && (
+        <span className="form-group-error">{errors.tdsType.message}</span>
       )}
     </div>
   );

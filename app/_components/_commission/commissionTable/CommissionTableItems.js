@@ -35,14 +35,28 @@ function CommissionTableItems({ item }) {
             onChange={handleCheckboxChange}
           />
         </span>
-        <span
-          className="table-col particular table-body-col"
-          onMouseEnter={() => setIsPartooltip(true)}
-          onMouseLeave={() => setIsPartooltip(false)}
-        >
-          Date
-        </span>
-        <span className="table-col date table-body-col">Students</span>
+        <span className="table-col particular table-body-col">Date</span>
+        <div>
+          <span className="table-col date table-body-col">Students</span>
+          <span
+            className="table-col date table-body-col"
+            style={{ color: "gray" }}
+          >
+            UK BPP
+          </span>
+          <span
+            className="table-col date table-body-col"
+            style={{ color: "gray" }}
+          >
+            hanna releaved
+          </span>
+          <span
+            className="table-col date table-body-col"
+            style={{ color: "gray" }}
+          >
+            November| November-March
+          </span>
+        </div>
         <span className="table-col amount table-body-col">Branch</span>
         <span className="table-col remark table-body-col">Course Fee</span>
         <span className="table-col branch table-body-col">Receivable</span>

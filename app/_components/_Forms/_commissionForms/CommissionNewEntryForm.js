@@ -11,6 +11,16 @@ import {
   Tds,
   GstPercent,
   BranchSelector,
+  Student,
+  Counsillor,
+  Country,
+  University,
+  Commission,
+  INR,
+  Agent,
+  IntakeSelector,
+  MonthSelector,
+  StatusSel,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
@@ -91,44 +101,43 @@ function CommissionNewEntryForm() {
         <div className="form-row">
           <DateSel register={register} errors={errors} />
           <BranchSelector register={register} errors={errors} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
+          <Counsillor register={register} errors={errors} />
         </div>
+        <label style={{ width: "10rem", margin: "auto" }}>
+          Student Details
+        </label>
         <div className="form-row">
-          <Purpose register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
+          <Student register={register} errors={errors} />
+          <Country register={register} errors={errors} />
+          <University register={register} errors={errors} />
         </div>
 
         <div className="form-row">
           <Bank register={register} errors={errors} />
-          <Radio register={register} errors={errors} />
+          <Commission register={register} errors={errors} />
+          <INR register={register} errors={errors} />
         </div>
-      </div>
-      <BranchComponent
-        setSelectedBranches={setSelectedBranches}
-        clearErrors={clearErrors}
-        selectedBranches={selectedBranches}
-        errors={errors}
-        register={register}
-      />
-      <div className="form-row">
-        <Tds register={register} errors={errors} />
-        <Gst register={register} errors={errors} />
-        <GstPercent register={register} errors={errors} />
-      </div>
-      <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
-        <Button
-          type="submit"
-          style={loading ? { opacity: 0.5 } : {}}
-          className={`btn primary-blue-btn form-submit`}
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </Button>
+
+        <div className="form-row">
+          <Agent register={register} errors={errors} />
+          <IntakeSelector register={register} errors={errors} />
+          <MonthSelector register={register} errors={errors} />
+        </div>
+        <div className="form-row">
+          <StatusSel register={register} errors={errors} />
+          <Remark register={register} errors={errors} />
+        </div>
+        <div className="form-btn-group form-submit-btns">
+          <Button type="clear">Clear</Button>
+          <Button
+            type="submit"
+            style={loading ? { opacity: 0.5 } : {}}
+            className={`btn primary-blue-btn form-submit`}
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
+        </div>
       </div>
     </form>
   );
