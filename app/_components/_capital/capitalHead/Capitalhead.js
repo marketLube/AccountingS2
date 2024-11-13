@@ -88,7 +88,6 @@ function Capitalhead() {
             <GiSettingsKnobs />
           </Button>
         </>
-        <></>
         <>
           <Search />
           <Button type="filter">
