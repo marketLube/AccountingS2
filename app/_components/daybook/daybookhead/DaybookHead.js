@@ -126,12 +126,27 @@ function DaybookHead() {
         handleDateModal={handleDateModal}
         handleSelectChange={handleSelectChange}
       >
-        <div className="popupContainer">
-          <div className="daybook__datePopup">
-            <MaterialDatePicker date={startDate} setDate={handleSetStartDate} />
+        <div className="date_container">
+          <div className="date_popup_selector">
+            <MaterialDatePicker
+              date={startDate}
+              setDate={handleSetStartDate}
+              label={"Select Start Date"}
+            />
           </div>
-          <div className="daybook__datePopup">
-            <MaterialDatePicker date={endDate} setDate={handleSetEndDate} />
+          <div className="date_popup_selector">
+            <MaterialDatePicker
+              date={endDate}
+              setDate={handleSetEndDate}
+              label={"Select End Date"}
+            />
+          </div>
+          <div className="date_custom">
+            <ul>
+              {dateOptions.map((val) => (
+                <li>{val}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </DateModal>

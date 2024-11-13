@@ -1,12 +1,10 @@
-"use client";
-
 import formatDate from "@/app/_services/helpers";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 const MaterialDatePicker = ({ date, setDate }) => {
   const initialDate = date ? new Date(date) : new Date();
-
   const [selected, setSelected] = useState(initialDate);
   const [month, setMonth] = useState(initialDate);
 
@@ -17,7 +15,7 @@ const MaterialDatePicker = ({ date, setDate }) => {
   }, [date]);
 
   const handleYearChange = (e) => {
-    const newYear = e.target.value;
+    const newYear = parseInt(e.target.value);
     const newDate = new Date(month.setFullYear(newYear));
     setMonth(newDate);
   };
@@ -28,7 +26,7 @@ const MaterialDatePicker = ({ date, setDate }) => {
   };
 
   return (
-    <div className="my-daypicker">
+    <div className="material-datepicker">
       <DayPicker
         mode="single"
         selected={selected}
@@ -37,15 +35,15 @@ const MaterialDatePicker = ({ date, setDate }) => {
         onMonthChange={setMonth}
         captionLayout="dropdown"
         components={{
-          Caption: ({ date }) => (
-            <div className="rdp-caption">
+          Caption: ({ displayMonth }) => (
+            <div className="datepicker-caption">
               <select
-                value={date.getFullYear()}
+                value={displayMonth.getFullYear()}
                 onChange={handleYearChange}
-                className="rdp-year-dropdown"
+                className="year-dropdown"
               >
                 {Array.from(
-                  { length: 10 }, // Show 10 years range, you can adjust as needed
+                  { length: 10 },
                   (_, i) => new Date().getFullYear() - 5 + i
                 ).map((year) => (
                   <option key={year} value={year}>
@@ -56,10 +54,15 @@ const MaterialDatePicker = ({ date, setDate }) => {
             </div>
           ),
         }}
-        modifiersclassNames={{
-          selected: "rdp-day--selected",
-          today: "rdp-day--today",
+        modifiers={{ today: new Date() }}
+        modifiersStyles={{
+          today: { border: "2px solid var(--color-primary)" },
+          selected: {
+            backgroundColor: "var(--color-primary)",
+            color: "white",
+          },
         }}
+        className="my-datepicker"
       />
     </div>
   );
