@@ -11,7 +11,7 @@ function DashboardCurrentbalance() {
         <div className="dashbordCurrenttext">Current Balance</div>
         <Arrow color={"#00ba9d"} size="large" />
       </div>
-      <div className="dashbordCurrentamount">$ {bankBalance}</div>
+      <div className="dashbordCurrentamount">₹{bankBalance}</div>
       <div>
         <span>+{percentHike}%</span> than last month
       </div>

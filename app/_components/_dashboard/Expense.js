@@ -8,7 +8,7 @@ function Expense({ expense, isLoading, isError }) {
 
         <Arrow color={"#0040ff"} size="small" />
       </div>
-      <div className="expenseamount">$ {expense}</div>
+      <div className="expenseamount">₹ {expense}</div>
     </div>
   );
 }

@@ -36,6 +36,10 @@ function DaybookTableItem({ transaction }) {
     }
   };
 
+  const amount = parseFloat(transaction?.amount) || 0;
+  const tdsPercentage = parseFloat(transaction?.tds) || 0;
+  const tdsAmount = (amount * tdsPercentage) / 100;
+
   return (
     <>
       <div className="table-col">
@@ -99,9 +103,9 @@ function DaybookTableItem({ transaction }) {
           {transaction?.type === "Credit" ? "Credit" : "--"}
         </span>
         <span className="table-col gst table-body-col">
-          <GstShower data={transaction} />
+          <GstShower data={transaction} amount={transaction.amount} />
         </span>
-        <span className="table-col tds table-body-col">{transaction?.tds}</span>
+        <span className="table-col tds table-body-col">{tdsAmount}</span>
       </div>
     </>
   );
