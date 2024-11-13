@@ -12,12 +12,14 @@ import {
 import LiabilityNewEntirForm from "../../_Forms/_liabilityForms/LiabilityNewEntirForm";
 import FsModal from "../../utils/FsModal";
 import LiabilityEditForm from "../../_Forms/_liabilityForms/LiabilityEditForm";
+import Selector from "../../utils/Selector";
 
 function LiabilityHead() {
   const dispatch = useDispatch();
   const { isNewEntry, selectedItems, isEdit } = useSelector(
     (state) => state.liability
   );
+
   return (
     <>
       <LayoutHead>
