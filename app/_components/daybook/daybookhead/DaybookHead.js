@@ -68,11 +68,13 @@ function DaybookHead() {
 
   // Date modal
   const [isOpen, setIsOpen] = useState(false);
+
   const handleDateModal = () => {
     setIsOpen((open) => !open);
   };
 
   const handleSelectChange = (range) => {
+    console.log(range, "select");
     return () => dispatch(setDayBookSelectedDate(range));
   };
 
@@ -143,9 +145,11 @@ function DaybookHead() {
           </div>
           <div className="date_custom">
             <ul>
-              {dateOptions.map((val) => (
-                <li>{val}</li>
-              ))}
+              <li onClick={handleSelectChange("All")}>All</li>
+              <li onClick={handleSelectChange("Today")}>Today</li>
+              <li onClick={handleSelectChange("Yesterday")}>Yesterday</li>
+              <li onClick={handleSelectChange("Last 30 Days")}>Last 30 Days</li>
+              <li onClick={handleSelectChange("Last 60 Days")}>Last 60 Days</li>
             </ul>
           </div>
         </div>
