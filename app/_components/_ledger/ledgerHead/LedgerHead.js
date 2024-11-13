@@ -7,10 +7,6 @@ function LedgerHead() {
   return (
     <LayoutHead>
       <>
-        <Button>+ New Entri</Button>
-        <Button type="secondary">Edit</Button>
-      </>
-      <>
         <Search />
         <Button type="filter">
           <GiSettingsKnobs />

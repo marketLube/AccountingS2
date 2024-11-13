@@ -35,9 +35,9 @@ function CommissionTableItems({ item }) {
             onChange={handleCheckboxChange}
           />
         </span>
-        <span className="table-col particular table-body-col">Date</span>
+
         <div>
-          <span className="table-col date table-body-col">Students</span>
+          <span className="table-col particulars table-body-col">Students</span>
           <span
             className="table-col date table-body-col"
             style={{ color: "gray" }}
@@ -57,11 +57,13 @@ function CommissionTableItems({ item }) {
             November| November-March
           </span>
         </div>
-        <span className="table-col amount table-body-col">Branch</span>
-        <span className="table-col remark table-body-col">Course Fee</span>
-        <span className="table-col branch table-body-col">Receivable</span>
-        <span className="table-col branch table-body-col">Status</span>
-        <span className="table-col branch table-body-col">Agent</span>
+        <span className="table-col date table-body-col">Date</span>
+        <span className="table-col branch table-body-col">Branch</span>
+        <span className="table-col courseFee table-body-col">Course Fee</span>
+        <span className="table-col remark table-body-col">Remark</span>
+        <span className="table-col receivable table-body-col">Receivable</span>
+        <span className="table-col status table-body-col">Status</span>
+        <span className="table-col agent table-body-col">Agent</span>
       </div>
       <Tooltip
         isVisible={isParTooltip}
