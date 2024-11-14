@@ -11,9 +11,9 @@ function LedgerTableHead() {
       <span className="table-col debit">Debited</span>
       <span className="table-col credit">Credited</span>
       <span className="table-col liability">Liabilty</span>
-      <span className="table-col outstanding">Outstanding</span>
-      <span className="table-col tds">Tds Paid</span>
-      <span className="table-col tds">Tds Recieved</span>
+      <span className="table-col liability">Outstanding</span>
+      <span className="table-col branch">Tds Paid</span>
+      <span className="table-col branch">Tds Recieved</span>
     </div>
   );
 }

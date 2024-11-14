@@ -57,11 +57,11 @@ function LedgerTableItems({ item }) {
         <span className="table-col liability table-body-col">
           {item?.liability}
         </span>
-        <span className="table-col outstanding table-body-col">
+        <span className="table-col liability table-body-col">
           {item?.outstanding}
         </span>
-        <span className="table-col tds table-body-col">{item?.Tdspaid}</span>
-        <span className="table-col tds table-body-col">
+        <span className="table-col branch table-body-col">{item?.Tdspaid}</span>
+        <span className="table-col branch table-body-col">
           {item?.TdsRecieved}
         </span>
       </div>
