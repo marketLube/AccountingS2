@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import { setBudgetplannerBtnDisable } from "@/lib/slices/budgetplannerSlice";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
-import BudgetplannerFooterbtns from "./BudgetplannerFooterbtns";
+
 import Button from "@/app/_components/utils/Button";
 
 function BudgetplannerFooter() {

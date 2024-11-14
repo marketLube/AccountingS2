@@ -34,7 +34,6 @@ function LiabilityHead() {
     particulars,
     curCat,
     curParticular,
-    curBank,
     startDate,
     endDate,
     selectedDate,
@@ -108,11 +107,6 @@ function LiabilityHead() {
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
-          />
-          <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
           />
           <Search />
           <Button type="filter" onClick={handleDateModal}>
