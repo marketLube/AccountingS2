@@ -9,9 +9,6 @@ function LedgerFooter() {
   const { currentPage, btnDisable } = useSelector((state) => state.ledger);
   return (
     <div className={`layout-footer`}>
-      <div className="layout-footer-left">
-        <LedgerFooterbtns />
-      </div>
       <div className="layout-footer-right">
         <PageNavigate
           currentPage={currentPage}

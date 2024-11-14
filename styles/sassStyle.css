@@ -878,6 +878,35 @@ body {
   margin: 0 auto;
 }
 
+.ledgerfooterCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: white;
+}
+
+.ledgerfooteramount {
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+.ledgerfooteritems {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ledgerfootertext {
+  color: gray;
+  font-size: medium;
+}
+
+.ledger-layout {
+  display: flex;
+  align-items: center;
+}
+
 .pagination {
   display: flex;
   justify-content: start;
@@ -1314,6 +1343,20 @@ body {
 .rdp-day_button {
   border-radius: 1rem !important;
   display: none;
+}
+
+.ledger .layout-footer {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+}
+.ledger .layout-footer-left {
+  background-color: aquamarine;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.ledger .layout-footer-right {
+  background-color: rgb(23, 69, 54);
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

@@ -1,12 +1,15 @@
 "use client";
 
 import Button from "../../utils/Button";
+import LedgerFooterCards from "./LedgerFooterCards";
 
 function LedgerFooterbtns() {
   return (
     <>
-      <Button>Download Report</Button>
-      <Button>Total</Button>
+      <LedgerFooterCards />
+      <LedgerFooterCards />
+      <LedgerFooterCards />
+      <LedgerFooterCards />
     </>
   );
 }
