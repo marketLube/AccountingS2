@@ -13,7 +13,7 @@ import universityRoute from "../Routes/universityRoutes.js";
 import assetsRoute from "../Routes/assetRouters.js";
 import capitalRoute from "../Routes/capitalRoutes.js";
 import statsRoute from "../Routes/statsRouters.js";
-
+import generalRoute from "../Routes/generalRoute.js";
 import { protect } from "../Controller/authController.js";
 
 const router = express.Router();
@@ -34,5 +34,6 @@ router.use("/liability", liabilityRoute);
 router.use("/university", universityRoute);
 router.use("/assets", assetsRoute);
 router.use("/capital", capitalRoute);
+router.use("/general", generalRoute);
 
 export default router;
