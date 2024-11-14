@@ -9,13 +9,20 @@ import {
   setOutstandingCurBranch,
   setOutstandingCurCat,
   setOutstandingCurParticular,
+  setOutstandingEndDate,
   setOutstandingIsEdit,
+  setOutstandingSelectedDate,
+  setOutstandingStartDate,
 } from "@/lib/slices/outstandingSlice";
 import FsModal from "../../utils/FsModal";
 import OutstandingNewEntryForm from "../../_Forms/_outstandingForms/OutstandingNewEntryForm";
 import { setLiabilityIsEdit } from "@/lib/slices/liabilitySlice";
 import OutstandingEditForm from "../../_Forms/_outstandingForms/OutstandingEditForm";
 import Selector from "../../utils/Selector";
+import DateModal from "../../utils/DateModal/DateModal";
+import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
+import { dateOptions } from "@/app/data/generalDatas";
+import { useState } from "react";
 
 function OutstandingHead() {
   const dispatch = useDispatch();
@@ -27,6 +34,9 @@ function OutstandingHead() {
     curCat,
     curParticular,
     curBank,
+    startDate,
+    endDate,
+    selectedDate,
   } = useSelector((state) => state.outstanding);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -45,6 +55,25 @@ function OutstandingHead() {
 
   const handlebankChange = (e) => {
     dispatch(setOutstandingCurBank(e.target.value));
+  };
+  const handleSetStartDate = (date) => {
+    dispatch(setOutstandingStartDate(date));
+  };
+
+  const handleSetEndDate = (date) => {
+    dispatch(setOutstandingEndDate(date));
+  };
+
+  // Date modal
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDateModal = () => {
+    setIsOpen((open) => !open);
+  };
+
+  const handleSelectChange = (range) => {
+    console.log(range, "select");
+    return () => dispatch(setOutstandingSelectedDate(range));
   };
 
   return (
@@ -84,17 +113,45 @@ function OutstandingHead() {
             curValue={curBank}
           />
           <Search />
-          <Button type="filter">
-            <GiSettingsKnobs />
-          </Button>
-        </>
-        <>
-          <Search />
-          <Button type="filter">
+          <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>
         </>
       </LayoutHead>
+
+      <DateModal
+        dateOptions={dateOptions}
+        isOpen={isOpen}
+        handleDateModal={handleDateModal}
+        handleSelectChange={handleSelectChange}
+      >
+        <div className="date_container">
+          <div className="date_popup_selector">
+            <MaterialDatePicker
+              date={startDate}
+              setDate={handleSetStartDate}
+              label={"Select Start Date"}
+            />
+          </div>
+          <div className="date_popup_selector">
+            <MaterialDatePicker
+              date={endDate}
+              setDate={handleSetEndDate}
+              label={"Select End Date"}
+            />
+          </div>
+          <div className="date_custom">
+            <ul>
+              <li onClick={handleSelectChange("All")}>All</li>
+              <li onClick={handleSelectChange("Today")}>Today</li>
+              <li onClick={handleSelectChange("Yesterday")}>Yesterday</li>
+              <li onClick={handleSelectChange("Last 30 Days")}>Last 30 Days</li>
+              <li onClick={handleSelectChange("Last 60 Days")}>Last 60 Days</li>
+            </ul>
+          </div>
+        </div>
+      </DateModal>
+
       <FsModal isOpen={isNewEntry} setIsCancel={setIsOutstandingNewEntry}>
         <OutstandingNewEntryForm />
       </FsModal>
