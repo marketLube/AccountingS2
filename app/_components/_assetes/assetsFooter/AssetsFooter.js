@@ -3,22 +3,30 @@ import { useSelector } from "react-redux";
 import AssetsFooterbtns from "./AssetsFooterbtns";
 import { setAssetsBtnDisable } from "@/lib/slices/assetsSlice";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
+import Button from "@/app/_components/utils/Button";
 
 function AssetsFooter() {
   const { currentPage, btnDisable } = useSelector((state) => state.assets);
   return (
-    <div className={`layout-footer`}>
-      <div className="layout-footer-left">
-        <AssetsFooterbtns />
+    <>
+      <div className={`layout-footer`}>
+        <div className="layout-footer-left">
+          <Button>Total</Button>
+        </div>
+        <div className="layout-footer-right">
+          <PageNavigate
+            currentPage={currentPage}
+            setCurrentPage={setAssetsBtnDisable}
+            btnDisable={btnDisable}
+          />
+        </div>
       </div>
-      <div className="layout-footer-right">
-        <PageNavigate
-          currentPage={currentPage}
-          setCurrentPage={setAssetsBtnDisable}
-          btnDisable={btnDisable}
-        />
+      <div className="layout-footer-bottom">
+        <div className="layout-footer-bottom-left">
+          <Button>Download Report</Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
