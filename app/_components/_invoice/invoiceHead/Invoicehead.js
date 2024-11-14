@@ -26,18 +26,8 @@ import { useState } from "react";
 
 function Invoicehead() {
   const dispatch = useDispatch();
-  const {
-    isNewEntry,
-    selectedItems,
-    isEdit,
-    particulars,
-    curCat,
-    curParticular,
-    curBank,
-    startDate,
-    endDate,
-    selectedDate,
-  } = useSelector((state) => state.invoice);
+  const { selectedItems, particulars, curCat, curParticular, curBank } =
+    useSelector((state) => state.invoice);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
     (state) => state.general
@@ -118,46 +108,6 @@ function Invoicehead() {
           </Button>
         </>
       </LayoutHead>
-
-      <DateModal
-        dateOptions={dateOptions}
-        isOpen={isOpen}
-        handleDateModal={handleDateModal}
-        handleSelectChange={handleSelectChange}
-      >
-        <div className="date_container">
-          <div className="date_popup_selector">
-            <MaterialDatePicker
-              date={startDate}
-              setDate={handleSetStartDate}
-              label={"Select Start Date"}
-            />
-          </div>
-          <div className="date_popup_selector">
-            <MaterialDatePicker
-              date={endDate}
-              setDate={handleSetEndDate}
-              label={"Select End Date"}
-            />
-          </div>
-          <div className="date_custom">
-            <ul>
-              <li onClick={handleSelectChange("All")}>All</li>
-              <li onClick={handleSelectChange("Today")}>Today</li>
-              <li onClick={handleSelectChange("Yesterday")}>Yesterday</li>
-              <li onClick={handleSelectChange("Last 30 Days")}>Last 30 Days</li>
-              <li onClick={handleSelectChange("Last 60 Days")}>Last 60 Days</li>
-            </ul>
-          </div>
-        </div>
-      </DateModal>
-
-      <FsModal isOpen={isNewEntry} setIsCancel={setIsInvoiceNewEntry}>
-        <InvoiceNewEntryForm />
-      </FsModal>
-      <FsModal isOpen={isEdit} setIsCancel={setInvoiceIsEdit}>
-        <InvoiceEditForm />
-      </FsModal>
     </>
   );
 }
