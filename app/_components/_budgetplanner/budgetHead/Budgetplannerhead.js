@@ -8,7 +8,10 @@ import {
   setBudgetplannerCurBranch,
   setBudgetplannerCurCat,
   setBudgetplannerCurParticular,
+  setBudgetplannerEndDate,
   setBudgetplannerIsEdit,
+  setBudgetplannerSelectedDate,
+  setBudgetplannerStartDate,
   setIsBudgetplannerNewEntry,
 } from "@/lib/slices/budgetplannerSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +19,10 @@ import FsModal from "../../utils/FsModal";
 import BudgetplannerNewEntryForm from "../../_Forms/_budgetplannerForms/BudgetplannerNewEntryForm";
 import BudgetplannerEditForm from "../../_Forms/_budgetplannerForms/BudgetplannerEditForm";
 import Selector from "../../utils/Selector";
+import { useState } from "react";
+import DateModal from "../../utils/DateModal/DateModal";
+import { dateOptions } from "@/app/data/generalDatas";
+import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 
 function Budgetplannerhead() {
   const dispatch = useDispatch();
@@ -27,6 +34,9 @@ function Budgetplannerhead() {
     curCat,
     curParticular,
     curBank,
+    startDate,
+    endDate,
+    selectedDate,
   } = useSelector((state) => state.budgetplanner);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -45,6 +55,26 @@ function Budgetplannerhead() {
 
   const handlebankChange = (e) => {
     dispatch(setBudgetplannerCurBank(e.target.value));
+  };
+
+  const handleSetStartDate = (date) => {
+    dispatch(setBudgetplannerStartDate(date));
+  };
+
+  const handleSetEndDate = (date) => {
+    dispatch(setBudgetplannerEndDate(date));
+  };
+
+  // Date modal
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDateModal = () => {
+    setIsOpen((open) => !open);
+  };
+
+  const handleSelectChange = (range) => {
+    console.log(range, "select");
+    return () => dispatch(setBudgetplannerSelectedDate(range));
   };
 
   return (
@@ -83,17 +113,44 @@ function Budgetplannerhead() {
             curValue={curBank}
           />
           <Search />
-          <Button type="filter">
-            <GiSettingsKnobs />
-          </Button>
-        </>
-        <>
-          <Search />
-          <Button type="filter">
+          <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>
         </>
       </LayoutHead>
+
+      <DateModal
+        dateOptions={dateOptions}
+        isOpen={isOpen}
+        handleDateModal={handleDateModal}
+        handleSelectChange={handleSelectChange}
+      >
+        <div className="date_container">
+          <div className="date_popup_selector">
+            <MaterialDatePicker
+              date={startDate}
+              setDate={handleSetStartDate}
+              label={"Select Start Date"}
+            />
+          </div>
+          <div className="date_popup_selector">
+            <MaterialDatePicker
+              date={endDate}
+              setDate={handleSetEndDate}
+              label={"Select End Date"}
+            />
+          </div>
+          <div className="date_custom">
+            <ul>
+              <li onClick={handleSelectChange("All")}>All</li>
+              <li onClick={handleSelectChange("Today")}>Today</li>
+              <li onClick={handleSelectChange("Yesterday")}>Yesterday</li>
+              <li onClick={handleSelectChange("Last 30 Days")}>Last 30 Days</li>
+              <li onClick={handleSelectChange("Last 60 Days")}>Last 60 Days</li>
+            </ul>
+          </div>
+        </div>
+      </DateModal>
 
       <FsModal isOpen={isNewEntry} setIsCancel={setIsBudgetplannerNewEntry}>
         <BudgetplannerNewEntryForm />
