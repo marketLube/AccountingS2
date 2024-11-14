@@ -1,8 +1,6 @@
 "use client";
 
 import useReminders from "@/app/_hooks/useReminders";
-import CapitalTableHead from "../../_commission/commissionTable/CommissionTableHead";
-import CapitalTableItems from "./InvoiceTableItems";
 import { useSelector } from "react-redux";
 import { useViewEight } from "@/app/_services/helpers";
 import TableLoader from "../../_loader/TableLoader";
@@ -12,14 +10,7 @@ import InvoiceTableItems from "./InvoiceTableItems";
 
 function InvoiceTable() {
   const { startPage } = useSelector((state) => state.invoice);
-
-  const {
-    refetch,
-    reminders: invoice,
-    isError,
-    isLoading,
-    error,
-  } = useReminders();
+  const { reminders: invoice, isError, isLoading } = useReminders();
   const veiwEight = useViewEight(invoice, startPage, setInvoiceBtnDisable);
 
   return (
@@ -30,9 +21,7 @@ function InvoiceTable() {
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
       ) : (
-        veiwEight?.map((liab, i) => (
-          <InvoiceTableItems key={i} item={liab}></InvoiceTableItems>
-        ))
+        veiwEight?.map((liab, i) => <InvoiceTableItems key={i} item={liab} />)
       )}
     </div>
   );
