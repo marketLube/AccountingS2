@@ -59,6 +59,11 @@ const transactionSchema = mongoose.Schema(
       enum: ["incl", "excl", "no-gst"],
       default: "no-gst",
     },
+    tdsType: {
+      type: String,
+      enum: ["Payable", "Recievable"],
+      required: [true, "Transaction Must have Tds Type"],
+    },
     branches: [
       {
         branch: {

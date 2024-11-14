@@ -1,5 +1,21 @@
-.invoice-container {
-  background-color: yellow;
-  height: 200vh;
-  width: 100%;
+@use "../abstract/mixins";
+@use "../abstract/variables";
+
+.invoice {
+  &-container {
+    background-color: rgb(86, 86, 60);
+    height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+  }
+
+  &-body {
+    height: 200vh;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  &-form {
+    background-color: variables.$color-white;
+  }
 }

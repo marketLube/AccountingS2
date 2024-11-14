@@ -1359,4 +1359,19 @@ body {
   background-color: rgb(23, 69, 54);
 }
 
+.invoice-container {
+  background-color: rgb(86, 86, 60);
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+}
+.invoice-body {
+  height: 200vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.invoice-form {
+  background-color: #fff;
+}
+
 /*# sourceMappingURL=sassStyle.css.map */
