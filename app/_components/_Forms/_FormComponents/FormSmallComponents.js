@@ -548,11 +548,11 @@ export function TdsPercent({ register, errors }) {
       </label>
       <div className="type-options">
         <label className="type-option">
-          <input type="radio" value="incl" {...register("tdsType")} />
+          <input type="radio" value="Payable" {...register("tdsType")} />
           Payable
         </label>
         <label className="type-option">
-          <input type="radio" value="excl" {...register("tdsType")} />
+          <input type="radio" value="Receivable" {...register("tdsType")} />
           Receivable
         </label>
       </div>

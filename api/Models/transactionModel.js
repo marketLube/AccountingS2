@@ -61,7 +61,7 @@ const transactionSchema = mongoose.Schema(
     },
     tdsType: {
       type: String,
-      enum: ["Payable", "Recievable"],
+      enum: ["Payable", "Receivable"],
       required: [true, "Transaction Must have Tds Type"],
     },
     branches: [
