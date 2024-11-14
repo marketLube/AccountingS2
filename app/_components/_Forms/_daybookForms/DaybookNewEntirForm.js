@@ -88,7 +88,11 @@ function DaybookNewEntirForm() {
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
-        <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
+        <CatagorySelector
+          catagory={catagory}
+          setCatagory={setCatagory}
+          setParticular={setParticular}
+        />
 
         <div className="form-row">
           <Purpose register={register} errors={errors} />

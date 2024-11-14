@@ -1359,4 +1359,66 @@ body {
   background-color: rgb(23, 69, 54);
 }
 
+.invoice-container {
+  background-color: rgb(86, 86, 60);
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+}
+.invoice-body {
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.invoice-form {
+  background-color: #fff;
+  text-align: center;
+}
+.invoice-form-content-box {
+  width: 70vw;
+  max-width: 210mm;
+  min-height: 297mm;
+  margin: 10rem auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.invoice-form-head {
+  height: 5rem;
+  width: 100%;
+  background-color: yellow;
+}
+.invoice-form-from {
+  height: 10rem;
+  background-color: red;
+}
+.invoice-form-to {
+  height: 10rem;
+  background-color: red;
+}
+.invoice-form-place {
+  height: 2.5rem;
+  background-color: gray;
+}
+.invoice-form-table-head {
+  height: 2rem;
+  background-color: rgb(28, 101, 126);
+  border-radius: 1rem;
+}
+.invoice-form-table-itemContainer {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+.invoice-form-table-item {
+  height: 4rem;
+  background-color: yellow;
+}
+.invoice-form-footer {
+  height: 8rem;
+  background-color: orangered;
+}
+
 /*# sourceMappingURL=sassStyle.css.map */
