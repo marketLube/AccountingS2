@@ -1,14 +1,16 @@
+"use client";
 import { GiSettingsKnobs } from "react-icons/gi";
 import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
 import Search from "../../utils/Search";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setLedgerCurBank,
   setLedgerCurBranch,
   setLedgerCurCat,
   setLedgerCurParticular,
 } from "@/lib/slices/ledgerSlice";
+import Selector from "../../utils/Selector";
 
 function LedgerHead() {
   const dispatch = useDispatch();
