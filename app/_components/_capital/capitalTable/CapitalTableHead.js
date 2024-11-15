@@ -3,7 +3,7 @@ function CapitalTableHead() {
   return (
     <div className="table-head">
       <span className="table-check">
-        <input type="checkbox" style={{ opacity: "1" }} />
+        <input type="checkbox" style={{ opacity: "0" }} />
       </span>
       <span className="table-col particular">Invested by</span>
       <span className="table-col date">Date</span>

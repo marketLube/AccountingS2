@@ -84,13 +84,12 @@ function ReminderNewEntryForm() {
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
-        <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
-        </div>
+        <CatagorySelector
+          catagory={catagory}
+          setCatagory={setCatagory}
+          setParticular={setParticular}
+        />
+
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Amount register={register} errors={errors} />
