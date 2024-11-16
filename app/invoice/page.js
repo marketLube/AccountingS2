@@ -11,7 +11,7 @@ function Page() {
   return isInVoice ? (
     <InvoiceDownloader />
   ) : (
-    <div className="layout assetes">
+    <div className="layout invoice">
       <h1 className="main-head">Invoice</h1>
       <div className="layout-body">
         <Invoicehead />

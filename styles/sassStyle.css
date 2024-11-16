@@ -102,6 +102,15 @@ body {
   width: fit-content;
 }
 
+.logo-box {
+  width: 7rem;
+  height: 4rem;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @keyframes navText {
   from {
     opacity: 0;
@@ -1365,6 +1374,30 @@ body {
   width: 100%;
   overflow-y: scroll;
 }
+.invoice-container-input {
+  width: 15rem;
+  padding: 0.2rem;
+  color: gray;
+  font-size: 0.9rem;
+  display: none;
+}
+.invoice-container-input:focus {
+  outline: 0.5px solid gray;
+  border-radius: 0.3rem;
+}
+.invoice-container .input-head {
+  font-weight: 600;
+  color: rgb(54, 50, 50);
+}
+.invoice-container label {
+  margin-right: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: start;
+  width: 8rem;
+}
 .invoice-body {
   height: fit-content;
   display: grid;
@@ -1372,7 +1405,6 @@ body {
 }
 .invoice-form {
   background-color: #fff;
-  text-align: center;
 }
 .invoice-form-content-box {
   width: 70vw;
@@ -1388,11 +1420,30 @@ body {
 .invoice-form-head {
   height: 5rem;
   width: 100%;
-  background-color: yellow;
+  padding: 0 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.invoice-form-head h3 {
+  font-size: 2rem;
+  font-weight: 600;
 }
 .invoice-form-from {
-  height: 10rem;
-  background-color: red;
+  height: fit-content;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  justify-content: space-between;
+}
+.invoice-form-to-container {
+  display: flex;
+  justify-content: space-between;
+}
+.invoice-form-to-input-container {
+  display: flex;
+  margin-bottom: 0.5rem;
 }
 .invoice-form-to {
   height: 10rem;
@@ -1402,19 +1453,38 @@ body {
   height: 2.5rem;
   background-color: gray;
 }
+.invoice-form-table {
+  width: 100%;
+}
 .invoice-form-table-head {
   height: 2rem;
   background-color: rgb(28, 101, 126);
   border-radius: 1rem;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+.invoice-form-table-head input {
+  color: rgb(233, 228, 228);
 }
 .invoice-form-table-itemContainer {
   display: flex;
   flex-direction: column;
   height: fit-content;
 }
-.invoice-form-table-item {
-  height: 4rem;
-  background-color: yellow;
+.invoice-form-table-item-box {
+  flex: 1;
+  height: 2rem;
+}
+.invoice-form-table-item-box input {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  padding: 0 1rem;
+}
+.invoice-form-table-item-box input:focus {
+  background-color: #fff;
+  color: rgb(54, 50, 50);
 }
 .invoice-form-footer {
   height: 8rem;

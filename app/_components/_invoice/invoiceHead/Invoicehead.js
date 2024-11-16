@@ -15,13 +15,7 @@ import {
   setInvoiceStartDate,
   setIsInvoiceNewEntry,
 } from "@/lib/slices/invoiceSlice";
-import FsModal from "../../utils/FsModal";
-import InvoiceNewEntryForm from "../../_Forms/_invoiceForms/InvoiceNewEntryForm";
-import InvoiceEditForm from "../../_Forms/_invoiceForms/InvoiceEditForm";
 import Selector from "../../utils/Selector";
-import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
-import { dateOptions } from "@/app/data/generalDatas";
-import DateModal from "../../utils/DateModal/DateModal";
 import { useState } from "react";
 
 function Invoicehead() {

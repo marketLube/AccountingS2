@@ -1,6 +1,7 @@
 "use client";
 
 import InvoiceCompanyDetails from "./InvoiceCompanyDetails";
+import InvoiceDateSection from "./InvoiceDateSection";
 import InvoiceFormFooter from "./InvoiceFormFooter";
 import InvoiceFormHead from "./InvoiceFormHead";
 import InvoiceFromTable from "./InvoiceTable/InvoiceFormTable";
@@ -14,7 +15,10 @@ function InvoiceDownloader() {
           <div className="invoice-form-content-box">
             <InvoiceFormHead />
             <InvoiceCompanyDetails />
-            <InvoiceTo />
+            <div className="invoice-form-to-container">
+              <InvoiceTo />
+              <InvoiceDateSection />
+            </div>
             <InvoiceFromTable />
             <InvoiceFormFooter />
           </div>

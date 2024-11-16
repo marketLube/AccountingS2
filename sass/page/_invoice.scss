@@ -1,12 +1,39 @@
 @use "../abstract/mixins";
 @use "../abstract/variables";
 
+$small-padding: 0.2rem;
+
 .invoice {
   &-container {
     background-color: rgb(86, 86, 60);
     height: 100vh;
     width: 100%;
     overflow-y: scroll;
+
+    &-input {
+      width: 15rem;
+      padding: $small-padding;
+      color: variables.$color-gray;
+      font-size: 0.9rem;
+      display: none;
+      &:focus {
+        outline: 0.5px solid variables.$color-gray;
+        border-radius: variables.$small-radius;
+      }
+    }
+
+    & .input-head {
+      font-weight: 600;
+      color: variables.$color-dark;
+    }
+
+    & label {
+      margin-right: 1rem;
+      font-size: 0.9rem;
+      @include mixins.flex(center);
+      justify-content: start;
+      width: 8rem;
+    }
   }
 
   &-body {
@@ -17,7 +44,6 @@
 
   &-form {
     background-color: variables.$color-white;
-    text-align: center;
 
     &-content-box {
       width: 70vw;
@@ -35,12 +61,32 @@
     &-head {
       height: 5rem;
       width: 100%;
-      background-color: yellow;
+      padding: 0 $small-padding;
+      @include mixins.flex(between);
+
+      & h3 {
+        font-size: 2rem;
+        font-weight: 600;
+      }
     }
 
     &-from {
-      height: 10rem;
-      background-color: red;
+      height: fit-content;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      justify-content: space-between;
+    }
+
+    &-to-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-to-input-container {
+      display: flex;
+      margin-bottom: 0.5rem;
     }
 
     &-to {
@@ -54,10 +100,17 @@
     }
 
     &-table {
+      width: 100%;
       &-head {
         height: 2rem;
         background-color: variables.$color-primary;
         border-radius: variables.$large-radius;
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+        & input {
+          color: rgb(233, 228, 228);
+        }
       }
 
       &-itemContainer {
@@ -66,9 +119,21 @@
         height: fit-content;
       }
 
-      &-item {
-        height: 4rem;
-        background-color: yellow;
+      &-item-box {
+        flex: 1;
+        height: 2rem;
+
+        & input {
+          height: 100%;
+          width: 100%;
+          background-color: transparent;
+          padding: 0 1rem;
+
+          &:focus {
+            background-color: variables.$color-white;
+            color: variables.$color-dark;
+          }
+        }
       }
     }
 

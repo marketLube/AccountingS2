@@ -85,3 +85,11 @@ body {
     }
   }
 }
+
+.logo-box {
+  width: 7rem;
+  height: 4rem;
+  background-color: variables.$color-gray;
+
+  @include mixins.flex(center);
+}
