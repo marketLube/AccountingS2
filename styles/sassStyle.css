@@ -916,6 +916,155 @@ body {
   align-items: center;
 }
 
+.banks-list-container {
+  width: 70%;
+}
+.banks-list-container .header-bank {
+  background-color: #276678;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.banks-list-container .header-bank h2 {
+  color: white;
+  margin: 0;
+}
+.banks-list-container .banks-list {
+  margin-top: 10px;
+}
+.banks-list-container .banks-list .bank-item {
+  padding: 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+.banks-list-container .banks-list .bank-item:nth-child(even) {
+  background: #f1f1f1;
+}
+.banks-list-container .bank-button {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+.manage-bcontainer {
+  width: 70%;
+}
+.manage-bcontainer .header-branch {
+  background-color: #276678;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.manage-bcontainer .header-branch h2 {
+  color: white;
+  margin: 0;
+}
+.manage-bcontainer .branches-list {
+  margin-top: 10px;
+}
+.manage-bcontainer .branches-list .branch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+.manage-bcontainer .branches-list .branch-item:nth-child(even) {
+  background: #f1f1f1;
+}
+.manage-bcontainer .branches-list .branch-item .branch-switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+.manage-bcontainer .branches-list .branch-item .branch-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.manage-bcontainer .branches-list .branch-item .branch-switch .branch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.manage-bcontainer .branches-list .branch-item .branch-switch .branch-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+.manage-bcontainer .branches-list .branch-item .branch-switch input:checked + .slider {
+  background-color: #4caf50;
+}
+.manage-bcontainer .branches-list .branch-item .branch-switch input:checked + .slider:before {
+  transform: translateX(14px);
+}
+.manage-bcontainer .branch-button {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f1f1f1;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: #f0fafc;
+  border-radius: 8px;
+  text-align: center;
+  height: 70%;
+}
+.profile-card-title {
+  font-size: 1.5rem;
+  color: #276678;
+  margin-bottom: 1.5rem;
+}
+.profile-card-avatar {
+  width: 100px;
+  height: 100px;
+  background-color: #276678;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+}
+.profile-card-field {
+  margin-bottom: 0.1rem;
+}
+.profile-card-field label {
+  display: block;
+  padding: 10px;
+  font-size: 15px;
+  text-align: start;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+.profile-card-field input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  color: #555;
+  border: none;
+  border-radius: 4px;
+}
+.profile-card-field input::placeholder {
+  color: #aaa;
+}
+
 .pagination {
   display: flex;
   justify-content: start;
@@ -1489,6 +1638,19 @@ body {
 .invoice-form-footer {
   height: 8rem;
   background-color: orangered;
+}
+
+.manage-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 10%;
+  height: 60vh;
+}
+.manage-box-container {
+  flex: 1;
+  height: 100%;
+  background-color: rgb(7, 8, 8);
+  border-radius: 1rem;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

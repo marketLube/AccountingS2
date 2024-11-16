@@ -20,6 +20,7 @@ import { BiSolidPlusSquare } from "react-icons/bi";
 import { MdLocalPhone } from "react-icons/md";
 import { BiSolidBarChartAlt2 } from "react-icons/bi";
 import { AiFillBell } from "react-icons/ai";
+import { RiFolderSettingsFill } from "react-icons/ri";
 import NavItem from "./NavItem";
 
 const routes = [
@@ -36,6 +37,7 @@ const routes = [
   { path: "/budgetplanner", icon: BiSolidPlusSquare, name: "Budget Planner" },
   { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
   { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
+  { path: "/manage", icon: RiFolderSettingsFill, name: "Manage" },
 ];
 
 function Navigation({ onSetHover, isHover }) {
