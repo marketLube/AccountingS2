@@ -1,0 +1,16 @@
+@use "../abstract/variables";
+
+.manage {
+  &-body {
+    display: flex;
+    justify-content: space-between;
+    gap: 10%;
+    height: 60vh;
+  }
+  &-box-container {
+    flex: 1;
+    height: 100%;
+    background-color: rgb(7, 8, 8);
+    border-radius: variables.$large-radius;
+  }
+}
