@@ -10,18 +10,6 @@ $small-padding: 0.2rem;
     width: 100%;
     overflow-y: scroll;
 
-    &-input {
-      width: 15rem;
-      padding: $small-padding;
-      color: variables.$color-gray;
-      font-size: 0.9rem;
-      display: none;
-      &:focus {
-        outline: 0.5px solid variables.$color-gray;
-        border-radius: variables.$small-radius;
-      }
-    }
-
     & .input-head {
       font-weight: 600;
       color: variables.$color-dark;
@@ -40,6 +28,11 @@ $small-padding: 0.2rem;
     height: fit-content;
     display: grid;
     grid-template-columns: 2fr 1fr;
+  }
+
+  &-actions {
+    background-color: variables.$color-light-gray;
+    @include mixins.flex(center);
   }
 
   &-form {
@@ -75,7 +68,6 @@ $small-padding: 0.2rem;
       text-align: left;
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
       justify-content: space-between;
     }
 
@@ -87,16 +79,15 @@ $small-padding: 0.2rem;
     &-to-input-container {
       display: flex;
       margin-bottom: 0.5rem;
+      font-size: 0.8rem;
     }
 
     &-to {
       height: 10rem;
-      background-color: red;
     }
 
     &-place {
       height: 2.5rem;
-      background-color: gray;
     }
 
     &-table {
@@ -122,12 +113,15 @@ $small-padding: 0.2rem;
       &-item-box {
         flex: 1;
         height: 2rem;
+        padding: 0 0.5rem;
+        overflow: hidden;
 
         & input {
           height: 100%;
           width: 100%;
           background-color: transparent;
           padding: 0 1rem;
+          font-size: 0.9rem;
 
           &:focus {
             background-color: variables.$color-white;
@@ -135,11 +129,74 @@ $small-padding: 0.2rem;
           }
         }
       }
+
+      &-item-content {
+        display: flex;
+        height: 5rem;
+        border-bottom: 0.2px solid lightgray;
+        position: relative;
+
+        & .invoice-form-table-item-box {
+          height: 100%;
+        }
+        textarea {
+          height: 100%;
+          width: 100%;
+          padding: 1rem;
+          text-align: left; /* Horizontal alignment */
+          resize: none; /* Disable resizing */
+          overflow: hidden;
+          line-height: normal; /* Use default line height */
+          vertical-align: middle;
+        }
+
+        & .icons {
+          position: absolute;
+          top: 50%; /* Vertically center */
+          right: 0rem; /* Adjust the distance from the right edge */
+          transform: translateY(
+            -50%
+          ); /* Align properly to the vertical center */
+          cursor: pointer; /* Add pointer cursor for better UX */
+        }
+      }
     }
 
     &-footer {
       height: 8rem;
-      background-color: orangered;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
+  }
+  &-total-container {
+    @include mixins.flex(center);
+    align-items: start;
+    flex-direction: column;
+    justify-content: end;
+    padding-right: 0.5rem;
+  }
+
+  &-total-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1em 0;
+    border-bottom: 0.2px solid lightgray;
+  }
+}
+.i-item-desc {
+  flex: 2;
+}
+
+.invoice-input {
+  width: 15rem;
+  padding: $small-padding;
+  color: variables.$color-gray;
+  font-size: 0.8rem;
+
+  &:focus {
+    outline: 0.5px solid variables.$color-gray;
+    border-radius: variables.$small-radius;
   }
 }

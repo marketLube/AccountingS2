@@ -1,29 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import InvoiceFormTableHead from "./InvoiceFormTableHead";
 import InvoiceTableItems from "./InvoiceTableItems";
 
-function InvoiceFromTable() {
-  const [items, setItems] = useState([{ id: 1 }]); // Initialize items as an array of objects
+function InvoiceFromTable({ register, errors, setTableItems }) {
+  const [items, setItems] = useState([{ id: 1 }]);
+
+  // Function to update table items
+  const updateTableItem = useCallback(
+    (index, itemData) => {
+      setTableItems((prevItems) => {
+        const newItems = [...prevItems];
+        newItems[index] = itemData;
+        return newItems;
+      });
+    },
+    [setTableItems]
+  );
 
   // Function to add more items
   const handleAddMore = () => {
     setItems((prevItems) => [...prevItems, { id: prevItems.length + 1 }]);
+    setTableItems((prevTableItems) => [...prevTableItems, {}]);
   };
 
   // Function to remove an item by index
   const handleRemove = (index) => {
     setItems((prevItems) => prevItems.filter((_, i) => i !== index));
+    setTableItems((prevTableItems) =>
+      prevTableItems.filter((_, i) => i !== index)
+    );
   };
 
   return (
-    <div className="invoice-form-table-container  bg-white rounded-lg shadow-md">
-      <InvoiceFormTableHead />
+    <div className="invoice-form-table-container bg-white rounded-lg shadow-md">
+      <InvoiceFormTableHead register={register} errors={errors} />
       <div className="invoice-form-table-itemContainer">
         {items.map((item, index) => (
           <InvoiceTableItems
             key={item.id}
+            index={index}
+            updateTableItem={updateTableItem}
             onRemove={() => handleRemove(index)}
           />
         ))}

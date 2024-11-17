@@ -37,6 +37,8 @@
   margin: 0;
   padding: 0;
   transition: 0.15s all ease;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
 }
 
 body {
@@ -1523,17 +1525,6 @@ body {
   width: 100%;
   overflow-y: scroll;
 }
-.invoice-container-input {
-  width: 15rem;
-  padding: 0.2rem;
-  color: gray;
-  font-size: 0.9rem;
-  display: none;
-}
-.invoice-container-input:focus {
-  outline: 0.5px solid gray;
-  border-radius: 0.3rem;
-}
 .invoice-container .input-head {
   font-weight: 600;
   color: rgb(54, 50, 50);
@@ -1551,6 +1542,12 @@ body {
   height: fit-content;
   display: grid;
   grid-template-columns: 2fr 1fr;
+}
+.invoice-actions {
+  background-color: rgb(226, 225, 225);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .invoice-form {
   background-color: #fff;
@@ -1583,7 +1580,6 @@ body {
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
   justify-content: space-between;
 }
 .invoice-form-to-container {
@@ -1593,14 +1589,13 @@ body {
 .invoice-form-to-input-container {
   display: flex;
   margin-bottom: 0.5rem;
+  font-size: 0.8rem;
 }
 .invoice-form-to {
   height: 10rem;
-  background-color: red;
 }
 .invoice-form-place {
   height: 2.5rem;
-  background-color: gray;
 }
 .invoice-form-table {
   width: 100%;
@@ -1624,20 +1619,81 @@ body {
 .invoice-form-table-item-box {
   flex: 1;
   height: 2rem;
+  padding: 0 0.5rem;
+  overflow: hidden;
 }
 .invoice-form-table-item-box input {
   height: 100%;
   width: 100%;
   background-color: transparent;
   padding: 0 1rem;
+  font-size: 0.9rem;
 }
 .invoice-form-table-item-box input:focus {
   background-color: #fff;
   color: rgb(54, 50, 50);
 }
+.invoice-form-table-item-content {
+  display: flex;
+  height: 5rem;
+  border-bottom: 0.2px solid lightgray;
+  position: relative;
+}
+.invoice-form-table-item-content .invoice-form-table-item-box {
+  height: 100%;
+}
+.invoice-form-table-item-content textarea {
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  text-align: left; /* Horizontal alignment */
+  resize: none; /* Disable resizing */
+  overflow: hidden;
+  line-height: normal; /* Use default line height */
+  vertical-align: middle;
+}
+.invoice-form-table-item-content .icons {
+  position: absolute;
+  top: 50%; /* Vertically center */
+  right: 0rem; /* Adjust the distance from the right edge */
+  transform: translateY(-50%); /* Align properly to the vertical center */
+  cursor: pointer; /* Add pointer cursor for better UX */
+}
 .invoice-form-footer {
   height: 8rem;
-  background-color: orangered;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.invoice-total-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  justify-content: end;
+  padding-right: 0.5rem;
+}
+.invoice-total-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1em 0;
+  border-bottom: 0.2px solid lightgray;
+}
+
+.i-item-desc {
+  flex: 2;
+}
+
+.invoice-input {
+  width: 15rem;
+  padding: 0.2rem;
+  color: gray;
+  font-size: 0.8rem;
+}
+.invoice-input:focus {
+  outline: 0.5px solid gray;
+  border-radius: 0.3rem;
 }
 
 .manage-body {

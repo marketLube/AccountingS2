@@ -16,7 +16,6 @@ function InvoiceTableItems({ item }) {
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
 
-  console.log(item, "kkkkkkkkk");
   const dispatch = useDispatch();
 
   const handleCheckboxChange = () => {

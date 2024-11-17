@@ -1,17 +1,82 @@
-function InvoiceCompanyDetails() {
+import { useSelector } from "react-redux";
+
+function InvoiceCompanyDetails({ register, errors }) {
   return (
     <div className="invoice-form-from">
+      {/* Company Name */}
       <input
         type="text"
-        value="Your Company"
-        className="invoice-input input-head"
+        {...register("companyName")}
+        className={`invoice-input input-head ${
+          errors.companyName ? "input-error" : ""
+        }`}
+        placeholder="Your Company"
       />
-      <input type="text" value="Your Name" className="invoice-input" />
-      <input type="text" value="GST" className="invoice-input" />
-      <input type="text" value="Address" className="invoice-input" />
-      <input type="text" value="City" className="invoice-input" />
-      <input type="text" value="State" className="invoice-input" />
-      <input type="text" value="Country" className="invoice-input" />
+      {errors.companyName && (
+        <span className="error-text">{errors.companyName.message}</span>
+      )}
+
+      {/* Client Name */}
+      <input
+        type="text"
+        {...register("clientName")}
+        className={`invoice-input ${errors.clientName ? "input-error" : ""}`}
+        placeholder="Your Name"
+      />
+      {errors.clientName && (
+        <span className="error-text">{errors.clientName.message}</span>
+      )}
+
+      {/* GST */}
+      <input
+        type="text"
+        {...register("gst")}
+        className={`invoice-input ${errors.gst ? "input-error" : ""}`}
+        placeholder="GST"
+      />
+      {errors.gst && <span className="error-text">{errors.gst.message}</span>}
+
+      {/* Address */}
+      <input
+        type="text"
+        {...register("address")}
+        className={`invoice-input ${errors.address ? "input-error" : ""}`}
+        placeholder="Address"
+      />
+      {errors.address && (
+        <span className="error-text">{errors.address.message}</span>
+      )}
+
+      {/* City */}
+      <input
+        type="text"
+        {...register("city")}
+        className={`invoice-input ${errors.city ? "input-error" : ""}`}
+        placeholder="City"
+      />
+      {errors.city && <span className="error-text">{errors.city.message}</span>}
+
+      {/* State */}
+      <input
+        type="text"
+        {...register("state")}
+        className={`invoice-input ${errors.state ? "input-error" : ""}`}
+        placeholder="State"
+      />
+      {errors.state && (
+        <span className="error-text">{errors.state.message}</span>
+      )}
+
+      {/* Country */}
+      <input
+        type="text"
+        {...register("country")}
+        className={`invoice-input ${errors.country ? "input-error" : ""}`}
+        placeholder="Country"
+      />
+      {errors.country && (
+        <span className="error-text">{errors.country.message}</span>
+      )}
     </div>
   );
 }
