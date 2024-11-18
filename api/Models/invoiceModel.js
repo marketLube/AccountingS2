@@ -117,7 +117,16 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  items: [{}],
+  items: [
+    {
+      desc: String,
+      qty: Number,
+      rate: Number,
+      sgst: String,
+      cgst: String,
+      amount: String,
+    },
+  ],
 });
 
 const Invoice = mongoose.model("Invoice", InvoiceSchema);
