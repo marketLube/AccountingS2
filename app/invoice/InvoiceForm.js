@@ -6,7 +6,7 @@ import InvoicePaymentInfo from "./InvoicePaymentInfo";
 import InvoiceFromTable from "./InvoiceTable/InvoiceFormTable";
 import InvoiceTo from "./InvoiceTo";
 
-function InvoiceForm({ ref, register, errors, setTableItems }) {
+function InvoiceForm({ ref, register, errors, setTableItems, tableItems }) {
   return (
     <div ref={ref} className="invoice-form">
       <div className="invoice-form-content-box">
@@ -24,7 +24,13 @@ function InvoiceForm({ ref, register, errors, setTableItems }) {
           errors={errors}
           setTableItems={setTableItems}
         />
-        <InvoiceFormFooter register={register} errors={errors} />
+        {tableItems?.length > 0 && tableItems[0]?.amount && (
+          <InvoiceFormFooter
+            register={register}
+            errors={errors}
+            tableItems={tableItems}
+          />
+        )}
       </div>
     </div>
   );

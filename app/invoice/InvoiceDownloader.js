@@ -75,7 +75,7 @@ function InvoiceDownloader() {
     data.items = tableItems;
     console.log(data, "data");
   };
-
+  console.log(tableItems, "tableItems");
   return (
     <div className="invoice-container">
       <div className="invoice-body">
@@ -84,6 +84,7 @@ function InvoiceDownloader() {
           register={register}
           errors={errors}
           setTableItems={setTableItems}
+          tableItems={tableItems}
         />
         <div className="invoice-actions">
           <BackButton onClick={() => dispatch(setIsInvoice(false))} />

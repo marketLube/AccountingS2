@@ -124,7 +124,7 @@ const InvoiceSchema = new mongoose.Schema({
       rate: Number,
       sgst: String,
       cgst: String,
-      amount: String,
+      amount: Number,
     },
   ],
 });
