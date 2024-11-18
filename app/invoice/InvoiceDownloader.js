@@ -7,8 +7,12 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useForm } from "react-hook-form";
 import { today } from "../_services/helpers";
+import BackButton from "../_components/utils/BackButton";
+import { useDispatch } from "react-redux";
+import { setIsInvoice } from "@/lib/slices/invoiceSlice";
 
 function InvoiceDownloader() {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -21,11 +25,32 @@ function InvoiceDownloader() {
       date: today(),
       itemDescription: "Item Description",
       quantity: "Qty",
+      gst: "",
       rate: "Rate",
       sgst: "SGST",
       cgst: "CGST",
       amount: "Amount",
+      address: "",
+      city: "",
+      name: "",
+      state: "",
+      country: "",
+      companyName: "Skymark",
       companyName2: "Bill To",
+      receiverName: "",
+      accountNumber: "",
+      ifsc: "",
+      branch: "",
+      invoiceId: "",
+      invoiceDate: "",
+      invoiceDueDate: "",
+      billtoGst: "",
+      name2: "",
+      gst2: "",
+      address2: "",
+      city2: "",
+      state2: "",
+      country2: "",
     },
   });
   const formRef = useRef();
@@ -61,6 +86,7 @@ function InvoiceDownloader() {
           setTableItems={setTableItems}
         />
         <div className="invoice-actions">
+          <BackButton onClick={() => dispatch(setIsInvoice(false))} />
           <Button onClick={handleDownloadPdf}>Download Invoice</Button>
           <Button onClick={handleSubmit(onSubmit)}>Save invoice</Button>
         </div>

@@ -34,9 +34,9 @@ function InvoiceDateSection({ register, errors }) {
           id="invoice-gst"
           type="text"
           placeholder="GST"
-          {...register("gst", { required: "GST is required" })}
+          {...register("billtoGst", { required: "GST is required" })}
         />
-        {errors.gst && <span>{errors.gst.message}</span>}
+        {errors.billtoGst && <span>{errors.billtoGst.message}</span>}
       </div>
     </div>
   );

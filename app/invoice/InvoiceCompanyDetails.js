@@ -19,13 +19,11 @@ function InvoiceCompanyDetails({ register, errors }) {
       {/* Client Name */}
       <input
         type="text"
-        {...register("clientName")}
-        className={`invoice-input ${errors.clientName ? "input-error" : ""}`}
+        {...register("name")}
+        className={`invoice-input ${errors.name ? "input-error" : ""}`}
         placeholder="Your Name"
       />
-      {errors.clientName && (
-        <span className="error-text">{errors.clientName.message}</span>
-      )}
+      {errors.name && <span className="error-text">{errors.name.message}</span>}
 
       {/* GST */}
       <input

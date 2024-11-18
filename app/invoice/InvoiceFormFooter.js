@@ -15,6 +15,7 @@ function InvoiceFormFooter() {
           <label>CGST</label>
           <span>927538</span>
         </div>
+        <div className="invoice-all-sum">000000</div>
       </div>
     </div>
   );

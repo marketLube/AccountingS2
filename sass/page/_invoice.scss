@@ -71,6 +71,17 @@ $small-padding: 0.2rem;
       justify-content: space-between;
     }
 
+    &-payment {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+
+      & .invoice-input {
+        text-align: right;
+      }
+    }
+
     &-to-container {
       display: flex;
       justify-content: space-between;
@@ -183,6 +194,12 @@ $small-padding: 0.2rem;
     width: 100%;
     padding: 1em 0;
     border-bottom: 0.2px solid lightgray;
+  }
+  &-all-sum {
+    width: 100%;
+    padding: 1rem 0;
+    @include mixins.flex(center);
+    border-bottom: 1px solid black;
   }
 }
 .i-item-desc {

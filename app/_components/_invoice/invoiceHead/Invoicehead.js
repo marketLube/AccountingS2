@@ -13,6 +13,7 @@ import {
   setInvoiceIsEdit,
   setInvoiceSelectedDate,
   setInvoiceStartDate,
+  setIsInvoice,
   setIsInvoiceNewEntry,
 } from "@/lib/slices/invoiceSlice";
 import Selector from "../../utils/Selector";
@@ -65,7 +66,7 @@ function Invoicehead() {
     <>
       <LayoutHead>
         <>
-          <Button onClick={() => dispatch(setIsInvoiceNewEntry(true))}>
+          <Button onClick={() => dispatch(setIsInvoice(true))}>
             + New Entri
           </Button>
           <Button

@@ -13,7 +13,7 @@ function InvoiceTo({ register, errors }) {
         type="text"
         placeholder="Your Name"
         className="invoice-input"
-        {...register("contactName2", { required: "Name is required" })}
+        {...register("name2", { required: "Name is required" })}
       />
       {errors.contactName && <span>{errors.contactName.message}</span>}
 
