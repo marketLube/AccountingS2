@@ -67,15 +67,12 @@ export const getLiabilityOutstandingTotal = async (req) => {
     );
   } else {
     // For non-branch specific calculations
-    pipeline.push(
-      // Group to sum the total amounts
-      {
-        $group: {
-          _id: null,
-          totalAmount: { $sum: "$amount" },
-        },
-      }
-    );
+    pipeline.push({
+      $group: {
+        _id: null,
+        totalAmount: { $sum: "$amount" },
+      },
+    });
   }
 
   try {

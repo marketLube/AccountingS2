@@ -1,5 +1,4 @@
 "use client";
-import { useSelector } from "react-redux";
 
 function ParticularSelector({ particular, setParticular, particulars }) {
   return (

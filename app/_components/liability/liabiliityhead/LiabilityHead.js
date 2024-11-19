@@ -87,7 +87,7 @@ function LiabilityHead() {
           <Button
             onClick={() => dispatch(setLiabilityIsEdit(true))}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
+            disabled={!selectedItems?._id}
           >
             Edit
           </Button>
