@@ -1,0 +1,31 @@
+@use "../abstract/variables";
+@use "../abstract/mixins";
+
+.bottom {
+  height: 100%;
+  width: 20rem;
+  padding: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(variables.$color-white, 0.7);
+  border-radius: variables.$large-radius;
+  display: flex;
+  flex-direction: column;
+
+  &-value {
+    font-weight: 700;
+    color: variables.$color-dark;
+    font-size: 1.4rem;
+  }
+
+  &-down {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex: 1;
+    font-size: 1rem;
+    color: variables.$color-gray;
+    font-weight: 500;
+  }
+  &-liability {
+  }
+}

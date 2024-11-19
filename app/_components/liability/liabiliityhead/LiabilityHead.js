@@ -15,6 +15,7 @@ import {
   setLiabilityIsEdit,
   setLiabilitySelectedDate,
   setLiabilityStartDate,
+  setLiabilityStatus,
 } from "@/lib/slices/liabilitySlice";
 import LiabilityNewEntirForm from "../../_Forms/_liabilityForms/LiabilityNewEntirForm";
 import FsModal from "../../utils/FsModal";
@@ -22,7 +23,7 @@ import LiabilityEditForm from "../../_Forms/_liabilityForms/LiabilityEditForm";
 import Selector from "../../utils/Selector";
 import { useState } from "react";
 import DateModal from "../../utils/DateModal/DateModal";
-import { dateOptions } from "@/app/data/generalDatas";
+import { dateOptions, liabilityStatus } from "@/app/data/generalDatas";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 
 function LiabilityHead() {
@@ -36,7 +37,7 @@ function LiabilityHead() {
     curParticular,
     startDate,
     endDate,
-    selectedDate,
+    curStatus,
   } = useSelector((state) => state.liability);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -53,8 +54,8 @@ function LiabilityHead() {
     dispatch(setLiabilityCurParticular(e.target.value));
   };
 
-  const handlebankChange = (e) => {
-    dispatch(setLiabilityCurBank(e.target.value));
+  const handleStatusChange = (e) => {
+    dispatch(setLiabilityStatus(e.target.value));
   };
 
   const handleSetStartDate = (date) => {
@@ -73,7 +74,6 @@ function LiabilityHead() {
   };
 
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setLiabilitySelectedDate(range));
   };
 
@@ -107,6 +107,11 @@ function LiabilityHead() {
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
+          />
+          <Selector
+            options={["All Status", ...liabilityStatus]}
+            callback={handleStatusChange}
+            curValue={curStatus}
           />
           <Search />
           <Button type="filter" onClick={handleDateModal}>

@@ -5,13 +5,15 @@ import { useDispatch } from "react-redux";
 function FsModal({
   isOpen,
   setIsCancel,
-  width = "50vw",
-  height = "50vh",
+  width = "60vw",
+  height = "60vh",
   children,
+  callback = () => {},
 }) {
   const dispatch = useDispatch();
   const handleCancel = () => {
     dispatch(setIsCancel(false));
+    callback();
   };
   return (
     <Modal

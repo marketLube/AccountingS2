@@ -32,6 +32,14 @@
   display: block;
 }
 
+.fs-modal .ant-modal-content {
+  padding: 20px; /* Add your desired padding */
+}
+
+.fs-modal-content {
+  padding: 20px; /* Add padding to children if needed */
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -363,8 +371,9 @@ body {
   overflow: hidden;
 }
 .balance-sheet-footer {
-  background-color: black;
   grid-column: span 2;
+  display: flex;
+  gap: 1rem;
 }
 
 .branchwise {
@@ -713,6 +722,14 @@ body {
   height: 10rem; /* Height of the spinner */
   animation: spin 1s linear infinite; /* Animation for spinning effect */
   margin-left: 10px; /* Spacing between text and spinner */
+}
+
+.sheet-loader {
+  grid-row: span 12;
+}
+
+.error-message {
+  color: red;
 }
 
 @keyframes spin {
@@ -1137,6 +1154,30 @@ body {
   border-radius: 0.3rem;
 }
 
+.bottom {
+  height: 100%;
+  width: 20rem;
+  padding: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.bottom-value {
+  font-weight: 700;
+  color: rgb(54, 50, 50);
+  font-size: 1.4rem;
+}
+.bottom-down {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex: 1;
+  font-size: 1rem;
+  color: gray;
+  font-weight: 500;
+}
 .form {
   margin: 2rem;
   font-size: 0.9rem;

@@ -5,3 +5,4 @@ export const dateOptions = [
   "Last 30 Days",
   "Last 60 Days",
 ];
+export const liabilityStatus = ["Paid", "Unpaid", "Postponed", "Pending"];

@@ -33,10 +33,8 @@ function OutstandingHead() {
     particulars,
     curCat,
     curParticular,
-    curBank,
     startDate,
     endDate,
-    selectedDate,
   } = useSelector((state) => state.outstanding);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -53,9 +51,6 @@ function OutstandingHead() {
     dispatch(setOutstandingCurParticular(e.target.value));
   };
 
-  const handlebankChange = (e) => {
-    dispatch(setOutstandingCurBank(e.target.value));
-  };
   const handleSetStartDate = (date) => {
     dispatch(setOutstandingStartDate(date));
   };
@@ -72,7 +67,6 @@ function OutstandingHead() {
   };
 
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setOutstandingSelectedDate(range));
   };
 
@@ -107,11 +101,7 @@ function OutstandingHead() {
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
           />
-          <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
-          />
+
           <Search />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />

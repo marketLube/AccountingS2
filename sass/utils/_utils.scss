@@ -30,3 +30,11 @@
   transform: 0.5s all ease;
   display: block;
 }
+
+.fs-modal .ant-modal-content {
+  padding: 20px; /* Add your desired padding */
+}
+
+.fs-modal-content {
+  padding: 20px; /* Add padding to children if needed */
+}

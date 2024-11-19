@@ -12,9 +12,6 @@ import ToggleSwitch from "../_components/utils/ToggleSwitch/ToggleSwitch";
 import { getCurrentMonthName } from "../_services/helpers";
 import useDashboardTotals, { useDashboardChart } from "../_hooks/useDashboard";
 
-// export const metadata = {
-//   title: "Dashboard",
-// };
 function Page() {
   const { isAllTime, debits, credits, branchNames } = useSelector(
     (state) => state.dashboard
@@ -56,7 +53,7 @@ function Page() {
       <div className={`dashboard-left`}>
         <div className={`dashboard-stats`}>
           <div className={`stats-box dashboard-yearly-card`}>
-            <CurrentYearBox />
+            <CurrentYearBox totals={totals?.transactions} />
           </div>
           <div className={`first-section`}>
             <Income

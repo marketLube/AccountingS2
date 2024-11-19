@@ -1,13 +1,20 @@
 "use client";
 
-function Button(
-  { children, type = "primary", onClick = () => {} },
+function Button({
+  children,
+  type = "primary",
+  onClick = () => {},
   style,
-  disabled = false
-) {
+  disabled = false,
+}) {
   if (type === "filter") {
     return (
-      <button className="filterbtn" onClick={onClick} style={style}>
+      <button
+        className="filterbtn"
+        onClick={onClick}
+        style={style}
+        disabled={disabled}
+      >
         {children}
       </button>
     );
@@ -27,25 +34,45 @@ function Button(
     );
   if (type === "clear")
     return (
-      <button className="btn clear-btn" onClick={onClick} style={style}>
+      <button
+        className="btn clear-btn"
+        onClick={onClick}
+        style={style}
+        disabled={disabled}
+      >
         {children}
       </button>
     );
 
   if (type === "thertiary")
     return (
-      <button className="btn thertiary" onClick={onClick} style={style}>
+      <button
+        className="btn thertiary"
+        onClick={onClick}
+        style={style}
+        disabled={disabled}
+      >
         {children}
       </button>
     );
   if (type === "secondary")
     return (
-      <button className="btn secondary" onClick={onClick} style={style}>
+      <button
+        className="btn secondary"
+        onClick={onClick}
+        style={style}
+        disabled={disabled}
+      >
         {children}
       </button>
     );
   return (
-    <button className="btn primary" onClick={onClick} style={style}>
+    <button
+      className="btn primary"
+      onClick={onClick}
+      style={style}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

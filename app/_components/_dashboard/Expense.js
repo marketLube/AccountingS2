@@ -6,7 +6,7 @@ function Expense({ expense, isLoading, isError }) {
       <div className="expensefirsthead">
         <div className="expensetext">Expense</div>
 
-        <Arrow color={"#0040ff"} size="small" />
+        <Arrow color="#0040ff" size="small" isDown={true} />
       </div>
       <div className="expenseamount">₹ {expense}</div>
     </div>

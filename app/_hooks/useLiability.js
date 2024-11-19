@@ -18,7 +18,7 @@ import { useEffect } from "react";
 
 export function useLiability() {
   const dispatch = useDispatch();
-  const { curBranch, curCat, curParticular, page } = useSelector(
+  const { curBranch, curCat, curParticular, page, curStatus } = useSelector(
     (state) => state.liability
   );
 
@@ -31,7 +31,7 @@ export function useLiability() {
     setLiabilityParticular,
     setLiabilityCurParticular
   );
-  let endpoint = `/liability?type=liability?page=${page}`;
+  let endpoint = `/liability?type=liability&page=${page}`;
 
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
@@ -42,23 +42,20 @@ export function useLiability() {
   if (particular?._id) {
     endpoint += `&particular=${particular?._id}`;
   }
+  if (curStatus && !curStatus?.startsWith("All")) {
+    endpoint += `&status=${curStatus}`;
+  }
 
-  const {
-    data: liabilities,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["liability", endpoint],
-    queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data),
   });
 
   useEffect(() => {
-    dispatch(setLiabilitySummery(liabilities?.summery));
-  }, [liabilities]);
+    dispatch(setLiabilitySummery(data?.summery));
+  }, [data]);
 
-  return { isLoading, isError, error, refetch, liabilities: liabilities?.data };
+  return { isLoading, isError, error, refetch, liabilities: data?.data };
 }
 export function refreshLiability() {
   queryClient.invalidateQueries("liability");

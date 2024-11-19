@@ -1,14 +1,23 @@
-import { thisYear } from "@/app/_services/helpers";
+import { getCurrentMonthName, thisYear } from "@/app/_services/helpers";
 import CurrentYearCard from "./CurrentYearCard";
+import { useSelector } from "react-redux";
 
-function CurrentYearBox() {
-  const profit = "25,78,2359";
+function CurrentYearBox({ totals }) {
+  const { totalCredit, totalDebit } = totals || {
+    totalCredit: "--",
+    totalDebit: "--",
+  };
+
+  const { isAllTime } = useSelector((state) => state.dashboard);
+
   return (
     <div className="current-year-box">
-      <CurrentYearCard />
+      <CurrentYearCard dataset={[totalCredit, totalDebit]} />
       <div className="current-year-box-text">
-        <h4 className="topperformerhead">Profit in {thisYear()}</h4>
-        <h2 className="text-small-bold">$ {profit}</h2>
+        <h4 className="topperformerhead">
+          {isAllTime ? "All time Profit" : "Profit in " + getCurrentMonthName()}
+        </h4>
+        <h2 className="text-small-bold">$ {totalCredit - totalDebit}</h2>
       </div>
     </div>
   );

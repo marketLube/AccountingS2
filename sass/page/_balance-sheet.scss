@@ -20,7 +20,8 @@
     overflow: hidden;
   }
   &-footer {
-    background-color: black;
     grid-column: span 2;
+    display: flex;
+    gap: 1rem;
   }
 }

@@ -47,7 +47,8 @@ export const getTransactionTotal = async (req) => {
       // Match specific branch
       {
         $match: {
-          "branches.branch": new mongoose.Types.ObjectId(branchId),
+          "branches.branch":
+            mongoose.Types.ObjectId.createFromHexString(branchId),
         },
       },
       // Add calculated amount based on type
@@ -130,6 +131,5 @@ export const getTransactionTotal = async (req) => {
         };
   } catch (error) {
     console.error("Aggregation error:", error);
-    throw error;
   }
 };

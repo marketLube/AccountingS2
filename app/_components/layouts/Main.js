@@ -1,5 +1,6 @@
 "use client";
 
+import useDashboardTotals from "@/app/_hooks/useDashboard";
 import {
   fetchBanks,
   fetchBranches,
@@ -10,6 +11,7 @@ import { useDispatch } from "react-redux";
 
 function Main({ children }) {
   const dispatch = useDispatch();
+  useDashboardTotals();
   useEffect(() => {
     dispatch(fetchCategory());
     dispatch(fetchBranches());

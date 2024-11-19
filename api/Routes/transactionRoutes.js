@@ -5,14 +5,12 @@ import {
   updateTransaction,
   getTransaction,
   deleteTransaction,
-  balanceSheet,
   deleteTransactionByIdMiddleWare,
   downloadTranscation,
 } from "../Controller/transactionController.js";
 
 const router = express.Router();
 
-router.get("/balance-sheet", balanceSheet);
 router.get("/download", downloadTranscation);
 
 router.get("/", getAllTransaction);

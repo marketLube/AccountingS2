@@ -2,10 +2,8 @@
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 import APIFeatures from "../APIFeatures/APIFeatures.js";
-import Catagory from "../Models/catagoryModel.js";
-import Particulars from "../Models/particularsModel.js";
 import { idChecker } from "../APIFeatures/idChecker.js";
-import { getTransactionTotal } from "../Aggregation/transactionGrandTotal.js";
+import totalChecker from "../APIFeatures/totalChecker.js";
 
 export const getAll = (Model) => {
   return catchAsync(async (req, res, next) => {
@@ -24,9 +22,7 @@ export const getAll = (Model) => {
       .search();
 
     const docs = await features.query;
-
-    const total = await getTransactionTotal(req);
-    console.log(total, "total");
+    const total = await totalChecker(Model, req);
 
     res.status(200).json({
       status: "success",

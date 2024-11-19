@@ -84,3 +84,8 @@ export const calculateDateRange = (daysAgo) => {
   const endDate = formatDate(new Date());
   return { startDate, endDate };
 };
+
+export const formatWithCommas = (number) => {
+  if (!number) return "---";
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

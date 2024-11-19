@@ -13,6 +13,7 @@ import {
   setDayBookEndDate,
   setDaybookIsEdit,
   setDayBookSelectedDate,
+  setDaybookSelectedItems,
   setDayBookStartDate,
   setIsDaybookNewEntri,
 } from "@/lib/slices/daybookSlice";
@@ -25,6 +26,7 @@ import DateModal from "../../utils/DateModal/DateModal";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import { dateOptions } from "@/app/data/generalDatas";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 function DaybookHead() {
   const dispatch = useDispatch();
@@ -75,8 +77,13 @@ function DaybookHead() {
   };
 
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setDayBookSelectedDate(range));
+  };
+
+  const handleIsEdits = () => {
+    if (!selectedItems?._id)
+      return toast.error("Please Select a Transaction..!");
+    dispatch(setDaybookIsEdit(true));
   };
 
   return (
@@ -88,9 +95,8 @@ function DaybookHead() {
           </Button>
           <Button>+ Bank to Bank</Button>
           <Button
-            onClick={() => dispatch(setDaybookIsEdit(true))}
+            onClick={handleIsEdits}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
           >
             Edit
           </Button>
@@ -159,7 +165,11 @@ function DaybookHead() {
       <FsModal isOpen={isNewEntry} setIsCancel={setIsDaybookNewEntri}>
         <DaybookNewEntirForm />
       </FsModal>
-      <FsModal isOpen={isEdit} setIsCancel={setDaybookIsEdit}>
+      <FsModal
+        isOpen={isEdit}
+        setIsCancel={setDaybookIsEdit}
+        callback={() => dispatch(setDaybookSelectedItems({}))}
+      >
         <DaybookEditForm />
       </FsModal>
     </>

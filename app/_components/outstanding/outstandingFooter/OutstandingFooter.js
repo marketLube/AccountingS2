@@ -6,12 +6,14 @@ import PageNavigate from "../../utils/_pagination/PageNavigate";
 import Button from "@/app/_components/utils/Button";
 
 function OutstandingFooter() {
-  const { currentPage, btnDisable } = useSelector((state) => state.outstanding);
+  const { currentPage, btnDisable, summery } = useSelector(
+    (state) => state.outstanding
+  );
   return (
     <>
       <div className={`layout-footer`}>
         <div className="layout-footer-left">
-          <Button>Total</Button>
+          <Button>Total : {summery?.totalAmount}</Button>
         </div>
         <div className="layout-footer-right">
           <PageNavigate

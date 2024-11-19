@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../_components/layouts/AppLayout";
 import apiClient from "@/lib/axiosInstance";
 import { useDispatch, useSelector } from "react-redux";
-import { setDataset, setTotals } from "@/lib/slices/dashboardSlice";
+import { setDataset } from "@/lib/slices/dashboardSlice";
 import { useEffect } from "react";
+import { setTotals } from "@/lib/slices/generalSlice";
 
 export default function useDashboardTotals() {
+  const dispatch = useDispatch();
   let endpoint = `/stats/totals?thisMonth=yes`;
 
   const { isAllTime } = useSelector((state) => state.dashboard);
@@ -24,6 +26,10 @@ export default function useDashboardTotals() {
     queryKey: ["totals", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data.result),
   });
+
+  useEffect(() => {
+    dispatch(setTotals(totals));
+  }, [totals]);
 
   return { isLoading, isError, error, refetch, totals };
 }

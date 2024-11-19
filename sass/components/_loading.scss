@@ -24,6 +24,13 @@
   margin-left: 10px; /* Spacing between text and spinner */
 }
 
+.sheet-loader {
+  grid-row: span 12;
+}
+.error-message {
+  color: red;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg); /* Initial state */
