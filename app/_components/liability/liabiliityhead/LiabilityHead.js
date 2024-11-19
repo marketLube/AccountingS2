@@ -1,13 +1,11 @@
 "use client";
 import LayoutHead from "@/app/_components/layouts/LayoutHead";
 import Button from "@/app/_components/utils/Button";
-
 import { GiSettingsKnobs } from "react-icons/gi";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsLiabilityNewEntry,
-  setLiabilityCurBank,
   setLiabilityCurBranch,
   setLiabilityCurCat,
   setLiabilityCurParticular,
@@ -72,7 +70,6 @@ function LiabilityHead() {
   const handleDateModal = () => {
     setIsOpen((open) => !open);
   };
-
   const handleSelectChange = (range) => {
     return () => dispatch(setLiabilitySelectedDate(range));
   };
