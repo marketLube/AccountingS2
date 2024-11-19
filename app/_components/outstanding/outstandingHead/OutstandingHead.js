@@ -5,7 +5,6 @@ import Search from "@/app/_components/utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsOutstandingNewEntry,
-  setOutstandingCurBank,
   setOutstandingCurBranch,
   setOutstandingCurCat,
   setOutstandingCurParticular,
@@ -16,7 +15,6 @@ import {
 } from "@/lib/slices/outstandingSlice";
 import FsModal from "../../utils/FsModal";
 import OutstandingNewEntryForm from "../../_Forms/_outstandingForms/OutstandingNewEntryForm";
-import { setLiabilityIsEdit } from "@/lib/slices/liabilitySlice";
 import OutstandingEditForm from "../../_Forms/_outstandingForms/OutstandingEditForm";
 import Selector from "../../utils/Selector";
 import DateModal from "../../utils/DateModal/DateModal";
@@ -70,6 +68,8 @@ function OutstandingHead() {
     return () => dispatch(setOutstandingSelectedDate(range));
   };
 
+  console.log(selectedItems, "Outstanding");
+
   return (
     <>
       <LayoutHead>
@@ -80,7 +80,7 @@ function OutstandingHead() {
           <Button
             onClick={() => dispatch(setOutstandingIsEdit(true))}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
+            disabled={!selectedItems?._id}
           >
             Edit
           </Button>
