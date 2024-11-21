@@ -1,4 +1,5 @@
 import { getAssetsTotal } from "../Aggregation/assetsGrandTotal.js";
+import { budgetPlannerTotal } from "../Aggregation/budgetPlannerTotal.js";
 import { getCapitalGrandTotal } from "../Aggregation/capitalGrandTotal.js";
 import { getLiabilityOutstandingTotal } from "../Aggregation/liabiilityOutstandingGrandTotal.js";
 import { getReminderGrandTotal } from "../Aggregation/reminderGrandTotal.js";
@@ -16,5 +17,8 @@ export default async function totalChecker(Model, req) {
     return await getAssetsTotal(req);
   } else if (Model.modelName === "Capital") {
     return await getCapitalGrandTotal(req);
-  } else return {};
+  } else if (Model.modelName === "Events") {
+    return await budgetPlannerTotal(req);
+  }
+  return {};
 }

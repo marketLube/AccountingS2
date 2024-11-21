@@ -3,7 +3,7 @@
 import { useBranchNameFinder } from "@/app/_services/finders";
 import { truncate } from "@/app/_services/helpers";
 import { setBudgetplannerSelectedItems } from "@/lib/slices/budgetplannerSlice";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function BudgetplannerTableItems({ item }) {
@@ -22,16 +22,16 @@ function BudgetplannerTableItems({ item }) {
     }
   };
 
-  const total = useRef(item?.totalAmount);
+  const [total, setTotal] = useState(item?.amount * 1);
   useEffect(() => {
     if (curRange.startsWith("One")) {
-      total.current = item?.totalAmount * 1;
+      setTotal(item?.amount * 1);
     } else if (curRange.startsWith("Three")) {
-      total.current = item?.totalAmount * 3;
+      setTotal(item?.amount * 3);
     } else if (curRange.startsWith("Six")) {
-      total.current = item?.totalAmount * 6;
+      setTotal(item?.amount * 6);
     }
-  }, [curRange]);
+  }, [curRange, item]);
 
   return (
     <div className="table-col">
@@ -48,11 +48,13 @@ function BudgetplannerTableItems({ item }) {
       <span className="table-col date table-body-col">
         {item?.formattedDate}
       </span>
-      <span className="table-col amount table-body-col">{item?.amount}</span>
+      <span className="table-col amount table-body-col">{total}</span>
       <span className="table-col change table-body-col">
         {item?.percentageDifference}
       </span>
-      <span className="table-col total table-body-col">{total.current}</span>
+      <span className="table-col total table-body-col">
+        {item?.totalAmount}
+      </span>
       <span className="table-col branch table-body-col">{branch}</span>
     </div>
   );

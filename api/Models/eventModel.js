@@ -62,7 +62,7 @@ eventSchema.pre("findOneAndUpdate", async function (next) {
       this.set({ pastUpdatedAmount: docToUpdate.amount });
     }
     this.totalAmount -= docToUpdate.amount;
-    this.totalAmount += updateData.amaount;
+    this.totalAmount += updateData.amount;
 
     next();
   } catch (error) {

@@ -57,8 +57,8 @@ function Page() {
             className="stats-box dashboard-yearly-card"
             style={{
               position: "relative",
-              width: "100%", // This is the full width of the parent
-              height: "auto", // Fixed height for the skeleton to work correctly
+              width: "100%",
+              height: "auto",
             }}
           >
             {isLoading ? (
