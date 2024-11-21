@@ -8,7 +8,6 @@ import {
 } from "@/lib/slices/liabilitySlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  useBankIdFinder,
   useBranchIdFinder,
   useCategoryNameFinder,
   useParticularNameFinder,

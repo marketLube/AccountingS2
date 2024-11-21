@@ -4,6 +4,7 @@ import { useCategoryNameFinder } from "@/app/_services/finders";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ParticularSelector from "./ParticularSelector";
+import apiClient from "@/lib/axiosInstance";
 
 function CatagorySelector({
   catagory,

@@ -32,7 +32,7 @@ const reminderSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Paid", "Unpaid", "Postponed"],
+      enum: ["Paid", "Unpaid", "Postponed", "Pending"],
       required: [true, "Reminder must have a Status (Paid, Unpaid, Postponed)"],
     },
     branch: {

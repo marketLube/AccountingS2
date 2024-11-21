@@ -1,30 +1,34 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../_components/layouts/AppLayout";
 import apiClient from "@/lib/axiosInstance";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useBranchIdFinder } from "../_services/finders";
+import { useEffect } from "react";
+import { setAssetsSummery } from "@/lib/slices/assetsSlice";
 
 export default function useAssets() {
-  let endpoint = `/assets?`;
-  const { curBranch } = useSelector((state) => state.branchwise);
+  const { curBranch, page, curType } = useSelector((state) => state.assets);
+  const dispatch = useDispatch();
   const assetsCurbranch = useBranchIdFinder(curBranch);
-  console.log(curBranch, "ufkfg");
+
+  let endpoint = `/assets?page=${page}`;
 
   if (assetsCurbranch) {
-    endpoint += `branchId=${assetsCurbranch?._id}`;
+    endpoint += `&branch=${assetsCurbranch?._id}`;
   }
-  const {
-    data: assets,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
+  if (!curType.startsWith("All")) {
+    endpoint += `&type=${curType}`;
+  }
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["assets", endpoint],
-    queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data),
   });
 
-  return { isLoading, isError, error, refetch, assets };
+  useEffect(() => {
+    dispatch(setAssetsSummery(data?.summery));
+  }, [data]);
+
+  return { isLoading, isError, error, refetch, assets: data?.data };
 }
 export function refreshAssets() {
   queryClient.invalidateQueries("assets");

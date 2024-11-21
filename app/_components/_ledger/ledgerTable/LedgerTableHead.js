@@ -6,8 +6,6 @@ function LedgerTableHead() {
         <input type="checkbox" style={{ opacity: "0" }} />
       </span>
       <span className="table-col particular">Particular</span>
-      <span className="table-col date">Date</span>
-      <span className="table-col amount">Amount</span>
       <span className="table-col debit">Debited</span>
       <span className="table-col credit">Credited</span>
       <span className="table-col liability">Liabilty</span>

@@ -5,6 +5,7 @@ import Search from "@/app/_components/utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsOutstandingNewEntry,
+  setOutCurStatus,
   setOutstandingCurBranch,
   setOutstandingCurCat,
   setOutstandingCurParticular,
@@ -19,7 +20,7 @@ import OutstandingEditForm from "../../_Forms/_outstandingForms/OutstandingEditF
 import Selector from "../../utils/Selector";
 import DateModal from "../../utils/DateModal/DateModal";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
-import { dateOptions } from "@/app/data/generalDatas";
+import { dateOptions, liabilityStatus } from "@/app/data/generalDatas";
 import { useState } from "react";
 
 function OutstandingHead() {
@@ -33,6 +34,7 @@ function OutstandingHead() {
     curParticular,
     startDate,
     endDate,
+    curStatus,
   } = useSelector((state) => state.outstanding);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -62,6 +64,10 @@ function OutstandingHead() {
 
   const handleDateModal = () => {
     setIsOpen((open) => !open);
+  };
+
+  const handleStatusChange = (e) => {
+    dispatch(setOutCurStatus(e.target.value));
   };
 
   const handleSelectChange = (range) => {
@@ -100,6 +106,11 @@ function OutstandingHead() {
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
+          />
+          <Selector
+            options={["All Status", ...liabilityStatus]}
+            callback={handleStatusChange}
+            curValue={curStatus}
           />
 
           <Search />

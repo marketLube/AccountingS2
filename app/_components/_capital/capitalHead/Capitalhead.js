@@ -5,12 +5,9 @@ import Button from "../../utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setCapitalBtnDisable,
-  setCapitalCurBank,
   setCapitalCurBranch,
-  setCapitalCurCat,
-  setCapitalCurParticular,
   setCapitalIsEdit,
+  setCapitalType,
   setIsCapitalNewEntry,
 } from "@/lib/slices/capitalSlice";
 import CapitalNewEntryForms from "../../_Forms/_capitalForms/CapitalNewEntryForms";
@@ -24,35 +21,13 @@ import { useState } from "react";
 
 function Capitalhead() {
   const dispatch = useDispatch();
-  const {
-    isNewEntry,
-    selectedItems,
-    isEdit,
-    particulars,
-    curCat,
-    curParticular,
-    curBank,
-    startDate,
-    endDate,
-    selectedDate,
-  } = useSelector((state) => state.capital);
+  const { isNewEntry, selectedItems, isEdit, startDate, endDate, curType } =
+    useSelector((state) => state.capital);
 
-  const { branchNames, categoryNames, bankNames } = useSelector(
-    (state) => state.general
-  );
+  const { branchNames } = useSelector((state) => state.general);
 
   const handleBranchChange = (e) => {
     dispatch(setCapitalCurBranch(e.target.value));
-  };
-  const handleCatChange = (e) => {
-    dispatch(setCapitalCurCat(e.target.value));
-  };
-  const handleParticularChange = (e) => {
-    dispatch(setCapitalCurParticular(e.target.value));
-  };
-
-  const handlebankChange = (e) => {
-    dispatch(setCapitalCurBank(e.target.value));
   };
 
   const handleSetStartDate = (date) => {
@@ -70,8 +45,11 @@ function Capitalhead() {
     setIsOpen((open) => !open);
   };
 
+  const handleTypeChange = (e) => {
+    dispatch(setCapitalType(e.target.value));
+  };
+
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setCapitalSelectedDate(range));
   };
 
@@ -85,30 +63,20 @@ function Capitalhead() {
           <Button
             onClick={() => dispatch(setCapitalIsEdit(true))}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
+            disabled={!selectedItems?._id}
           >
             Edit
           </Button>
         </>
         <>
           <Selector
-            options={["All Categories", ...categoryNames]}
-            callback={handleCatChange}
-          />
-          <Selector
-            options={["All Particulars", ...particulars]}
-            callback={handleParticularChange}
-            disabled={curCat?.startsWith("All")}
-            curValue={curParticular}
-          />
-          <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
           />
           <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
+            options={["All Type", "Fixed", "Temp"]}
+            callback={handleTypeChange}
+            curValue={curType}
           />
           <Search />
           <Button type="filter" onClick={handleDateModal}>

@@ -1,0 +1,17 @@
+.ledger {
+  & .layout-body {
+    grid-template-rows: 2rem 1fr 7rem;
+  }
+  & .layout-footer {
+    align-items: start;
+    &-left {
+      flex: 1;
+      margin-right: 2rem;
+    }
+  }
+
+  & .bottom {
+    flex: 1;
+    width: auto;
+  }
+}

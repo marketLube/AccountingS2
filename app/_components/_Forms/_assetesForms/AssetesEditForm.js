@@ -9,7 +9,6 @@ import {
   PurchasedBy,
   Remark,
 } from "../_FormComponents/FormSmallComponents";
-import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import { useSelector } from "react-redux";
@@ -24,13 +23,12 @@ function AssetesEditForms() {
   const { selectedItems } = useSelector((state) => state.assets);
 
   const branch = useBranchNameFinder(selectedItems?.branch);
-  console.log(branch, "branch");
 
   const defaultValues = {
     date: selectedItems?.date,
     remark: selectedItems?.remark,
     type: selectedItems?.type,
-    purchaseby: selectedItems?.purchaseby,
+    purchasedBy: selectedItems?.purchasedBy,
     branch: branch,
     amount: selectedItems?.amount,
     item: selectedItems?.item,
@@ -41,8 +39,6 @@ function AssetesEditForms() {
     handleSubmit,
     formState: { errors },
     reset,
-    setError,
-    clearErrors,
   } = useForm({ defaultValues });
 
   useEffect(() => {
@@ -51,7 +47,7 @@ function AssetesEditForms() {
       date: new Date(selectedItems?.date) || "",
       remark: selectedItems?.remark || "",
       type: selectedItems?.type || "",
-      purchaseby: selectedItems?.purchaseby || "",
+      purchasedBy: selectedItems?.purchasedBy || "",
       branch: branch || "",
       amount: selectedItems?.amount || "",
       item: selectedItems?.item || "",

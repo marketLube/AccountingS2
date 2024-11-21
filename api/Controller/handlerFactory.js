@@ -11,7 +11,7 @@ export const getAll = (Model) => {
 
     let filter = {};
     const features = new APIFeatures(Model, Model.find(filter), req.query);
-    console.log(req.query, "query");
+
     features
       .filter()
       .sort()

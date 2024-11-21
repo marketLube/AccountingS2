@@ -34,7 +34,7 @@ function AssetesNewEntryForms() {
       date: today(),
       remark: "",
       branch: "",
-      purchaseby: "",
+      purchasedBy: "",
       purpose: "",
       item: "",
       amount: "",

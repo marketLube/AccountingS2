@@ -14,6 +14,7 @@ function BudgetplannerFooter() {
     <>
       <div className={`layout-footer`}>
         <div className="layout-footer-left">
+          <Button>Download Report</Button>
           <Button>Total</Button>
         </div>
         <div className="layout-footer-right">
@@ -22,11 +23,6 @@ function BudgetplannerFooter() {
             setCurrentPage={setBudgetplannerBtnDisable}
             btnDisable={btnDisable}
           />
-        </div>
-      </div>
-      <div className="layout-footer-bottom">
-        <div className="layout-footer-bottom-left">
-          <Button>Download Report</Button>
         </div>
       </div>
     </>

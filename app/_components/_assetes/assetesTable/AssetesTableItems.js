@@ -1,22 +1,14 @@
 "use client";
 
-import {
-  useBranchNameFinder,
-  useCategoryFinder,
-  useParticularFinder,
-} from "@/app/_services/finders";
+import { useBranchNameFinder } from "@/app/_services/finders";
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
-import Log from "@/api/Models/logModel";
 import { useDispatch, useSelector } from "react-redux";
 import { setAssetsSelectedItems } from "@/lib/slices/assetsSlice";
 
 function AssetesTableItems({ item }) {
   const { selectedItems } = useSelector((state) => state.assets);
-  const particular = useParticularFinder(item?.particular);
-  const category = useCategoryFinder(item?.catagory);
-  const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const branch = useBranchNameFinder(item.branch);
 
@@ -63,6 +55,7 @@ function AssetesTableItems({ item }) {
           />
         </span>
         <span className="table-col branch table-body-col">{branch}</span>
+        <span className="table-col branch table-body-col">{item?.type}</span>
       </div>
     </>
   );

@@ -3,7 +3,6 @@
 import useReminders from "@/app/_hooks/useReminders";
 import ReminderTableHead from "./ReminderTableHead";
 import TableLoader from "../../_loader/TableLoader";
-import OutstandingTableItems from "../../outstanding/outstandingTable/OutstandingTableItems";
 import { useSelector } from "react-redux";
 import { useViewEight } from "@/app/_services/helpers";
 import { setRemBtnDiable } from "@/lib/slices/reminderSlice";

@@ -6,6 +6,10 @@ import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsReminderNewEntry,
+  setReminderCurBranch,
+  setReminderCurCat,
+  setReminderCurParticular,
+  setReminderCurStatus,
   setReminderEndDate,
   setReminderIsEdit,
   setReminderSelectedDate,
@@ -17,7 +21,7 @@ import ReminderEditForm from "../../_Forms/_reminderForms/ReminderEditForm";
 import Selector from "../../utils/Selector";
 import DateModal from "../../utils/DateModal/DateModal";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
-import { dateOptions } from "@/app/data/generalDatas";
+import { dateOptions, liabilityStatus } from "@/app/data/generalDatas";
 import { useState } from "react";
 
 function Reminderhead() {
@@ -29,7 +33,7 @@ function Reminderhead() {
     particulars,
     curCat,
     curParticular,
-    curBank,
+    curStatus,
     startDate,
     endDate,
     selectedDate,
@@ -49,10 +53,6 @@ function Reminderhead() {
     dispatch(setReminderCurParticular(e.target.value));
   };
 
-  const handlebankChange = (e) => {
-    dispatch(setReminderCurBank(e.target.value));
-  };
-
   const handleSetStartDate = (date) => {
     dispatch(setReminderStartDate(date));
   };
@@ -68,8 +68,11 @@ function Reminderhead() {
     setIsOpen((open) => !open);
   };
 
+  const handleStatusChange = (e) => {
+    dispatch(setReminderCurStatus(e.target.value));
+  };
+
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setReminderSelectedDate(range));
   };
 
@@ -83,7 +86,7 @@ function Reminderhead() {
           <Button
             onClick={() => dispatch(setReminderIsEdit(true))}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
+            disabled={!selectedItems?._id}
           >
             Edit
           </Button>
@@ -95,6 +98,11 @@ function Reminderhead() {
             callback={handleCatChange}
           />
           <Selector
+            options={["All Status", ...liabilityStatus]}
+            callback={handleStatusChange}
+            curValue={curStatus}
+          />
+          <Selector
             options={["All Particulars", ...particulars]}
             callback={handleParticularChange}
             disabled={curCat?.startsWith("All")}
@@ -104,11 +112,7 @@ function Reminderhead() {
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
           />
-          <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
-          />
+
           <Search />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />

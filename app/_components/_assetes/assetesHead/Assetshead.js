@@ -6,14 +6,12 @@ import { GiSettingsKnobs } from "react-icons/gi";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAssetsCurBank,
   setAssetsCurBranch,
-  setAssetsCurCat,
-  setAssetsCurParticular,
   setAssetsEndDate,
   setAssetsIsEdit,
   setAssetsSelectedDate,
   setAssetsStartDate,
+  setAssetsType,
   setIsAssetsNewEntry,
 } from "@/lib/slices/assetsSlice";
 import FsModal from "../../utils/FsModal";
@@ -31,10 +29,7 @@ function Assetshead() {
     isNewEntry,
     selectedItems,
     isEdit,
-    particulars,
-    curCat,
-    curParticular,
-    curBank,
+    curType,
     curBranch,
     startDate,
     endDate,
@@ -48,17 +43,6 @@ function Assetshead() {
   const handleBranchChange = (e) => {
     dispatch(setAssetsCurBranch(e.target.value));
   };
-  const handleCatChange = (e) => {
-    dispatch(setAssetsCurCat(e.target.value));
-  };
-  const handleParticularChange = (e) => {
-    dispatch(setAssetsCurParticular(e.target.value));
-  };
-
-  const handlebankChange = (e) => {
-    dispatch(setAssetsCurBank(e.target.value));
-  };
-
   const handleSetStartDate = (date) => {
     dispatch(setAssetsStartDate(date));
   };
@@ -73,9 +57,11 @@ function Assetshead() {
   const handleDateModal = () => {
     setIsOpen((open) => !open);
   };
+  const handleTypeChange = (e) => {
+    dispatch(setAssetsType(e.target.value));
+  };
 
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setAssetsSelectedDate(range));
   };
 
@@ -89,31 +75,21 @@ function Assetshead() {
           <Button
             onClick={() => dispatch(setAssetsIsEdit(true))}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
+            disabled={!selectedItems?._id}
           >
             Edit
           </Button>
         </>
         <>
           <Selector
-            options={["All Categories", ...categoryNames]}
-            callback={handleCatChange}
-          />
-          <Selector
-            options={["All Particulars", ...particulars]}
-            callback={handleParticularChange}
-            disabled={curCat?.startsWith("All")}
-            curValue={curParticular}
-          />
-          <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
             curValue={curBranch}
           />
           <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
+            options={["All Type", "Fixed", "Temp"]}
+            callback={handleTypeChange}
+            curValue={curType}
           />
           <Search />
           <Button type="filter" onClick={handleDateModal}>

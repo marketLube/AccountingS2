@@ -4,9 +4,29 @@ import catchAsync from "../Utilities/catchAsync.js";
 import mongoose from "mongoose";
 
 export const getAllLedgers = catchAsync(async (req, res, next) => {
-  const { branchId, startDate, endDate, status } = req.query;
+  const {
+    branchId,
+    startDate,
+    endDate,
+    status,
+    catagory,
+    page = 1,
+    limit = 32,
+  } = req.query;
 
   try {
+    // Parse pagination values
+    const pageNumber = parseInt(page, 10);
+    const pageLimit = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageLimit;
+
+    if (pageNumber < 1 || pageLimit < 1) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid pagination parameters",
+      });
+    }
+
     // Base match stages
     const dateMatch = {};
     if (startDate && endDate) {
@@ -15,6 +35,9 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
         $lte: new Date(endDate),
       };
     }
+    const catagoryMatch = catagory
+      ? { catagory: new mongoose.Types.ObjectId(catagory) }
+      : {};
 
     const branchMatch = branchId
       ? { "branches.branch": new mongoose.Types.ObjectId(branchId) }
@@ -22,6 +45,7 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
 
     // Transaction Aggregation Pipeline
     const transactionPipeline = [
+      { $match: catagoryMatch },
       { $match: dateMatch },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
       { $match: branchMatch },
@@ -39,13 +63,44 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
         $unwind: { path: "$particularInfo", preserveNullAndEmptyArrays: true },
       },
       {
+        $addFields: {
+          tdsPercentage: {
+            $convert: {
+              input: {
+                $replaceAll: { input: "$tds", find: "%", replacement: "" },
+              },
+              to: "double",
+              onError: 0,
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          tdsAmount: {
+            $cond: {
+              if: { $gt: ["$tdsPercentage", 0] },
+              then: {
+                $multiply: [
+                  "$branches.amount",
+                  { $divide: ["$tdsPercentage", 100] },
+                ],
+              },
+              else: 0,
+            },
+          },
+        },
+      },
+      {
         $group: {
           _id: {
             particularId: { $ifNull: ["$particular", null] },
             particularName: { $ifNull: ["$particularInfo.name", "Unknown"] },
             type: { $ifNull: ["$type", "Unknown"] },
+            tdsType: "$tdsType",
           },
           total: { $sum: { $ifNull: ["$branches.amount", 0] } },
+          totalTds: { $sum: { $ifNull: ["$tdsAmount", 0] } },
           count: { $sum: 1 },
         },
       },
@@ -58,7 +113,9 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
           transactions: {
             $push: {
               type: "$_id.type",
+              tdsType: "$_id.tdsType",
               total: { $ifNull: ["$total", 0] },
+              totalTds: { $ifNull: ["$totalTds", 0] },
               count: { $ifNull: ["$count", 0] },
             },
           },
@@ -95,6 +152,32 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
               in: { $add: ["$$value", "$$this.total"] },
             },
           },
+          tdsPayable: {
+            $reduce: {
+              input: {
+                $filter: {
+                  input: "$transactions",
+                  as: "item",
+                  cond: { $eq: ["$$item.tdsType", "Payable"] },
+                },
+              },
+              initialValue: 0,
+              in: { $add: ["$$value", "$$this.totalTds"] },
+            },
+          },
+          tdsReceivable: {
+            $reduce: {
+              input: {
+                $filter: {
+                  input: "$transactions",
+                  as: "item",
+                  cond: { $eq: ["$$item.tdsType", "Receivable"] },
+                },
+              },
+              initialValue: 0,
+              in: { $add: ["$$value", "$$this.totalTds"] },
+            },
+          },
         },
       },
       {
@@ -106,6 +189,7 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
 
     // Liability and Outstanding Aggregation Pipeline
     const liabilityPipeline = [
+      { $match: catagoryMatch },
       { $match: { ...dateMatch, status: status || { $ne: "Paid" } } },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
       { $match: branchMatch },
@@ -183,7 +267,7 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
       },
     ];
 
-    // Execute both pipelines separately
+    // Execute both pipelines
     const transactionData = await Transaction.aggregate(transactionPipeline);
     const liabilityData = await LiabilityAndOutstanding.aggregate(
       liabilityPipeline
@@ -200,6 +284,8 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
           totalCredit: item.totalCredit || 0,
           totalDebit: item.totalDebit || 0,
           netAmount: item.netAmount || 0,
+          tdsPayable: item.tdsPayable || 0,
+          tdsReceivable: item.tdsReceivable || 0,
         },
         liabilityOutstanding: {
           totalLiability: 0,
@@ -218,6 +304,8 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
             totalCredit: 0,
             totalDebit: 0,
             netAmount: 0,
+            tdsPayable: 0,
+            tdsReceivable: 0,
           },
           liabilityOutstanding: {
             totalLiability: 0,
@@ -230,17 +318,26 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
       record.liabilityOutstanding.totalOutstanding = item.totalOutstanding || 0;
     });
 
+    // Convert Map to Array and apply pagination
+    const particulars = Array.from(particularMap.values()).map((item) => ({
+      ...item,
+      balance:
+        (item.transactions.netAmount || 0) -
+        (item.liabilityOutstanding.totalLiability || 0) +
+        (item.liabilityOutstanding.totalOutstanding || 0),
+    }));
+
+    const totalRecords = particulars.length;
+    const paginatedData = particulars.slice(skip, skip + pageLimit);
+
     res.status(200).json({
       message: "Successfully fetched",
       status: "Success",
       data: {
-        particulars: Array.from(particularMap.values()).map((item) => ({
-          ...item,
-          balance:
-            (item.transactions.netAmount || 0) -
-            (item.liabilityOutstanding.totalLiability || 0) +
-            (item.liabilityOutstanding.totalOutstanding || 0),
-        })),
+        totalRecords,
+        totalPages: Math.ceil(totalRecords / pageLimit),
+        currentPage: pageNumber,
+        particulars: paginatedData,
       },
     });
   } catch (error) {

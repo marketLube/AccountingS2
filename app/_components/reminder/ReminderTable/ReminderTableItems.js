@@ -8,7 +8,6 @@ import {
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
-import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
 import { setReminderSelectedItems } from "@/lib/slices/reminderSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +16,10 @@ function ReminderTableItems({ item }) {
   const { selectedItems } = useSelector((state) => state.reminder);
   const particular = useParticularFinder(item?.particular);
   const category = useCategoryFinder(item?.catagory);
-  const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
+
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
-  const branch = useBranchNameFinder(item.branch);
+  const branch = useBranchNameFinder(item?.branch);
 
   const dispatch = useDispatch();
 

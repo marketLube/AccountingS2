@@ -1546,20 +1546,6 @@ body {
   display: none;
 }
 
-.ledger .layout-footer {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 1rem;
-}
-.ledger .layout-footer-left {
-  background-color: aquamarine;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.ledger .layout-footer-right {
-  background-color: rgb(23, 69, 54);
-}
-
 .invoice-container {
   background-color: rgb(86, 86, 60);
   height: 100vh;
@@ -1765,6 +1751,21 @@ body {
   height: 100%;
   background-color: rgb(7, 8, 8);
   border-radius: 1rem;
+}
+
+.ledger .layout-body {
+  grid-template-rows: 2rem 1fr 7rem;
+}
+.ledger .layout-footer {
+  align-items: start;
+}
+.ledger .layout-footer-left {
+  flex: 1;
+  margin-right: 2rem;
+}
+.ledger .bottom {
+  flex: 1;
+  width: auto;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

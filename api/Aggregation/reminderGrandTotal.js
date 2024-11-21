@@ -1,9 +1,9 @@
-import LiabilityAndOutstanding from "../Models/liabilityModel.js";
 import mongoose from "mongoose";
+import Reminder from "../Models/remindersModel.js";
 
-export const getLiabilityOutstandingTotal = async (req) => {
+export const getReminderGrandTotal = async (req) => {
   const query = { ...req.query };
-  const branchId = req.query.branchId;
+  const branchId = req.query.branch;
 
   delete query.page;
   delete query.limit;
@@ -38,26 +38,17 @@ export const getLiabilityOutstandingTotal = async (req) => {
     }
   });
 
-  // Add match stage if there are any conditions
-  if (Object.keys(matchStage).length > 0) {
-    pipeline.push({ $match: matchStage });
-  }
-
+  // Add branch-specific filtering
   if (branchId) {
     if (!mongoose.Types.ObjectId.isValid(branchId)) {
       throw new Error("branchId is not a valid ObjectId");
     }
+    matchStage.branch = new mongoose.Types.ObjectId(branchId);
+  }
 
-    pipeline.push(
-      // Unwind branches array to work with individual branch entries
-      { $unwind: "$branches" },
-      // Match specific branch
-      {
-        $match: {
-          "branches.branch": new mongoose.Types.ObjectId(branchId),
-        },
-      }
-    );
+  // Add match stage if there are any conditions
+  if (Object.keys(matchStage).length > 0) {
+    pipeline.push({ $match: matchStage });
   }
 
   // Add a group stage to calculate totals
@@ -86,7 +77,7 @@ export const getLiabilityOutstandingTotal = async (req) => {
   });
 
   try {
-    const result = await LiabilityAndOutstanding.aggregate(pipeline);
+    const result = await Reminder.aggregate(pipeline);
     return result.length > 0
       ? {
           totalExcludingPaid: result[0].totalExcludingPaid || 0,

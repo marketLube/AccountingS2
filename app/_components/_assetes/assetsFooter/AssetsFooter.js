@@ -1,17 +1,20 @@
 "use client";
 import { useSelector } from "react-redux";
-import AssetsFooterbtns from "./AssetsFooterbtns";
 import { setAssetsBtnDisable } from "@/lib/slices/assetsSlice";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
 import Button from "@/app/_components/utils/Button";
 
 function AssetsFooter() {
-  const { currentPage, btnDisable } = useSelector((state) => state.assets);
+  const { currentPage, btnDisable, summery } = useSelector(
+    (state) => state.assets
+  );
   return (
     <>
       <div className={`layout-footer`}>
         <div className="layout-footer-left">
-          <Button>Total</Button>
+          <Button>Total : {summery?.overallTotal}</Button>
+          <Button>Fixed : {summery?.fixedTotal}</Button>
+          <Button>Temp : {summery?.tempTotal}</Button>
         </div>
         <div className="layout-footer-right">
           <PageNavigate

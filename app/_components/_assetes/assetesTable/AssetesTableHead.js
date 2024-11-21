@@ -11,6 +11,7 @@ function AssetesTableHead() {
       <span className="table-col purchase">Purchased by</span>
       <span className="table-col remark">Remark</span>
       <span className="table-col branch">Branch</span>
+      <span className="table-col type">Type</span>
     </div>
   );
 }

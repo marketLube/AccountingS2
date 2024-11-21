@@ -27,7 +27,7 @@ import toast from "react-hot-toast";
 import { refreshLiability } from "@/app/_hooks/useLiability";
 
 function OutstandingEditForm() {
-  const { selectedItems } = useSelector((state) => state.liability);
+  const { selectedItems } = useSelector((state) => state.outstanding);
 
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
@@ -96,10 +96,10 @@ function OutstandingEditForm() {
     data.branches = branchObjects;
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
     data.type = "liability";
 
     try {
+      setLoading(true);
       await apiClient.patch("/liability", data);
       toast.success("Successfully created new Liability");
       refreshLiability();
@@ -107,6 +107,8 @@ function OutstandingEditForm() {
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
 
     return;
@@ -114,13 +116,12 @@ function OutstandingEditForm() {
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
-        <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
-        </div>
+        <CatagorySelector
+          catagory={catagory}
+          setCatagory={setCatagory}
+          particular={particular}
+        />
+
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <StatusSel register={register} errors={errors} />

@@ -8,22 +8,18 @@ import {
   StatusSel,
   Amount,
 } from "../_FormComponents/FormSmallComponents";
-import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
   branchFinder,
   catIdFinder,
-  getBranchNames,
   parIdFinder,
   useBranchNameFinder,
   useCategoryFinder,
   useParticularFinder,
-  useStatusFinder,
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshReminders } from "@/app/_hooks/useReminders";
@@ -36,9 +32,7 @@ function ReminderEditForm() {
     (state) => state.general
   );
   const { branches } = useSelector((state) => state.general);
-
   const branch = useBranchNameFinder(selectedItems?.branch);
-  console.log(branch, "branch");
 
   const curCat = useCategoryFinder(selectedItems?.catagory)?.name;
   const curPart = useParticularFinder(selectedItems?.particular)?.name;
@@ -47,14 +41,12 @@ function ReminderEditForm() {
   const [particular, setParticular] = useState("Select Particular");
 
   const defaultValues = {
-    date: selectedItems?.date,
-    remark: selectedItems?.remark,
-    type: selectedItems?.type,
-    purpose: selectedItems?.purpose,
-    status: selectedItems?.status,
-    branch: branch,
-    amount: selectedItems?.amount,
-    banks: selectedItems?.bank,
+    date: selectedItems?.date || "",
+    remark: selectedItems?.remark || "",
+    purpose: selectedItems?.purpose || "",
+    status: selectedItems?.status || "",
+    branch: branch || "",
+    amount: selectedItems?.amount || "",
   };
   console.log(selectedItems);
 
@@ -77,7 +69,6 @@ function ReminderEditForm() {
       status: selectedItems?.status || "",
       branch: branch || "",
       amount: selectedItems?.amount || "",
-      bank: selectedItems?.amount || "",
     });
     setCatagory(curCat);
     setParticular(curPart);
@@ -107,13 +98,12 @@ function ReminderEditForm() {
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
-        <div className="form-row">
-          <CatagorySelector catagory={catagory} setCatagory={setCatagory} />
-          <ParticularSelector
-            particular={particular}
-            setParticular={setParticular}
-          />
-        </div>
+        <CatagorySelector
+          catagory={catagory}
+          setCatagory={setCatagory}
+          particular={particular}
+        />
+
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Amount register={register} errors={errors} />

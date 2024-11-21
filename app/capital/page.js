@@ -10,9 +10,6 @@ function page() {
         <Capitalhead />
         <CapitalTable />
         <CapitalFooter />
-
-        {/* <div className={`layout-table`}>table</div>
-  <div className={`layout-footer`}>Footer</div> */}
       </div>
     </div>
   );

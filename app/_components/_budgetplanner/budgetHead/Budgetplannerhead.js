@@ -12,6 +12,7 @@ import {
   setBudgetplannerIsEdit,
   setBudgetplannerSelectedDate,
   setBudgetplannerStartDate,
+  setCurRange,
   setIsBudgetplannerNewEntry,
 } from "@/lib/slices/budgetplannerSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,31 +31,17 @@ function Budgetplannerhead() {
     isNewEntry,
     selectedItems,
     isEdit,
-    particulars,
-    curCat,
-    curParticular,
-    curBank,
+    curBranch,
     startDate,
     endDate,
+    curRange,
     selectedDate,
   } = useSelector((state) => state.budgetplanner);
 
-  const { branchNames, categoryNames, bankNames } = useSelector(
-    (state) => state.general
-  );
+  const { branchNames } = useSelector((state) => state.general);
 
   const handleBranchChange = (e) => {
     dispatch(setBudgetplannerCurBranch(e.target.value));
-  };
-  const handleCatChange = (e) => {
-    dispatch(setBudgetplannerCurCat(e.target.value));
-  };
-  const handleParticularChange = (e) => {
-    dispatch(setBudgetplannerCurParticular(e.target.value));
-  };
-
-  const handlebankChange = (e) => {
-    dispatch(setBudgetplannerCurBank(e.target.value));
   };
 
   const handleSetStartDate = (date) => {
@@ -73,8 +60,11 @@ function Budgetplannerhead() {
   };
 
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setBudgetplannerSelectedDate(range));
+  };
+
+  const handleRangeChange = (e) => {
+    dispatch(setCurRange(e.target.value));
   };
 
   return (
@@ -87,30 +77,21 @@ function Budgetplannerhead() {
           <Button
             onClick={() => dispatch(setBudgetplannerIsEdit(true))}
             type={selectedItems?._id ? "primary" : "secondary"}
-            disabled={selectedItems?._id}
+            disabled={!selectedItems?._id}
           >
             Edit
           </Button>
         </>
         <>
           <Selector
-            options={["All Categories", ...categoryNames]}
-            callback={handleCatChange}
-          />
-          <Selector
-            options={["All Particulars", ...particulars]}
-            callback={handleParticularChange}
-            disabled={curCat?.startsWith("All")}
-            curValue={curParticular}
+            options={["One Month", "Three Months", "Six Months"]}
+            callback={handleRangeChange}
+            curValue={curRange}
           />
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
-          />
-          <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
+            curValue={curBranch}
           />
           <Search />
           <Button type="filter" onClick={handleDateModal}>

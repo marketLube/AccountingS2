@@ -13,7 +13,8 @@ function OutstandingFooter() {
     <>
       <div className={`layout-footer`}>
         <div className="layout-footer-left">
-          <Button>Total : {summery?.totalAmount}</Button>
+          <Button>Total : {summery?.totalExcludingPaid}</Button>
+          <Button>Paid : {summery?.totalPaid}</Button>
         </div>
         <div className="layout-footer-right">
           <PageNavigate
