@@ -1748,9 +1748,74 @@ body {
 }
 .manage-box-container {
   flex: 1;
-  height: 100%;
-  background-color: rgb(7, 8, 8);
+  display: flex;
+  flex-direction: column;
   border-radius: 1rem;
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.manage-box-container-head {
+  background-color: rgb(28, 101, 126);
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #fff;
+}
+.manage-box-container-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: calc(60vh - 3rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.manage-box-container-body > div:nth-child(even) {
+  background-color: rgba(204, 222, 228, 0.8);
+}
+.manage-box-container-body > div:nth-child(odd) {
+  background-color: #fff;
+}
+.manage-box-container-body-item {
+  height: 3rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  font-weight: 600;
+  color: gray;
+  transform-origin: top;
+}
+.manage-box-container-body-item input {
+  border-radius: 3rem;
+  height: 90%;
+  width: 10rem;
+  background-color: rgba(193, 193, 193, 0.6);
+  padding: 0 1rem;
+  outline: none;
+  border: none;
+}
+.manage-box-container-body-item-inputbtn {
+  display: flex;
+  gap: 0.5rem;
+}
+.manage-box-container-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.manage-box-container-footer button {
+  font-weight: 600;
+  color: #fff;
 }
 
 .ledger .layout-body {
@@ -1766,6 +1831,18 @@ body {
 .ledger .bottom {
   flex: 1;
   width: auto;
+}
+
+.commition-table {
+  grid-template-rows: 1rem 1.2fr repeat(4, 1fr);
+}
+.commition .students {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+  align-items: start;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

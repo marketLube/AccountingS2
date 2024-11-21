@@ -1,0 +1,14 @@
+.commition {
+  &-table {
+    grid-template-rows: 1rem 1.2fr repeat(4, 1fr);
+  }
+
+  .students {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: left;
+    align-items: start;
+    justify-content: center;
+  }
+}

@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  useCategoryFinder,
-  useParticularFinder,
-} from "@/app/_services/finders";
 import Tooltip from "../../utils/Tooltip";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +7,6 @@ import { setCommissionSelectedItems } from "@/lib/slices/CommissionSlice";
 
 function CommissionTableItems({ item }) {
   const { selectedItems } = useSelector((state) => state.commission);
-  const particular = useParticularFinder(item?.particular);
-  const category = useCategoryFinder(item?.catagory);
-  const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
 
   const dispatch = useDispatch();
@@ -36,46 +29,31 @@ function CommissionTableItems({ item }) {
           />
         </span>
 
-        <div>
-          <span className="table-col particulars table-body-col">Students</span>
-          <span
-            className="table-col date table-body-col"
-            style={{ color: "gray" }}
-          >
-            UK BPP
-          </span>
-          <span
-            className="table-col date table-body-col"
-            style={{ color: "gray" }}
-          >
-            hanna releaved
-          </span>
-          <span
-            className="table-col date table-body-col"
-            style={{ color: "gray" }}
-          >
-            November| November-March
-          </span>
+        <div className="table-col particular table-body-col students">
+          <span>Students</span>
+          <span style={{ color: "gray" }}>UK BPP</span>
+          <span style={{ color: "gray" }}>hanna releaved</span>
+          <span style={{ color: "gray" }}>November| November-March</span>
         </div>
         <span className="table-col date table-body-col">Date</span>
         <span className="table-col branch table-body-col">Branch</span>
         <span className="table-col courseFee table-body-col">Course Fee</span>
-        <span className="table-col remark table-body-col">Remark</span>
+        <span
+          className="table-col remark table-body-col"
+          onMouseEnter={() => setIsRemarkTooltip(true)}
+          onMouseLeave={() => setIsRemarkTooltip(false)}
+        >
+          Remark
+          <Tooltip
+            type="remark"
+            isVisible={isRemarkTooltip}
+            remark={item?.remark}
+          />
+        </span>
         <span className="table-col receivable table-body-col">Receivable</span>
         <span className="table-col status table-body-col">Status</span>
         <span className="table-col agent table-body-col">Agent</span>
       </div>
-      <Tooltip
-        isVisible={isParTooltip}
-        parName={particular?.name}
-        catName={category?.name}
-        purpose={item?.purpose}
-      />
-      <Tooltip
-        type="remark"
-        isVisible={isRemarkTooltip}
-        remark={item?.remark}
-      />
     </>
   );
 }

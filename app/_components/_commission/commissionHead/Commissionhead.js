@@ -80,23 +80,8 @@ function Commissionhead() {
         </>
         <>
           <Selector
-            options={["All Categories", ...categoryNames]}
-            callback={handleCatChange}
-          />
-          <Selector
-            options={["All Particulars", ...particulars]}
-            callback={handleParticularChange}
-            disabled={curCat?.startsWith("All")}
-            curValue={curParticular}
-          />
-          <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
-          />
-          <Selector
-            options={["All Banks", ...bankNames]}
-            callback={handlebankChange}
-            curValue={curBank}
           />
           <Search />
           <Button type="filter" onClick={handleDateModal}>

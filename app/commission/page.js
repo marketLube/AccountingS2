@@ -5,7 +5,7 @@ import InvoiceFooter from "../_components/_invoice/invoiceFooter/InvoiceFooter";
 
 function page() {
   return (
-    <div className={`layout assetes`}>
+    <div className={`layout commition`}>
       <h1 className={`main-head`}>Commission</h1>
       <div className={`layout-body`}>
         <Commissionhead />

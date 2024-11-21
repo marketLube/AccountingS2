@@ -6,9 +6,9 @@ export const truncate = (string, num = 40) => {
   return string?.slice(0, num) + "...";
 };
 
-export const useViewEight = (data, startPage, setBtnDisable) => {
+export const useViewEight = (data, startPage, setBtnDisable, num = 8) => {
   const dispatch = useDispatch();
-  const veiwEight = data?.slice(startPage, startPage + 8);
+  const veiwEight = data?.slice(startPage, startPage + num);
   useEffect(() => {
     if (veiwEight?.length < 8) {
       dispatch(setBtnDisable(true));

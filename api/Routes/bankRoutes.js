@@ -6,14 +6,12 @@ import {
   updateBank,
   getBank,
   deleteBank,
-  getBalance,
   bankTransfer,
 } from "../Controller/bankController.js";
 
 const router = express.Router();
 
 router.post("/bank-transfer", bankTransfer);
-router.get("/balance", getBalance);
 
 router.get("/", getAllBank);
 router.get("/:id", getBank);

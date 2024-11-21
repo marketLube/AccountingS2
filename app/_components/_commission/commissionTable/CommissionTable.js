@@ -12,10 +12,15 @@ function CommissionTable() {
   const { startPage } = useSelector((state) => state.commission);
 
   const { refetch, reminders, isError, isLoading, error } = useReminders();
-  const veiwEight = useViewEight(reminders, startPage, setCommissionBtnDisable);
+  const veiwEight = useViewEight(
+    reminders,
+    startPage,
+    setCommissionBtnDisable,
+    5
+  );
 
   return (
-    <div className="table">
+    <div className="table commition-table">
       <CommissionTableHead />
       {isLoading ? (
         <TableLoader />

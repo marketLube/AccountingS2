@@ -1,16 +1,92 @@
 @use "../abstract/variables";
+@use "../abstract/mixins";
 
 .manage {
   &-body {
     display: flex;
     justify-content: space-between;
     gap: 10%;
-    height: 60vh;
+    height: 60vh; // This constrains the height of the manage-body
   }
+
   &-box-container {
     flex: 1;
-    height: 100%;
-    background-color: rgb(7, 8, 8);
+    display: flex;
+    flex-direction: column;
     border-radius: variables.$large-radius;
+    background-color: variables.$color-white;
+    overflow: hidden;
+    position: relative;
+
+    &-head {
+      background-color: variables.$color-primary;
+      height: 3rem;
+      @include mixins.flex(center);
+      font-weight: 600;
+      color: variables.$color-white;
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1; // Allow body to fill remaining space
+      max-height: calc(
+        60vh - 3rem
+      ); // Subtract head height to fit within parent
+      overflow-y: auto; // Enable vertical scrolling only
+      overflow-x: hidden; // Prevent horizontal scrolling
+
+      & > div:nth-child(even) {
+        background-color: variables.$color-table-col;
+      }
+
+      // Style for odd children
+      & > div:nth-child(odd) {
+        background-color: variables.$color-white; // Color for odd items
+      }
+
+      &-item {
+        height: 3rem; // Fixed height for consistent appearance
+        flex-shrink: 0; // Prevent items from shrinking
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+        font-weight: 600;
+        color: variables.$color-gray;
+        transform-origin: top;
+
+        & input {
+          border-radius: 3rem;
+          height: 90%;
+          width: 10rem;
+          background-color: rgba(variables.$color-mid-gray, 0.6);
+          padding: 0 1rem;
+
+          outline: none;
+          border: none;
+        }
+
+        &-inputbtn {
+          display: flex;
+          gap: 0.5rem;
+        }
+      }
+    }
+
+    &-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3rem;
+      background-color: variables.$color-white;
+      @include mixins.flex(between);
+
+      & button {
+        font-weight: 600;
+        color: variables.$color-white;
+      }
+    }
   }
 }

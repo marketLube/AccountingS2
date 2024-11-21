@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import cron from "node-cron";
+import Branch from "./branchModel.js";
+import AppError from "../Utilities/appError.js";
 
 const bankSchema = mongoose.Schema(
   {
@@ -23,7 +25,24 @@ const bankSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Bank = mongoose.model("Bank", bankSchema);
+bankSchema.pre("save", async function (next) {
+  if (!this.isNew) return next();
+  try {
+    // Fetch all branches
+    const branches = await Branch.find({});
+
+    const updatePromises = branches.map((branch) => {
+      branch.accounts.push({ bank: this._id, branchBalance: 0 });
+      return branch.save();
+    });
+
+    await Promise.all(updatePromises);
+    next();
+  } catch (error) {
+    console.error("Error adding bank to branches:", error);
+    next(new AppError("Failed to update branches", 500));
+  }
+});
 
 // Function to update the last month's bank balances
 const updateLastMonthBankBalances = async () => {
@@ -62,5 +81,5 @@ cron.schedule("0 0 1 * *", async () => {
   console.log("Running Cron Job: Updating last month's bank balances...");
   await updateLastMonthBankBalances();
 });
-
+const Bank = mongoose.model("Bank", bankSchema);
 export default Bank;
