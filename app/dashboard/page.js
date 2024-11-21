@@ -11,6 +11,7 @@ import MonthlyPNLChart from "../_components/_cards/_monthlyCharts/MonthlyCart";
 import ToggleSwitch from "../_components/utils/ToggleSwitch/ToggleSwitch";
 import { getCurrentMonthName } from "../_services/helpers";
 import useDashboardTotals, { useDashboardChart } from "../_hooks/useDashboard";
+import { Skeleton } from "antd";
 
 function Page() {
   const { isAllTime, debits, credits, branchNames } = useSelector(
@@ -52,15 +53,41 @@ function Page() {
       </div>
       <div className={`dashboard-left`}>
         <div className={`dashboard-stats`}>
-          <div className={`stats-box dashboard-yearly-card`}>
-            <CurrentYearBox totals={totals?.transactions} />
+          <div
+            className="stats-box dashboard-yearly-card"
+            style={{
+              position: "relative",
+              width: "100%", // This is the full width of the parent
+              height: "auto", // Fixed height for the skeleton to work correctly
+            }}
+          >
+            {isLoading ? (
+              Array.from({ length: 1 }).map((_, index) => (
+                <div key={index}>
+                  <Skeleton.Input style={{ width: 320, height: 320 }} active />
+                </div>
+              ))
+            ) : (
+              <CurrentYearBox totals={totals?.transactions} />
+            )}
           </div>
+
           <div className={`first-section`}>
-            <Income
-              income={transactions?.totalCredit}
-              isError={isError}
-              isLoading={isLoading}
-            />
+            {isLoading ? (
+              Array.from({ length: 1 }).map((_, index) => (
+                <Skeleton.Input
+                  key={index}
+                  style={{ width: 100, height: 50 }}
+                  active
+                />
+              ))
+            ) : (
+              <Income
+                income={transactions?.totalCredit}
+                isError={isError}
+                isLoading={isLoading}
+              />
+            )}
           </div>
           <div className={`first-section`}>
             <Expense
