@@ -24,6 +24,8 @@ function Page() {
 
   const labels = branchNames || ["Loading..", "Loading.."];
 
+  const isLoadings = true;
+
   const datasets = [
     {
       label: "Expense",
@@ -61,7 +63,7 @@ function Page() {
               height: "auto",
             }}
           >
-            {isLoading ? (
+            {isLoadings ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <div key={index}>
                   <Skeleton.Input style={{ width: 320, height: 320 }} active />
@@ -72,12 +74,19 @@ function Page() {
             )}
           </div>
 
-          <div className={`first-section`}>
-            {isLoading ? (
+          <div
+            className={`first-section`}
+            style={{
+              position: "relative",
+              width: "100%", // This is the full width of the parent
+              height: "auto", // Fixed height for the skeleton to work correctly
+            }}
+          >
+            {isLoadings ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <Skeleton.Input
                   key={index}
-                  style={{ width: 100, height: 50 }}
+                  style={{ width: 332, height: 170 }}
                   active
                 />
               ))
@@ -89,34 +98,125 @@ function Page() {
               />
             )}
           </div>
-          <div className={`first-section`}>
-            <Expense
-              expense={transactions?.totalDebit}
-              isError={isError}
-              isLoading={isLoading}
-            />
+          <div
+            className={`first-section`}
+            style={{
+              position: "relative",
+              width: "100%", // This is the full width of the parent
+              height: "auto", // Fixed height for the skeleton to work correctly
+            }}
+          >
+            {isLoadings ? (
+              Array.from({ length: 1 }).map((_, index) => (
+                <Skeleton.Input
+                  key={index}
+                  style={{ width: 332, height: 170 }}
+                  active
+                />
+              ))
+            ) : (
+              <Expense
+                expense={transactions?.totalDebit}
+                isError={isError}
+                isLoading={isLoading}
+              />
+            )}
           </div>
-          <div className={`stats-box`}>
-            <TopPerformer />
+
+          <div
+            className={`stats-box`}
+            style={{
+              position: "relative",
+              width: "100%", // This is the full width of the parent
+              height: "auto", // Fixed height for the skeleton to work correctly
+            }}
+          >
+            {isLoadings ? (
+              Array.from({ length: 1 }).map((_, index) => (
+                <Skeleton.Input
+                  key={index}
+                  style={{ width: 320, height: 120 }}
+                  active
+                />
+              ))
+            ) : (
+              <TopPerformer
+                expense={transactions?.totalDebit}
+                isError={isError}
+                isLoading={isLoading}
+              />
+            )}
           </div>
-          <div className={`stats-box`}>
-            <Oustandingpay
-              outstanding={liabilityAndOutstanding?.totalOutstanding}
-              isLoading={isLoading}
-              isError={isError}
-            />
+
+          <div
+            className={`stats-box`}
+            style={{
+              position: "relative",
+              width: "100%", // This is the full width of the parent
+              height: "auto", // Fixed height for the skeleton to work correctly
+            }}
+          >
+            {isLoadings ? (
+              Array.from({ length: 1 }).map((_, index) => (
+                <Skeleton.Input
+                  key={index}
+                  style={{ width: 320, height: 120 }}
+                  active
+                />
+              ))
+            ) : (
+              <Oustandingpay
+                outstanding={liabilityAndOutstanding?.totalOutstanding}
+                isLoading={isLoading}
+                isError={isError}
+              />
+            )}
           </div>
         </div>
-        <div className={`stats-box dashboard-chart`}>
-          <MonthlyPNLChart labels={labels} datasets={datasets} />
+        <div
+          className={`stats-box dashboard-chart`}
+          style={{
+            position: "relative",
+            width: "100%", // This is the full width of the parent
+            height: "auto", // Fixed height for the skeleton to work correctly
+          }}
+        >
+          {isLoadings ? (
+            Array.from({ length: 1 }).map((_, index) => (
+              <Skeleton.Input
+                key={index}
+                style={{ width: 1000, height: 300, marginLeft: "1.5rem" }}
+                active
+              />
+            ))
+          ) : (
+            <MonthlyPNLChart labels={labels} datasets={datasets} />
+          )}
         </div>
       </div>
       <div className={`dashboard-right`}>
-        <div className={`first-section dashboard-curbalance`}>
-          <DashboardCurrentbalance />
+        <div
+          className={`first-section dashboard-curbalance`}
+          style={{
+            position: "relative",
+            width: "100%", // This is the full width of the parent
+            height: "auto", // Fixed height for the skeleton to work correctly
+          }}
+        >
+          {isLoadings ? (
+            Array.from({ length: 1 }).map((_, index) => (
+              <Skeleton.Input
+                key={index}
+                style={{ width: 520, height: 250 }}
+                active
+              />
+            ))
+          ) : (
+            <DashboardCurrentbalance />
+          )}
         </div>
         <div className={`stats-box dashboard-reminder`}>
-          <ReminderContainer />
+          <ReminderContainer isLoadings={isLoadings} />
         </div>
       </div>
     </div>
