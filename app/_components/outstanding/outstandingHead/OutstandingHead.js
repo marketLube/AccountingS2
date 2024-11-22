@@ -74,8 +74,12 @@ function OutstandingHead() {
     return () => dispatch(setOutstandingSelectedDate(range));
   };
 
-  console.log(selectedItems, "Outstanding");
+  const [selectedOption, setSelectedOption] = useState("All");
 
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    dispatch(setOutstandingSelectedDate(option));
+  };
   return (
     <>
       <LayoutHead>
@@ -143,11 +147,21 @@ function OutstandingHead() {
           </div>
           <div className="date_custom">
             <ul>
-              <li onClick={handleSelectChange("All")}>All</li>
-              <li onClick={handleSelectChange("Today")}>Today</li>
-              <li onClick={handleSelectChange("Yesterday")}>Yesterday</li>
-              <li onClick={handleSelectChange("Last 30 Days")}>Last 30 Days</li>
-              <li onClick={handleSelectChange("Last 60 Days")}>Last 60 Days</li>
+              {[
+                "All",
+                "Today",
+                "Yesterday",
+                "Last 30 Days",
+                "Last 60 Days",
+              ].map((option) => (
+                <li
+                  key={option}
+                  onClick={() => handleOptionClick(option)}
+                  className={selectedOption === option ? "selected" : ""}
+                >
+                  {option}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

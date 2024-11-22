@@ -27,6 +27,7 @@ import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import { dateOptions } from "@/app/data/generalDatas";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import Banktobank from "../../_Forms/BanktoBank/Banktobank";
 
 function DaybookHead() {
   const dispatch = useDispatch();
@@ -42,6 +43,8 @@ function DaybookHead() {
     endDate,
     selectedDate,
   } = useSelector((state) => state.daybook);
+
+  const [Bankopen, setBankopen] = useState(false);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
     (state) => state.general
@@ -86,6 +89,13 @@ function DaybookHead() {
     dispatch(setDaybookIsEdit(true));
   };
 
+  const [selectedOption, setSelectedOption] = useState("All");
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    dispatch(setDayBookSelectedDate(option));
+  };
+
   return (
     <>
       <LayoutHead>
@@ -93,7 +103,7 @@ function DaybookHead() {
           <Button onClick={() => dispatch(setIsDaybookNewEntri(true))}>
             + New Entri
           </Button>
-          <Button>+ Bank to Bank</Button>
+          <Button onClick={() => setBankopen(true)}>+ Bank to Bank</Button>
           <Button
             onClick={handleIsEdits}
             type={selectedItems?._id ? "primary" : "secondary"}
@@ -152,15 +162,28 @@ function DaybookHead() {
           </div>
           <div className="date_custom">
             <ul>
-              <li onClick={handleSelectChange("All")}>All</li>
-              <li onClick={handleSelectChange("Today")}>Today</li>
-              <li onClick={handleSelectChange("Yesterday")}>Yesterday</li>
-              <li onClick={handleSelectChange("Last 30 Days")}>Last 30 Days</li>
-              <li onClick={handleSelectChange("Last 60 Days")}>Last 60 Days</li>
+              {[
+                "All",
+                "Today",
+                "Yesterday",
+                "Last 30 Days",
+                "Last 60 Days",
+              ].map((option) => (
+                <li
+                  key={option}
+                  onClick={() => handleOptionClick(option)}
+                  className={selectedOption === option ? "selected" : ""}
+                >
+                  {option}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </DateModal>
+      <FsModal isOpen={Bankopen} setIsCancel={setBankopen} width="60vh">
+        <Banktobank />
+      </FsModal>
 
       <FsModal isOpen={isNewEntry} setIsCancel={setIsDaybookNewEntri}>
         <DaybookNewEntirForm />

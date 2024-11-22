@@ -79,3 +79,13 @@
     border-radius: variables.$large-radius;
   }
 }
+.no-datafound {
+  text-align: center;
+  color: #999;
+  font-size: 20px;
+  padding: 2rem;
+  padding-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

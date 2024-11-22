@@ -24,8 +24,6 @@ function Page() {
 
   const labels = branchNames || ["Loading..", "Loading.."];
 
-  const isLoadings = true;
-
   const datasets = [
     {
       label: "Expense",
@@ -63,7 +61,7 @@ function Page() {
               height: "auto",
             }}
           >
-            {isLoadings ? (
+            {isLoading ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <div key={index}>
                   <Skeleton.Input style={{ width: 320, height: 320 }} active />
@@ -82,7 +80,7 @@ function Page() {
               height: "auto", // Fixed height for the skeleton to work correctly
             }}
           >
-            {isLoadings ? (
+            {isLoading ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <Skeleton.Input
                   key={index}
@@ -106,7 +104,7 @@ function Page() {
               height: "auto", // Fixed height for the skeleton to work correctly
             }}
           >
-            {isLoadings ? (
+            {isLoading ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <Skeleton.Input
                   key={index}
@@ -131,7 +129,7 @@ function Page() {
               height: "auto", // Fixed height for the skeleton to work correctly
             }}
           >
-            {isLoadings ? (
+            {isLoading ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <Skeleton.Input
                   key={index}
@@ -156,7 +154,7 @@ function Page() {
               height: "auto", // Fixed height for the skeleton to work correctly
             }}
           >
-            {isLoadings ? (
+            {isLoading ? (
               Array.from({ length: 1 }).map((_, index) => (
                 <Skeleton.Input
                   key={index}
@@ -181,7 +179,7 @@ function Page() {
             height: "auto", // Fixed height for the skeleton to work correctly
           }}
         >
-          {isLoadings ? (
+          {isLoading ? (
             Array.from({ length: 1 }).map((_, index) => (
               <Skeleton.Input
                 key={index}
@@ -216,7 +214,7 @@ function Page() {
           )}
         </div>
         <div className={`stats-box dashboard-reminder`}>
-          <ReminderContainer isLoadings={isLoadings} />
+          <ReminderContainer isLoading={isLoading} />
         </div>
       </div>
     </div>

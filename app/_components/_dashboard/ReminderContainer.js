@@ -13,13 +13,13 @@ const paymentitem = [
   { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
   { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
 ];
-function ReminderContainer({ isLoadings }) {
+function ReminderContainer({ isLoading }) {
   const dispatch = useDispatch();
   const { isNewEntry } = useSelector((state) => state.reminder);
   return (
     <>
       <div className="dashboard-reminder-container">
-        {isLoadings ? (
+        {isLoading ? (
           Array.from({ length: 1 }).map((_, index) => (
             <Skeleton.Input
               key={index}

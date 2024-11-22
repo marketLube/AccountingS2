@@ -31,7 +31,7 @@ function TotalBalanceCard() {
               <div key={i} className="balance-card-item-box">
                 <span className="balance-card-name-box">{bank?.name}</span>
                 <span className="balance-card-balance">
-                  {isBalanceVisible ? `${bank?.balance} $` : "****"}
+                  {isBalanceVisible ? `${bank?.balance} ₹` : "****"}
                 </span>
               </div>
             );
@@ -39,7 +39,7 @@ function TotalBalanceCard() {
         </div>
       </div>
       <div className="balance-card-balance-total">
-        {isBalanceVisible ? `${total} $` : "****"}
+        {isBalanceVisible ? `${total} ₹` : "****"}
       </div>
     </div>
   );
