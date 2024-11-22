@@ -168,6 +168,7 @@ function DaybookHead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -178,6 +179,13 @@ function DaybookHead() {
                 </li>
               ))}
             </ul>
+          </div>
+          <div
+            className="form-btn-group form-submit-btns"
+            style={{ padding: "0 4rem" }}
+          >
+            <Button type="submit">Submit</Button>
+            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>

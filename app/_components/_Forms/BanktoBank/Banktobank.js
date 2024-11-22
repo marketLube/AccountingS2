@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Button from "../../utils/Button";
 import { Bank, BranchSelector } from "../_FormComponents/FormSmallComponents";
+import { Bold } from "lucide-react";
 
 function Banktobank() {
   const {
@@ -20,19 +21,24 @@ function Banktobank() {
   return (
     <form className="form">
       <div className="form-section">
-        <label style={{ width: "5rem", margin: "0 auto" }}>From</label>
+        <label style={{ width: "5rem", margin: "0 auto", fontWeight: "bold" }}>
+          From
+        </label>
         <div className="form-row">
           <Bank register={register} errors={errors} />
           <BranchSelector register={register} errors={errors} />
         </div>
-        <label>To</label>
+        <label style={{ width: "5rem", margin: "0 auto", fontWeight: "bold" }}>
+          To
+        </label>
         <div className="form-row">
           <Bank register={register} errors={errors} />
           <BranchSelector register={register} errors={errors} />
         </div>
       </div>
       <div className="form-btn-group form-submit-btns">
-        <Button type="submit">Tasfer</Button>
+        <Button type="submit">Transfer</Button>
+        <Button type="clear">Clear</Button>
       </div>
     </form>
   );

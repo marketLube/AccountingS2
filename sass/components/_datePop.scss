@@ -31,15 +31,15 @@
         padding: 0.5rem 2rem;
         cursor: pointer;
         border-radius: variables.$large-radius;
-        background-color: variables.$color-primary;
+        background: white;
 
         &:hover {
           background-color: rgb(22, 81, 101);
         }
 
         &.selected {
-          background-color: rgb(240, 243, 244);
-          color: rgb(28, 101, 126);
+          color: rgb(240, 243, 244);
+          background-color: rgb(28, 101, 126);
         }
       }
     }

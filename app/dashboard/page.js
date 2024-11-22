@@ -201,7 +201,7 @@ function Page() {
             height: "auto", // Fixed height for the skeleton to work correctly
           }}
         >
-          {isLoadings ? (
+          {isLoading ? (
             Array.from({ length: 1 }).map((_, index) => (
               <Skeleton.Input
                 key={index}

@@ -82,6 +82,15 @@ function OutstandingNewEntryForm() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2
+        style={{
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+          paddingBottom: "1rem",
+        }}
+      >
+        Outstanding New Entry Form
+      </h2>
       <div className="form-section">
         <CatagorySelector
           catagory={catagory}

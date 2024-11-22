@@ -30,6 +30,8 @@ function DaybookTable() {
         <TableLoader />
       ) : isError ? (
         <TableLoader error="Something Went Wrong..." />
+      ) : veiwEight?.length === 0 ? (
+        <div className="no-datafound">No Data Found</div>
       ) : (
         veiwEight?.map((trans, i) => (
           <DaybookTableItem key={i} transaction={trans} />
