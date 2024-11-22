@@ -1,6 +1,6 @@
 import Button from "../../utils/Button";
 
-function ManageAdd({ onSetIsAdding, isAdding }) {
+function ManageAddBranch({ onSetIsAdding, isAdding }) {
   return (
     <>
       {!isAdding ? (
@@ -24,4 +24,4 @@ function ManageAdd({ onSetIsAdding, isAdding }) {
   );
 }
 
-export default ManageAdd;
+export default ManageAddBranch;

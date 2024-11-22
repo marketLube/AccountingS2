@@ -5,23 +5,23 @@ import { FaCheck } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import apiClient from "@/lib/axiosInstance";
 import { useDispatch } from "react-redux";
-import { fetchBanks, fetchBranches } from "@/lib/slices/generalSlice";
+import { fetchBranches } from "@/lib/slices/generalSlice";
 import { ClipLoader } from "react-spinners";
 
-function ManageBankItem({ bank }) {
+function ManageBranchItem({ branch }) {
   const dispatch = useDispatch();
   const [isItemEdit, setIsItemEdit] = useState(false);
-  const [updatedInput, setUpdatedInput] = useState(bank?.name);
-  const [pastVal, setPastVal] = useState(bank?.name);
+  const [updatedInput, setUpdatedInput] = useState(branch?.name);
+  const [pastVal, setPastVal] = useState(branch?.name);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setUpdatedInput(bank?.name);
-  }, [bank]);
+    setUpdatedInput(branch?.name);
+  }, [branch]);
 
   const handleIsEdit = () => {
     setIsItemEdit(true);
-    setPastVal(bank?.name);
+    setPastVal(branch?.name);
   };
 
   const handleCancelEdit = () => {
@@ -34,8 +34,7 @@ function ManageBankItem({ bank }) {
     }
     try {
       setIsLoading(true);
-      await apiClient.patch(`/bank/${bank?._id}`, { name: updatedInput });
-      dispatch(fetchBanks());
+      await apiClient.patch(`/branch/${branch?._id}`, { name: updatedInput });
       dispatch(fetchBranches());
       setIsItemEdit(false);
       setPastVal(updatedInput);
@@ -60,7 +59,7 @@ function ManageBankItem({ bank }) {
             value={updatedInput}
             style={{ color: "black" }}
             onChange={handleChange}
-            placeholder="Add bank"
+            placeholder="Add branch"
           />
           <span className="manage-box-container-body-item-inputbtn">
             <RxCross2
@@ -91,4 +90,4 @@ function ManageBankItem({ bank }) {
   );
 }
 
-export default ManageBankItem;
+export default ManageBranchItem;

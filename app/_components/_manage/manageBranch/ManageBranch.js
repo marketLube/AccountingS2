@@ -1,37 +1,36 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import ManageBankItem from "./ManageBankItem";
 import { useState } from "react";
-import ManageAdd from "./ManageAdd";
 import { FaCheck } from "react-icons/fa";
 import toast from "react-hot-toast";
 import apiClient from "@/lib/axiosInstance";
 import { fetchBanks, fetchBranches } from "@/lib/slices/generalSlice";
 import { ClipLoader } from "react-spinners";
+import ManageBranchItem from "./ManageBranchItem";
+import ManageAddBranch from "./ManageAddBranch";
 
-function ManageBank({ type = "Bank" }) {
-  const { banks } = useSelector((state) => state.general);
+function ManageBranch({ type = "Branch" }) {
+  const { branches } = useSelector((state) => state.general);
   const dispatch = useDispatch();
   const [isAdding, setIsAdding] = useState(false);
-  const [bankName, setBankName] = useState("");
+  const [branchName, setbranchName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange = (e) => {
-    setBankName(e.target.value);
+    setbranchName(e.target.value);
   };
 
   const handleSaveBank = async () => {
     try {
       setIsLoading(true);
-      await apiClient.post("/bank", {
-        name: bankName,
+      await apiClient.post("/branch", {
+        name: branchName,
         balance: 0,
       });
-      dispatch(fetchBanks());
       dispatch(fetchBranches());
       setIsAdding(false);
-      setBankName("");
+      setbranchName("");
       toast.success("Successful");
     } catch (e) {
       toast.error("Duplicate Key");
@@ -53,8 +52,8 @@ function ManageBank({ type = "Bank" }) {
           }
         >
           <input
-            placeholder="Add bank"
-            value={bankName}
+            placeholder="Add Branch"
+            value={branchName}
             onChange={handleOnChange}
           />
           <span className="manage-box-container-body-item-inputbtn">
@@ -70,15 +69,15 @@ function ManageBank({ type = "Bank" }) {
           </span>
         </div>
 
-        {banks?.map((bank, i) => (
-          <ManageBankItem bank={bank} key={i} />
+        {branches?.map((branch, i) => (
+          <ManageBranchItem branch={branch} key={i} />
         ))}
       </div>
       <div className="manage-box-container-footer">
-        <ManageAdd onSetIsAdding={setIsAdding} isAdding={isAdding} />
+        <ManageAddBranch onSetIsAdding={setIsAdding} isAdding={isAdding} />
       </div>
     </div>
   );
 }
 
-export default ManageBank;
+export default ManageBranch;
