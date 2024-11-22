@@ -4,6 +4,7 @@ import app from "./app.js";
 const Db = process.env.CONNECTION_STR;
 
 // Connect to MongoDB
+console.log(Db, "db");
 mongoose
   .connect(Db)
   .then(() => console.log("Connected to Database"))
