@@ -2,6 +2,7 @@
 
 import ManageBank from "../_components/_manage/manageBank/ManageBank";
 import ManageBranch from "../_components/_manage/manageBranch/ManageBranch";
+import ManageProfileCard from "../_components/_manage/manageProfile/ManageProfileCard";
 
 function page() {
   return (
@@ -10,7 +11,7 @@ function page() {
       <div className="manage-body">
         <ManageBank />
         <ManageBranch />
-        <ManageBank />
+        <ManageProfileCard />
       </div>
     </div>
   );

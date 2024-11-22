@@ -1,3 +1,5 @@
+import Button from "../../utils/Button";
+
 function ManageProfileCard() {
   return (
     <div className="profile-card">
@@ -23,6 +25,7 @@ function ManageProfileCard() {
         <label>Position</label>
         <input type="text" placeholder="Position" />
       </div>
+      <Button>Save</Button>
     </div>
   );
 }
