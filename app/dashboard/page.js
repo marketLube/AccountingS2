@@ -197,11 +197,11 @@ function Page() {
           className={`first-section dashboard-curbalance`}
           style={{
             position: "relative",
-            width: "100%", // This is the full width of the parent
-            height: "auto", // Fixed height for the skeleton to work correctly
+            width: "100%",
+            height: "auto",
           }}
         >
-          {isLoadings ? (
+          {isLoading ? (
             Array.from({ length: 1 }).map((_, index) => (
               <Skeleton.Input
                 key={index}
