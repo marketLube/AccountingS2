@@ -13,6 +13,7 @@ function OutstandingFooter() {
     <>
       <div className={`layout-footer`}>
         <div className="layout-footer-left">
+          <Button>Download Report</Button>
           <Button>Total : {summery?.totalExcludingPaid}</Button>
           <Button>Paid : {summery?.totalPaid}</Button>
         </div>
@@ -22,11 +23,6 @@ function OutstandingFooter() {
             setCurrentPage={setOutstandingCurrentPage}
             btnDisable={btnDisable}
           />
-        </div>
-      </div>
-      <div className="layout-footer-bottom">
-        <div className="layout-footer-bottom-left">
-          <Button>Download Report</Button>
         </div>
       </div>
     </>
