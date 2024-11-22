@@ -85,6 +85,15 @@ function InvoiceNewEntryForm() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2
+        style={{
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+          paddingBottom: "1rem",
+        }}
+      >
+        Invoice New Entry Form
+      </h2>
       <div className="form-section">
         <div className="form-row">
           <CatagorySelector catagory={catagory} setCatagory={setCatagory} />

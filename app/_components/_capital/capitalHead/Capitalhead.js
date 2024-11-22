@@ -132,6 +132,13 @@ function Capitalhead() {
               ))}
             </ul>
           </div>
+          <div
+            className="form-btn-group form-submit-btns"
+            style={{ padding: "0 4rem" }}
+          >
+            <Button type="submit">Submit</Button>
+            <Button type="clear">Clear</Button>
+          </div>
         </div>
       </DateModal>
 
