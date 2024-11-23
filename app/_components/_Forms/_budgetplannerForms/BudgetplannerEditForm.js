@@ -21,7 +21,6 @@ function BudgetplannerEditForm() {
   const { selectedItems } = useSelector((state) => state.budgetplanner);
 
   const branch = useBranchNameFinder(selectedItems?.branch);
-  console.log(branch, "branch");
 
   const defaultValues = {
     existingProperty: selectedItems?.existingProperty,
@@ -70,7 +69,7 @@ function BudgetplannerEditForm() {
 
     try {
       setLoading(true);
-      await apiClient.patch("/event", {
+      await apiClient.patch(`/event`, {
         ...data,
         property: propertyToUse,
       });

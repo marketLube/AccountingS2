@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { truncate } from "@/app/_services/helpers";
 
 function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
+  if (value === "Select Category") return null;
+
   const [isEdit, setIsEdit] = useState(false);
   const [pastValue, setPastValue] = useState(value); // Store the original value
   const [localCurValue, setLocalCurValue] = useState(value); // Local editable

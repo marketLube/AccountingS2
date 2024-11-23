@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 
 import CircularProgress from "@mui/material/CircularProgress"; // Import MUI's spinner
 import { truncate } from "@/app/_services/helpers";
+import apiClient from "@/lib/axiosInstance";
+import { fetchCategory } from "@/lib/slices/generalSlice";
+import { checkCaseSensitivity } from "./helper";
 
 function Catagory({
   defaultValue = "Select Category",
@@ -20,7 +23,9 @@ function Catagory({
   const [stopDropdown, setStopDropdown] = useState(false);
   const [isCurEdit, setIsCurEdit] = useState(false);
   const [curEditValue, setCurEditValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setCurValue(defaultValue);
@@ -57,6 +62,10 @@ function Catagory({
 
   const handleSaveCatagory = async (e) => {
     e.stopPropagation();
+    if (await checkCaseSensitivity(catagories, curEditValue)) {
+      console.log("hittling");
+      return toast.error("Catagory already exist");
+    }
     if (curEditValue === "") {
       toast.error("Catagory name is required");
       return;
@@ -64,14 +73,20 @@ function Catagory({
     try {
       setIsLoading(true);
       setCurValue(curEditValue);
+      const response = await apiClient.post("/catagory", {
+        name: curEditValue,
+      });
+      setCurValue(response.data.data.name);
+      dispatch(fetchCategory());
       toast.success("Catagory added successfully");
       setIsCurEdit(false);
     } catch (err) {
-      toast.error("Catagory added failed");
+      console.log(err);
+      toast.error("Catagory already exist");
       setCurValue(defaultValue);
       setIsCurEdit(true);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
