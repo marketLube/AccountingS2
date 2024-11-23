@@ -10,3 +10,173 @@
     border-radius: variables.$small-radius;
   }
 }
+.catagory-container {
+  width: 70%;
+  margin: 0 auto;
+  height: 10rem !important;
+}
+
+.catagory-container .catagory {
+  display: flex;
+  height: 5rem;
+  margin-bottom: 1rem;
+  z-index: 100;
+  transition: all 0.2s ease-in-out;
+  &-creator-box {
+    flex: 1;
+    height: 100%;
+    @include mixins.flex(center);
+    position: relative;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 100;
+  }
+}
+.show-cat {
+  width: 95%;
+  height: 70%;
+  border-radius: variables.$large-radius;
+  background-color: variables.$color-light-gray;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+  @include mixins.flex(between);
+  justify-content: space-around;
+  color: variables.$color-primary;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  z-index: 100;
+
+  &-add-icon {
+    color: variables.$color-green;
+    position: absolute;
+    left: 1rem;
+  }
+  &-input {
+    width: 60%;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    background-color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: variables.$large-radius;
+    background-color: variables.$color-white;
+    margin-right: 1.5rem;
+  }
+  &-icon-box {
+    @include mixins.flex(center);
+    position: absolute;
+    height: 100%;
+    gap: 0.5rem;
+    padding-right: 0.5rem;
+    right: 0;
+    z-index: 100;
+  }
+  &-save-icon {
+    color: variables.$color-green;
+    width: 2.5rem;
+    z-index: 100;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+}
+.cat-items {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background-color: variables.$color-light-gray;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 1.5rem 1.5rem;
+  transition: all 0.2s ease-in-out;
+  transform-origin: top;
+  max-height: 300px; /* Set a maximum height for the dropdown */
+  overflow-y: auto; /* Add a vertical scrollbar when the content exceeds the height */
+  z-index: 100;
+}
+.cat-item-box {
+  width: 100%;
+  height: 100%;
+  border-radius: variables.$large-radius;
+  @include mixins.flex(between);
+  z-index: 100;
+  &:hover {
+    background-color: variables.$color-mid-gray;
+  }
+}
+.cat-item-input {
+  border-radius: variables.$large-radius;
+  background-color: inherit;
+  font-size: 1rem;
+  width: 80%;
+  padding: 0.5rem 1rem;
+  padding-right: 0rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.cat-icon-box {
+  flex: 1;
+  height: 2rem;
+  @include mixins.flex(center);
+  gap: 0.4rem;
+}
+
+.edit-icon {
+  color: variables.$color-primary;
+}
+.delete-icon {
+  color: variables.$color-red;
+}
+.save-icon {
+  color: variables.$color-green;
+}
+
+.catagory-container .catagory-selector {
+  width: 100%;
+  height: 2.5rem;
+  position: relative;
+  cursor: pointer;
+  z-index: 100;
+
+  & select {
+    height: 100%;
+    padding: 0.5rem;
+    padding-right: 1.5rem; /* Adjust padding to make space for the icon */
+    border-radius: 7px;
+    width: 100%;
+    appearance: none; /* Remove the default arrow */
+    -webkit-appearance: none; /* Remove the default arrow in Safari */
+    -moz-appearance: none; /* Remove the default arrow in Firefox */
+    outline: none;
+    cursor: pointer;
+    :focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  .cat-custom-dropdown {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .cat-icon {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem; /* Adjust to align the icon */
+    transform: translateY(-50%);
+    pointer-events: none; /* Prevent the icon from interfering with the select box */
+    cursor: pointer;
+  }
+}
