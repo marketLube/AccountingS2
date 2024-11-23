@@ -136,6 +136,7 @@ function Budgetplannerhead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -151,8 +152,10 @@ function Budgetplannerhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button type="clear" onClick={() => dispatch(setResetBudgetDate())}>
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>

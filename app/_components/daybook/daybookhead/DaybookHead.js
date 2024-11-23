@@ -184,8 +184,8 @@ function DaybookHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button type="submit">Submit</Button>
             <Button type="clear">Clear</Button>
+            <Button type="submit">Submit</Button>
           </div>
         </div>
       </DateModal>

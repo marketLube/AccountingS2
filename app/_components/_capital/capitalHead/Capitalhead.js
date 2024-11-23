@@ -9,6 +9,7 @@ import {
   setCapitalIsEdit,
   setCapitalType,
   setIsCapitalNewEntry,
+  setResetCapitalDate,
 } from "@/lib/slices/capitalSlice";
 import CapitalNewEntryForms from "../../_Forms/_capitalForms/CapitalNewEntryForms";
 import FsModal from "../../utils/FsModal";
@@ -136,8 +137,13 @@ function Capitalhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button
+              type="clear"
+              onClick={() => dispatch(setResetCapitalDate())}
+            >
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>

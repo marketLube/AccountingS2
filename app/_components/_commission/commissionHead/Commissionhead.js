@@ -9,6 +9,7 @@ import {
   setCommissionCurCat,
   setCommissionCurParticular,
   setIsCommissionNewEntry,
+  setResetCommissionDate,
 } from "@/lib/slices/CommissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FsModal from "../../utils/FsModal";
@@ -141,8 +142,13 @@ function Commissionhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button
+              type="clear"
+              onClick={() => dispatch(setResetCommissionDate())}
+            >
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>

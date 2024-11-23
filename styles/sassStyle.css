@@ -1553,7 +1553,7 @@ body {
   min-width: 8rem;
 }
 .balance-card-balance-total {
-  background-color: rgb(28, 101, 126);
+  background-color: rgb(201, 8, 124);
   width: 100%;
   color: white;
   font-weight: 700;
@@ -1747,7 +1747,7 @@ body {
   position: relative;
   color: var(--color-primary);
   font-weight: 500;
-  border-radius: 90%;
+  border-radius: 50%;
 }
 .material-datepicker .rdp-day_today:not(.rdp-day_selected)::after {
   content: "";
@@ -1766,7 +1766,7 @@ body {
 }
 
 .rdp-day_button {
-  border-radius: 2rem !important;
+  border-radius: 1rem !important;
   display: none;
 }
 

@@ -13,6 +13,7 @@ import {
   setAssetsStartDate,
   setAssetsType,
   setIsAssetsNewEntry,
+  setResetAssetDate,
 } from "@/lib/slices/assetsSlice";
 import FsModal from "../../utils/FsModal";
 import AssetesNewEntryForms from "../../_Forms/_assetesForms/AssetesNewEntryForms";
@@ -113,7 +114,6 @@ function Assetshead() {
       >
         <div className="date_container">
           <div className="date_popup_selector">
-            <h3>rr</h3>
             <MaterialDatePicker
               date={startDate}
               setDate={handleSetStartDate}
@@ -121,7 +121,6 @@ function Assetshead() {
             />
           </div>
           <div className="date_popup_selector">
-            <h3>rr</h3>
             <MaterialDatePicker
               date={endDate}
               setDate={handleSetEndDate}
@@ -136,6 +135,7 @@ function Assetshead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -151,7 +151,9 @@ function Assetshead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button type="clear">Clear</Button>
+            <Button type="clear" onClick={() => dispatch(setResetAssetDate())}>
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
           </div>
         </div>

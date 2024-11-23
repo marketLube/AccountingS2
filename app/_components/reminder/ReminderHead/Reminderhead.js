@@ -14,6 +14,7 @@ import {
   setReminderIsEdit,
   setReminderSelectedDate,
   setReminderStartDate,
+  setResetReminderDate,
 } from "@/lib/slices/reminderSlice";
 import FsModal from "../../utils/FsModal";
 import ReminderNewEntryForm from "../../_Forms/_reminderForms/ReminderNewEntryForm";
@@ -156,6 +157,7 @@ function Reminderhead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -171,8 +173,13 @@ function Reminderhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button
+              type="clear"
+              onClick={() => dispatch(setResetReminderDate())}
+            >
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>

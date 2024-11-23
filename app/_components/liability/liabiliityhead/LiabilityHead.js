@@ -15,6 +15,7 @@ import {
   setLiabilitySelectedDate,
   setLiabilityStartDate,
   setLiabilityStatus,
+  setResetLiabilityDate,
 } from "@/lib/slices/liabilitySlice";
 
 import LiabilityNewEntirForm from "../../_Forms/_liabilityForms/LiabilityNewEntirForm";
@@ -155,6 +156,7 @@ function LiabilityHead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -170,8 +172,13 @@ function LiabilityHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button
+              type="clear"
+              onClick={() => dispatch(setResetLiabilityDate())}
+            >
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>
