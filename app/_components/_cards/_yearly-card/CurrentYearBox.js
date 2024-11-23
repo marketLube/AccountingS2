@@ -17,7 +17,13 @@ function CurrentYearBox({ totals }) {
         <h4 className="topperformerhead">
           {isAllTime ? "All time Profit" : "Profit in " + getCurrentMonthName()}
         </h4>
-        <h2 className="text-small-bold">$ {totalCredit - totalDebit}</h2>
+        <h2
+          className={`text-small-bold ${
+            totalCredit - totalDebit < 0 ? "negativeamount" : ""
+          }`}
+        >
+          ₹{Math.abs(totalCredit - totalDebit)}
+        </h2>
       </div>
     </div>
   );

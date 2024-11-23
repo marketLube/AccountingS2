@@ -34,7 +34,8 @@
         background: white;
 
         &:hover {
-          background-color: rgb(22, 81, 101);
+          font-size: larger;
+          font-weight: 600;
         }
 
         &.selected {
@@ -49,7 +50,7 @@
 .material-datepicker {
   --color-primary: rgb(28, 101, 126);
   --color-primary-light: rgb(35, 126, 157);
-  --color-primary-dark: rgb(22, 81, 101);
+
   --color-text: #333;
   --color-border: #e2e8f0;
 
@@ -205,7 +206,7 @@
     position: relative;
     color: var(--color-primary);
     font-weight: 500;
-    border-radius: 50%;
+    border-radius: 90%;
 
     &::after {
       content: "";
@@ -225,6 +226,6 @@
   border: none !important;
 }
 .rdp-day_button {
-  border-radius: 1rem !important;
+  border-radius: 2rem !important;
   display: none;
 }

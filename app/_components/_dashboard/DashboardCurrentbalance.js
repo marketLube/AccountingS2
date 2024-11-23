@@ -16,7 +16,7 @@ function DashboardCurrentbalance() {
           bankBalance < 0 ? "negativeamount" : ""
         }`}
       >
-        ₹{bankBalance}
+        ₹{Math.abs(bankBalance)}
       </div>
       <div>
         <span>+{percentHike}%</span> than last month
