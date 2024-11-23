@@ -9,7 +9,7 @@ import OutstandingTable from "../_components/outstanding/outstandingTable/Outsta
 function Page() {
   return (
     <div className={`layout outstanding`}>
-      <h1 className={`main-head`}>Outstanding</h1>
+      <h1 className={`main-head`}>Receivables</h1>
       <div className={`layout-body`}>
         <OutstandingHead />
         <OutstandingTable />

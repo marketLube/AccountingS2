@@ -57,15 +57,7 @@ function CapitalNewEntryForms() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <h2
-        style={{
-          fontWeight: "bold",
-          fontSize: "1.5rem",
-          paddingBottom: "1rem",
-        }}
-      >
-        Capital New Entry Form
-      </h2>
+      <h2 className="form-head-text">Capital New Entry Form</h2>
       <div className="form-section">
         <div className="form-row">
           <Invested register={register} errors={errors} />

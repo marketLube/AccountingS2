@@ -5,7 +5,9 @@ import BranchGroup from "./BranchGroup";
 export function Purpose({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="purpose">Purpose</label>
+      <label htmlFor="purpose" className="form-group-formlabel">
+        Purpose
+      </label>
       <input
         type="text"
         id="purpose"
@@ -22,7 +24,9 @@ export function Purpose({ register, errors }) {
 export function Student({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="student">Student</label>
+      <label htmlFor="student" className="form-group-formlabel">
+        Student
+      </label>
       <input
         type="text"
         id="student"
@@ -39,7 +43,9 @@ export function Student({ register, errors }) {
 export function Country({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="Country">Country</label>
+      <label htmlFor="Country" className="form-group-formlabel">
+        Country
+      </label>
       <input
         type="text"
         id="Country"
@@ -57,7 +63,9 @@ export function Country({ register, errors }) {
 export function University({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="University">University</label>
+      <label htmlFor="University" className="form-group-formlabel">
+        University
+      </label>
       <input
         type="text"
         id="University"
@@ -74,7 +82,9 @@ export function University({ register, errors }) {
 export function Commission({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="Commission">Commission</label>
+      <label htmlFor="Commission" className="form-group-formlabel">
+        Commission
+      </label>
       <input
         type="text"
         id="Commission"
@@ -92,7 +102,9 @@ export function Commission({ register, errors }) {
 export function INR({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="INR">INR</label>
+      <label htmlFor="INR" className="form-group-formlabel">
+        INR
+      </label>
       <input
         type="number"
         id="INR"
@@ -110,7 +122,9 @@ export function INR({ register, errors }) {
 export function Agent({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="Agent">Agent</label>
+      <label htmlFor="Agent" className="form-group-formlabel">
+        Agent
+      </label>
       <input
         type="text"
         id="Agent"
@@ -128,7 +142,9 @@ export function Agent({ register, errors }) {
 export function Counsillor({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="counsillor">Counsillor</label>
+      <label htmlFor="counsillor" className="form-group-formlabel">
+        Counsillor
+      </label>
       <input
         type="text"
         id="counsillor"
@@ -146,7 +162,9 @@ export function Counsillor({ register, errors }) {
 export function Property({ register, errors, isDisabled }) {
   return (
     <div className="form-group">
-      <label htmlFor="property">Create Property</label>
+      <label htmlFor="property" className="form-group-formlabel">
+        Create Property
+      </label>
       <input
         type="text"
         id="property"
@@ -177,7 +195,9 @@ export function ExistingProperty({ register, errors, isDisabled }) {
 
   return (
     <div className="form-group">
-      <label htmlFor="existingProperty">Select Property</label>
+      <label htmlFor="existingProperty" className="form-group-formlabel">
+        Select Property
+      </label>
       <select
         id="existingProperty"
         disabled={isDisabled}
@@ -212,7 +232,9 @@ export function ExistingProperty({ register, errors, isDisabled }) {
 export function Invested({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="invested">Invested</label>
+      <label htmlFor="invested" className="form-group-formlabel">
+        Invested
+      </label>
       <input
         type="text"
         id="invested"
@@ -229,7 +251,9 @@ export function Invested({ register, errors }) {
 export function Item({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="item">Item</label>
+      <label htmlFor="item" className="form-group-formlabel">
+        Item
+      </label>
       <input
         type="text"
         id="item"
@@ -246,7 +270,9 @@ export function Item({ register, errors }) {
 export function Amount({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="item">Amount</label>
+      <label htmlFor="item" className="form-group-formlabel">
+        Amount
+      </label>
       <input
         type="number"
         id="amouont"
@@ -263,7 +289,9 @@ export function Amount({ register, errors }) {
 export function PurchasedBy({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="item">Purchased By</label>
+      <label htmlFor="item" className="form-group-formlabel">
+        Purchased By
+      </label>
       <input
         type="text"
         id="purchasedBy"
@@ -281,7 +309,9 @@ export function PurchasedBy({ register, errors }) {
 export function Remark({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="remark">Remark</label>
+      <label htmlFor="remark" className="form-group-formlabel">
+        Remark
+      </label>
       <textarea
         id="remark"
         {...register("remark", { required: "Remark is required" })}
@@ -297,7 +327,9 @@ export function Bank({ register, errors }) {
   const { banks } = useSelector((state) => state.general);
   return (
     <div className="form-group">
-      <label htmlFor="bank">Bank</label>
+      <label htmlFor="bank" className="form-group-formlabel">
+        Bank
+      </label>
       <select id="bank" {...register("bank", { required: "Bank is required" })}>
         <option value="">Select Bank</option>
         {banks?.map((bank) => (
@@ -316,7 +348,9 @@ export function Bank({ register, errors }) {
 export function Tds({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="tds">TDS</label>
+      <label htmlFor="tds" className="form-group-formlabel">
+        TDS
+      </label>
       <select id="tds" {...register("tds", { required: "TDS is required" })}>
         <option value="">Select TDS Percent %</option>
         <option value="0%">0%</option>
@@ -336,7 +370,9 @@ export function BranchSelector({ register, errors }) {
   const { branchNames } = useSelector((state) => state.general);
   return (
     <div className="form-group">
-      <label htmlFor="branchselector">Branch</label>
+      <label htmlFor="branchselector" className="form-group-formlabel">
+        Branch
+      </label>
       <select
         id="branch"
         {...register("branch", { required: "GST Percent is required" })}
@@ -359,7 +395,9 @@ export function IntakeSelector({ register, errors }) {
   const { intake } = useSelector((state) => state.general);
   return (
     <div className="form-group">
-      <label htmlFor="intakeselector">Intake</label>
+      <label htmlFor="intakeselector" className="form-group-formlabel">
+        Intake
+      </label>
       <select id="intake" {...register("intake", { required: " required" })}>
         <option value="">Select intake</option>
         {intake?.map((intake, i) => (
@@ -379,7 +417,9 @@ export function MonthSelector({ register, errors }) {
   const { month } = useSelector((state) => state.general);
   return (
     <div className="form-group">
-      <label htmlFor="monthselector">Intake Month</label>
+      <label htmlFor="monthselector" className="form-group-formlabel">
+        Intake Month
+      </label>
       <select id="month" {...register("month", { required: " required" })}>
         <option value="">Select Intake Month</option>
         {month?.map((month, i) => (
@@ -398,7 +438,9 @@ export function MonthSelector({ register, errors }) {
 export function GstPercent({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="gstPercent">GST Percent</label>
+      <label htmlFor="gstPercent" className="form-group-formlabel">
+        GST Percent
+      </label>
       <select
         id="gstPercent"
         {...register("gstPercent", { required: "GST Percent is required" })}
@@ -566,7 +608,9 @@ export function TdsPercent({ register, errors }) {
 export function DateSel({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="date">Date</label>
+      <label htmlFor="date" className="form-group-formlabel">
+        Date
+      </label>
       <input
         type="date"
         id="date"
@@ -582,7 +626,9 @@ export function DateSel({ register, errors }) {
 export function StatusSel({ register, errors }) {
   return (
     <div className="form-group">
-      <label htmlFor="status">Status</label>
+      <label htmlFor="status" className="form-group-formlabel">
+        Status
+      </label>
       <select
         id="status"
         {...register("status", { required: "Select a status" })}

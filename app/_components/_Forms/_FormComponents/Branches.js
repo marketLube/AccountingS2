@@ -1,7 +1,9 @@
 function Branches({ branch, register, errors, defaultAmount = 0 }) {
   return (
     <div key={branch} className="form-amount-container">
-      <label htmlFor={`amount_${branch}`}>{branch}</label>
+      <label htmlFor={`amount_${branch}`} className="form-group-formlabel">
+        {branch}
+      </label>
       <div className="amount-field ">
         <input
           type="number"

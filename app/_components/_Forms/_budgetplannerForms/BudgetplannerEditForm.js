@@ -70,7 +70,7 @@ function BudgetplannerEditForm() {
 
     try {
       setLoading(true);
-      await apiClient.post("/event", {
+      await apiClient.patch("/event", {
         ...data,
         property: propertyToUse,
       });
@@ -87,6 +87,7 @@ function BudgetplannerEditForm() {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-head-text">Budget planner Edit Form</h2>
       <div className="form-section">
         <div className="form-row">
           <Property

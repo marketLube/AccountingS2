@@ -36,8 +36,9 @@
     flex-direction: column;
     gap: 0.3rem;
 
-    & label {
-      // margin: 0 1rem;
+    &-formlabel {
+      color: gray;
+      font-size: small;
     }
     & input,
     select {

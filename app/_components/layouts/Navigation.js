@@ -28,7 +28,7 @@ const routes = [
   { path: "/daybook", icon: MdDateRange, name: "Daybook" },
   { path: "/balance-sheet", icon: BiSolidBarChartAlt2, name: "Balance Sheet" },
   { path: "/liability", icon: MdLocalPhone, name: "Liability" },
-  { path: "/outstanding", icon: SiBlockchaindotcom, name: "Outstanding" },
+  { path: "/outstanding", icon: SiBlockchaindotcom, name: "Receivables" },
   { path: "/reminder", icon: AiFillBell, name: "Reminder" },
   { path: "/branchwise", icon: GiShirtButton, name: "Branch Wise Pnl" },
   { path: "/assetes", icon: FaHandHoldingUsd, name: "Assets" },

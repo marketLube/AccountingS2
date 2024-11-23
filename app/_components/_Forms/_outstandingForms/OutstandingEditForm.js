@@ -115,6 +115,7 @@ function OutstandingEditForm() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-head-text">Outstanding Edit Form</h2>
       <div className="form-section">
         <CatagorySelector
           catagory={catagory}

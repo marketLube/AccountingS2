@@ -7,8 +7,11 @@ function Income({ income, isLoading, isError }) {
         <div className="incometext">Income</div>
         <Arrow color={"#00ba9d"} size="small" />
       </div>
-      <div className="incomeamount">₹ {income}</div>
+      <div className={`incomeamount ${income < 0 ? "negativeamount" : ""}`}>
+        ₹ {income}
+      </div>
     </div>
   );
 }
 export default Income;
+//

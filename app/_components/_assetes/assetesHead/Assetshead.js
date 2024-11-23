@@ -77,7 +77,7 @@ function Assetshead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsAssetsNewEntry(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button
             onClick={() => dispatch(setAssetsIsEdit(true))}

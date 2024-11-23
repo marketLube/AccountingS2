@@ -81,7 +81,7 @@ function Commissionhead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsCommissionNewEntry(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button type="secondary">Edit</Button>
         </>

@@ -73,6 +73,7 @@ function AssetesEditForms() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-head-text">Asset edit Form</h2>
       <div className="form-section">
         <div className="form-row">
           <Item register={register} errors={errors} />

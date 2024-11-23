@@ -120,6 +120,7 @@ function DaybookEditForm() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-head-text">Daybook Edit Form</h2>
       <div className="form-section">
         <CatagorySelector
           catagory={catagory}

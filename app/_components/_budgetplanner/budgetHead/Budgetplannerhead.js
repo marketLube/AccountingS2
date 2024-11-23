@@ -79,7 +79,7 @@ function Budgetplannerhead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsBudgetplannerNewEntry(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button
             onClick={() => dispatch(setBudgetplannerIsEdit(true))}

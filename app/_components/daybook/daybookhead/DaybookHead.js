@@ -101,7 +101,7 @@ function DaybookHead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsDaybookNewEntri(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button onClick={() => setBankopen(true)}>+ Bank to Bank</Button>
           <Button

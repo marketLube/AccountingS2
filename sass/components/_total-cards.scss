@@ -90,7 +90,7 @@ $padding: 0 1.5rem;
   }
 
   &-balance-total {
-    background-color: rgb(49, 128, 196);
+    background-color: variables.$color-primary;
     width: 100%;
     color: white;
     font-weight: 700;

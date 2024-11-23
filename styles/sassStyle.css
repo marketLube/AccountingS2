@@ -149,6 +149,12 @@ body {
   font-size: 1.3rem;
 }
 
+.form-head-text {
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+}
+
 .nav {
   background-color: rgb(28, 101, 126);
   width: 5rem;
@@ -382,7 +388,7 @@ body {
   position: relative;
 }
 .branchwise .layout-body {
-  min-height: 75vh;
+  min-height: 80vh;
 }
 .branchwise-cards-container {
   height: 70vh;
@@ -1104,6 +1110,10 @@ body {
   color: #aaa;
 }
 
+.negativeamount {
+  color: red !important;
+}
+
 .pagination {
   display: flex;
   justify-content: start;
@@ -1237,6 +1247,10 @@ body {
   flex-direction: column;
   gap: 0.3rem;
 }
+.form-group-formlabel {
+  color: gray;
+  font-size: small;
+}
 .form-group input,
 .form-group select {
   padding: 0.6rem;
@@ -1356,7 +1370,7 @@ body {
   min-width: 8rem;
 }
 .balance-card-balance-total {
-  background-color: rgb(49, 128, 196);
+  background-color: rgb(28, 101, 126);
   width: 100%;
   color: white;
   font-weight: 700;

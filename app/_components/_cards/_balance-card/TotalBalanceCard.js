@@ -30,7 +30,12 @@ function TotalBalanceCard() {
             return (
               <div key={i} className="balance-card-item-box">
                 <span className="balance-card-name-box">{bank?.name}</span>
-                <span className="balance-card-balance">
+                <span
+                  className="balance-card-balance"
+                  style={{
+                    color: isBalanceVisible && bank?.balance < 0 ? "red" : "",
+                  }}
+                >
                   {isBalanceVisible ? `${bank?.balance} ₹` : "****"}
                 </span>
               </div>
@@ -38,8 +43,13 @@ function TotalBalanceCard() {
           })}
         </div>
       </div>
-      <div className="balance-card-balance-total">
-        {isBalanceVisible ? `${total} ₹` : "****"}
+      <div
+        className="balance-card-balance-total"
+        style={{
+          color: isBalanceVisible && total < 0 ? "red" : "",
+        }}
+      >
+        {isBalanceVisible ? `${total} ` : "****"}
       </div>
     </div>
   );

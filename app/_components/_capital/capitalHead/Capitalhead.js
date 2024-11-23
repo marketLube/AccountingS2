@@ -65,7 +65,7 @@ function Capitalhead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsCapitalNewEntry(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button
             onClick={() => dispatch(setCapitalIsEdit(true))}

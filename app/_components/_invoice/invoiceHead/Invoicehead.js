@@ -28,7 +28,7 @@ function Invoicehead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsInvoice(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button
             onClick={() => dispatch(setInvoiceIsEdit(true))}

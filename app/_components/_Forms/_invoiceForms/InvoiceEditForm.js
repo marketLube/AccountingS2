@@ -111,7 +111,7 @@ function InvoiceEditForm() {
     data.bank = bankIdFiner(banks, data.bank);
 
     try {
-      await apiClient.post("/transaction", data);
+      await apiClient.patch("/transaction", data);
       toast.success("Successfully created new Transaction");
       refreshTransaction();
       reset();
@@ -124,6 +124,7 @@ function InvoiceEditForm() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-head-text">Invoice Edit Form</h2>
       <div className="form-section">
         <div className="form-row">
           <CatagorySelector catagory={catagory} setCatagory={setCatagory} />

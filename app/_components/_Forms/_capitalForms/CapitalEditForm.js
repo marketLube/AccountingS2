@@ -63,7 +63,7 @@ function CapitalEditForms() {
 
     try {
       setLoading(true);
-      await apiClient.post("/capital", data);
+      await apiClient.patch("/capital", data);
       toast.success("Successfully created new Capital");
       refreshCapital();
       reset();
@@ -76,6 +76,7 @@ function CapitalEditForms() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-head-text">Capital Edit Form</h2>
       <div className="form-section">
         <div className="form-row">
           <Invested register={register} errors={errors} />

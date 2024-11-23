@@ -19,7 +19,7 @@ function DaybookFooterBtns() {
         type={type === "Debit" ? "primary" : "thertiary"}
         onClick={() => dispatch(setDaybookType("Debit"))}
       >
-        Expanse
+        Expense
       </Button>
       <Button
         type={type === "Credit" ? "primary" : "thertiary"}

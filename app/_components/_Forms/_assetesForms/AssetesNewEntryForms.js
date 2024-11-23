@@ -61,15 +61,7 @@ function AssetesNewEntryForms() {
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <h2
-        style={{
-          fontWeight: "bold",
-          fontSize: "1.5rem",
-          paddingBottom: "1rem",
-        }}
-      >
-        Asset New Entry Form
-      </h2>
+      <h2 className="form-head-text">Asset New Entry Form</h2>
       <div className="form-section">
         <div className="form-row">
           <Item register={register} errors={errors} />

@@ -6,7 +6,13 @@ function Oustandingpay({ outstanding, isLoading, isError }) {
   return (
     <div className="outstandingcard">
       <div className="outstandingtext">Outstanding Peyments</div>
-      <div className="outstandingamount">₹ {outstanding}</div>
+      <div
+        className={`outstandingamount ${
+          outstanding < 0 ? "negativeamount" : ""
+        }`}
+      >
+        ₹ {outstanding}
+      </div>
       <div className="outstandingoctober">
         {isAllTime ? "All time" : getCurrentMonthName()}
       </div>

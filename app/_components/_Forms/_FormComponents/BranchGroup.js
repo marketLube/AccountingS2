@@ -8,7 +8,7 @@ function BranchGroup({ setSelectedBranches, clearErrors, selectedBranches }) {
 
   return (
     <div className="form-group">
-      <div htmlFor="Branches" className="branch-label">
+      <div htmlFor="Branches" className="form-group-formlabel">
         Branches
       </div>
       <div className="branch-group">
