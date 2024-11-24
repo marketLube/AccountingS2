@@ -5,6 +5,9 @@ import { useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress"; // Import MUI's spinner
 
 import ParticularItemBox from "./Components/ParticularItemBox";
+import apiClient from "@/lib/axiosInstance";
+import { fetchCategory } from "@/lib/slices/generalSlice";
+import { checkCaseSensitivity } from "./helper";
 
 function Particular({
   defaultValue = "Select Particular",
@@ -84,13 +87,23 @@ function Particular({
       toast.error("Particular name is required");
       return;
     }
+    const isDup = await checkCaseSensitivity(particulars, curEditValue.trim());
+    if (isDup) {
+      return toast.error("Duplicate Particular");
+    }
+
     try {
-      setIsLoading(true); // Start loading
+      setIsLoading(true);
+      await apiClient.patch("/catagory/addParticular", {
+        catagoryName,
+        particular: { name: curEditValue.trim() },
+      });
+      dispatch(fetchCategory());
       setCurValue(curEditValue);
-      setCurValue(res.data.name);
       toast.success("Particular added successfully");
       setIsCurEdit(false);
     } catch (err) {
+      console.log(err);
       setCurValue(defaultValue);
       const message = err.response.data.message || "Network Error";
       toast.error(message);
@@ -174,6 +187,7 @@ function Particular({
           {particulars.length > 0 &&
             particulars.map((par) => (
               <ParticularItemBox
+                particulars={particulars}
                 key={par._id}
                 value={par.name}
                 catName={catagoryName}

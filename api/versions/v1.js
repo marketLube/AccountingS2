@@ -20,7 +20,7 @@ import { protect } from "../Controller/authController.js";
 const router = express.Router();
 
 router.use("/user", userRoute);
-// router.use(protect);
+//router.use(protect);
 
 router.use("/stats", statsRoute);
 router.use("/logs", logRoute);

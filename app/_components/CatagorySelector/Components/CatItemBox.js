@@ -2,8 +2,12 @@ import { Check, Close, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { truncate } from "@/app/_services/helpers";
+import apiClient from "@/lib/axiosInstance";
+import { useSelector } from "react-redux";
+import { checkCaseSensitivity } from "../helper";
 
 function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
+  const { categories } = useSelector((state) => state.general);
   if (value === "Select Category") return null;
 
   const [isEdit, setIsEdit] = useState(false);
@@ -25,6 +29,16 @@ function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
     if (localCurValue === pastValue) return; // If no changes, do nothing
 
     try {
+      const isDup = await checkCaseSensitivity(
+        categories,
+        localCurValue.trim()
+      );
+      if (isDup) {
+        setLocalCurValue(pastValue);
+        return toast.error("Catagory already exist");
+      }
+      await apiClient.patch(`/catagory/${id}`, { name: localCurValue.trim() });
+      setPastValue(localCurValue.trim());
       toast.success("Category updated successfully");
     } catch (err) {
       toast.error("Duplicate category name or error occurred");

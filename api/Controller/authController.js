@@ -6,7 +6,7 @@ import AppError from "../Utilities/appError.js";
 const KEY = process.env.JWT_SECRET;
 
 const generateToken = (id) => {
-  const expiresIn = Math.floor(Date.now() / 1000) + 60 * 60 * 8; // 8 hours in seconds
+  const expiresIn = Math.floor(Date.now() / 1000) + 60 * 10 * 2; // 8 hours in seconds
   return jwt.sign({ id, exp: expiresIn }, KEY);
 };
 const sendToken = (user, statusCode, res) => {
@@ -68,9 +68,11 @@ export const verify = catchAsync(async (req, res, next) => {
 
   // 2) Varify token
   const decode = jwt.verify(token, KEY);
+
   const currentUser = await User.findById(decode.id).select(
     "email phone image name"
   );
+
   if (!currentUser) {
     return res.status(404).json({
       status: "Failed",
@@ -87,7 +89,6 @@ export const verify = catchAsync(async (req, res, next) => {
     currentUser,
   });
 });
-const mails = ["skymarkdubai@gmail.com"];
 
 export const signUp = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;

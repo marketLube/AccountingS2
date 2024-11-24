@@ -62,8 +62,8 @@ function Catagory({
 
   const handleSaveCatagory = async (e) => {
     e.stopPropagation();
-    if (await checkCaseSensitivity(catagories, curEditValue)) {
-      console.log("hittling");
+    const isDup = await checkCaseSensitivity(catagories, curEditValue);
+    if (isDup) {
       return toast.error("Catagory already exist");
     }
     if (curEditValue === "") {
@@ -74,9 +74,9 @@ function Catagory({
       setIsLoading(true);
       setCurValue(curEditValue);
       const response = await apiClient.post("/catagory", {
-        name: curEditValue,
+        name: curEditValue.trim(),
       });
-      setCurValue(response.data.data.name);
+      setCurValue(response.data.data.name.trim());
       dispatch(fetchCategory());
       toast.success("Catagory added successfully");
       setIsCurEdit(false);
@@ -193,7 +193,7 @@ function Catagory({
         setParticular={setParticular}
         defaultValue={defaultParticular}
         setIsCatagory={setIsCat}
-        disabled={isLoading} // Disable Particular component while loading
+        disabled={isLoading}
       />
     </div>
   );

@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import { setAssetsSummery } from "@/lib/slices/assetsSlice";
 
 export default function useAssets() {
-  const { curBranch, page, curType } = useSelector((state) => state.assets);
   const dispatch = useDispatch();
+
+  const { curBranch, page, curType } = useSelector((state) => state.assets);
+
   const assetsCurbranch = useBranchIdFinder(curBranch);
 
   let endpoint = `/assets?page=${page}`;
@@ -30,6 +32,7 @@ export default function useAssets() {
 
   return { isLoading, isError, error, refetch, assets: data?.data };
 }
+
 export function refreshAssets() {
   queryClient.invalidateQueries("assets");
 }
