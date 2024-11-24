@@ -13,6 +13,7 @@ import {
   setOutstandingIsEdit,
   setOutstandingSelectedDate,
   setOutstandingStartDate,
+  setResetOutstandingyDate,
 } from "@/lib/slices/outstandingSlice";
 import FsModal from "../../utils/FsModal";
 import OutstandingNewEntryForm from "../../_Forms/_outstandingForms/OutstandingNewEntryForm";
@@ -153,6 +154,7 @@ function OutstandingHead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -168,8 +170,13 @@ function OutstandingHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button
+              type="clear"
+              onClick={() => dispatch(setResetOutstandingyDate())}
+            >
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>

@@ -57,10 +57,14 @@ const MaterialDatePicker = ({ date, setDate }) => {
         }}
         modifiers={{ today: new Date() }}
         modifiersStyles={{
-          today: { border: "2px solid var(--color-primary)" },
+          today: {
+            border: "2px solid var(--color-primary)",
+            borderRadius: ".8rem",
+          },
           selected: {
             backgroundColor: "var(--color-primary)",
             color: "white",
+            borderRadius: ".8rem",
           },
         }}
         className="my-datepicker"

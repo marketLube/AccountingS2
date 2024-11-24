@@ -4,7 +4,11 @@ import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { setLedgerCurBranch, setLedgerCurCat } from "@/lib/slices/ledgerSlice";
+import {
+  setLedgerCurBranch,
+  setLedgerCurCat,
+  setResetLedgerDate,
+} from "@/lib/slices/ledgerSlice";
 import Selector from "../../utils/Selector";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import { dateOptions } from "@/app/data/generalDatas";
@@ -98,6 +102,7 @@ function LedgerHead() {
                 "Yesterday",
                 "Last 30 Days",
                 "Last 60 Days",
+                "Custom",
               ].map((option) => (
                 <li
                   key={option}
@@ -113,8 +118,10 @@ function LedgerHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
+            <Button type="clear" onClick={() => dispatch(setResetLedgerDate())}>
+              Clear
+            </Button>
             <Button type="submit">Submit</Button>
-            <Button type="clear">Clear</Button>
           </div>
         </div>
       </DateModal>
