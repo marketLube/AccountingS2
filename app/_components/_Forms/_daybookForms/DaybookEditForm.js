@@ -107,6 +107,9 @@ function DaybookEditForm() {
     data.particular = parIdFinder(particulars, particular);
     data.bank = bankIdFiner(banks, data.bank);
 
+    if (!data.gstType) data.gstType = "no-gst";
+    if (!data.tdsType) data.tdsType = "no tds";
+
     try {
       await apiClient.patch("/transaction", data);
       toast.success("Successfully created new Transaction");

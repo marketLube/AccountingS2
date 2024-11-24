@@ -354,10 +354,10 @@ export function Tds({ register, errors }) {
       <select id="tds" {...register("tds", { required: "TDS is required" })}>
         <option value="">Select TDS Percent %</option>
         <option value="0%">0%</option>
+        <option value="2%">2%</option>
         <option value="5%">5%</option>
         <option value="10%">10%</option>
         <option value="15%">15%</option>
-        <option value="20%">20%</option>
       </select>
       {errors.tds && (
         <span className="form-group-error">{errors.tds.message}</span>
@@ -447,6 +447,7 @@ export function GstPercent({ register, errors }) {
       >
         <option value="">Select GST Percent %</option>
         <option value="0%">0%</option>
+        <option value="2%">5%</option>
         <option value="5%">5%</option>
         <option value="12%">12%</option>
         <option value="18%">18%</option>
@@ -547,7 +548,7 @@ export function AssetsType({ register, errors }) {
 }
 
 // Gst Component for "GST Type" Selection
-export function Gst({ register, errors }) {
+export function Gst({ register, errors, disabled = false }) {
   return (
     <div className="form-group">
       <label htmlFor="GstType" className="type-option-label">
@@ -558,9 +559,8 @@ export function Gst({ register, errors }) {
           <input
             type="radio"
             value="incl"
-            {...register("gstType", {
-              required: "Select a GST type",
-            })}
+            {...register("gstType")}
+            disabled={disabled}
           />
           Inclusive
         </label>
@@ -568,9 +568,8 @@ export function Gst({ register, errors }) {
           <input
             type="radio"
             value="excl"
-            {...register("gstType", {
-              required: "Select a GST type",
-            })}
+            {...register("gstType")}
+            disabled={disabled}
           />
           Exclusive
         </label>
@@ -582,7 +581,7 @@ export function Gst({ register, errors }) {
   );
 }
 
-export function TdsPercent({ register, errors }) {
+export function TdsPercent({ register, errors, disabled = false }) {
   return (
     <div className="form-group">
       <label htmlFor="TdsPercentType" className="type-option-label">
@@ -590,11 +589,21 @@ export function TdsPercent({ register, errors }) {
       </label>
       <div className="type-options">
         <label className="type-option">
-          <input type="radio" value="Payable" {...register("tdsType")} />
+          <input
+            type="radio"
+            value="Payable"
+            {...register("tdsType")}
+            disabled={disabled}
+          />
           Payable
         </label>
         <label className="type-option">
-          <input type="radio" value="Receivable" {...register("tdsType")} />
+          <input
+            type="radio"
+            value="Receivable"
+            {...register("tdsType")}
+            disabled={disabled}
+          />
           Receivable
         </label>
       </div>

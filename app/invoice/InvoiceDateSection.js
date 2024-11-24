@@ -6,17 +6,13 @@ function InvoiceDateSection({ register, errors }) {
         <input
           id="invoice-id"
           placeholder="Enter Invoice ID"
-          {...register("invoiceId", { required: "Invoice ID is required" })}
+          {...register("invoiceId")}
         />
         {errors.invoiceId && <span>{errors.invoiceId.message}</span>}
       </div>
       <div className="invoice-form-to-input-container">
         <label htmlFor="invoice-date">Invoice Date</label>
-        <input
-          id="invoice-date"
-          type="date"
-          {...register("invoiceDate", { required: "Invoice Date is required" })}
-        />
+        <input id="invoice-date" type="date" {...register("invoiceDate")} />
         {errors.invoiceDate && <span>{errors.invoiceDate.message}</span>}
       </div>
       <div className="invoice-form-to-input-container">
@@ -24,7 +20,7 @@ function InvoiceDateSection({ register, errors }) {
         <input
           id="invoice-due-date"
           type="date"
-          {...register("invoiceDueDate", { required: "Due Date is required" })}
+          {...register("invoiceDueDate")}
         />
         {errors.invoiceDueDate && <span>{errors.invoiceDueDate.message}</span>}
       </div>
@@ -34,7 +30,7 @@ function InvoiceDateSection({ register, errors }) {
           id="invoice-gst"
           type="text"
           placeholder="GST"
-          {...register("billtoGst", { required: "GST is required" })}
+          {...register("billtoGst")}
         />
         {errors.billtoGst && <span>{errors.billtoGst.message}</span>}
       </div>
