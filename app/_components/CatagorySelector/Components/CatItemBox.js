@@ -8,7 +8,6 @@ import { checkCaseSensitivity } from "../helper";
 
 function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
   const { categories } = useSelector((state) => state.general);
-  if (value === "Select Category") return null;
 
   const [isEdit, setIsEdit] = useState(false);
   const [pastValue, setPastValue] = useState(value); // Store the original value
@@ -60,6 +59,7 @@ function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
     setLocalCurValue(e.target.value); // Track input changes locally
   };
 
+  if (value === "Select Category") return null;
   return (
     <div className="cat-item-box" onClick={onClick}>
       <input
