@@ -6,7 +6,7 @@ import ManageProfileCard from "../_components/_manage/manageProfile/ManageProfil
 import Catagory from "../_components/CatagorySelector/Catagory";
 import { useState } from "react";
 
-function page() {
+function Page() {
   const [catagory, setCatagory] = useState("");
   const [particular, setParticular] = useState("");
   return (
@@ -27,4 +27,4 @@ function page() {
     </div>
   );
 }
-export default page;
+export default Page;
