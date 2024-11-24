@@ -96,7 +96,6 @@ function LiabilityEditForm() {
     data.branches = branchObjects;
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
     data.type = "liability";
 
     try {

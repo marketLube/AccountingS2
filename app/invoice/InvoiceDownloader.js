@@ -10,9 +10,12 @@ import { today } from "../_services/helpers";
 import BackButton from "../_components/utils/BackButton";
 import { useDispatch } from "react-redux";
 import { setIsInvoice } from "@/lib/slices/invoiceSlice";
+import apiClient from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
 
 function InvoiceDownloader() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -42,8 +45,10 @@ function InvoiceDownloader() {
       ifsc: "",
       branch: "",
       invoiceId: "",
-      invoiceDate: "",
-      invoiceDueDate: "",
+      invoiceDate: today(),
+      invoiceDueDate: new Date(new Date().setMonth(new Date().getMonth() + 1))
+        .toISOString()
+        .split("T")[0],
       billtoGst: "",
       name2: "",
       gst2: "",
@@ -64,7 +69,7 @@ function InvoiceDownloader() {
 
     // Create a new PDF document
     const pdf = new jsPDF("p", "mm", "a4");
-    const imgWidth = 210; // A4 width in mm
+    const imgWidth = 210;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     pdf.addImage(data, "PNG", 0, 0, imgWidth, imgHeight);
@@ -73,9 +78,19 @@ function InvoiceDownloader() {
 
   const onSubmit = async (data) => {
     data.items = tableItems;
-    console.log(data, "data");
+    try {
+      setIsLoading(true);
+      const res = await apiClient.post("/invoice", data);
+      console.log(res, "res");
+      toast.success("Success");
+    } catch (e) {
+      console.log(e, "e");
+      toast.error("Failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
-  console.log(tableItems, "tableItems");
+
   return (
     <div className="invoice-container">
       <div className="invoice-body">
@@ -87,9 +102,17 @@ function InvoiceDownloader() {
           tableItems={tableItems}
         />
         <div className="invoice-actions">
-          <BackButton onClick={() => dispatch(setIsInvoice(false))} />
+          <BackButton
+            style={{ top: "5rem", left: "5rem", position: "absolute" }}
+            onClick={() => dispatch(setIsInvoice(false))}
+          />
           <Button onClick={handleDownloadPdf}>Download Invoice</Button>
-          <Button onClick={handleSubmit(onSubmit)}>Save invoice</Button>
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            style={isLoading ? { opacity: "0.5" } : { opacity: "1" }}
+          >
+            {isLoading ? "Save invoice" : "Saving.."}
+          </Button>
         </div>
       </div>
     </div>
