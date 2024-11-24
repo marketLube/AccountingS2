@@ -102,17 +102,19 @@ function InvoiceDownloader() {
           tableItems={tableItems}
         />
         <div className="invoice-actions">
-          <BackButton
-            style={{ top: "5rem", left: "5rem", position: "absolute" }}
-            onClick={() => dispatch(setIsInvoice(false))}
-          />
-          <Button onClick={handleDownloadPdf}>Download Invoice</Button>
-          <Button
-            onClick={handleSubmit(onSubmit)}
-            style={isLoading ? { opacity: "0.5" } : { opacity: "1" }}
-          >
-            {isLoading ? "Save invoice" : "Saving.."}
-          </Button>
+          <div className="invoice-actions-back-btn">
+            <BackButton onClick={() => dispatch(setIsInvoice(false))} />
+          </div>
+
+          <div className="invoice-actions-btns">
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              style={isLoading ? { opacity: "0.5" } : { opacity: "1" }}
+            >
+              {!isLoading ? "Save invoice" : "Saving.."}
+            </Button>
+            <Button onClick={handleDownloadPdf}>Download Invoice</Button>
+          </div>
         </div>
       </div>
     </div>

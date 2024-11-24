@@ -1796,9 +1796,28 @@ body {
 }
 .invoice-actions {
   background-color: rgb(226, 225, 225);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.invoice-actions-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20rem;
+  height: 20rem;
+  position: absolute;
+  top: 10rem;
+  gap: 1rem;
+}
+.invoice-actions-back-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10rem;
 }
 .invoice-form {
   background-color: white;

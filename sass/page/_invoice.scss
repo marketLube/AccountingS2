@@ -32,7 +32,22 @@ $small-padding: 0.2rem;
 
   &-actions {
     background-color: variables.$color-light-gray;
+    position: relative;
     @include mixins.flex(center);
+    &-btns {
+      @include mixins.flex(center);
+      width: 20rem;
+      height: 20rem;
+      position: absolute;
+      top: 10rem;
+      gap: 1rem;
+    }
+    &-back-btn {
+      width: 100%;
+      @include mixins.flex(center);
+      position: absolute;
+      top: 10rem;
+    }
   }
 
   &-form {
