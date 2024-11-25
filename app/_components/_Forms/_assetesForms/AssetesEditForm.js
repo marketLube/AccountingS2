@@ -90,10 +90,12 @@ function AssetesEditForms() {
           <PurchasedBy register={register} errors={errors} />
           <AssetsType register={register} errors={errors} />
         </div>
+
         <div className="form-row">
           <Remark register={register} errors={errors} />
         </div>
       </div>
+
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
         <Button

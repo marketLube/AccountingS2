@@ -115,13 +115,14 @@ function ReminderEditForm() {
           <BranchSelector register={register} errors={errors} />
           <StatusSel register={register} errors={errors} />
         </div>
+
+        <div className="form-row">
+          <DateSel register={register} errors={errors} />
+          <Remark register={register} errors={errors} />
+        </div>
       </div>
 
-      <div className="form-row">
-        <DateSel register={register} errors={errors} />
-        <Remark register={register} errors={errors} />
-      </div>
-
+      
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
         <Button

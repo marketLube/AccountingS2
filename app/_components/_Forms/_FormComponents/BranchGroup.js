@@ -11,7 +11,10 @@ function BranchGroup({ setSelectedBranches, clearErrors, selectedBranches }) {
       <div htmlFor="Branches" className="form-group-formlabel">
         Branches
       </div>
-      <div className="branch-group">
+      <div
+        className="branch-group"
+        style={{ width: branches.length > 3 ? "100%" : "70%" }}
+      >
         {branches?.map(({ name: branch }) => (
           <BranchesSelector
             key={branch}

@@ -89,7 +89,7 @@ function Reminderhead() {
       <LayoutHead>
         <>
           <Button onClick={() => dispatch(setIsReminderNewEntry(true))}>
-            + New Entri
+            + New Entry
           </Button>
           <Button
             onClick={() => dispatch(setReminderIsEdit(true))}

@@ -1,5 +1,7 @@
 "use client";
-function BanktoTableitem() {
+function BanktoTableitem({ banktobank }) {
+  console.log(banktobank, "uuuuuuu");
+
   return (
     <>
       <div className="table-col">

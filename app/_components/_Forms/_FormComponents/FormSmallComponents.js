@@ -679,7 +679,12 @@ export function BranchComponent({
         {selectedBranches?.length > 0 && (
           <>
             <h5>Selected Branches and Amounts</h5>
-            <div className="form-amt-grid-container">
+            <div
+              className="form-amt-grid-container"
+              style={{
+                width: selectedBranches.length > 3 ? "100%" : "70%",
+              }}
+            >
               {selectedBranches?.map((branch, i) => (
                 <Branches
                   defaultAmount={defaultAmounts && defaultAmounts[i]}

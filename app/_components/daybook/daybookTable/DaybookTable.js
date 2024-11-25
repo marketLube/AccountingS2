@@ -8,14 +8,27 @@ import { setBtnDisable } from "@/lib/slices/daybookSlice";
 import useTransactions from "@/app/_hooks/useTransactions";
 import BanktoTableHead from "../../_banktobank/BanktoBankTable/BanktoTableHead";
 import BanktoTableitem from "../../_banktobank/BanktoBankTable/BanktoTableitem";
+import { useQuery } from "@tanstack/react-query";
 
 function DaybookTable() {
   const { isLoading, isError, error, transactions } = useTransactions();
+
+  const {
+    data: banktobank,
+    isLoadingbank,
+    isErrorbank,
+    errorbank,
+    refetch,
+  } = useQuery({
+    queryKey: ["banktobank"],
+    queryFn: () => apiClient.get("/to-bank").then((res) => res.data),
+  });
 
   const { startPage, type } = useSelector((state) => state.daybook);
   const dispatch = useDispatch();
 
   const veiwEight = transactions?.slice(startPage, startPage + 8);
+  const veiwEightForBank = banktobank?.slice(startPage, startPage + 8);
 
   useEffect(() => {
     if (veiwEight?.length < 8) {
@@ -30,15 +43,15 @@ function DaybookTable() {
       {type == "Bank" ? (
         <>
           <BanktoTableHead />
-          {isLoading ? (
+          {isLoadingbank ? (
             <TableLoader />
-          ) : isError ? (
+          ) : isErrorbank ? (
             <TableLoader error="Something Went Wrong..." />
-          ) : veiwEight?.length === 0 ? (
+          ) : veiwEightForBank?.length === 0 ? (
             <div className="no-datafound">No Data Found</div>
           ) : (
-            veiwEight?.map((trans, i) => (
-              <BanktoTableitem key={i} transaction={trans} />
+            veiwEightForBank?.map((bankto, i) => (
+              <BanktoTableitem key={i} banktobank={bankto} />
             ))
           )}
         </>
