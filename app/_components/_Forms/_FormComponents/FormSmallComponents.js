@@ -323,14 +323,14 @@ export function Remark({ register, errors }) {
   );
 }
 
-export function Bank({ register, errors }) {
+export function Bank({ register, errors, val = "bank" }) {
   const { banks } = useSelector((state) => state.general);
   return (
     <div className="form-group">
-      <label htmlFor="bank" className="form-group-formlabel">
+      <label htmlFor={val} className="form-group-formlabel">
         Bank
       </label>
-      <select id="bank" {...register("bank", { required: "Bank is required" })}>
+      <select id={val} {...register(val, { required: "Bank is required" })}>
         <option value="">Select Bank</option>
         {banks?.map((bank) => (
           <option value={bank.name} key={bank._id}>
@@ -338,8 +338,8 @@ export function Bank({ register, errors }) {
           </option>
         ))}
       </select>
-      {errors.bank && (
-        <span className="form-group-error">{errors.bank.message}</span>
+      {errors[val] && (
+        <span className="form-group-error">{errors[val].message}</span>
       )}
     </div>
   );
@@ -366,7 +366,7 @@ export function Tds({ register, errors }) {
   );
 }
 
-export function BranchSelector({ register, errors }) {
+export function BranchSelector({ register, errors, val = "branch" }) {
   const { branchNames } = useSelector((state) => state.general);
   return (
     <div className="form-group">
@@ -374,8 +374,8 @@ export function BranchSelector({ register, errors }) {
         Branch
       </label>
       <select
-        id="branch"
-        {...register("branch", { required: "GST Percent is required" })}
+        id={val}
+        {...register(val, { required: "GST Percent is required" })}
       >
         <option value="">Select a branch</option>
         {branchNames?.map((branch, i) => (
@@ -384,8 +384,8 @@ export function BranchSelector({ register, errors }) {
           </option>
         ))}
       </select>
-      {errors.branch && (
-        <span className="form-group-error">{errors.branch.message}</span>
+      {errors[val] && (
+        <span className="form-group-error">{errors[val].message}</span>
       )}
     </div>
   );
