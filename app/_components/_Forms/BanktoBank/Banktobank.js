@@ -8,12 +8,14 @@ import {
 import apiClient from "@/lib/axiosInstance";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bankIdFiner, branchFinder } from "@/app/_services/finders";
+import { fetchBranches } from "@/lib/slices/generalSlice";
 
 function Banktobank() {
   const [loading, setLoading] = useState(false);
   const { banks, branches } = useSelector((state) => state.general);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -40,6 +42,7 @@ function Banktobank() {
       setLoading(true);
       await apiClient.post("/to-bank", data);
       toast.success("Successfully created new Transaction");
+      dispatch(fetchBranches());
       reset();
     } catch (e) {
       console.log(e);

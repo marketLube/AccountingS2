@@ -4,7 +4,7 @@ import catchAsync from "../Utilities/catchAsync.js";
 import Branch from "../Models/branchModel.js";
 
 export const getTotals = catchAsync(async (req, res, next) => {
-  const { thisMonth } = req.query;
+  const { thisMonth, branch } = req.query;
 
   // Calculate current month's date range
   let dateFilter = {};

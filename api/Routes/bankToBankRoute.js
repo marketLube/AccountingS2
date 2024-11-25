@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  bankToBankMiddleWare,
   createBtob,
   deleteBtob,
   getAllBtoB,
@@ -10,7 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/", getAllBtoB);
-router.post("/", createBtob);
+router.post("/", bankToBankMiddleWare, createBtob);
 router.get("/:id", getBtoB);
 router.patch("/:id", updateBtob);
 router.delete("/:id", deleteBtob);

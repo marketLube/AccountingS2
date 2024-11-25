@@ -110,7 +110,6 @@ transactionSchema.pre("save", async function (next) {
         totalAmount += amount;
 
         // Find and update the branch's bank account
-        console.log(branch.accounts);
         const bankAccount = branch.accounts.find(
           (account) => account.bank.toString() === this.bank.toString()
         );

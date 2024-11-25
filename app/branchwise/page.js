@@ -10,6 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import apiClient from "@/lib/axiosInstance";
 import { useEffect } from "react";
 import { useBranchIdFinder } from "../_services/finders";
+import { useBranchWiseChart } from "../_hooks/useBranchwise";
+import BranchBalanceCard from "../_components/_cards/_balance-card/BranchBalanceCard";
 
 function Page() {
   const labels = [
@@ -27,39 +29,24 @@ function Page() {
     "December",
   ];
 
+  const { data, isLoading, isError } = useBranchWiseChart();
   const { curBranch } = useSelector((state) => state.branchwise);
+  const branch = useBranchIdFinder(curBranch);
 
-  let endpoint = "/stats/yearly-pnl?";
-  const branchId = useBranchIdFinder(curBranch)?._id;
-
-  useEffect(() => {
-    if (branchId) {
-      endpoint += `branch=${branchId}`;
-    }
-  }, [curBranch]);
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["whole-year"],
-    queryFn: () => apiClient.get(endpoint).then((res) => res.data),
-  });
+  const totalIncome = data?.map((val) => val.totalIncome);
+  const totalExpence = data?.map((val) => val.totalExpense);
 
   // Reordered datasets to show Expense first, then Income
   const datasets = [
     {
       label: "Expense",
-      data: [
-        130000, 130000, 160000, 140000, 180000, 220000, 210000, 200000, 230000,
-        240000, 260000, 290000,
-      ],
+      data: totalExpence,
       gradientStart: "rgb(28, 101, 126)",
       gradientEnd: "#0c2d48",
     },
     {
       label: "Income",
-      data: [
-        150000, 180000, 220000, 200000, 250000, 300000, 280000, 270000, 290000,
-        310000, 350000, 370000,
-      ],
+      data: totalIncome,
       gradientStart: "#2eb629",
       gradientEnd: "#1b5e20",
     },
@@ -77,7 +64,7 @@ function Page() {
         </div>
         <div className="branchwise-cards-container">
           <div className="branchwise-total-bal">
-            <TotalBalanceCard />
+            <BranchBalanceCard branch={branch} />
           </div>
           <div className="branchwise-total-bal">
             <TotalBalanceCard />

@@ -6,18 +6,12 @@ import {
   updateBranch,
   getBranch,
   deleteBranch,
-  monthWiseBranchPnl,
-  yearlyPnl,
-  allMonthBranchPnl,
 } from "../Controller/branchController.js";
 import { getTotals } from "../Aggregation/dashbordAggregate.js";
 
 const router = express.Router();
 
 router.get("/totals", getTotals);
-router.get("/month-wise-pnl", monthWiseBranchPnl);
-router.get("/all-month-pnl", allMonthBranchPnl);
-router.get("/yearly-pnl", yearlyPnl);
 
 router.get("/", getAllBranch);
 router.get("/:id", getBranch);

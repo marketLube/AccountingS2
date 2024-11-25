@@ -59,6 +59,51 @@ export default function useBranchWise() {
   return { isLoading, isError, error, refetch, branchwiseTrans: data?.data };
 }
 
+export function useBranchWiseChart() {
+  let endpoint = "/stats/yearly-pnl?";
+  const { curBranch } = useSelector((state) => state.branchwise);
+  const branchId = useBranchIdFinder(curBranch)?._id;
+
+  if (branchId) {
+    endpoint += `branch=${branchId}`;
+  } else {
+    endpoint += `branch=Kozhikode`;
+  }
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["whole-year", endpoint],
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data.data),
+  });
+
+  return { isLoading, isError, data };
+}
+export function useBranchWiseCircle() {
+  let endpoint = "/stats/branchwise-circle?";
+  const { curBranch } = useSelector((state) => state.branchwise);
+  const branchId = useBranchIdFinder(curBranch)?._id;
+
+  if (branchId) {
+    endpoint += `branch=${branchId}`;
+  }
+
+  const {
+    data: stats,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["branchwise-circle", endpoint],
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data.stats),
+  });
+
+  return { isLoading, isError, stats };
+}
+
 export function refreshBranchwise() {
   queryClient.invalidateQueries("branchwise");
+}
+export function refreshBranchWiseChart() {
+  queryClient.invalidateQueries("whole-year");
+}
+export function refreshBranchWiseCircle() {
+  queryClient.invalidateQueries("branchwise-circle");
 }
