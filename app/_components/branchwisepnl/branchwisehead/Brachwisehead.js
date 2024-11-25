@@ -1,7 +1,6 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import LayoutHead from "../../layouts/LayoutHead";
-import Button from "../../utils/Button";
 import Selector from "../../utils/Selector";
 import { useEffect } from "react";
 import {
@@ -64,10 +63,6 @@ function Brachwisehead() {
           callback={handleParticularChange}
           disabled={curCat?.startsWith("All")}
           curValue={curParticular}
-        />
-        <Selector
-          options={["All Branches", ...branchNames]}
-          callback={handleBranchChange}
         />
         <Selector
           options={["All Banks", ...bankNames]}
