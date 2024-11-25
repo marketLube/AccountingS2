@@ -10,13 +10,12 @@ import Button from "../../utils/Button";
 
 function BranchwiseFooter() {
   const { currentPage, summery } = useSelector((state) => state.branchwise);
-
-  console.log(summery, "summery");
   return (
     <div className={`layout-footer`}>
       <div className="layout-footer-left">
         <Button>Download Report</Button>
-        <Button>Total</Button>
+        <Button>Total Expense: {summery?.totalDebit}</Button>
+        <Button>Total Income: {summery?.totalCredit}</Button>
       </div>
       <div className="layout-footer-right">
         <PageNavigate

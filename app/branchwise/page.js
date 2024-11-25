@@ -1,12 +1,17 @@
 "use client";
+import { useSelector } from "react-redux";
 import TotalBalanceCard from "../_components/_cards/_balance-card/TotalBalanceCard";
 import MonthlyPNLChart from "../_components/_cards/_monthlyCharts/MonthlyCart";
 import BranchWIseChartBox from "../_components/branchwisepnl/BranchWiseChartBox/BranchWIseChartBox";
 import BranchwiseFooter from "../_components/branchwisepnl/BranchwiseFooter/BranchwiseFooter";
 import Brachwisehead from "../_components/branchwisepnl/branchwisehead/Brachwisehead";
 import BranchwiseTable from "../_components/branchwisepnl/BranchwiseTable/BranchwiseTable";
+import { useQuery } from "@tanstack/react-query";
+import apiClient from "@/lib/axiosInstance";
+import { useEffect } from "react";
+import { useBranchIdFinder } from "../_services/finders";
 
-function page() {
+function Page() {
   const labels = [
     "January",
     "February",
@@ -21,6 +26,22 @@ function page() {
     "November",
     "December",
   ];
+
+  const { curBranch } = useSelector((state) => state.branchwise);
+
+  let endpoint = "/stats/yearly-pnl?";
+  const branchId = useBranchIdFinder(curBranch)?._id;
+
+  useEffect(() => {
+    if (branchId) {
+      endpoint += `branch=${branchId}`;
+    }
+  }, [curBranch]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["whole-year"],
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data),
+  });
 
   // Reordered datasets to show Expense first, then Income
   const datasets = [
@@ -72,4 +93,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
