@@ -76,6 +76,7 @@ function DaybookNewEntirForm() {
     if (!data.tdsType) data.tdsType = "no tds";
 
     try {
+      setLoading(true);
       await apiClient.post("/transaction", data);
       toast.success("Successfully created new Transaction");
       refreshTransaction();
@@ -83,6 +84,8 @@ function DaybookNewEntirForm() {
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
 
     return;

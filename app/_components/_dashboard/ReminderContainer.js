@@ -5,6 +5,7 @@ import { setIsReminderNewEntry } from "@/lib/slices/reminderSlice";
 import ReminderNewEntryForm from "../_Forms/_reminderForms/ReminderNewEntryForm";
 import FsModal from "../utils/FsModal";
 import { Skeleton } from "antd";
+import useReminders from "@/app/_hooks/useReminders";
 
 const paymentitem = [
   { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
@@ -14,6 +15,8 @@ const paymentitem = [
   { amount: "1000", description: "Marketing expense", date: "25/9/2022" },
 ];
 function ReminderContainer({ isLoading }) {
+  const { reminders } = useReminders();
+
   const dispatch = useDispatch();
   const { isNewEntry } = useSelector((state) => state.reminder);
   return (
@@ -41,7 +44,7 @@ function ReminderContainer({ isLoading }) {
                 +
               </button>
             </div>
-            {paymentitem.map((item, i) => (
+            {reminders?.slice(0, 5).map((item, i) => (
               <DashboardReminderItems key={i} item={item} />
             ))}
           </>
