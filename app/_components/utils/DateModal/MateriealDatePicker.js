@@ -13,7 +13,7 @@ const MaterialDatePicker = ({ date, setDate }) => {
     const newDate = date ? new Date(date) : new Date();
     setSelected(newDate);
     setMonth(newDate);
-  }, [date]);
+  }, [date, setDate]);
 
   const handleYearChange = (e) => {
     const newYear = parseInt(e.target.value);

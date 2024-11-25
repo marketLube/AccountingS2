@@ -1,11 +1,11 @@
 "use client";
-
 import { GiSettingsKnobs } from "react-icons/gi";
 import LayoutHead from "@/app/_components/layouts/LayoutHead";
 import Button from "@/app/_components/utils/Button";
 import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetDaybookDates,
   setDaybookCurBank,
   setDaybookCurBranch,
   setDaybookCurCat,
@@ -67,13 +67,17 @@ function DaybookHead() {
   };
 
   const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setDaybookSelectedItems("Custom"));
     dispatch(setDayBookStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setDaybookSelectedItems("Custom"));
     dispatch(setDayBookEndDate(date));
+  };
+
+  const handleSelectChange = (range) => {
+    return () => dispatch(setDayBookSelectedDate(range));
   };
 
   // Date modal
@@ -83,21 +87,18 @@ function DaybookHead() {
     setIsOpen((open) => !open);
   };
 
-  const handleSelectChange = (range) => {
-    return () => dispatch(setDayBookSelectedDate(range));
-  };
-
   const handleIsEdits = () => {
     if (!selectedItems?._id)
       return toast.error("Please Select a Transaction..!");
     dispatch(setDaybookIsEdit(true));
   };
 
-  const [selectedOption, setSelectedOption] = useState("All");
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    dispatch(setDayBookSelectedDate(option));
+  const handleClear = () => {
+    dispatch(resetDaybookDates());
+    dispatch(setDayBookSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -171,18 +172,11 @@ function DaybookHead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-                "Custom",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  onClick={() => dispatch(setDayBookSelectedDate(option))}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -193,8 +187,12 @@ function DaybookHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button type="clear">Clear</Button>
-            <Button type="submit">Submit</Button>
+            <Button type="clear" onClick={handleClear}>
+              Clear
+            </Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>
