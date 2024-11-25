@@ -47,7 +47,6 @@ function Commissionhead() {
   };
 
   const handleSelectChange = (range) => {
-    console.log(range, "select");
     return () => dispatch(setReminderSelectedDate(range));
   };
 
