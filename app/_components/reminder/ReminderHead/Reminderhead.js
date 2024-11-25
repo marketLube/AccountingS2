@@ -55,10 +55,12 @@ function Reminderhead() {
   };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setReminderStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setReminderEndDate(date));
   };
 

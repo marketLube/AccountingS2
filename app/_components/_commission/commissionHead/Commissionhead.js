@@ -4,10 +4,7 @@ import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
 import Search from "../../utils/Search";
 import {
-  setCommissionCurBank,
   setCommissionCurBranch,
-  setCommissionCurCat,
-  setCommissionCurParticular,
   setIsCommissionNewEntry,
   setResetCommissionDate,
 } from "@/lib/slices/CommissionSlice";
@@ -22,40 +19,23 @@ import { useState } from "react";
 
 function Commissionhead() {
   const dispatch = useDispatch();
-  const {
-    isNewEntry,
-    particulars,
-    curCat,
-    curParticular,
-    curBank,
-    startDate,
-    endDate,
-    selectedDate,
-  } = useSelector((state) => state.commission);
-
-  const { branchNames, categoryNames, bankNames } = useSelector(
-    (state) => state.general
+  const { isNewEntry, startDate, endDate, selectedDate } = useSelector(
+    (state) => state.commission
   );
+
+  const { branchNames } = useSelector((state) => state.general);
 
   const handleBranchChange = (e) => {
     dispatch(setCommissionCurBranch(e.target.value));
   };
-  const handleCatChange = (e) => {
-    dispatch(setCommissionCurCat(e.target.value));
-  };
-  const handleParticularChange = (e) => {
-    dispatch(setCommissionCurParticular(e.target.value));
-  };
-
-  const handlebankChange = (e) => {
-    dispatch(setCommissionCurBank(e.target.value));
-  };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setReminderStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setReminderEndDate(date));
   };
 

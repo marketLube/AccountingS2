@@ -65,10 +65,12 @@ function DaybookHead() {
   };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setDayBookStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setDayBookEndDate(date));
   };
 

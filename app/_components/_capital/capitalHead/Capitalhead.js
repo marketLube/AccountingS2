@@ -32,10 +32,12 @@ function Capitalhead() {
   };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setCapitalStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setCapitalEndDate(date));
   };
 
