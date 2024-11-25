@@ -5,9 +5,15 @@ import {
   Bank,
   BranchSelector,
 } from "../_FormComponents/FormSmallComponents";
-import { Bold } from "lucide-react";
+import apiClient from "@/lib/axiosInstance";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { bankIdFiner, branchFinder } from "@/app/_services/finders";
 
 function Banktobank() {
+  const [loading, setLoading] = useState(false);
+  const { banks, branches } = useSelector((state) => state.general);
   const {
     register,
     handleSubmit,
@@ -17,13 +23,35 @@ function Banktobank() {
     clearErrors,
   } = useForm({
     defaultValues: {
-      bank: "",
-      purpose: "",
-      branch: "",
+      toBank: "",
+      toBranch: "",
+      fromBank: "",
+      fromBranch: "",
     },
   });
+
+  const onSubmit = async (data) => {
+    data.fromBank = bankIdFiner(banks, data.fromBank);
+    data.fromBranch = branchFinder(data.fromBranch, branches)?._id;
+    data.toBank = bankIdFiner(banks, data.toBank);
+    data.toBranch = branchFinder(data.toBranch, branches)?._id;
+    data.amount = parseFloat(data.amount);
+    try {
+      setLoading(true);
+      await apiClient.post("/to-bank", data);
+      toast.success("Successfully created new Transaction");
+      reset();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+    return;
+  };
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
         <label
           style={{ width: "5rem", fontWeight: "bold", fontSize: "1.5rem" }}
@@ -31,8 +59,12 @@ function Banktobank() {
           From
         </label>
         <div className="form-row">
-          <Bank register={register} errors={errors} />
-          <BranchSelector register={register} errors={errors} />
+          <Bank register={register} errors={errors} val="fromBank" />
+          <BranchSelector
+            register={register}
+            errors={errors}
+            val="fromBranch"
+          />
         </div>
         <label
           style={{ width: "5rem", fontWeight: "bold", fontSize: "1.5rem" }}
@@ -40,8 +72,8 @@ function Banktobank() {
           To
         </label>
         <div className="form-row">
-          <Bank register={register} errors={errors} />
-          <BranchSelector register={register} errors={errors} />
+          <Bank register={register} errors={errors} val="toBank" />
+          <BranchSelector register={register} errors={errors} val="toBranch" />
         </div>
         <Amount register={register} errors={errors} />
       </div>

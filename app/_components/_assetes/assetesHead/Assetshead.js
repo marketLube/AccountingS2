@@ -45,10 +45,12 @@ function Assetshead() {
     dispatch(setAssetsCurBranch(e.target.value));
   };
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setAssetsStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setAssetsEndDate(date));
   };
 

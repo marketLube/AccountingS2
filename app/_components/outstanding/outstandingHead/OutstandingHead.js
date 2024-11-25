@@ -53,10 +53,12 @@ function OutstandingHead() {
   };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setOutstandingStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setOutstandingEndDate(date));
   };
 

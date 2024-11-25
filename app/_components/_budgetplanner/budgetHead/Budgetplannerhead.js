@@ -45,10 +45,12 @@ function Budgetplannerhead() {
   };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setBudgetplannerStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setBudgetplannerEndDate(date));
   };
 

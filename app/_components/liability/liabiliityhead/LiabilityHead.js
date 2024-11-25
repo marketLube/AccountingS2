@@ -60,10 +60,12 @@ function LiabilityHead() {
   };
 
   const handleSetStartDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setLiabilityStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    setSelectedOption("Custom");
     dispatch(setLiabilityEndDate(date));
   };
 

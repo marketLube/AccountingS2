@@ -19,14 +19,23 @@ import { useEffect } from "react";
 
 export default function useTransactions() {
   const dispatch = useDispatch();
-  const { type, curBranch, curCat, curParticular, curBank, page } = useSelector(
-    (state) => state.daybook
-  );
+  const {
+    type,
+    curBranch,
+    curCat,
+    curParticular,
+    curBank,
+    page,
+    startDate,
+    endDate,
+  } = useSelector((state) => state.daybook);
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
   const particular = useParticularNameFinder(curParticular);
 
   const bank = useBankIdFinder(curBank);
+
+  console.log(startDate, endDate, "cl");
 
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
@@ -47,6 +56,12 @@ export default function useTransactions() {
   }
   if (bank?._id) {
     endpoint += `&bank=${bank?._id}`;
+  }
+  if (startDate) {
+    endpoint += `&startDate=${startDate}`;
+  }
+  if (endDate) {
+    endpoint += `&endDate=${endDate}`;
   }
 
   const {

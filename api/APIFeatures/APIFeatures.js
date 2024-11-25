@@ -184,6 +184,7 @@ class APIFeatures {
   }
 
   filterByDateRange() {
+    console.log(this.queryStr);
     if (this.queryStr.startDate || this.queryStr.endDate) {
       let dateFilter = {};
 
