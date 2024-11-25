@@ -4,11 +4,15 @@ import TableLoader from "../../_loader/TableLoader";
 import DaybookTableItem from "./DaybookTableItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setBtnDisable } from "@/lib/slices/daybookSlice";
+import {
+  setBanktoBankBtnDisable,
+  setBtnDisable,
+} from "@/lib/slices/daybookSlice";
 import useTransactions from "@/app/_hooks/useTransactions";
 import BanktoTableHead from "../../_banktobank/BanktoBankTable/BanktoTableHead";
 import BanktoTableitem from "../../_banktobank/BanktoBankTable/BanktoTableitem";
 import { useQuery } from "@tanstack/react-query";
+import apiClient from "@/lib/axiosInstance";
 
 function DaybookTable() {
   const { isLoading, isError, error, transactions } = useTransactions();
@@ -21,7 +25,7 @@ function DaybookTable() {
     refetch,
   } = useQuery({
     queryKey: ["banktobank"],
-    queryFn: () => apiClient.get("/to-bank").then((res) => res.data),
+    queryFn: () => apiClient.get("/to-bank").then((res) => res.data.data),
   });
 
   const { startPage, type } = useSelector((state) => state.daybook);
@@ -37,6 +41,14 @@ function DaybookTable() {
       dispatch(setBtnDisable(false));
     }
   }, [dispatch, veiwEight?.length]);
+
+  useEffect(() => {
+    if (veiwEightForBank?.length < 8) {
+      dispatch(setBanktoBankBtnDisable(true));
+    } else {
+      dispatch(setBanktoBankBtnDisable(false));
+    }
+  }, [dispatch, veiwEightForBank?.length]);
 
   return (
     <div className="table">

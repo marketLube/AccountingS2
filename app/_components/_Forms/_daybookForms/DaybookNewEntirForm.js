@@ -41,6 +41,7 @@ function DaybookNewEntirForm() {
     reset,
     setError,
     clearErrors,
+    watch,
   } = useForm({
     defaultValues: {
       date: today(),
@@ -54,6 +55,8 @@ function DaybookNewEntirForm() {
       tdsType: "",
     },
   });
+
+  const tdsValue = watch("tds");
 
   const onSubmit = async (data) => {
     const branchObjects = selectedBranches.map((branch) => {
@@ -120,7 +123,11 @@ function DaybookNewEntirForm() {
       />
       <div className="form-row">
         <Tds register={register} errors={errors} />
-        <TdsPercent register={register} errors={errors} />
+        <TdsPercent
+          register={register}
+          errors={errors}
+          disabled={tdsValue === "0%"}
+        />
         <Gst register={register} errors={errors} />
         <GstPercent register={register} errors={errors} />
       </div>

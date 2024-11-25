@@ -1,6 +1,18 @@
 "use client";
+
+import { useBankFinder, useBranchNameFinder } from "@/app/_services/finders";
+import formatDate from "@/app/_services/helpers";
+
 function BanktoTableitem({ banktobank }) {
-  console.log(banktobank, "uuuuuuu");
+  console.log(banktobank, "ooooooooo");
+
+  const tobank = useBankFinder(banktobank.toBank);
+  const frombank = useBankFinder(banktobank.fromBank);
+  const frombranch = useBranchNameFinder(banktobank.fromBranch);
+  const tobranch = useBranchNameFinder(banktobank.toBranch);
+  const date = formatDate(new Date(banktobank.createdAt));
+  console.log(tobank, "///////////");
+  console.log(frombank, "-----------");
 
   return (
     <>
@@ -8,12 +20,20 @@ function BanktoTableitem({ banktobank }) {
         <span className="table-check">
           <input type="checkbox" />
         </span>
-        <span className="table-col particular table-body-col">55/9/0</span>
-        <span className="table-col date table-body-col">rbl</span>
-        <span className="table-col amount table-body-col">kochi</span>
-        <span className="table-col remark table-body-col">sbi</span>
-        <span className="table-col branch table-body-col">kottayam</span>
-        <span className="table-col bank table-body-col">2000</span>
+        <span className="table-col banktobank table-body-col">{date}</span>
+        <span className="table-col banktobank table-body-col">
+          {frombank?.name}
+        </span>
+        <span className="table-col banktobank table-body-col">
+          {frombranch}
+        </span>
+        <span className="table-col banktobank table-body-col">
+          {tobank?.name}
+        </span>
+        <span className="table-col banktobank table-body-col">{tobranch}</span>
+        <span className="table-col banktobank table-body-col">
+          {banktobank?.amount}
+        </span>
       </div>
     </>
   );

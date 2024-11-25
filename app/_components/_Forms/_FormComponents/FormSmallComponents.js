@@ -344,7 +344,7 @@ export function Bank({ register, errors, val = "bank" }) {
     </div>
   );
 }
-// Tds Component for TDS Percent Selection
+
 export function Tds({ register, errors }) {
   return (
     <div className="form-group">

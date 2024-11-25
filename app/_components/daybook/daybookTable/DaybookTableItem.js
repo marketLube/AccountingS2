@@ -78,7 +78,6 @@ function DaybookTableItem({ transaction }) {
           <Tooltip
             type="remark"
             isVisible={isRemarkTooltip}
-            
             remark={transaction?.remark}
           />
         </span>
@@ -96,7 +95,6 @@ function DaybookTableItem({ transaction }) {
           />
         </span>
         <span className="table-col bank table-body-col">{bank?.name}</span>
-
         <span className="table-col debit table-body-col">
           {transaction?.type === "Debit" ? "Debit" : "--"}
         </span>
@@ -106,7 +104,19 @@ function DaybookTableItem({ transaction }) {
         <span className="table-col gst table-body-col">
           <GstShower data={transaction} amount={transaction.amount} />
         </span>
-        <span className="table-col tds table-body-col">{tdsAmount}</span>
+
+        <span
+          className="table-col tds table-body-col"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div>{tdsPercentage}%</div>
+          <div>{tdsAmount}</div>
+        </span>
       </div>
     </>
   );
