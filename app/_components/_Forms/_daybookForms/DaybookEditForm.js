@@ -14,7 +14,6 @@ import {
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
@@ -111,8 +110,8 @@ function DaybookEditForm() {
     if (!data.tdsType) data.tdsType = "no tds";
 
     try {
-      await apiClient.patch("/transaction", data);
-      toast.success("Successfully created new Transaction");
+      await apiClient.patch(`/transaction/${selectedItems._id}`, data);
+      toast.success("Successfully edited new Transaction");
       refreshTransaction();
       reset();
     } catch (e) {

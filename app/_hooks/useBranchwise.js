@@ -6,6 +6,7 @@ import {
   useBankIdFinder,
   useBranchIdFinder,
   useCategoryNameFinder,
+  useParticularNameFinder,
 } from "../_services/finders";
 import {
   setBranchwiseCurParticular,
