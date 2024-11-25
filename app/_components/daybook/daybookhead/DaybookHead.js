@@ -39,8 +39,10 @@ function DaybookHead() {
     curCat,
     curParticular,
     curBank,
+    curBranch,
     startDate,
     endDate,
+    type,
     selectedDate,
   } = useSelector((state) => state.daybook);
 
@@ -118,6 +120,8 @@ function DaybookHead() {
           <Selector
             options={["All Categories", ...categoryNames]}
             callback={handleCatChange}
+            disabled={type?.startsWith("Bank")}
+            curValue={curCat}
           />
           <Selector
             options={["All Particulars", ...particulars]}
@@ -128,10 +132,13 @@ function DaybookHead() {
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
+            disabled={type?.startsWith("Bank")}
+            curValue={curBranch}
           />
           <Selector
             options={["All Banks", ...bankNames]}
             callback={handlebankChange}
+            disabled={type?.startsWith("Bank")}
             curValue={curBank}
           />
           <Search />

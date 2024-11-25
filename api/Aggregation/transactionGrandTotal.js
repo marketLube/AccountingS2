@@ -20,7 +20,6 @@ export const getTransactionTotal = async (req) => {
       $gte: new Date(query.startDate),
       $lte: new Date(query.endDate),
     };
-    ß;
   }
 
   // Add other query parameters to match stage
