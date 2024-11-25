@@ -94,6 +94,7 @@ function InvoiceEditForm() {
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
     const branchObjects = selectedBranches.map((branch) => {
       const branchObj = branches.find(
         (branchObjs) => branchObjs.name === branch
@@ -111,7 +112,7 @@ function InvoiceEditForm() {
     data.bank = bankIdFiner(banks, data.bank);
 
     try {
-      await apiClient.patch("/transaction", data);
+      await apiClient.patch(`/transaction/${id}`, data);
       toast.success("Successfully created new Transaction");
       refreshTransaction();
       reset();

@@ -82,6 +82,7 @@ function LiabilityEditForm() {
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
     const branchObjects = selectedBranches.map((branch) => {
       const branchObj = branches.find(
         (branchObjs) => branchObjs.name === branch
@@ -99,7 +100,7 @@ function LiabilityEditForm() {
     data.type = "liability";
 
     try {
-      await apiClient.patch("/liability", data);
+      await apiClient.patch(`/liability/${id}`, data);
       toast.success("Successfully created new Liability");
       refreshLiability();
       reset();

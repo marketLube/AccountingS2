@@ -75,6 +75,7 @@ function ReminderEditForm() {
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
 
@@ -84,7 +85,7 @@ function ReminderEditForm() {
 
     try {
       setLoading(true);
-      await apiClient.patch("/reminders", data);
+      await apiClient.patch(`/reminders/${id}`, data);
       toast.success("Successfully created new Reminder");
       refreshReminders();
       reset();

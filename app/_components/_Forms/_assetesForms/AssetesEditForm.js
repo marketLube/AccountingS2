@@ -55,12 +55,13 @@ function AssetesEditForms() {
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
     const branch = branchFinder(data.branch, branches);
     if (!branch) return toast.error("Something went wrong..");
     data.branch = branch?._id;
     try {
       setLoading(true);
-      await apiClient.patch("/assets", data);
+      await apiClient.patch(`/assets/${id}`, data);
       toast.success("Successfully created new Asset");
       refreshAssets();
       reset();

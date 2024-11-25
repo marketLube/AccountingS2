@@ -56,6 +56,7 @@ function BudgetplannerEditForm() {
   const isExistingPropertyDisabled = !!propertyValue;
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
     // Use either property or existingProperty
     const propertyToUse = data.property || data.existingProperty;
 
@@ -69,7 +70,7 @@ function BudgetplannerEditForm() {
 
     try {
       setLoading(true);
-      await apiClient.patch(`/event`, {
+      await apiClient.patch(`/event/${id}`, {
         ...data,
         property: propertyToUse,
       });

@@ -16,6 +16,7 @@ import apiClient from "@/lib/axiosInstance";
 import { branchFinder, useBranchNameFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshCapital } from "@/app/_hooks/useCapital";
+import { se } from "date-fns/locale";
 
 function CapitalEditForms() {
   const [loading, setLoading] = useState(false);
@@ -57,13 +58,14 @@ function CapitalEditForms() {
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
     const branch = branchFinder(data.branch, branches);
     if (!branch) return toast.error("Something went wrong..");
     data.branch = branch?._id;
 
     try {
       setLoading(true);
-      await apiClient.patch("/capital", data);
+      await apiClient.patch(`/capital/${id}`, data);
       toast.success("Successfully created new Capital");
       refreshCapital();
       reset();
