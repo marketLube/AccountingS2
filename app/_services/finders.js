@@ -65,13 +65,17 @@ export const getBranchNames = (branches) => {
 };
 
 export const dateFinder = (selectedDate) => {
+  if (selectedDate === "Custom") return {};
   const date = today();
   let startDate = new Date(date);
   let endDate = new Date(date);
 
   switch (selectedDate) {
-    case "Today":
+    case "Today": {
+      startDate = new Date(today());
+      endDate = new Date(today());
       break;
+    }
     case "Yesterday": {
       const { startDate: yesterday } = calculateDateRange(1);
       startDate = new Date(yesterday);
@@ -81,11 +85,13 @@ export const dateFinder = (selectedDate) => {
     case "Last 30 Days": {
       const { startDate: thirtyDays } = calculateDateRange(30);
       startDate = new Date(thirtyDays);
+      endDate = new Date(today());
       break;
     }
     case "Last 60 Days": {
       const { startDate: sixty } = calculateDateRange(60);
       startDate = new Date(sixty);
+      endDate = new Date(today());
       break;
     }
     case "All": {

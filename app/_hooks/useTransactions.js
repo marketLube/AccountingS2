@@ -35,7 +35,7 @@ export default function useTransactions() {
 
   const bank = useBankIdFinder(curBank);
 
-  console.log(startDate, endDate, "cl");
+  // console.log(startDate, endDate, "cl");
 
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
