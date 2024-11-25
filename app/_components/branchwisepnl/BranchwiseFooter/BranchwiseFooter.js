@@ -1,19 +1,22 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import BranchwiseFooterbtns from "./BranchwiseFooterbtns";
 import {
   setBranchwiseBtnDisable,
   setBranchwiseCurrentPage,
 } from "@/lib/slices/branchwiseSlice";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
+import Button from "../../utils/Button";
 
 function BranchwiseFooter() {
-  const { currentPage } = useSelector((state) => state.branchwise);
+  const { currentPage, summery } = useSelector((state) => state.branchwise);
+
+  console.log(summery, "summery");
   return (
     <div className={`layout-footer`}>
       <div className="layout-footer-left">
-        <BranchwiseFooterbtns />
+        <Button>Download Report</Button>
+        <Button>Total</Button>
       </div>
       <div className="layout-footer-right">
         <PageNavigate

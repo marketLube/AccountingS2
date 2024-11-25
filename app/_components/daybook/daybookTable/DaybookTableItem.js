@@ -78,6 +78,7 @@ function DaybookTableItem({ transaction }) {
           <Tooltip
             type="remark"
             isVisible={isRemarkTooltip}
+            
             remark={transaction?.remark}
           />
         </span>

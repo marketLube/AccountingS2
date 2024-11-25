@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setBtnDisable } from "@/lib/slices/daybookSlice";
 import useTransactions from "@/app/_hooks/useTransactions";
+import BanktoTableHead from "../../_banktobank/BanktoBankTable/BanktoTableHead";
+import BanktoTableitem from "../../_banktobank/BanktoBankTable/BanktoTableitem";
 
 function DaybookTable() {
   const { isLoading, isError, error, transactions } = useTransactions();
 
-  const { startPage } = useSelector((state) => state.daybook);
+  const { startPage, type } = useSelector((state) => state.daybook);
   const dispatch = useDispatch();
 
   const veiwEight = transactions?.slice(startPage, startPage + 8);
@@ -25,17 +27,36 @@ function DaybookTable() {
 
   return (
     <div className="table">
-      <DaybookTableHead />
-      {isLoading ? (
-        <TableLoader />
-      ) : isError ? (
-        <TableLoader error="Something Went Wrong..." />
-      ) : veiwEight?.length === 0 ? (
-        <div className="no-datafound">No Data Found</div>
+      {type == "Bank" ? (
+        <>
+          <BanktoTableHead />
+          {isLoading ? (
+            <TableLoader />
+          ) : isError ? (
+            <TableLoader error="Something Went Wrong..." />
+          ) : veiwEight?.length === 0 ? (
+            <div className="no-datafound">No Data Found</div>
+          ) : (
+            veiwEight?.map((trans, i) => (
+              <BanktoTableitem key={i} transaction={trans} />
+            ))
+          )}
+        </>
       ) : (
-        veiwEight?.map((trans, i) => (
-          <DaybookTableItem key={i} transaction={trans} />
-        ))
+        <>
+          <DaybookTableHead />
+          {isLoading ? (
+            <TableLoader />
+          ) : isError ? (
+            <TableLoader error="Something Went Wrong..." />
+          ) : veiwEight?.length === 0 ? (
+            <div className="no-datafound">No Data Found</div>
+          ) : (
+            veiwEight?.map((trans, i) => (
+              <DaybookTableItem key={i} transaction={trans} />
+            ))
+          )}
+        </>
       )}
     </div>
   );
