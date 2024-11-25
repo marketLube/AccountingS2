@@ -23,6 +23,9 @@ import DateModal from "../../utils/DateModal/DateModal";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import { dateOptions, liabilityStatus } from "@/app/data/generalDatas";
 import { useState } from "react";
+import { refreshOutstanding } from "@/app/_hooks/useOutstanding";
+import apiClient from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
 
 function OutstandingHead() {
   const dispatch = useDispatch();
@@ -83,6 +86,22 @@ function OutstandingHead() {
     setSelectedOption(option);
     dispatch(setOutstandingSelectedDate(option));
   };
+
+  const [loading, setLoading] = useState(false);
+  const onSubmit = async () => {
+    const id = selectedItems?._id;
+    try {
+      setLoading(true);
+      await apiClient.delete(`/liability/${id}`);
+      toast.success("Successfully Receivables Deleted");
+      refreshOutstanding();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <LayoutHead>
@@ -96,6 +115,13 @@ function OutstandingHead() {
             disabled={!selectedItems?._id}
           >
             Edit
+          </Button>
+          <Button
+            onClick={onSubmit}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Delete
           </Button>
           <Button type="thertiary">Log</Button>
         </>

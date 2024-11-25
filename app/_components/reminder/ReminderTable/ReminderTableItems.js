@@ -71,7 +71,12 @@ function ReminderTableItems({ item }) {
           />
         </span>
         <span className="table-col branch table-body-col">{branch}</span>
-        <span className="table-col status table-body-col">{item?.status}</span>
+        <span className="table-col status table-body-col">
+          {item?.adminstatus}
+        </span>
+        <span className="table-col status table-body-col">
+          {item?.accountstatus}
+        </span>
       </div>
     </>
   );

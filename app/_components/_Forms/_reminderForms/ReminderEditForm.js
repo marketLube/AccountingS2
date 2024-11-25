@@ -44,7 +44,8 @@ function ReminderEditForm() {
     date: selectedItems?.date || "",
     remark: selectedItems?.remark || "",
     purpose: selectedItems?.purpose || "",
-    status: selectedItems?.status || "",
+    adminstatus: selectedItems?.adminstatus || "",
+    accountstatus: selectedItems?.accountstatus || "",
     branch: branch || "",
     amount: selectedItems?.amount || "",
   };
@@ -113,7 +114,8 @@ function ReminderEditForm() {
 
         <div className="form-row">
           <BranchSelector register={register} errors={errors} />
-          <StatusSel register={register} errors={errors} />
+          <AdminStatusSel register={register} errors={errors} />
+          <AccountStatusSel register={register} errors={errors} />
         </div>
 
         <div className="form-row">
@@ -122,7 +124,6 @@ function ReminderEditForm() {
         </div>
       </div>
 
-      
       <div className="form-btn-group form-submit-btns">
         <Button type="clear">Clear</Button>
         <Button

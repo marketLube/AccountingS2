@@ -19,6 +19,9 @@ import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import DateModal from "../../utils/DateModal/DateModal";
 import { dateOptions } from "@/app/data/generalDatas";
 import { useState } from "react";
+import apiClient from "@/lib/axiosInstance";
+import { refreshCapital } from "@/app/_hooks/useCapital";
+import toast from "react-hot-toast";
 
 function Capitalhead() {
   const dispatch = useDispatch();
@@ -63,6 +66,23 @@ function Capitalhead() {
     dispatch(setCapitalSelectedDate(option));
   };
 
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async () => {
+    const id = selectedItems?._id;
+    try {
+      setLoading(true);
+      await apiClient.delete(`/capital/${id}`);
+      toast.success("Successfully Liability Deleted");
+      refreshCapital();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <LayoutHead>
@@ -76,6 +96,13 @@ function Capitalhead() {
             disabled={!selectedItems?._id}
           >
             Edit
+          </Button>
+          <Button
+            onClick={onSubmit}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Delete
           </Button>
         </>
         <>

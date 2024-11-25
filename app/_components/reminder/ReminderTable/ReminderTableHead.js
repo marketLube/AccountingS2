@@ -10,7 +10,8 @@ function ReminderTableHead() {
       <span className="table-col amount">Amount</span>
       <span className="table-col remark">Remark</span>
       <span className="table-col branch">Branch</span>
-      <span className="table-col status">Status</span>
+      <span className="table-col status">Admin status</span>
+      <span className="table-col status">Account Status</span>
     </div>
   );
 }

@@ -24,6 +24,9 @@ import DateModal from "../../utils/DateModal/DateModal";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import { dateOptions, liabilityStatus } from "@/app/data/generalDatas";
 import { useState } from "react";
+import apiClient from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
+import { refreshReminders } from "@/app/_hooks/useReminders";
 
 function Reminderhead() {
   const dispatch = useDispatch();
@@ -86,6 +89,23 @@ function Reminderhead() {
     dispatch(setReminderSelectedDate(option));
   };
 
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async () => {
+    const id = selectedItems?._id;
+    try {
+      setLoading(true);
+      await apiClient.delete(`/reminders/${id}`);
+      toast.success("Successfully Reminder Deleted");
+      refreshReminders();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <LayoutHead>
@@ -99,6 +119,13 @@ function Reminderhead() {
             disabled={!selectedItems?._id}
           >
             Edit
+          </Button>
+          <Button
+            onClick={onSubmit}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Delete
           </Button>
           <Button type="thertiary">Log</Button>
         </>

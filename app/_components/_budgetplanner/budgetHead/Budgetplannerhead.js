@@ -24,6 +24,9 @@ import { useState } from "react";
 import DateModal from "../../utils/DateModal/DateModal";
 import { dateOptions } from "@/app/data/generalDatas";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
+import { refreshBudgetPlanner } from "@/app/_hooks/useBudgetPlanner";
+import apiClient from "@/lib/axiosInstance";
+import toast from "react-hot-toast";
 
 function Budgetplannerhead() {
   const dispatch = useDispatch();
@@ -76,6 +79,23 @@ function Budgetplannerhead() {
     dispatch(setBudgetplannerSelectedDate(option));
   };
 
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async () => {
+    const id = selectedItems?._id;
+    try {
+      setLoading(true);
+      await apiClient.delete(`/event/${id}`);
+      toast.success("Successfully Budget Planner Deleted");
+      refreshBudgetPlanner();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <LayoutHead>
@@ -89,6 +109,13 @@ function Budgetplannerhead() {
             disabled={!selectedItems?._id}
           >
             Edit
+          </Button>
+          <Button
+            onClick={onSubmit}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Delete
           </Button>
         </>
         <>

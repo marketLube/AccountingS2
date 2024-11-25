@@ -655,6 +655,49 @@ export function StatusSel({ register, errors }) {
   );
 }
 
+export function AdminStatusSel({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="adminstatus" className="form-group-formlabel">
+        Admin Status
+      </label>
+      <select
+        id="adminstatus"
+        {...register("adminstatus", { required: "Select a status" })}
+      >
+        <option value="">Select Status</option>
+
+        <option value="Approved">Approved</option>
+        <option value="Postponed">Postponed</option>
+      </select>
+      {errors.adminstatus && (
+        <span className="form-group-error">{errors.adminstatus.message}</span>
+      )}
+    </div>
+  );
+}
+
+export function AccountStatusSel({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="accountstatus" className="form-group-formlabel">
+        Account Status
+      </label>
+      <select
+        id="accountstatus"
+        {...register("accountstatus", { required: "Select a status" })}
+      >
+        <option value="">Select Status</option>
+        <option value="Paid">Paid</option>
+        <option value="Unpaid">Unpaid</option>
+      </select>
+      {errors.accountstatus && (
+        <span className="form-group-error">{errors.accountstatus.message}</span>
+      )}
+    </div>
+  );
+}
+
 export function BranchComponent({
   setSelectedBranches,
   clearErrors,

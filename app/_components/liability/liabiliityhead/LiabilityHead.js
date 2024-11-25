@@ -26,6 +26,9 @@ import { useState } from "react";
 import DateModal from "../../utils/DateModal/DateModal";
 import { dateOptions, liabilityStatus } from "@/app/data/generalDatas";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
+import apiClient from "@/lib/axiosInstance";
+import { refreshLiability } from "@/app/_hooks/useLiability";
+import toast from "react-hot-toast";
 
 function LiabilityHead() {
   const dispatch = useDispatch();
@@ -86,6 +89,23 @@ function LiabilityHead() {
     dispatch(setLiabilitySelectedDate(option));
   };
 
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async () => {
+    const id = selectedItems?._id;
+    try {
+      setLoading(true);
+      await apiClient.delete(`/liability/${id}`);
+      toast.success("Successfully Liability Deleted");
+      refreshLiability();
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <LayoutHead>
@@ -99,6 +119,13 @@ function LiabilityHead() {
             disabled={!selectedItems?._id}
           >
             Edit
+          </Button>
+          <Button
+            onClick={onSubmit}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Delete
           </Button>
           <Button type="thertiary">Log</Button>
         </>

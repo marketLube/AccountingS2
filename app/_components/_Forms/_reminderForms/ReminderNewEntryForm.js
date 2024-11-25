@@ -13,6 +13,8 @@ import {
   BranchSelector,
   StatusSel,
   Amount,
+  AdminStatusSel,
+  AccountStatusSel,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
@@ -55,7 +57,8 @@ function ReminderNewEntryForm() {
       type: "",
       purpose: "",
       branch: "",
-      status: "",
+      adminstatus: "",
+      accountstatus: "",
       amount: "",
     },
   });
@@ -98,7 +101,8 @@ function ReminderNewEntryForm() {
 
         <div className="form-row">
           <BranchSelector register={register} errors={errors} />
-          <StatusSel register={register} errors={errors} />
+          <AdminStatusSel register={register} errors={errors} />
+          <AccountStatusSel register={register} errors={errors} />
         </div>
 
         <div className="form-row">

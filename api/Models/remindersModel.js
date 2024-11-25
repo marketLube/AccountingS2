@@ -30,9 +30,14 @@ const reminderSchema = mongoose.Schema(
       trim: true,
       minlength: [3, "Remark must be at least 3 characters long"],
     },
-    status: {
+    adminstatus: {
       type: String,
-      enum: ["Paid", "Unpaid", "Postponed", "Pending"],
+      enum: ["Approved", "Postponed"],
+      required: [true, "Reminder must have a Status (Paid, Unpaid, Postponed)"],
+    },
+    accountstatus: {
+      type: String,
+      enum: ["Paid", "Unpaid"],
       required: [true, "Reminder must have a Status (Paid, Unpaid, Postponed)"],
     },
     branch: {
