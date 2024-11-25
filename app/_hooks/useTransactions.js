@@ -39,7 +39,7 @@ export default function useTransactions() {
 
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
-  let endpoint = `/transaction?page=${page}`;
+  let endpoint = `/transaction?page=${page}&sort=-date`;
 
   if (type !== "All Status") {
     endpoint += `&type=${type}`;

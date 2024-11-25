@@ -20,7 +20,7 @@ function DashboardCurrentbalance() {
       <div>
         <span style={isPercentNeg ? { color: "red" } : {}}>
           {isPercentNeg ? "-" : "+"}
-          {percentHike?.toFixed(2)}%
+          {percentHike}%
         </span>{" "}
         than last month
       </div>

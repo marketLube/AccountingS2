@@ -17,8 +17,7 @@ const sendToken = (user, statusCode, res) => {
   res.cookie("token", token, {
     httpOnly: true, // For security
     sameSite: "none", // Prevent CSRF
-    secure: true, // Use in production with HTTPS
-    // No 'expires' or 'maxAge' set, so this will be a session cookie
+    secure: true,
   });
 
   const currentUser = {
@@ -89,6 +88,8 @@ export const verify = catchAsync(async (req, res, next) => {
     currentUser,
   });
 });
+
+const mails = ["skymarkdubai@gmail.com"];
 
 export const signUp = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;

@@ -2,16 +2,9 @@
 
 import { GoHomeFill } from "react-icons/go";
 import { MdDateRange } from "react-icons/md";
-import { BsBarChartFill } from "react-icons/bs";
-import { FaPhoneAlt } from "react-icons/fa";
 import { SiBlockchaindotcom } from "react-icons/si";
-import { SiWindows } from "react-icons/si";
-import { BsFillBellFill } from "react-icons/bs";
 import { GiShirtButton } from "react-icons/gi";
 import { FaHandHoldingUsd } from "react-icons/fa";
-import { FaWallet } from "react-icons/fa";
-import { PiNotebookFill } from "react-icons/pi";
-import { BsPlusSquareFill } from "react-icons/bs";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { PiNotebookBold } from "react-icons/pi";
 import { PiFilesDuotone } from "react-icons/pi";
@@ -35,8 +28,8 @@ const routes = [
   { path: "/capital", icon: IoWalletOutline, name: "Capital" },
   { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
   { path: "/budgetplanner", icon: BiSolidPlusSquare, name: "Budget Planner" },
-  { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
-  { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
+  // { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
+  // { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
   { path: "/manage", icon: RiFolderSettingsFill, name: "Manage" },
 ];
 
