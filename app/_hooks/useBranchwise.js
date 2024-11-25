@@ -13,6 +13,7 @@ import {
   setBranchWiseSummery,
 } from "@/lib/slices/branchwiseSlice";
 import { useEffect } from "react";
+import useCatToParticular from "./useCatToParticular";
 
 export default function useBranchWise() {
   const { curBranch, type, curCat, curParticular, curBank, page } = useSelector(
