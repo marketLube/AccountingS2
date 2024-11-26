@@ -12,17 +12,27 @@ import ToggleSwitch from "../_components/utils/ToggleSwitch/ToggleSwitch";
 import { getCurrentMonthName } from "../_services/helpers";
 import useDashboardTotals, { useDashboardChart } from "../_hooks/useDashboard";
 import { Skeleton } from "antd";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { isCookiePresent } from "../_services/smallHelpers";
 
 function Page() {
   const { isAllTime, debits, credits, branchNames } = useSelector(
     (state) => state.dashboard
   );
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const { isLoading, isError, totals } = useDashboardTotals();
   const { isLoading: chartLoading, isError: chartError } = useDashboardChart();
 
   const { liabilityAndOutstanding, transactions } = totals || {};
-
   const labels = branchNames || ["Loading..", "Loading.."];
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoggedIn) return;
+    router.push("/login");
+  }, []);
 
   const datasets = [
     {
@@ -38,6 +48,8 @@ function Page() {
       gradientEnd: "#1b5e20",
     },
   ];
+
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   return (
     <div className={`layout dashboard`}>
