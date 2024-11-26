@@ -9,7 +9,8 @@ function Oustandingpay({ outstanding, isLoading, isError }) {
       <div className="outstandingtext">Outstanding Peyments</div>
       <div className={`outstandingamount`}>
         {" "}
-        {isNegative ? "-" : ""} ₹{formatWithCommas(Math.abs(outstanding))}
+        {isNegative ? "-" : ""} ₹
+        {formatWithCommas(Math.abs(outstanding)?.toFixed(2))}
       </div>
       <div className="outstandingoctober">
         {isAllTime ? "All time" : getCurrentMonthName()}

@@ -10,7 +10,8 @@ function Income({ income, isLoading, isError }) {
         <Arrow color={"#00ba9d"} size="small" />
       </div>
       <div className={`incomeamount`}>
-        {isNegative ? "-" : ""} ₹{formatWithCommas(Math.abs(income))}
+        {isNegative ? "-" : ""} ₹
+        {formatWithCommas(Math.abs(income)?.toFixed(2))}
       </div>
     </div>
   );

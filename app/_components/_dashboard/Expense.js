@@ -11,7 +11,8 @@ function Expense({ expense, isLoading, isError }) {
         <Arrow color="#0040ff" size="small" isDown={true} />
       </div>
       <div className={`expenseamount`}>
-        {isNegative ? "-" : ""} ₹{formatWithCommas(Math.abs(expense))}
+        {isNegative ? "-" : ""} ₹
+        {formatWithCommas(Math.abs(expense)?.toFixed(2))}
       </div>
     </div>
   );

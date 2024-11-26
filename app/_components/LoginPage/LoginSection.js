@@ -13,7 +13,6 @@ function LoginSection() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
 

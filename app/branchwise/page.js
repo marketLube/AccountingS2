@@ -6,12 +6,10 @@ import BranchWIseChartBox from "../_components/branchwisepnl/BranchWiseChartBox/
 import BranchwiseFooter from "../_components/branchwisepnl/BranchwiseFooter/BranchwiseFooter";
 import Brachwisehead from "../_components/branchwisepnl/branchwisehead/Brachwisehead";
 import BranchwiseTable from "../_components/branchwisepnl/BranchwiseTable/BranchwiseTable";
-import { useQuery } from "@tanstack/react-query";
-import apiClient from "@/lib/axiosInstance";
-import { useEffect } from "react";
 import { useBranchIdFinder } from "../_services/finders";
 import { useBranchWiseChart } from "../_hooks/useBranchwise";
 import BranchBalanceCard from "../_components/_cards/_balance-card/BranchBalanceCard";
+import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
   const labels = [
@@ -35,6 +33,9 @@ function Page() {
 
   const totalIncome = data?.map((val) => val.totalIncome);
   const totalExpence = data?.map((val) => val.totalExpense);
+
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   // Reordered datasets to show Expense first, then Income
   const datasets = [

@@ -1,8 +1,12 @@
+"use client";
 import LedgerFooter from "../_components/_ledger/ledgerFooter/LedgerFooter";
 import LedgerHead from "../_components/_ledger/ledgerHead/LedgerHead";
 import LedgerTable from "../_components/_ledger/ledgerTable/LedgerTable";
+import { useAuthorize } from "../_hooks/useAuthorize";
 
-function page() {
+function Page() {
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
   return (
     <div className={`layout ledger`}>
       <h1 className={`main-head`}>Ledger</h1>
@@ -15,4 +19,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
