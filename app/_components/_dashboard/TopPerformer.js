@@ -12,7 +12,7 @@ export const TopPerformer = () => {
       <div className="topperformerprofit">
         <span style={isNegative ? { color: "red" } : {}}>
           {isNegative ? "-" : ""}₹{" "}
-          {formatWithCommas(topPerformer?.profit)?.toFixed(2)}
+          {formatWithCommas(topPerformer?.profit?.toFixed(2))}
         </span>{" "}
         Profit
       </div>
