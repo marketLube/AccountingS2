@@ -26,7 +26,8 @@ function CurrentYearBox({
       <div className="current-year-box-text">
         <h4 className="topperformerhead">{text}</h4>
         <h2 className={`text-small-bold`}>
-          {isNegative ? "-" : ""} ₹{formatWithCommas(Math.abs(profitAmount))}
+          {isNegative ? "-" : ""} ₹
+          {formatWithCommas(Math.abs(profitAmount)?.toFixed(2))}
         </h2>
       </div>
     </div>

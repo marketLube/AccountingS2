@@ -11,7 +11,8 @@ export const TopPerformer = () => {
       <div className="topperformerdistrict">{topPerformer?.name}</div>
       <div className="topperformerprofit">
         <span style={isNegative ? { color: "red" } : {}}>
-          {isNegative ? "-" : ""}₹ {formatWithCommas(topPerformer?.profit)}
+          {isNegative ? "-" : ""}₹{" "}
+          {formatWithCommas(topPerformer?.profit)?.toFixed(2)}
         </span>{" "}
         Profit
       </div>

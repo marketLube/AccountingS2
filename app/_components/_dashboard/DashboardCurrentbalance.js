@@ -15,7 +15,8 @@ function DashboardCurrentbalance() {
       </div>
       <div className={`dashbordCurrentamount`}>
         {" "}
-        {isNegative ? "-" : ""} ₹{formatWithCommas(Math.abs(bankBalance))}
+        {isNegative ? "-" : ""} ₹
+        {formatWithCommas(Math.abs(bankBalance)?.toFixed(2))}
       </div>
       <div>
         <span style={isPercentNeg ? { color: "red" } : {}}>
