@@ -29,7 +29,7 @@ export default function useDashboardTotals() {
 
   useEffect(() => {
     dispatch(setTotals(totals));
-  }, [totals]);
+  }, [totals, dispatch]);
 
   return { isLoading, isError, error, refetch, totals };
 }

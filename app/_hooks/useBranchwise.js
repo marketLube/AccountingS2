@@ -55,7 +55,7 @@ export default function useBranchWise() {
 
   useEffect(() => {
     dispatch(setBranchWiseSummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
   return { isLoading, isError, error, refetch, branchwiseTrans: data?.data };
 }
 

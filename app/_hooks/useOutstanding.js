@@ -64,7 +64,7 @@ export default function useOutstanding() {
 
   useEffect(() => {
     dispatch(setOutstandingSummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
 
   return { isLoading, isError, error, refetch, outstandings: data?.data };
 }

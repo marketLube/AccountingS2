@@ -64,7 +64,7 @@ export function useLiability() {
 
   useEffect(() => {
     dispatch(setLiabilitySummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
 
   return { isLoading, isError, error, refetch, liabilities: data?.data };
 }

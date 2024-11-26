@@ -77,7 +77,7 @@ export default function useTransactions() {
 
   useEffect(() => {
     dispatch(setDaybookSummery(transactions?.summery));
-  }, [transactions]);
+  }, [transactions, dispatch]);
 
   return {
     isLoading,

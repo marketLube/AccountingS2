@@ -26,7 +26,7 @@ export default function useLedgers() {
 
   useEffect(() => {
     dispatch(setLedgerSummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
 
   return {
     isLoading,

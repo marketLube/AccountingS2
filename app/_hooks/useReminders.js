@@ -60,7 +60,7 @@ export default function useReminders() {
 
   useEffect(() => {
     dispatch(setReminderSummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
 
   return { isLoading, isError, error, refetch, reminders: data?.data };
 }

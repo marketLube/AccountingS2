@@ -35,7 +35,7 @@ export default function useCapitals() {
 
   useEffect(() => {
     dispatch(setCapitalSummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
 
   return { isLoading, isError, error, refetch, capital: data?.data };
 }

@@ -44,7 +44,7 @@ export default function useBudgetPlanner() {
     const uniqueNames = new Set(eventNames);
     dispatch(setPropertyNames([...uniqueNames]));
     dispatch(setBudgetPlannerSummery(events?.summery));
-  }, [events]);
+  }, [events, dispatch]);
 
   return { isLoading, isError, error, refetch, events: events?.data };
 }

@@ -36,7 +36,7 @@ export default function useAssets() {
 
   useEffect(() => {
     dispatch(setAssetsSummery(data?.summery));
-  }, [data]);
+  }, [data, dispatch]);
 
   return { isLoading, isError, error, refetch, assets: data?.data };
 }
