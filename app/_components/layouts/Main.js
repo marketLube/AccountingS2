@@ -1,6 +1,15 @@
 "use client";
 
+import useAssets from "@/app/_hooks/useAssets";
+import useBranchWise from "@/app/_hooks/useBranchwise";
+import useBudgetPlanner from "@/app/_hooks/useBudgetPlanner";
+import useCapitals from "@/app/_hooks/useCapital";
 import useDashboardTotals from "@/app/_hooks/useDashboard";
+import useLedgers from "@/app/_hooks/useLedgers";
+import { useLiability } from "@/app/_hooks/useLiability";
+import useOutstanding from "@/app/_hooks/useOutstanding";
+import useReminders from "@/app/_hooks/useReminders";
+import useTransactions from "@/app/_hooks/useTransactions";
 import { clearCookie } from "@/app/_services/smallHelpers";
 import {
   fetchBanks,
@@ -15,7 +24,18 @@ function Main({ children }) {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const router = useRouter();
   const dispatch = useDispatch();
+
   useDashboardTotals();
+  useTransactions();
+  useLiability();
+  useOutstanding();
+  useReminders();
+  useBranchWise();
+  useAssets();
+  useBudgetPlanner();
+  useCapitals();
+  useLedgers();
+
   useEffect(() => {
     dispatch(fetchCategory());
     dispatch(fetchBranches());
