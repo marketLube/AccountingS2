@@ -4,15 +4,16 @@ import { useBankFinder, useBranchNameFinder } from "@/app/_services/finders";
 import formatDate from "@/app/_services/helpers";
 
 function BanktoTableitem({ banktobank }) {
-  console.log(banktobank, "ooooooooo");
-
   const tobank = useBankFinder(banktobank.toBank);
   const frombank = useBankFinder(banktobank.fromBank);
   const frombranch = useBranchNameFinder(banktobank.fromBranch);
   const tobranch = useBranchNameFinder(banktobank.toBranch);
   const date = formatDate(new Date(banktobank.createdAt));
-  console.log(tobank, "///////////");
-  console.log(frombank, "-----------");
+
+  console.log(tobank, "tobank");
+  console.log(frombank, "tobank");
+  console.log(frombranch, "tobank");
+  console.log(tobranch, "tobank");
 
   return (
     <>

@@ -9,7 +9,8 @@ $color-red: rgb(126, 25, 25);
 $color-green: #2eb629;
 $color-blue: #0c2d48;
 
-$color-table-col: rgba(204, 222, 228, 0.9);
+$color-table-col: rgba($color-sec, 0.5);
+$color-table-col-1: rgba(#ffff, 0.5);
 
 //layout variables
 $sidebar-width: 5rem;

@@ -34,15 +34,17 @@ function Banktobank() {
   });
 
   const onSubmit = async (data) => {
+    if (data.fromBank === data.toBank && data.toBank === data.fromBank) {
+      return toast.error("Invalid transaction..");
+    }
+    
     data.fromBank = bankIdFiner(banks, data.fromBank);
     data.fromBranch = branchFinder(data.fromBranch, branches)?._id;
     data.toBank = bankIdFiner(banks, data.toBank);
     data.toBranch = branchFinder(data.toBranch, branches)?._id;
     data.amount = parseFloat(data.amount);
 
-    if (data.fromBank === data.toBank && data.toBank === data.fromBank) {
-      return toast.error("Invalid transaction..");
-    }
+    console.log(data, "data");
 
     try {
       setLoading(true);

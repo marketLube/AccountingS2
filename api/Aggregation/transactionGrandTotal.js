@@ -34,6 +34,45 @@ export const getTransactionTotal = async (req) => {
     }
   });
 
+  // Build the search query if `search` is provided
+  if (
+    query.search &&
+    typeof query.search === "string" &&
+    query.search.trim() !== ""
+  ) {
+    const escapedSearch = query.search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const searchRegex = new RegExp(query.search, "i");
+    const searchQuery = {
+      $or: [
+        { formattedDate: { $regex: searchRegex } },
+        { gstPercent: { $regex: searchRegex } },
+        { gstType: { $regex: searchRegex } },
+        { tds: { $regex: searchRegex } },
+        { tdsType: { $regex: searchRegex } },
+        { purpose: { $regex: searchRegex } },
+        { remark: { $regex: searchRegex } },
+        { type: { $regex: searchRegex } },
+        {
+          status: {
+            $regex: `^${escapedSearch.substring(0, 4)}`,
+            $options: "i",
+          },
+        },
+        {
+          $expr: {
+            $regexMatch: {
+              input: { $toString: "$amount" },
+              regex: query.search,
+              options: "i",
+            },
+          },
+        },
+        // Add other `$expr` cases for numeric fields if necessary
+      ],
+    };
+    Object.assign(matchStage, searchQuery);
+  }
+
   // Add match stage if there are any conditions
   if (Object.keys(matchStage).length > 0) {
     pipeline.push({ $match: matchStage });
@@ -41,16 +80,13 @@ export const getTransactionTotal = async (req) => {
 
   if (branchId) {
     pipeline.push(
-      // Unwind branches array to work with individual branch entries
       { $unwind: "$branches" },
-      // Match specific branch
       {
         $match: {
           "branches.branch":
             mongoose.Types.ObjectId.createFromHexString(branchId),
         },
       },
-      // Add calculated amount based on type
       {
         $addFields: {
           calculatedAmount: {
@@ -62,7 +98,6 @@ export const getTransactionTotal = async (req) => {
           },
         },
       },
-      // Group to sum the calculated amounts
       {
         $group: {
           _id: null,
@@ -81,9 +116,7 @@ export const getTransactionTotal = async (req) => {
       }
     );
   } else {
-    // For non-branch specific calculations
     pipeline.push(
-      // Add calculated amount based on type
       {
         $addFields: {
           calculatedAmount: {
@@ -95,7 +128,6 @@ export const getTransactionTotal = async (req) => {
           },
         },
       },
-      // Group to sum the calculated amounts
       {
         $group: {
           _id: null,

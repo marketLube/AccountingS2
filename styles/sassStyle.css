@@ -670,10 +670,10 @@ body {
   margin-top: 0.2rem;
 }
 .table > div:nth-child(even) {
-  background-color: rgba(204, 222, 228, 0.9);
+  background-color: rgba(201, 200, 254, 0.5);
 }
 .table > div:nth-child(odd) {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .table > div:nth-child(1) {
   background-color: rgb(7, 0, 87);
@@ -755,6 +755,189 @@ body {
   }
   100% {
     transform: rotate(360deg); /* Final state */
+  }
+}
+.loader-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  --background: linear-gradient(135deg, rgb(7, 0, 87), rgb(201, 200, 254));
+  --shadow: rgb(7, 0, 87);
+  --text: #6c7486;
+  --page: rgba(255, 255, 255, 0.36);
+  --page-fold: rgba(255, 255, 255, 0.52);
+  --duration: 3s;
+  width: 200px;
+  height: 140px;
+  position: relative;
+}
+
+.loader:before,
+.loader:after {
+  --r: -6deg;
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  width: 120px;
+  top: 80%;
+  box-shadow: 0 16px 12px var(--shadow);
+  transform: rotate(var(--r));
+}
+
+.loader:before {
+  left: 4px;
+}
+
+.loader:after {
+  --r: 6deg;
+  right: 4px;
+}
+
+.loader div {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  position: relative;
+  z-index: 1;
+  perspective: 600px;
+  box-shadow: 0 4px 6px var(--shadow);
+  background-image: var(--background);
+}
+
+.loader div ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+.loader div ul li {
+  --r: 180deg;
+  --o: 0;
+  --c: var(--page);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  transform-origin: 100% 50%;
+  color: var(--c);
+  opacity: var(--o);
+  transform: rotateY(var(--r));
+  -webkit-animation: var(--duration) ease infinite;
+  animation: var(--duration) ease infinite;
+}
+
+.loader div ul li:nth-child(2) {
+  --c: var(--page-fold);
+  -webkit-animation-name: page-2;
+  animation-name: page-2;
+}
+
+.loader div ul li:nth-child(3) {
+  --c: var(--page-fold);
+  -webkit-animation-name: page-3;
+  animation-name: page-3;
+}
+
+.loader div ul li:nth-child(4) {
+  --c: var(--page-fold);
+  -webkit-animation-name: page-4;
+  animation-name: page-4;
+}
+
+.loader div ul li:nth-child(5) {
+  --c: var(--page-fold);
+  -webkit-animation-name: page-5;
+  animation-name: page-5;
+}
+
+.loader div ul li svg {
+  width: 90px;
+  height: 120px;
+  display: block;
+}
+
+.loader div ul li:first-child {
+  --r: 0deg;
+  --o: 1;
+}
+
+.loader div ul li:last-child {
+  --o: 1;
+}
+
+.loader span {
+  display: block;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 20px;
+  text-align: center;
+  color: var(--text);
+}
+
+@keyframes page-2 {
+  0% {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  35%, 100% {
+    opacity: 0;
+  }
+  50%, 100% {
+    transform: rotateY(0deg);
+  }
+}
+@keyframes page-3 {
+  15% {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+  65%, 100% {
+    transform: rotateY(0deg);
+  }
+}
+@keyframes page-4 {
+  30% {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  65%, 100% {
+    opacity: 0;
+  }
+  80%, 100% {
+    transform: rotateY(0deg);
+  }
+}
+@keyframes page-5 {
+  45% {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+  65% {
+    opacity: 1;
+  }
+  80%, 100% {
+    opacity: 0;
+  }
+  95%, 100% {
+    transform: rotateY(0deg);
   }
 }
 .dashbordBalancecard {
@@ -1061,7 +1244,7 @@ body {
 .profile-card {
   width: 100%;
   max-width: 400px;
-  background-color: rgba(204, 222, 228, 0.5);
+  background-color: rgba(201, 200, 254, 0.5);
   border-radius: 1rem;
   text-align: left;
   padding: 1rem;
@@ -1214,7 +1397,7 @@ body {
   width: 95%;
   height: 70%;
   border-radius: 1rem;
-  background-color: rgb(226, 225, 225);
+  background-color: rgb(7, 0, 87);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   transition: all 0.1s ease-in-out;
@@ -1223,7 +1406,7 @@ body {
   align-items: center;
   justify-content: space-between;
   justify-content: space-around;
-  color: rgb(7, 0, 87);
+  color: white;
   font-size: 1.2rem;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
@@ -1272,17 +1455,20 @@ body {
 
 .cat-items {
   position: absolute;
-  top: 110%;
+  top: 100%;
   left: 0;
   width: 100%;
-  background-color: rgb(226, 225, 225);
+  background-color: rgb(7, 0, 87);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 0 0 1.5rem 1.5rem;
+  border-radius: 1rem;
   transition: all 0.2s ease-in-out;
   transform-origin: top;
   max-height: 300px; /* Set a maximum height for the dropdown */
   overflow-y: auto; /* Add a vertical scrollbar when the content exceeds the height */
   z-index: 100;
+}
+.cat-items:first-child {
+  padding-top: 0.5rem !important;
 }
 
 .cat-item-box {
@@ -1295,7 +1481,7 @@ body {
   z-index: 100;
 }
 .cat-item-box:hover {
-  background-color: rgb(193, 193, 193);
+  background-color: gray;
 }
 
 .cat-item-input {
@@ -1320,7 +1506,7 @@ body {
 }
 
 .edit-icon {
-  color: rgb(7, 0, 87);
+  color: white;
 }
 
 .delete-icon {
@@ -1488,7 +1674,7 @@ body {
 .balance-card {
   width: 100%;
   height: 100%;
-  background-color: rgba(204, 222, 228, 0.9);
+  background-color: rgba(201, 200, 254, 0.5);
   overflow-y: scroll;
   display: flex;
   align-items: stretch;
@@ -1519,7 +1705,7 @@ body {
   justify-content: space-between;
 }
 .balance-card-body > div:nth-child(even) {
-  background-color: rgba(204, 222, 228, 0.8);
+  background-color: rgba(201, 200, 254, 0.8);
 }
 .balance-card-body > div:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.8);
@@ -2022,7 +2208,7 @@ body {
   overflow-x: hidden;
 }
 .manage-box-container-body > div:nth-child(even) {
-  background-color: rgba(204, 222, 228, 0.9);
+  background-color: rgba(201, 200, 254, 0.5);
 }
 .manage-box-container-body > div:nth-child(odd) {
   background-color: white;

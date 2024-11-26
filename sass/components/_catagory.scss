@@ -5,6 +5,7 @@
   flex: 1;
   &-select {
     background-color: variables.$color-light-gray;
+
     padding: 0.9rem 1rem;
     width: 100%;
     border-radius: variables.$small-radius;
@@ -37,14 +38,14 @@
   width: 95%;
   height: 70%;
   border-radius: variables.$large-radius;
-  background-color: variables.$color-light-gray;
+  background-color: variables.$color-primary;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   transition: all 0.1s ease-in-out;
   cursor: pointer;
   @include mixins.flex(between);
   justify-content: space-around;
-  color: variables.$color-primary;
+  color: variables.$color-white;
   font-size: 1.2rem;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
@@ -92,17 +93,21 @@
 }
 .cat-items {
   position: absolute;
-  top: 110%;
+  top: 100%;
   left: 0;
   width: 100%;
-  background-color: variables.$color-light-gray;
+  background-color: variables.$color-primary;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 0 0 1.5rem 1.5rem;
+  border-radius: variables.$large-radius;
   transition: all 0.2s ease-in-out;
   transform-origin: top;
   max-height: 300px; /* Set a maximum height for the dropdown */
   overflow-y: auto; /* Add a vertical scrollbar when the content exceeds the height */
   z-index: 100;
+
+  &:first-child {
+    padding-top: 0.5rem !important;
+  }
 }
 .cat-item-box {
   width: 100%;
@@ -111,7 +116,7 @@
   @include mixins.flex(between);
   z-index: 100;
   &:hover {
-    background-color: variables.$color-mid-gray;
+    background-color: variables.$color-gray;
   }
 }
 .cat-item-input {
@@ -133,7 +138,7 @@
 }
 
 .edit-icon {
-  color: variables.$color-primary;
+  color: variables.$color-white;
 }
 .delete-icon {
   color: variables.$color-red;

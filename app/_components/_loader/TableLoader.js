@@ -1,5 +1,7 @@
 "use client";
 
+import PageLoader from "../layouts/PageLoader";
+
 function TableLoader({ error = "", style, className }) {
   if (error)
     return (
@@ -9,7 +11,8 @@ function TableLoader({ error = "", style, className }) {
     );
   return (
     <div className={`table-loader ${className}`} style={style}>
-      <div className="spinner"></div>
+      {/* <div className="spinner"></div> */}
+      <PageLoader />
     </div>
   );
 }

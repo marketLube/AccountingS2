@@ -58,7 +58,7 @@
 
   // Style for odd children
   & > div:nth-child(odd) {
-    background-color: variables.$color-white; // Color for odd items
+    background-color: variables.$color-table-col-1; // Color for odd items
   }
   // Style for even children
   & > div:nth-child(1) {
