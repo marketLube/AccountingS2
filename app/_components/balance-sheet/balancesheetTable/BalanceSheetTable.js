@@ -1,18 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import TableLoader from "../../_loader/TableLoader";
 import BalanceSheetTableHead from "../balancesheetTableHead/BalanceSheetTableHead";
-import apiClient from "@/lib/axiosInstance";
 import BalanceSheetTableItems from "./BalanceSheetTableItems";
+import { useBalanceSheet } from "@/app/_hooks/useBalanceSheet";
 
 function BalanceSheetTable() {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["balancesheet"],
-    queryFn: () =>
-      apiClient
-        .get("/stats/balance-sheet")
-        .then((res) => res.data.formattedResult),
-  });
-
+  const { data, isLoading, isError } = useBalanceSheet();
   return (
     <div className="table">
       <BalanceSheetTableHead />

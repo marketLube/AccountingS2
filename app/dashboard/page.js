@@ -29,10 +29,10 @@ function Page() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (isLoggedIn) return;
-    router.push("/login");
-  }, []);
+  // useEffect(() => {
+  //   if (isLoggedIn) return;
+  //   router.push("/login");
+  // }, []);
 
   const datasets = [
     {
@@ -222,7 +222,7 @@ function Page() {
               />
             ))
           ) : (
-            <DashboardCurrentbalance />
+            <DashboardCurrentbalance transaction={transactions} />
           )}
         </div>
         <div className={`stats-box dashboard-reminder`}>

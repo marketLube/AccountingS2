@@ -56,9 +56,8 @@ export function useDashboardChart() {
   });
 
   useEffect(() => {
-    console.log(chartData, "data");
     dispatch(setDataset(chartData));
-  }, [chartData]);
+  }, [chartData, dispatch]);
 
   return { isLoading, isError, error, refetch, chartData };
 }

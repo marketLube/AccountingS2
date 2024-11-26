@@ -5,7 +5,6 @@ import TotalBalanceCard from "../_components/_cards/_balance-card/TotalBalanceCa
 import BottomCard from "../_components/_cards/_bottomCards/BottomCard";
 import BalanceSheetTable from "../_components/balance-sheet/balancesheetTable/BalanceSheetTable";
 import Button from "../_components/utils/Button";
-import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
   const { totals } = useSelector((state) => state.general);

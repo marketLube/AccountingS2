@@ -103,7 +103,6 @@ function LiabilityEditForm() {
       await apiClient.patch(`/liability/${id}`, data);
       toast.success("Successfully created new Liability");
       refreshLiability();
-      reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

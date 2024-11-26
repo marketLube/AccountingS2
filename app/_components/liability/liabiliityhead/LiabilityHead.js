@@ -84,13 +84,6 @@ function LiabilityHead() {
     setIsOpen((open) => !open);
   };
 
-  // const [selectedOption, setSelectedOption] = useState("All");
-
-  // const handleOptionClick = (option) => {
-  //   setSelectedOption(option); // Update local state
-  //   dispatch(setLiabilitySelectedDate(option));
-  // };
-
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {

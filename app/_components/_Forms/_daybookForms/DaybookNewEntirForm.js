@@ -16,16 +16,25 @@ import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import {
+  refreshDashboardChartData,
+  refreshDashboardTotals,
+} from "@/app/_hooks/useDashboard";
+import {
+  refreshBranchWiseChart,
+  refreshBranchWiseCircle,
+} from "@/app/_hooks/useBranchwise";
+import { fetchBanks } from "@/lib/slices/generalSlice";
 
 function DaybookNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const { categories, particulars, banks } = useSelector(
     (state) => state.general
   );
@@ -87,6 +96,12 @@ function DaybookNewEntirForm() {
       await apiClient.post("/transaction", data);
       toast.success("Successfully created new Transaction");
       refreshTransaction();
+      refreshDashboardTotals();
+      refreshDashboardChartData();
+      refreshBranchWiseChart();
+      refreshBranchWiseCircle();
+      dispatch(fetchBanks());
+      refreshBalanceSheet();
       reset();
     } catch (e) {
       console.log(e);

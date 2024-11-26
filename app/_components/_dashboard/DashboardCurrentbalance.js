@@ -3,10 +3,13 @@ import { useSelector } from "react-redux";
 import Arrow from "../utils/Arrow";
 import { formatWithCommas } from "@/app/_services/helpers";
 
-function DashboardCurrentbalance() {
-  const { bankBalance, percentHike } = useSelector((state) => state.general);
+function DashboardCurrentbalance({ transaction }) {
+  const { percentHike } = useSelector((state) => state.general);
+
+  const bankBalance = transaction?.totalCredit - transaction?.totalDebit || 0;
   const isNegative = bankBalance < 0;
   const isPercentNeg = percentHike < 0;
+
   return (
     <div className="dashbordBalancecard">
       <div className="dashbordCurrentfirst">

@@ -8,9 +8,9 @@ import { useAuthorize } from "../_hooks/useAuthorize";
 //   title: "Outstanding",
 // };
 function Page() {
-  const isLoggedIn = useAuthorize();
+  // const isLoggedIn = useAuthorize();
 
-  if (!isLoggedIn) return <div>Unauthorized</div>;
+  // if (!isLoggedIn) return <div>Unauthorized</div>;
   return (
     <div className={`layout outstanding`}>
       <h1 className={`main-head`}>Receivables</h1>

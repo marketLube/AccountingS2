@@ -27,11 +27,22 @@ import {
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshTransaction } from "@/app/_hooks/useTransactions";
-import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
+import {
+  refreshDashboardChartData,
+  refreshDashboardTotals,
+} from "@/app/_hooks/useDashboard";
+import {
+  refreshBranchWiseChart,
+  refreshBranchWiseCircle,
+} from "@/app/_hooks/useBranchwise";
+import { fetchBanks } from "@/lib/slices/generalSlice";
+import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
 
 function DaybookEditForm() {
   const { selectedItems } = useSelector((state) => state.daybook);
+
   const dispatch = useDispatch();
+
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
@@ -117,8 +128,15 @@ function DaybookEditForm() {
       );
       toast.success("Successfully edited new Transaction");
       refreshTransaction();
+      refreshDashboardTotals();
+      refreshDashboardChartData();
+      refreshBranchWiseChart();
+      refreshBranchWiseCircle();
+      dispatch(fetchBanks());
+      refreshBalanceSheet();
     } catch (e) {
-      toast.error(e.response.data.message);
+      console.log(e, "ee");
+      toast.error(e);
     } finally {
       setLoading(false);
     }

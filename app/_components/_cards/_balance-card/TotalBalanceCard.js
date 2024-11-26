@@ -2,6 +2,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+
 function TotalBalanceCard() {
   const { banks } = useSelector((state) => state.general);
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
@@ -9,6 +10,8 @@ function TotalBalanceCard() {
   const toggleBalanceVisibility = () => {
     setIsBalanceVisible((prev) => !prev);
   };
+
+  console.log(banks, "banks");
 
   let total = 0;
 
