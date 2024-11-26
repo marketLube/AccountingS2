@@ -42,14 +42,14 @@ function Main({ children }) {
     dispatch(fetchBanks());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(isLoggedIn, "login");
-    if (!isLoggedIn) {
-      router.push("/login");
-    } else {
-      router.push("/dashboard");
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   console.log(isLoggedIn, "login");
+  //   if (!isLoggedIn) {
+  //     router.push("/login");
+  //   } else {
+  //     router.push("/dashboard");
+  //   }
+  // }, [isLoggedIn]);
 
   return <main className="main">{children}</main>;
 }

@@ -57,8 +57,12 @@ function DaybookNewEntirForm() {
   });
 
   const tdsValue = watch("tds");
+  const gstValue = watch("gstPercent");
 
   const onSubmit = async (data) => {
+    if (selectedBranches.length <= 0)
+      return toast.error("Please Select atleast one branch");
+
     const branchObjects = selectedBranches.map((branch) => {
       const branchObj = branches.find(
         (branchObjs) => branchObjs.name === branch
@@ -128,7 +132,7 @@ function DaybookNewEntirForm() {
           errors={errors}
           disabled={tdsValue === "0%"}
         />
-        <Gst register={register} errors={errors} />
+        <Gst register={register} errors={errors} disabled={gstValue === "0%"} />
         <GstPercent register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns">

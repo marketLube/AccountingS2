@@ -12,6 +12,7 @@ const bankSchema = mongoose.Schema(
     },
     balance: {
       type: Number,
+      default: 0,
     },
     isActive: {
       type: Boolean,

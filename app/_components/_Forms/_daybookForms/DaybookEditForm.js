@@ -10,11 +10,12 @@ import {
   Gst,
   Tds,
   GstPercent,
+  TdsPercent,
 } from "../_FormComponents/FormSmallComponents";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
   bankFinder,
@@ -26,10 +27,11 @@ import {
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
 
 function DaybookEditForm() {
   const { selectedItems } = useSelector((state) => state.daybook);
-
+  const dispatch = useDispatch();
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
@@ -50,30 +52,23 @@ function DaybookEditForm() {
   const [catagory, setCatagory] = useState(curCat);
   const [particular, setParticular] = useState(curPart);
 
-  const defaultValues = {
-    date: selectedItems?.date,
-    remark: selectedItems?.remark,
-    bank: curBank,
-    type: selectedItems?.type,
-    purpose: selectedItems?.purpose,
-    tds: selectedItems?.tds,
-    gstPercent: selectedItems?.gstPercent,
-    gstType: selectedItems?.gstType,
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setError,
+    watch,
     clearErrors,
   } = useForm();
 
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
-      date: new Date(selectedItems?.date) || "",
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "", // Handle invalid or missing date
       remark: selectedItems?.remark || "",
       bank: curBank || "",
       type: selectedItems?.type || "",
@@ -89,7 +84,12 @@ function DaybookEditForm() {
     );
   }, [selectedItems, reset]);
 
+  console.log(selectedItems, "selected items");
+
   const onSubmit = async (data) => {
+    if (selectedBranches.length <= 0)
+      return toast.error("Please Select atleast one branch");
+
     const branchObjects = selectedBranches.map((branch) => {
       const branchObj = branches.find(
         (branchObjs) => branchObjs.name === branch
@@ -110,16 +110,24 @@ function DaybookEditForm() {
     if (!data.tdsType) data.tdsType = "no tds";
 
     try {
-      await apiClient.patch(`/transaction/${selectedItems._id}`, data);
+      setLoading(true);
+      const res = await apiClient.patch(
+        `/transaction/${selectedItems._id}`,
+        data
+      );
       toast.success("Successfully edited new Transaction");
       refreshTransaction();
-      reset();
     } catch (e) {
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
 
     return;
   };
+
+  const tdsValue = watch("tds");
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Daybook Edit Form</h2>
@@ -151,6 +159,11 @@ function DaybookEditForm() {
       />
       <div className="form-row">
         <Tds register={register} errors={errors} />
+        <TdsPercent
+          register={register}
+          errors={errors}
+          disabled={tdsValue === "0%"}
+        />
         <Gst register={register} errors={errors} />
         <GstPercent register={register} errors={errors} />
       </div>

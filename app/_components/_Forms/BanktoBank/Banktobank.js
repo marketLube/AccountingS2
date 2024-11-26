@@ -10,7 +10,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { bankIdFiner, branchFinder } from "@/app/_services/finders";
-import { fetchBranches } from "@/lib/slices/generalSlice";
+import { fetchBanks, fetchBranches } from "@/lib/slices/generalSlice";
+import { refreshBankToBank } from "@/app/_hooks/useBankToBank";
 
 function Banktobank() {
   const [loading, setLoading] = useState(false);
@@ -38,11 +39,18 @@ function Banktobank() {
     data.toBank = bankIdFiner(banks, data.toBank);
     data.toBranch = branchFinder(data.toBranch, branches)?._id;
     data.amount = parseFloat(data.amount);
+
+    if (data.fromBank === data.toBank && data.toBank === data.fromBank) {
+      return toast.error("Invalid transaction..");
+    }
+
     try {
       setLoading(true);
       await apiClient.post("/to-bank", data);
       toast.success("Successfully created new Transaction");
       dispatch(fetchBranches());
+      dispatch(fetchBanks());
+      refreshBankToBank();
       reset();
     } catch (e) {
       console.log(e);

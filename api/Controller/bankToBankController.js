@@ -63,7 +63,15 @@ export const bankToBankMiddleWare = catchAsync(async (req, res, next) => {
     // Save both branches
     await Promise.all([fromBranchObj.save(), toBranchObj.save()]);
 
-    // Add transfer details to request object for subsequent middleware
+    const fromBankObj = await Bank.findById(fromBank);
+    const toBankObj = await Bank.findById(toBank);
+
+    fromBankObj.balance -= amount;
+    toBankObj.balance += amount;
+
+    await fromBankObj.save();
+    await toBankObj.save();
+
     req.body = {
       fromBranch: fromBranchObj._id,
       toBranch: toBranchObj._id,
