@@ -50,7 +50,14 @@
 }
 
 body {
-  background: linear-gradient(to top, rgb(243, 243, 243), rgba(243, 243, 243, 0.8) 40%, rgba(243, 243, 243, 0.6) 60%, rgba(243, 243, 243, 0.3) 80%, white);
+  background: linear-gradient(
+    to top,
+    rgb(243, 243, 243),
+    rgba(243, 243, 243, 0.8) 40%,
+    rgba(243, 243, 243, 0.6) 60%,
+    rgba(243, 243, 243, 0.3) 80%,
+    white
+  );
 }
 
 .app {
@@ -398,7 +405,8 @@ body {
   justify-content: space-between;
   gap: 1.2rem;
 }
-.branchwise-chart, .branchwise-total-bal {
+.branchwise-chart,
+.branchwise-total-bal {
   flex: 1;
   height: 100%;
   border-radius: 1rem;
@@ -722,7 +730,12 @@ body {
 
 .table-loader {
   grid-row: span 8; /* Span 8 rows in the grid */
-  background-color: rgba(41, 41, 41, 0.3) !important; /* Black background color */
+  background-color: rgba(
+    41,
+    41,
+    41,
+    0.3
+  ) !important; /* Black background color */
   display: flex; /* Enable flexbox */
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
@@ -1034,7 +1047,11 @@ body {
   transition: 0.4s;
   border-radius: 34px;
 }
-.manage-bcontainer .branches-list .branch-item .branch-switch .branch-slider:before {
+.manage-bcontainer
+  .branches-list
+  .branch-item
+  .branch-switch
+  .branch-slider:before {
   position: absolute;
   content: "";
   height: 14px;
@@ -1045,10 +1062,20 @@ body {
   transition: 0.4s;
   border-radius: 50%;
 }
-.manage-bcontainer .branches-list .branch-item .branch-switch input:checked + .slider {
+.manage-bcontainer
+  .branches-list
+  .branch-item
+  .branch-switch
+  input:checked
+  + .slider {
   background-color: #4caf50;
 }
-.manage-bcontainer .branches-list .branch-item .branch-switch input:checked + .slider:before {
+.manage-bcontainer
+  .branches-list
+  .branch-item
+  .branch-switch
+  input:checked
+  + .slider:before {
   transform: translateX(14px);
 }
 .manage-bcontainer .branch-button {
@@ -1137,7 +1164,8 @@ body {
 .pagination .button:hover {
   background-color: rgb(193, 193, 193);
 }
-.pagination .button.disabled, .pagination .button:disabled {
+.pagination .button.disabled,
+.pagination .button:disabled {
   background-color: rgb(226, 225, 225);
   color: white;
   cursor: not-allowed;
@@ -1466,6 +1494,7 @@ body {
 .branch-group {
   display: flex;
   gap: 0.8rem;
+  flex-wrap: wrap;
 }
 .branch-group .active {
   background-color: rgb(41, 41, 41);
@@ -1476,6 +1505,12 @@ body {
   padding: 0.5rem 1rem;
   border: 1px solid rgb(193, 193, 193);
   border-radius: 0.3rem;
+}
+
+.form-amt-grid-container {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
 .balance-card {
@@ -1658,12 +1693,16 @@ body {
   position: relative;
   overflow: hidden; /* Ensure content doesn't overflow the rounded shape */
 }
-.material-datepicker .my-datepicker .rdp-button:hover:not(:disabled):not(.rdp-day_selected) {
+.material-datepicker
+  .my-datepicker
+  .rdp-button:hover:not(:disabled):not(.rdp-day_selected) {
   background-color: rgba(28, 101, 126, 0.1);
   color: var(--color-primary);
   border-radius: 50%;
 }
-.material-datepicker .my-datepicker .rdp-button:focus, .material-datepicker .my-datepicker .rdp-button:focus-visible, .material-datepicker .my-datepicker .rdp-button:focus-within {
+.material-datepicker .my-datepicker .rdp-button:focus,
+.material-datepicker .my-datepicker .rdp-button:focus-visible,
+.material-datepicker .my-datepicker .rdp-button:focus-within {
   outline: none !important;
   box-shadow: none !important;
   background-color: rgba(28, 101, 126, 0.05);
@@ -1736,7 +1775,8 @@ body {
 .material-datepicker .rdp-nav_button:hover {
   background-color: rgba(28, 101, 126, 0.1);
 }
-.material-datepicker .rdp-nav_button:focus, .material-datepicker .rdp-nav_button:focus-visible {
+.material-datepicker .rdp-nav_button:focus,
+.material-datepicker .rdp-nav_button:focus-visible {
   border-radius: 50%;
   background-color: rgba(28, 101, 126, 0.1);
   outline: none !important;
@@ -2094,7 +2134,12 @@ body {
   width: 100%;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
-  background: linear-gradient(to bottom, rgb(243, 243, 243), rgb(41, 41, 41), gray);
+  background: linear-gradient(
+    to bottom,
+    rgb(243, 243, 243),
+    rgb(41, 41, 41),
+    gray
+  );
 }
 
 .auth-box {

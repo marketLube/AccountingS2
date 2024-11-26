@@ -18,9 +18,15 @@ import {
 export default function useOutstanding() {
   const dispatch = useDispatch();
 
-  const { curBranch, curCat, curParticular, page, curStatus } = useSelector(
-    (state) => state.outstanding
-  );
+  const {
+    curBranch,
+    curCat,
+    curParticular,
+    page,
+    curStatus,
+    startDate,
+    endDate,
+  } = useSelector((state) => state.outstanding);
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
   const particular = useParticularNameFinder(curParticular);
@@ -31,7 +37,7 @@ export default function useOutstanding() {
     setOutstandingCurParticular
   );
 
-  let endpoint = `/liability?type=outstanding`;
+  let endpoint = `/liability?type=outstanding&page=${page}&sort=-date`;
 
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
@@ -45,7 +51,12 @@ export default function useOutstanding() {
   if (curStatus && !curStatus?.startsWith("All")) {
     endpoint += `&status=${curStatus}`;
   }
-
+  if (startDate) {
+    endpoint += `&startDate=${startDate}`;
+  }
+  if (endDate) {
+    endpoint += `&endDate=${endDate}`;
+  }
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["outstanding", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data),

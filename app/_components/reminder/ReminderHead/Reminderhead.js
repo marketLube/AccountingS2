@@ -58,12 +58,12 @@ function Reminderhead() {
   };
 
   const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setReminderSelectedDate("Custom"));
     dispatch(setReminderStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setReminderSelectedDate("Custom"));
     dispatch(setReminderEndDate(date));
   };
 
@@ -105,7 +105,14 @@ function Reminderhead() {
       setLoading(false);
     }
   };
-
+  const handleClear = () => {
+    dispatch(setResetReminderDate());
+    dispatch(setReminderSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
+  };
+  console.log(selectedDate, ".........");
   return (
     <>
       <LayoutHead>
@@ -180,18 +187,11 @@ function Reminderhead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-                "Custom",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  onClick={() => dispatch(setReminderSelectedDate(option))}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -202,13 +202,12 @@ function Reminderhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button
-              type="clear"
-              onClick={() => dispatch(setResetReminderDate())}
-            >
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>

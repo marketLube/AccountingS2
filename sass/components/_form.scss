@@ -74,7 +74,7 @@
 .branch-group {
   display: flex;
   gap: 0.8rem;
-
+  flex-wrap: wrap;
   & .active {
     background-color: variables.$color-primary;
     color: variables.$color-white;
@@ -84,4 +84,9 @@
   padding: 0.5rem 1rem;
   border: 1px solid variables.$color-mid-gray;
   border-radius: variables.$small-radius;
+}
+.form-amt-grid-container {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
 }

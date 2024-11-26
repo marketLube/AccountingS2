@@ -67,12 +67,12 @@ function DaybookHead() {
   };
 
   const handleSetStartDate = (date) => {
-    dispatch(setDaybookSelectedItems("Custom"));
+    dispatch(setDayBookSelectedDate("Custom"));
     dispatch(setDayBookStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    dispatch(setDaybookSelectedItems("Custom"));
+    dispatch(setDayBookSelectedDate("Custom"));
     dispatch(setDayBookEndDate(date));
   };
 

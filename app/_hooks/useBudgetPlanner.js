@@ -10,17 +10,23 @@ import {
 import { useBranchIdFinder } from "../_services/finders";
 
 export default function useBudgetPlanner() {
-  const { page, curBranch, summery } = useSelector(
+  const { page, curBranch, summery, startDate, endDate } = useSelector(
     (state) => state.budgetplanner
   );
   const branch = useBranchIdFinder(curBranch);
 
   const dispatch = useDispatch();
 
-  let endpoint = `/event?page=${page}?`;
+  let endpoint = `/event?page=${page}?&sort=-date`;
 
   if (branch) {
     endpoint += `&branch=${branch?._id}`;
+  }
+  if (startDate) {
+    endpoint += `&startDate=${startDate}`;
+  }
+  if (endDate) {
+    endpoint += `&endDate=${endDate}`;
   }
   const {
     data: events,
