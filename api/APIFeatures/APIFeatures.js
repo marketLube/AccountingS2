@@ -1,21 +1,3 @@
-import mongoose from "mongoose";
-import { idChecker } from "./idChecker.js";
-
-const multipleKeywords = [
-  "Mult",
-  "mult",
-  "Multi",
-  "multi",
-  "Multy",
-  "multy",
-  "Multip",
-  "multip",
-  "Multipl",
-  "multipl",
-  "Multiple",
-  "multiple",
-];
-
 class APIFeatures {
   constructor(model, query, queryStr) {
     this.model = model;
@@ -52,15 +34,6 @@ class APIFeatures {
       typeof this.queryStr.search === "string" &&
       this.queryStr.search.trim() !== ""
     ) {
-      if (multipleKeywords.includes(this.queryStr.search)) {
-        // Find documents where the branches array length is greater than 1
-        this.query = this.query.find({
-          $expr: {
-            $gt: [{ $size: "$branches" }, 1],
-          },
-        });
-        return this; // Exit early since the search for "Multiple" is handled
-      }
       const escapedSearch = this.queryStr.search.replace(
         /[.*+?^${}()|[\]\\]/g,
         "\\$&"
@@ -68,11 +41,13 @@ class APIFeatures {
       const searchRegex = new RegExp(this.queryStr.search, "i");
       const searchQuery = {
         $or: [
+          { formattedDate: { $regex: searchRegex } },
+          { gstPercent: { $regex: searchRegex } },
+          { gstType: { $regex: searchRegex } },
+          { tds: { $regex: searchRegex } },
+          { tdsType: { $regex: searchRegex } },
           { purpose: { $regex: searchRegex } },
           { remark: { $regex: searchRegex } },
-          { bank: { $regex: searchRegex } },
-          { branch: { $regex: searchRegex } },
-          { branchName: { $regex: searchRegex } },
           { type: { $regex: searchRegex } },
           { agent: { $regex: searchRegex } },
           { counsillor: { $regex: searchRegex } },
@@ -86,8 +61,6 @@ class APIFeatures {
               $options: "i",
             },
           },
-          { "branches.branchName": { $regex: searchRegex } },
-          { "particular.name": { $regex: searchRegex } },
           {
             $expr: {
               $regexMatch: {
@@ -139,6 +112,7 @@ class APIFeatures {
     }
     return this;
   }
+
   sort() {
     if (this.queryStr.sort) {
       const sortingItems = this.queryStr.sort.split("%").join(" ");

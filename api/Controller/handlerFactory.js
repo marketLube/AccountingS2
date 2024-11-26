@@ -18,8 +18,7 @@ export const getAll = (Model) => {
       .limitFields()
       .paginate(await Model.countDocuments())
       .filterByBranch()
-      .filterByDateRange()
-      .search();
+      .filterByDateRange();
 
     const docs = await features.query;
     const total = await totalChecker(Model, req);

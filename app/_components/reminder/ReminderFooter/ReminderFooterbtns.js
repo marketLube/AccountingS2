@@ -4,6 +4,7 @@ import Button from "../../utils/Button";
 
 function ReminderFooterbtns() {
   const { summery } = useSelector((state) => state.reminder);
+  console.log(summery, "reminder summery");
   return (
     <>
       <Button>Download Report</Button>

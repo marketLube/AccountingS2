@@ -68,7 +68,10 @@ function LiabilityEditForm() {
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
-      date: new Date(selectedItems?.date) || "",
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "",
       remark: selectedItems?.remark || "",
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
@@ -100,12 +103,15 @@ function LiabilityEditForm() {
     data.type = "liability";
 
     try {
+      setLoading(true);
       await apiClient.patch(`/liability/${id}`, data);
       toast.success("Successfully created new Liability");
       refreshLiability();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
 
     return;

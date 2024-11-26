@@ -12,6 +12,7 @@ import {
   setDaybookCurParticular,
   setDayBookEndDate,
   setDaybookIsEdit,
+  setDaybookQuery,
   setDayBookSelectedDate,
   setDaybookSelectedItems,
   setDayBookStartDate,
@@ -43,6 +44,7 @@ function DaybookHead() {
     startDate,
     endDate,
     type,
+    query,
     selectedDate,
   } = useSelector((state) => state.daybook);
 
@@ -101,6 +103,10 @@ function DaybookHead() {
     setIsOpen(false);
   };
 
+  const handleQuery = (e) => {
+    dispatch(setDaybookQuery(e.target.value));
+  };
+
   return (
     <>
       <LayoutHead>
@@ -142,7 +148,7 @@ function DaybookHead() {
             disabled={type?.startsWith("Bank")}
             curValue={curBank}
           />
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>

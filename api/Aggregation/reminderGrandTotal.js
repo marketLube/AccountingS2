@@ -23,20 +23,22 @@ export const getReminderGrandTotal = async (req) => {
   }
 
   // Add other query parameters to match stage
-  ["type", "catagory", "particular", "status"].forEach((field) => {
-    if (query[field]) {
-      if (["catagory", "particular"].includes(field)) {
-        // Validate and convert ObjectId fields
-        if (mongoose.Types.ObjectId.isValid(query[field])) {
-          matchStage[field] = new mongoose.Types.ObjectId(query[field]);
+  ["type", "catagory", "particular", "adminstatus", "accountstatus"].forEach(
+    (field) => {
+      if (query[field]) {
+        if (["catagory", "particular"].includes(field)) {
+          // Validate and convert ObjectId fields
+          if (mongoose.Types.ObjectId.isValid(query[field])) {
+            matchStage[field] = new mongoose.Types.ObjectId(query[field]);
+          } else {
+            throw new Error(`${field} is not a valid ObjectId`);
+          }
         } else {
-          throw new Error(`${field} is not a valid ObjectId`);
+          matchStage[field] = query[field];
         }
-      } else {
-        matchStage[field] = query[field];
       }
     }
-  });
+  );
 
   // Add branch-specific filtering
   if (branchId) {
@@ -58,7 +60,7 @@ export const getReminderGrandTotal = async (req) => {
       totalExcludingPaid: {
         $sum: {
           $cond: [
-            { $ne: ["$status", "Paid"] }, // If status is not "Paid"
+            { $ne: ["$accountstatus", "Paid"] }, // If accountstatus is not "Paid"
             "$amount",
             0,
           ],
@@ -67,7 +69,7 @@ export const getReminderGrandTotal = async (req) => {
       totalPaid: {
         $sum: {
           $cond: [
-            { $eq: ["$status", "Paid"] }, // If status is "Paid"
+            { $eq: ["$accountstatus", "Paid"] }, // If accountstatus is "Paid"
             "$amount",
             0,
           ],

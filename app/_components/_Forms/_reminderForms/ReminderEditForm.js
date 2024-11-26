@@ -5,7 +5,6 @@ import {
   Purpose,
   Remark,
   BranchSelector,
-  StatusSel,
   Amount,
   AdminStatusSel,
   AccountStatusSel,
@@ -30,9 +29,7 @@ function ReminderEditForm() {
   const { selectedItems } = useSelector((state) => state.reminder);
   const [loading, setLoading] = useState(false);
 
-  const { categories, particulars, banks } = useSelector(
-    (state) => state.general
-  );
+  const { categories, particulars } = useSelector((state) => state.general);
   const { branches } = useSelector((state) => state.general);
   const branch = useBranchNameFinder(selectedItems?.branch);
 
@@ -43,7 +40,10 @@ function ReminderEditForm() {
   const [particular, setParticular] = useState("Select Particular");
 
   const defaultValues = {
-    date: selectedItems?.date || "",
+    date:
+      selectedItems?.date && !isNaN(new Date(selectedItems.date))
+        ? new Date(selectedItems.date).toISOString().split("T")[0]
+        : "",
     remark: selectedItems?.remark || "",
     purpose: selectedItems?.purpose || "",
     adminstatus: selectedItems?.adminstatus || "",
@@ -65,7 +65,10 @@ function ReminderEditForm() {
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
-      date: new Date(selectedItems?.date) || "",
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "",
       remark: selectedItems?.remark || "",
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
@@ -91,7 +94,6 @@ function ReminderEditForm() {
       await apiClient.patch(`/reminders/${id}`, data);
       toast.success("Successfully created new Reminder");
       refreshReminders();
-      reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

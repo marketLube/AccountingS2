@@ -34,10 +34,12 @@ function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
       );
       if (isDup) {
         setLocalCurValue(pastValue);
+        setCurValue(pastValue);
         return toast.error("Catagory already exist");
       }
       await apiClient.patch(`/catagory/${id}`, { name: localCurValue.trim() });
       setPastValue(localCurValue.trim());
+      setCurValue(localCurValue.trim());
       toast.success("Category updated successfully");
     } catch (err) {
       toast.error("Duplicate category name or error occurred");

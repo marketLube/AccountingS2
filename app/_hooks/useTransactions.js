@@ -28,6 +28,7 @@ export default function useTransactions() {
     page,
     startDate,
     endDate,
+    query,
   } = useSelector((state) => state.daybook);
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
@@ -62,6 +63,9 @@ export default function useTransactions() {
   }
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
+  }
+  if (query) {
+    endpoint += `&search=${query}`;
   }
 
   const {

@@ -68,7 +68,10 @@ function OutstandingEditForm() {
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
-      date: new Date(selectedItems?.date) || "",
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "",
       remark: selectedItems?.remark || "",
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
@@ -97,14 +100,13 @@ function OutstandingEditForm() {
     data.branches = branchObjects;
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
-    data.type = "liability";
+    data.type = "outstanding";
 
     try {
       setLoading(true);
       await apiClient.patch(`/liability/${id}`, data);
       toast.success("Successfully created new Liability");
       refreshLiability();
-      reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

@@ -10,7 +10,6 @@ import { useAuthorize } from "../_hooks/useAuthorize";
 function Page() {
   // const isLoggedIn = useAuthorize();
   // if (!isLoggedIn) return <div>Unauthorized</div>;
-
   return (
     <div className={`layout liability`}>
       <h1 className={`main-head`}>Liability</h1>
