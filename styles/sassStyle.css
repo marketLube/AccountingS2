@@ -50,7 +50,7 @@
 }
 
 body {
-  background: linear-gradient(to top, rgb(243, 243, 243), rgba(243, 243, 243, 0.8) 40%, rgba(243, 243, 243, 0.6) 60%, rgba(243, 243, 243, 0.3) 80%, white);
+  background: linear-gradient(to top, rgb(201, 200, 254), rgba(201, 200, 254, 0.8) 40%, rgba(201, 200, 254, 0.6) 60%, rgba(201, 200, 254, 0.3) 80%, white);
 }
 
 .app {
@@ -2101,7 +2101,7 @@ body {
   width: 100%;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
-  background: linear-gradient(to bottom, rgb(243, 243, 243), rgb(7, 0, 87), gray);
+  background: linear-gradient(to bottom, rgb(201, 200, 254), rgb(7, 0, 87), gray);
 }
 
 .auth-box {
