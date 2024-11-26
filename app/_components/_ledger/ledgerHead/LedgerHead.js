@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setLedgerCurBranch,
   setLedgerCurCat,
+  setLedgerSelectedDate,
   setResetLedgerDate,
 } from "@/lib/slices/ledgerSlice";
 import Selector from "../../utils/Selector";
@@ -28,10 +29,12 @@ function LedgerHead() {
   };
 
   const handleSetStartDate = (date) => {
+    dispatch(setLedgerSelectedDate("Custom"));
     dispatch(setReminderStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
+    dispatch(setLedgerSelectedDate("Custom"));
     dispatch(setReminderEndDate(date));
   };
 
@@ -51,6 +54,14 @@ function LedgerHead() {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     dispatch(setLedgerSelectedDate(option));
+  };
+
+  const handleClear = () => {
+    dispatch(setResetLedgerDate());
+    dispatch(setLedgerSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -96,18 +107,11 @@ function LedgerHead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-                "Custom",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  onClick={() => dispatch(setLedgerSelectedDate(option))}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -118,10 +122,12 @@ function LedgerHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button type="clear" onClick={() => dispatch(setResetLedgerDate())}>
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>

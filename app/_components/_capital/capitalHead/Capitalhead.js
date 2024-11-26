@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCapitalCurBranch,
   setCapitalIsEdit,
+  setCapitalSelectedDate,
   setCapitalType,
   setIsCapitalNewEntry,
   setResetCapitalDate,
@@ -25,8 +26,15 @@ import toast from "react-hot-toast";
 
 function Capitalhead() {
   const dispatch = useDispatch();
-  const { isNewEntry, selectedItems, isEdit, startDate, endDate, curType } =
-    useSelector((state) => state.capital);
+  const {
+    isNewEntry,
+    selectedItems,
+    isEdit,
+    startDate,
+    endDate,
+    curType,
+    selectedDate,
+  } = useSelector((state) => state.capital);
 
   const { branchNames } = useSelector((state) => state.general);
 
@@ -35,12 +43,12 @@ function Capitalhead() {
   };
 
   const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setCapitalSelectedDate("Custom"));
     dispatch(setCapitalStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setCapitalSelectedDate("Custom"));
     dispatch(setCapitalEndDate(date));
   };
 
@@ -81,6 +89,13 @@ function Capitalhead() {
     } finally {
       setLoading(false);
     }
+  };
+  const handleClear = () => {
+    dispatch(setResetCapitalDate());
+    dispatch(setCapitalSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -145,17 +160,11 @@ function Capitalhead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  onClick={() => dispatch(setCapitalSelectedDate(option))}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -166,13 +175,12 @@ function Capitalhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button
-              type="clear"
-              onClick={() => dispatch(setResetCapitalDate())}
-            >
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>

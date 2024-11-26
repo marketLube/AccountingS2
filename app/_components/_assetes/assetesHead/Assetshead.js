@@ -167,7 +167,7 @@ function Assetshead() {
               {dateOptions.map((option) => (
                 <li
                   key={option}
-                  onClick={() => handleOptionClick(option)}
+                  onClick={() => dispatch(setAssetsSelectedDate(option))}
                   className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
@@ -182,7 +182,7 @@ function Assetshead() {
             <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit" onClick={handleClear}>
+            <Button type="submit" onClick={handleSubmit}>
               Submit
             </Button>
           </div>

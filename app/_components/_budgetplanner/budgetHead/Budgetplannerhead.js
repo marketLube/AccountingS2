@@ -14,6 +14,7 @@ import {
   setBudgetplannerStartDate,
   setCurRange,
   setIsBudgetplannerNewEntry,
+  setResetBudgetDate,
 } from "@/lib/slices/budgetplannerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FsModal from "../../utils/FsModal";
@@ -48,12 +49,12 @@ function Budgetplannerhead() {
   };
 
   const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setBudgetplannerSelectedDate("Custom"));
     dispatch(setBudgetplannerStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setBudgetplannerSelectedDate("Custom"));
     dispatch(setBudgetplannerEndDate(date));
   };
 
@@ -94,6 +95,14 @@ function Budgetplannerhead() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleClear = () => {
+    dispatch(setResetBudgetDate());
+    dispatch(setBudgetplannerSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -159,18 +168,11 @@ function Budgetplannerhead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-                "Custom",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
                   onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -181,10 +183,12 @@ function Budgetplannerhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button type="clear" onClick={() => dispatch(setResetBudgetDate())}>
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>
