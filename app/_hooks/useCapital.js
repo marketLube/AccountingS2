@@ -9,10 +9,12 @@ import { setCapitalSummery } from "@/lib/slices/capitalSlice";
 export default function useCapitals() {
   const dispatch = useDispatch();
 
-  const { curBranch, page, curType } = useSelector((state) => state.capital);
+  const { curBranch, page, curType, startDate, endDate } = useSelector(
+    (state) => state.capital
+  );
   const capitalCurBranch = useBranchIdFinder(curBranch);
 
-  let endpoint = `/capital?page=${page}`;
+  let endpoint = `/capital?page=${page}&sort=-date`;
 
   if (capitalCurBranch) {
     endpoint += `&branch=${capitalCurBranch?._id}`;
@@ -20,7 +22,12 @@ export default function useCapitals() {
   if (!curType.startsWith("All")) {
     endpoint += `&type=${curType}`;
   }
-
+  if (startDate) {
+    endpoint += `&startDate=${startDate}`;
+  }
+  if (endDate) {
+    endpoint += `&endDate=${endDate}`;
+  }
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["capital", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data),

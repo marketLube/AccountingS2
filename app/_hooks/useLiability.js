@@ -17,9 +17,15 @@ import { useEffect } from "react";
 
 export function useLiability() {
   const dispatch = useDispatch();
-  const { curBranch, curCat, curParticular, page, curStatus } = useSelector(
-    (state) => state.liability
-  );
+  const {
+    curBranch,
+    curCat,
+    curParticular,
+    page,
+    curStatus,
+    startDate,
+    endDate,
+  } = useSelector((state) => state.liability);
 
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
@@ -30,7 +36,7 @@ export function useLiability() {
     setLiabilityParticular,
     setLiabilityCurParticular
   );
-  let endpoint = `/liability?type=liability&page=${page}`;
+  let endpoint = `/liability?type=liability&page=${page}&sort=-date`;
 
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
@@ -43,6 +49,12 @@ export function useLiability() {
   }
   if (curStatus && !curStatus?.startsWith("All")) {
     endpoint += `&status=${curStatus}`;
+  }
+  if (startDate) {
+    endpoint += `&startDate=${startDate}`;
+  }
+  if (endDate) {
+    endpoint += `&endDate=${endDate}`;
   }
 
   const { data, isLoading, isError, error, refetch } = useQuery({

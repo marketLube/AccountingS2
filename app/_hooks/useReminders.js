@@ -17,10 +17,16 @@ import { useEffect } from "react";
 
 export default function useReminders() {
   const dispatch = useDispatch();
-  const { curBranch, curCat, curParticular, page, curStatus } = useSelector(
-    (state) => state.reminder
-  );
-  let endpoint = `/reminders?page=${page}`;
+  const {
+    curBranch,
+    curCat,
+    curParticular,
+    page,
+    curStatus,
+    startDate,
+    endDate,
+  } = useSelector((state) => state.reminder);
+  let endpoint = `/reminders?page=${page}&sort=-date`;
 
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
@@ -39,6 +45,12 @@ export default function useReminders() {
   }
   if (curStatus && !curStatus?.startsWith("All")) {
     endpoint += `&status=${curStatus}`;
+  }
+  if (startDate) {
+    endpoint += `&startDate=${startDate}`;
+  }
+  if (endDate) {
+    endpoint += `&endDate=${endDate}`;
   }
 
   const { data, isLoading, isError, error, refetch } = useQuery({

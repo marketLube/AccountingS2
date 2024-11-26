@@ -42,6 +42,7 @@ function LiabilityHead() {
     startDate,
     endDate,
     curStatus,
+    selectedDate,
   } = useSelector((state) => state.liability);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -63,13 +64,17 @@ function LiabilityHead() {
   };
 
   const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setLiabilitySelectedDate("Custom"));
     dispatch(setLiabilityStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setLiabilitySelectedDate("Custom"));
     dispatch(setLiabilityEndDate(date));
+  };
+
+  const handleSelectChange = (range) => {
+    return () => dispatch(setLiabilitySelectedDate(range));
   };
 
   // Date modal
@@ -78,16 +83,13 @@ function LiabilityHead() {
   const handleDateModal = () => {
     setIsOpen((open) => !open);
   };
-  const handleSelectChange = (range) => {
-    return () => dispatch(setLiabilitySelectedDate(range));
-  };
 
-  const [selectedOption, setSelectedOption] = useState("All");
+  // const [selectedOption, setSelectedOption] = useState("All");
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option); // Update local state
-    dispatch(setLiabilitySelectedDate(option));
-  };
+  // const handleOptionClick = (option) => {
+  //   setSelectedOption(option); // Update local state
+  //   dispatch(setLiabilitySelectedDate(option));
+  // };
 
   const [loading, setLoading] = useState(false);
 
@@ -104,6 +106,13 @@ function LiabilityHead() {
     } finally {
       setLoading(false);
     }
+  };
+  const handleClear = () => {
+    dispatch(setResetLiabilityDate());
+    dispatch(setLiabilitySelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -179,18 +188,11 @@ function LiabilityHead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-                "Custom",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  onClick={() => dispatch(setLiabilitySelectedDate(option))}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -201,13 +203,12 @@ function LiabilityHead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button
-              type="clear"
-              onClick={() => dispatch(setResetLiabilityDate())}
-            >
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>

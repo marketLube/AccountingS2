@@ -48,12 +48,12 @@ function Assetshead() {
     dispatch(setAssetsCurBranch(e.target.value));
   };
   const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setAssetsSelectedDate("Custom"));
     dispatch(setAssetsStartDate(date));
   };
 
   const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
+    dispatch(setAssetsSelectedDate("Custom"));
     dispatch(setAssetsEndDate(date));
   };
 
@@ -94,7 +94,13 @@ function Assetshead() {
       setLoading(false);
     }
   };
-
+  const handleClear = () => {
+    dispatch(setResetAssetDate());
+    dispatch(setAssetsSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       <LayoutHead>
@@ -158,18 +164,11 @@ function Assetshead() {
           </div>
           <div className="date_custom">
             <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-                "Custom",
-              ].map((option) => (
+              {dateOptions.map((option) => (
                 <li
                   key={option}
                   onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -180,10 +179,12 @@ function Assetshead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button type="clear" onClick={() => dispatch(setResetAssetDate())}>
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleClear}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>
