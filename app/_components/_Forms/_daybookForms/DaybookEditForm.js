@@ -95,8 +95,6 @@ function DaybookEditForm() {
     );
   }, [selectedItems, reset]);
 
-  console.log(selectedItems, "selected items");
-
   const onSubmit = async (data) => {
     if (selectedBranches.length <= 0)
       return toast.error("Please Select atleast one branch");
@@ -146,6 +144,22 @@ function DaybookEditForm() {
 
   const tdsValue = watch("tds");
 
+  const handleClear = () => {
+    reset({
+      date: "",
+      remark: "",
+      bank: "",
+      type: "",
+      purpose: "",
+      tds: "",
+      gstPercent: "",
+      gstType: "",
+    });
+    setSelectedBranches([]);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Daybook Edit Form</h2>
@@ -186,7 +200,9 @@ function DaybookEditForm() {
         <GstPercent register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

@@ -2,7 +2,7 @@ import apiClient from "@/lib/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../_components/layouts/AppLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { useBranchIdFinder, useCategoryNameFinder } from "../_services/finders";
+import { useCategoryNameFinder } from "../_services/finders";
 import { useEffect } from "react";
 import { setLedgerSummery } from "@/lib/slices/ledgerSlice";
 

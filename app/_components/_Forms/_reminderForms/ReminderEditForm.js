@@ -24,6 +24,7 @@ import {
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshReminders } from "@/app/_hooks/useReminders";
+import { today } from "@/app/_services/helpers";
 
 function ReminderEditForm() {
   const { selectedItems } = useSelector((state) => state.reminder);
@@ -101,6 +102,23 @@ function ReminderEditForm() {
       setLoading(false);
     }
   };
+
+  const handleClear = () => {
+    reset({
+      date: today(),
+      remark: "",
+      bank: "",
+      type: "",
+      purpose: "",
+      branch: "",
+      adminstatus: "",
+      accountstatus: "",
+      amount: "",
+    });
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Reminder Edit Form</h2>
@@ -129,7 +147,9 @@ function ReminderEditForm() {
       </div>
 
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

@@ -116,6 +116,14 @@ function OutstandingEditForm() {
 
     return;
   };
+
+  const handleClear = () => {
+    reset({ date: today(), remark: "", bank: "", purpose: "", status: "" });
+    setSelectedBranches([]);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Outstanding Edit Form</h2>
@@ -145,7 +153,9 @@ function OutstandingEditForm() {
         defaultAmounts={defaultAmounts}
       />
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}
