@@ -96,29 +96,29 @@ function DaybookEditForm() {
   }, [selectedItems, reset]);
 
   const onSubmit = async (data) => {
-    if (selectedBranches.length <= 0)
-      return toast.error("Please Select atleast one branch");
-
-    const branchObjects = selectedBranches.map((branch) => {
-      const branchObj = branches.find(
-        (branchObjs) => branchObjs.name === branch
-      );
-
-      return {
-        branch: branchObj._id,
-        amount: parseFloat(data[branchObj.name]),
-      };
-    });
-
-    data.branches = branchObjects;
-    data.catagory = catIdFinder(categories, catagory);
-    data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
-
-    if (!data.gstType) data.gstType = "no-gst";
-    if (!data.tdsType) data.tdsType = "no tds";
-
     try {
+      if (selectedBranches.length <= 0)
+        return toast.error("Please Select atleast one branch");
+
+      const branchObjects = selectedBranches.map((branch) => {
+        const branchObj = branches.find(
+          (branchObjs) => branchObjs.name === branch
+        );
+
+        return {
+          branch: branchObj._id,
+          amount: parseFloat(data[branchObj.name]),
+        };
+      });
+
+      data.branches = branchObjects;
+      data.catagory = catIdFinder(categories, catagory);
+      data.particular = parIdFinder(particulars, particular);
+      data.bank = bankIdFiner(banks, data.bank);
+
+      if (!data.gstType) data.gstType = "no-gst";
+      if (!data.tdsType) data.tdsType = "no tds";
+
       setLoading(true);
       const res = await apiClient.patch(
         `/transaction/${selectedItems._id}`,

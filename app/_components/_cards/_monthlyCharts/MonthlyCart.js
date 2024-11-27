@@ -19,9 +19,12 @@ ChartJS.register(
   Legend
 );
 
-const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
-  const maxValue = Math.max(...datasets.flatMap((dataset) => dataset.data));
-  const max = (maxValue * 3) / 2;
+const MonthlyPNLChart = ({ labels, datasets, stepSize = 100000 }) => {
+  // Calculate max y-axis value
+  const maxDatasetValue = Math.max(
+    ...datasets.flatMap((dataset) => dataset.data)
+  );
+  const max = Math.ceil((maxDatasetValue + 2 * stepSize) / stepSize) * stepSize;
 
   const data = {
     labels: labels,
@@ -68,8 +71,8 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
       y: {
         beginAtZero: false,
         max,
-        stepSize,
         ticks: {
+          stepSize,
           callback: (value) => `₹${value}`,
         },
       },
@@ -83,6 +86,7 @@ const MonthlyPNLChart = ({ labels, datasets, stepSize = 200000 }) => {
       },
     },
   };
+
   return (
     <div className="monthly-chart-container">
       <Bar data={data} options={options} />

@@ -11,9 +11,9 @@ import MonthlyPNLChart from "../_components/_cards/_monthlyCharts/MonthlyCart";
 import ToggleSwitch from "../_components/utils/ToggleSwitch/ToggleSwitch";
 import { getCurrentMonthName } from "../_services/helpers";
 import useDashboardTotals, { useDashboardChart } from "../_hooks/useDashboard";
-import { Skeleton } from "antd";
 import { useRouter } from "next/navigation";
 import Login from "../_components/LoginPage/Login";
+import SmallLoader from "../_components/utils/SmallLoader";
 import { useEffect } from "react";
 
 function Page() {
@@ -32,7 +32,7 @@ function Page() {
   useEffect(() => {
     if (isLoggedIn) return;
     router.push("/login");
-  }, []);
+  }, [router]);
 
   const datasets = [
     {
@@ -74,11 +74,7 @@ function Page() {
             }}
           >
             {isLoading ? (
-              Array.from({ length: 1 }).map((_, index) => (
-                <div key={index}>
-                  <Skeleton.Input style={{ width: 320, height: 320 }} active />
-                </div>
-              ))
+              <SmallLoader />
             ) : (
               <CurrentYearBox totals={totals?.transactions} />
             )}
@@ -93,13 +89,7 @@ function Page() {
             }}
           >
             {isLoading ? (
-              Array.from({ length: 1 }).map((_, index) => (
-                <Skeleton.Input
-                  key={index}
-                  style={{ width: 332, height: 170 }}
-                  active
-                />
-              ))
+              <SmallLoader />
             ) : (
               <Income
                 income={transactions?.totalCredit}
@@ -117,13 +107,7 @@ function Page() {
             }}
           >
             {isLoading ? (
-              Array.from({ length: 1 }).map((_, index) => (
-                <Skeleton.Input
-                  key={index}
-                  style={{ width: 332, height: 170 }}
-                  active
-                />
-              ))
+              <SmallLoader />
             ) : (
               <Expense
                 expense={transactions?.totalDebit}
@@ -142,13 +126,7 @@ function Page() {
             }}
           >
             {isLoading ? (
-              Array.from({ length: 1 }).map((_, index) => (
-                <Skeleton.Input
-                  key={index}
-                  style={{ width: 320, height: 120 }}
-                  active
-                />
-              ))
+              <SmallLoader />
             ) : (
               <TopPerformer
                 expense={transactions?.totalDebit}
@@ -167,13 +145,7 @@ function Page() {
             }}
           >
             {isLoading ? (
-              Array.from({ length: 1 }).map((_, index) => (
-                <Skeleton.Input
-                  key={index}
-                  style={{ width: 320, height: 120 }}
-                  active
-                />
-              ))
+              <SmallLoader />
             ) : (
               <Oustandingpay
                 outstanding={liabilityAndOutstanding?.totalOutstanding}
@@ -192,13 +164,7 @@ function Page() {
           }}
         >
           {isLoading ? (
-            Array.from({ length: 1 }).map((_, index) => (
-              <Skeleton.Input
-                key={index}
-                style={{ width: 1000, height: 300, marginLeft: "1.5rem" }}
-                active
-              />
-            ))
+            <SmallLoader />
           ) : (
             <MonthlyPNLChart labels={labels} datasets={datasets} />
           )}
@@ -214,13 +180,7 @@ function Page() {
           }}
         >
           {isLoading ? (
-            Array.from({ length: 1 }).map((_, index) => (
-              <Skeleton.Input
-                key={index}
-                style={{ width: 520, height: 250 }}
-                active
-              />
-            ))
+            <SmallLoader />
           ) : (
             <DashboardCurrentbalance transaction={transactions} />
           )}
