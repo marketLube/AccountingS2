@@ -10,7 +10,7 @@ import {
 import { useBranchIdFinder } from "../_services/finders";
 
 export default function useBudgetPlanner() {
-  const { page, curBranch, summery, startDate, endDate } = useSelector(
+  const { page, curBranch, summery, startDate, endDate, query } = useSelector(
     (state) => state.budgetplanner
   );
   const branch = useBranchIdFinder(curBranch);
@@ -27,6 +27,9 @@ export default function useBudgetPlanner() {
   }
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
+  }
+  if (query) {
+    endpoint += `&search=${query}`;
   }
   const {
     data: events,

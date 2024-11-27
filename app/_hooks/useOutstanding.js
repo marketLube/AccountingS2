@@ -26,6 +26,7 @@ export default function useOutstanding() {
     curStatus,
     startDate,
     endDate,
+    query,
   } = useSelector((state) => state.outstanding);
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
@@ -56,6 +57,9 @@ export default function useOutstanding() {
   }
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
+  }
+  if (query) {
+    endpoint += `&search=${query}`;
   }
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["outstanding", endpoint],

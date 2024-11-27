@@ -12,6 +12,7 @@ import {
   setBudgetplannerIsEdit,
   setBudgetplannerSelectedDate,
   setBudgetplannerStartDate,
+  setBudgetQuery,
   setCurRange,
   setIsBudgetplannerNewEntry,
   setResetBudgetDate,
@@ -40,6 +41,7 @@ function Budgetplannerhead() {
     endDate,
     curRange,
     selectedDate,
+    query,
   } = useSelector((state) => state.budgetplanner);
 
   const { branchNames } = useSelector((state) => state.general);
@@ -105,6 +107,10 @@ function Budgetplannerhead() {
     setIsOpen(false);
   };
 
+  const handleQuery = (e) => {
+    dispatch(setBudgetQuery(e.target.value));
+  };
+
   return (
     <>
       <LayoutHead>
@@ -138,7 +144,7 @@ function Budgetplannerhead() {
             callback={handleBranchChange}
             curValue={curBranch}
           />
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>

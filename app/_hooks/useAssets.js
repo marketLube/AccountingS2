@@ -9,7 +9,7 @@ import { setAssetsSummery } from "@/lib/slices/assetsSlice";
 export default function useAssets() {
   const dispatch = useDispatch();
 
-  const { curBranch, page, curType, startDate, endDate } = useSelector(
+  const { curBranch, page, curType, startDate, endDate, query } = useSelector(
     (state) => state.assets
   );
 
@@ -28,6 +28,9 @@ export default function useAssets() {
   }
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
+  }
+  if (query) {
+    endpoint += `&search=${query}`;
   }
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["assets", endpoint],
