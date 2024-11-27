@@ -23,6 +23,12 @@
   color: variables.$color-gray;
   border: 0.3px solid variables.$color-gray;
 }
+.dltprimary {
+  background-color: variables.$color-red;
+  color: variables.$color-white;
+  width: 8rem;
+}
+
 .clear-btn,
 .submit-btn {
   padding: 0.5rem 1rem;
@@ -47,6 +53,9 @@
   width: 2.5rem;
   height: 2.5rem;
   @include mixins.flex(center);
+}
+.dltbtn {
+  background-color: variables.$color-red;
 }
 .arrow {
   justify-content: center;

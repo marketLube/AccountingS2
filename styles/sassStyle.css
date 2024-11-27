@@ -500,6 +500,12 @@ body {
   border: 0.3px solid gray;
 }
 
+.dltprimary {
+  background-color: rgb(126, 25, 25);
+  color: white;
+  width: 8rem;
+}
+
 .clear-btn,
 .submit-btn {
   padding: 0.5rem 1rem;
@@ -529,6 +535,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dltbtn {
+  background-color: rgb(126, 25, 25);
 }
 
 .arrow {

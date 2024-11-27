@@ -67,6 +67,17 @@ function Button({
         {children}
       </button>
     );
+  if (type === "dltprimary")
+    return (
+      <button
+        className="btn dltprimary"
+        onClick={onClick}
+        style={style}
+        disabled={disabled}
+      >
+        {children}
+      </button>
+    );
   return (
     <button
       className="btn primary"
