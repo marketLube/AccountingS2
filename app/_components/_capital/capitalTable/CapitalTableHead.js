@@ -9,7 +9,8 @@ function CapitalTableHead() {
       <span className="table-col date">Date</span>
       <span className="table-col amount">Amount</span>
       <span className="table-col remark">Remark</span>
-      <span className="table-col branch">Branch</span>
+      <span className="table-col branch">Remark</span>
+      <span className="table-col type">Type</span>
     </div>
   );
 }

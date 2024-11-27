@@ -8,6 +8,7 @@ function AssetsFooter() {
   const { currentPage, btnDisable, summery } = useSelector(
     (state) => state.assets
   );
+
   return (
     <>
       <div className={`layout-footer`}>

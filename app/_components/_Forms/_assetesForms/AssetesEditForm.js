@@ -44,7 +44,10 @@ function AssetesEditForms() {
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
-      date: new Date(selectedItems?.date) || "",
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "",
       remark: selectedItems?.remark || "",
       type: selectedItems?.type || "",
       purchasedBy: selectedItems?.purchasedBy || "",
@@ -64,7 +67,6 @@ function AssetesEditForms() {
       await apiClient.patch(`/assets/${id}`, data);
       toast.success("Successfully created new Asset");
       refreshAssets();
-      reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

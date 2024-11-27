@@ -13,9 +13,6 @@ import { setCapitalSelectedItems } from "@/lib/slices/capitalSlice";
 
 function CapitalTableItems({ item }) {
   const { selectedItems } = useSelector((state) => state.capital);
-  const particular = useParticularFinder(item?.particular);
-  const category = useCategoryFinder(item?.catagory);
-  const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const branch = useBranchNameFinder(item.branch);
 
@@ -59,6 +56,7 @@ function CapitalTableItems({ item }) {
           />
         </span>
         <span className="table-col branch table-body-col">{branch}</span>
+        <span className="table-col type table-body-col">{item?.type}</span>
       </div>
     </>
   );

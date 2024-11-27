@@ -38,7 +38,9 @@ function AssetesTableItems({ item }) {
         <span className="table-col date table-body-col">
           {item?.formattedDate}
         </span>
-        <span className="table-col amount table-body-col">{item?.amount}</span>
+        <span className="table-col amount table-body-col">
+          {item?.amount || 0}
+        </span>
         <span className="table-col purchased table-body-col">
           {item?.purchasedBy}
         </span>

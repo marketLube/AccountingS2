@@ -58,8 +58,6 @@ export default function useReminders() {
     queryFn: () => apiClient.get(endpoint).then((res) => res.data),
   });
 
-  console.log(data, "data");
-
   useEffect(() => {
     dispatch(setReminderSummery(data?.summery));
   }, [data, dispatch]);
