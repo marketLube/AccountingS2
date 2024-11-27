@@ -16,17 +16,67 @@ export const getCapitalGrandTotal = async (req) => {
 
   // Handle date range if present
   if (query.startDate && query.endDate) {
-    // Parse dates and set to start of start date and end of end date
+    // Parse dates and set to the start of the day for startDate and end of the day for endDate
     const startDate = new Date(query.startDate);
-    startDate.setHours(0, 0, 0, 0);
-
     const endDate = new Date(query.endDate);
-    endDate.setHours(23, 59, 59, 999);
+
+    // Validate the dates
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      throw new Error("Invalid date format for startDate or endDate");
+    }
+
+    // Ensure startDate is set to the start of the day
+    startDate.setUTCHours(0, 0, 0, 0);
+
+    // Ensure endDate is set to the end of the day
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    // Build the matchStage query
 
     matchStage.date = {
       $gte: startDate,
       $lte: endDate,
     };
+  }
+
+  if (
+    query.search &&
+    typeof query.search === "string" &&
+    query.search.trim() !== ""
+  ) {
+    const escapedSearch = query.search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const searchRegex = new RegExp(query.search, "i");
+    const searchQuery = {
+      $or: [
+        { formattedDate: { $regex: searchRegex } },
+        { invested: { $regex: searchRegex } },
+        { purpose: { $regex: searchRegex } },
+        { remark: { $regex: searchRegex } },
+        { type: { $regex: searchRegex } },
+        {
+          status: {
+            $regex: `^${escapedSearch.substring(0, 4)}`,
+            $options: "i",
+          },
+        },
+        {
+          $expr: {
+            $regexMatch: {
+              input: { $toString: "$amount" },
+              regex: query.search,
+              options: "i",
+            },
+          },
+        },
+        // Add other `$expr` cases for numeric fields if necessary
+      ],
+    };
+    Object.assign(matchStage, searchQuery);
+  }
+
+  // Add match stage if there are any conditions
+  if (Object.keys(matchStage).length > 0) {
+    pipeline.push({ $match: matchStage });
   }
 
   // Add branch-specific filtering

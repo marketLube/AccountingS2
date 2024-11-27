@@ -42,6 +42,10 @@ class APIFeatures {
       const searchQuery = {
         $or: [
           { formattedDate: { $regex: searchRegex } },
+          { property: { $regex: searchRegex } },
+          { item: { $regex: searchRegex } },
+          { purchasedBy: { $regex: searchRegex } },
+          { invested: { $regex: searchRegex } },
           { gstPercent: { $regex: searchRegex } },
           { gstType: { $regex: searchRegex } },
           { tds: { $regex: searchRegex } },
@@ -55,6 +59,7 @@ class APIFeatures {
           { student: { $regex: searchRegex } },
           { intakeMonth: { $regex: searchRegex } },
           { country: { $regex: searchRegex } },
+          { property: { $regex: searchRegex } },
           {
             status: {
               $regex: `^${escapedSearch.substring(0, 4)}`,
@@ -158,7 +163,6 @@ class APIFeatures {
   }
 
   filterByDateRange() {
-    console.log(this.queryStr);
     if (this.queryStr.startDate || this.queryStr.endDate) {
       let dateFilter = {};
 

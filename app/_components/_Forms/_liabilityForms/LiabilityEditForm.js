@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import { refreshLiability } from "@/app/_hooks/useLiability";
 import { refreshLedger } from "@/app/_hooks/useLedgers";
 import { Hanken_Grotesk } from "next/font/google";
+import { refreshDashboardTotals } from "@/app/_hooks/useDashboard";
 
 function LiabilityEditForm() {
   const { selectedItems } = useSelector((state) => state.liability);
@@ -110,6 +111,7 @@ function LiabilityEditForm() {
       toast.success("Successfully created new Liability");
       refreshLiability();
       refreshLedger();
+      refreshDashboardTotals();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

@@ -54,7 +54,10 @@ export const getTotals = catchAsync(async (req, res, next) => {
         $facet: {
           liabilityOutstandingTotals: [
             {
-              $match: dateFilter,
+              $match: {
+                ...dateFilter, // Include your date filter if applicable
+                status: { $ne: "Paid" }, // Exclude entries with status "Paid"
+              },
             },
             {
               $group: {

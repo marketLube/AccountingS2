@@ -1,29 +1,23 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
-  Bank,
   BranchComponent,
   DateSel,
   Purpose,
-  Radio,
   Remark,
-  Gst,
-  Tds,
-  GstPercent,
   StatusSel,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
 import { refreshLiability } from "@/app/_hooks/useLiability";
+import { refreshDashboardTotals } from "@/app/_hooks/useDashboard";
+import { refreshLedger } from "@/app/_hooks/useLedgers";
 
 function LiabilityNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -73,16 +67,19 @@ function LiabilityNewEntirForm() {
     data.type = "liability";
 
     try {
+      setLoading(true);
       await apiClient.post("/liability", data);
       toast.success("Successfully created new Liability");
       refreshLiability();
+      refreshDashboardTotals();
+      refreshLedger();
       reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
-
-    return;
   };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>

@@ -26,15 +26,36 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
         message: "Invalid pagination parameters",
       });
     }
+    const query = req.query;
 
     // Base match stages
+    const matchStage = {};
     const dateMatch = {};
-    if (startDate && endDate) {
-      dateMatch.date = {
-        $gte: new Date(startDate),
-        $lte: new Date(endDate),
+
+    if (query.startDate && query.endDate) {
+      // Parse dates and set to the start of the day for startDate and end of the day for endDate
+      const startDate = new Date(query.startDate);
+      const endDate = new Date(query.endDate);
+
+      // Validate the dates
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        throw new Error("Invalid date format for startDate or endDate");
+      }
+
+      // Ensure startDate is set to the start of the day
+      startDate.setUTCHours(0, 0, 0, 0);
+
+      // Ensure endDate is set to the end of the day
+      endDate.setUTCHours(23, 59, 59, 999);
+
+      // Build the matchStage query
+
+      matchStage.date = {
+        $gte: startDate,
+        $lte: endDate,
       };
     }
+
     const catagoryMatch = catagory
       ? { catagory: new mongoose.Types.ObjectId(catagory) }
       : {};
@@ -46,6 +67,7 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
     // Transaction Aggregation Pipeline
     const transactionPipeline = [
       { $match: catagoryMatch },
+      { $match: matchStage },
       { $match: dateMatch },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
       { $match: branchMatch },

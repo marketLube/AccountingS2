@@ -10,7 +10,7 @@ function LedgerFooter() {
 
   const { totals } = useSelector((state) => state.general);
   const { liabilityAndOutstanding, transactions } = totals || {};
-  console.log(transactions, "trans");
+
   return (
     <div className={`layout-footer`}>
       <div className="layout-footer-left">
