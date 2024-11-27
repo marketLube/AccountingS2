@@ -25,6 +25,7 @@ export function useLiability() {
     curStatus,
     startDate,
     endDate,
+    query,
   } = useSelector((state) => state.liability);
 
   const branchId = useBranchIdFinder(curBranch)?._id;
@@ -55,6 +56,9 @@ export function useLiability() {
   }
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
+  }
+  if (query) {
+    endpoint += `&search=${query}`;
   }
 
   const { data, isLoading, isError, error, refetch } = useQuery({

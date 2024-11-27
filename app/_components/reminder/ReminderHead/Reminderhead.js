@@ -12,6 +12,7 @@ import {
   setReminderCurStatus,
   setReminderEndDate,
   setReminderIsEdit,
+  setReminderQuery,
   setReminderSelectedDate,
   setReminderStartDate,
   setResetReminderDate,
@@ -41,6 +42,7 @@ function Reminderhead() {
     startDate,
     endDate,
     selectedDate,
+    query,
   } = useSelector((state) => state.reminder);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -112,7 +114,11 @@ function Reminderhead() {
   const handleSubmit = () => {
     setIsOpen(false);
   };
-  console.log(selectedDate, ".........");
+
+  const handleQuery = (e) => {
+    dispatch(setReminderQuery(e.target.value));
+  };
+
   return (
     <>
       <LayoutHead>
@@ -157,7 +163,7 @@ function Reminderhead() {
             callback={handleBranchChange}
           />
 
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>

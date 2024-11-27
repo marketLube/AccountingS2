@@ -12,6 +12,7 @@ import {
   setLiabilityCurParticular,
   setLiabilityEndDate,
   setLiabilityIsEdit,
+  setLiabilityQuery,
   setLiabilitySelectedDate,
   setLiabilityStartDate,
   setLiabilityStatus,
@@ -43,6 +44,7 @@ function LiabilityHead() {
     endDate,
     curStatus,
     selectedDate,
+    query,
   } = useSelector((state) => state.liability);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -108,6 +110,9 @@ function LiabilityHead() {
     setIsOpen(false);
   };
 
+  const handleQuery = (e) => {
+    dispatch(setLiabilityQuery(e.target.value));
+  };
   return (
     <>
       <LayoutHead>
@@ -151,7 +156,7 @@ function LiabilityHead() {
             callback={handleStatusChange}
             curValue={curStatus}
           />
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>

@@ -25,6 +25,7 @@ export default function useReminders() {
     curStatus,
     startDate,
     endDate,
+    query,
   } = useSelector((state) => state.reminder);
   let endpoint = `/reminders?page=${page}&sort=-date`;
 
@@ -51,6 +52,9 @@ export default function useReminders() {
   }
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
+  }
+  if (query) {
+    endpoint += `&search=${query}`;
   }
 
   const { data, isLoading, isError, error, refetch } = useQuery({

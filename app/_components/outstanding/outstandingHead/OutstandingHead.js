@@ -11,6 +11,7 @@ import {
   setOutstandingCurParticular,
   setOutstandingEndDate,
   setOutstandingIsEdit,
+  setOutstandingQuery,
   setOutstandingSelectedDate,
   setOutstandingStartDate,
   setResetOutstandingyDate,
@@ -40,6 +41,7 @@ function OutstandingHead() {
     endDate,
     curStatus,
     selectedDate,
+    query,
   } = useSelector((state) => state.outstanding);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -111,6 +113,10 @@ function OutstandingHead() {
   const handleSubmit = () => {
     setIsOpen(false);
   };
+
+  const handleQuery = (e) => {
+    dispatch(setOutstandingQuery(e.target.value));
+  };
   return (
     <>
       <LayoutHead>
@@ -155,7 +161,7 @@ function OutstandingHead() {
             curValue={curStatus}
           />
 
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>

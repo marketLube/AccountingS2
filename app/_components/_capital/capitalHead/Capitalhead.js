@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCapitalCurBranch,
   setCapitalIsEdit,
+  setCapitalQuery,
   setCapitalSelectedDate,
   setCapitalType,
   setIsCapitalNewEntry,
@@ -34,6 +35,7 @@ function Capitalhead() {
     endDate,
     curType,
     selectedDate,
+    query,
   } = useSelector((state) => state.capital);
 
   const { branchNames } = useSelector((state) => state.general);
@@ -98,6 +100,10 @@ function Capitalhead() {
     setIsOpen(false);
   };
 
+  const handleQuery = (e) => {
+    dispatch(setCapitalQuery(e.target.value));
+  };
+
   return (
     <>
       <LayoutHead>
@@ -130,7 +136,7 @@ function Capitalhead() {
             callback={handleTypeChange}
             curValue={curType}
           />
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>

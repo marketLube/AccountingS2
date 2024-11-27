@@ -9,6 +9,7 @@ import {
   setAssetsCurBranch,
   setAssetsEndDate,
   setAssetsIsEdit,
+  setAssetsQuery,
   setAssetsSelectedDate,
   setAssetsStartDate,
   setAssetsType,
@@ -38,6 +39,7 @@ function Assetshead() {
     startDate,
     endDate,
     selectedDate,
+    query,
   } = useSelector((state) => state.assets);
 
   const { branchNames, categoryNames, bankNames } = useSelector(
@@ -101,6 +103,9 @@ function Assetshead() {
   const handleSubmit = () => {
     setIsOpen(false);
   };
+  const handleQuery = (e) => {
+    dispatch(setAssetsQuery(e.target.value));
+  };
   return (
     <>
       <LayoutHead>
@@ -134,7 +139,7 @@ function Assetshead() {
             callback={handleTypeChange}
             curValue={curType}
           />
-          <Search />
+          <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
           </Button>
