@@ -19,7 +19,7 @@ function BanktoTableitem({ banktobank }) {
     <>
       <div className="table-col">
         <span className="table-check">
-          <input type="checkbox" />
+          <input type="checkbox" style={{ opacity: "0" }} />
         </span>
         <span className="table-col banktobank table-body-col">{date}</span>
         <span className="table-col banktobank table-body-col">

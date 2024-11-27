@@ -5,8 +5,8 @@ import BudgetplannerTable from "../_components/_budgetplanner/budgetTable/Budget
 import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
-  const isLoggedIn = useAuthorize();
-  if (!isLoggedIn) return <div>Unauthorized</div>;
+  // const isLoggedIn = useAuthorize();
+  // if (!isLoggedIn) return <div>Unauthorized</div>;
   return (
     <div className={`layout assetes`}>
       <h1 className={`main-head`}>Budget Planner</h1>

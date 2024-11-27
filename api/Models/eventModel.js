@@ -26,6 +26,10 @@ const eventSchema = mongoose.Schema(
     formattedDate: {
       type: String,
     },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
   },
 
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
