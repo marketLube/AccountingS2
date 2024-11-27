@@ -11,24 +11,30 @@ import {
 import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { branchFinder, useBranchNameFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshCapital } from "@/app/_hooks/useCapital";
 import { se } from "date-fns/locale";
+import {
+  setCapitalIsEdit,
+  setCapitalSelectedItems,
+} from "@/lib/slices/capitalSlice";
 
 function CapitalEditForms() {
   const [loading, setLoading] = useState(false);
   const { branches } = useSelector((state) => state.general);
-
+  const dispatch = useDispatch();
   const { selectedItems } = useSelector((state) => state.capital);
 
   const branch = useBranchNameFinder(selectedItems?.branch);
-  console.log(branch, "branch");
 
   const defaultValues = {
-    date: selectedItems?.date,
+    date:
+      selectedItems?.date && !isNaN(new Date(selectedItems.date))
+        ? new Date(selectedItems.date).toISOString().split("T")[0]
+        : "",
     remark: selectedItems?.remark,
     type: selectedItems?.type,
     invested: selectedItems?.invested,
@@ -48,7 +54,10 @@ function CapitalEditForms() {
   useEffect(() => {
     // Reset form values based on the latest selectedItems
     reset({
-      date: new Date(selectedItems?.date) || "",
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "",
       remark: selectedItems?.remark || "",
       type: selectedItems?.type || "",
       invested: selectedItems?.invested || "",
@@ -76,6 +85,18 @@ function CapitalEditForms() {
       setLoading(false);
     }
   };
+
+  const handleClear = () => {
+    reset({
+      date: today(),
+      remark: "",
+      type: "",
+      invested: "",
+      branch: "",
+      amount: "",
+    });
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Capital Edit Form</h2>
@@ -95,7 +116,9 @@ function CapitalEditForms() {
         </div>
       </div>
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

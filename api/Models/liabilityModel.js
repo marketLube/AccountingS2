@@ -93,10 +93,22 @@ liabilityAndOutstandingSchema.pre(/^find/, function (next) {
   next();
 });
 
+liabilityAndOutstandingSchema.pre("findOneAndUpdate", async function (next) {
+  const update = this.getUpdate();
+  if (update.branches) {
+    const amount = update.branches.reduce((acc, val) => val.amount + acc, 0);
+    this.setUpdate({ ...update, amount });
+  }
+
+  next();
+});
+
+// Handle save hooks
 liabilityAndOutstandingSchema.pre("save", function (next) {
   this.amount = this.branches.reduce((acc, val) => val.amount + acc, 0);
   next();
 });
+
 liabilityAndOutstandingSchema.pre("save", function (next) {
   const combinedDateTime = combineDateWithCurrentTime(this.date);
   this.date = combinedDateTime.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");

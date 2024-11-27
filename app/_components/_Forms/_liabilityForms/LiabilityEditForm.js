@@ -25,6 +25,8 @@ import {
 import toast from "react-hot-toast";
 
 import { refreshLiability } from "@/app/_hooks/useLiability";
+import { refreshLedger } from "@/app/_hooks/useLedgers";
+import { Hanken_Grotesk } from "next/font/google";
 
 function LiabilityEditForm() {
   const { selectedItems } = useSelector((state) => state.liability);
@@ -107,6 +109,7 @@ function LiabilityEditForm() {
       await apiClient.patch(`/liability/${id}`, data);
       toast.success("Successfully created new Liability");
       refreshLiability();
+      refreshLedger();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
@@ -116,6 +119,20 @@ function LiabilityEditForm() {
 
     return;
   };
+
+  const handleClear = () => {
+    reset({
+      date: today(),
+      remark: "",
+      bank: "",
+      purpose: "",
+      status: "",
+    });
+    setSelectedBranches([]);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Liability Edit Form</h2>
@@ -145,7 +162,9 @@ function LiabilityEditForm() {
         defaultAmounts={defaultAmounts}
       />
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

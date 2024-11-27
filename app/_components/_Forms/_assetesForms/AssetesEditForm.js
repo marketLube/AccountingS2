@@ -16,6 +16,7 @@ import apiClient from "@/lib/axiosInstance";
 import { branchFinder, useBranchNameFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshAssets } from "@/app/_hooks/useAssets";
+import { today } from "@/app/_services/helpers";
 
 function AssetesEditForms() {
   const [loading, setLoading] = useState(false);
@@ -74,6 +75,20 @@ function AssetesEditForms() {
       setLoading(false);
     }
   };
+
+  const handleClear = () => {
+    reset({
+      date: today(),
+      remark: "",
+      branch: "",
+      purchasedBy: "",
+      purpose: "",
+      item: "",
+      amount: "",
+      type: "",
+    });
+  };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Asset edit Form</h2>
@@ -99,7 +114,9 @@ function AssetesEditForms() {
       </div>
 
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

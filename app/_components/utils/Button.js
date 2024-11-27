@@ -39,6 +39,7 @@ function Button({
         onClick={onClick}
         style={style}
         disabled={disabled}
+        type="button"
       >
         {children}
       </button>

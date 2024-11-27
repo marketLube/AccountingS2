@@ -5,8 +5,8 @@ import LedgerTable from "../_components/_ledger/ledgerTable/LedgerTable";
 import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
-  const isLoggedIn = useAuthorize();
-  if (!isLoggedIn) return <div>Unauthorized</div>;
+  // const isLoggedIn = useAuthorize();
+  // if (!isLoggedIn) return <div>Unauthorized</div>;
   return (
     <div className={`layout ledger`}>
       <h1 className={`main-head`}>Ledger</h1>
