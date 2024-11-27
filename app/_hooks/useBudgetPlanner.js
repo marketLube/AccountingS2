@@ -28,6 +28,8 @@ export default function useBudgetPlanner() {
   if (endDate) {
     endpoint += `&endDate=${endDate}`;
   }
+
+  console.log(endpoint, "Endpoint");
   const {
     data: events,
     isLoading,

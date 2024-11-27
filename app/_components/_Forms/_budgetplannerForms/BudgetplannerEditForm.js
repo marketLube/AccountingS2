@@ -76,13 +76,21 @@ function BudgetplannerEditForm() {
       });
       toast.success("Successfully created new Event");
       refreshBudgetPlanner();
-      reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response?.data?.message || "An error occurred");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleClear = () => {
+    reset({
+      property: "",
+      existingProperty: "",
+      amount: "",
+      branch: "",
+    });
   };
 
   return (
@@ -108,7 +116,9 @@ function BudgetplannerEditForm() {
       </div>
 
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

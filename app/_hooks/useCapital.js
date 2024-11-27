@@ -32,8 +32,7 @@ export default function useCapitals() {
     queryKey: ["capital", endpoint],
     queryFn: () => apiClient.get(endpoint).then((res) => res.data),
   });
-  console.log(endpoint);
-  console.log(data, "Summery capital");
+
   useEffect(() => {
     dispatch(setCapitalSummery(data?.summery));
   }, [data, dispatch]);

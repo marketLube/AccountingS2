@@ -123,9 +123,11 @@ function Catagory({
               className="show-cat-input "
               type="text"
               value={curEditValue}
+              style={isCurEdit ? { color: "black" } : {}}
               onChange={handleCurEditValue}
               onClick={(e) => e.stopPropagation()}
-              disabled={isLoading} // Disable input while loading
+              disabled={isLoading}
+              ing
             />
           )}
           {!isCurEdit && truncate(curValue, 20)}
