@@ -19,7 +19,7 @@ function CatagorySelector({
   useEffect(() => {
     const particulars = curCat?.particulars;
     setParticulars(particulars);
-  }, [catagory]);
+  }, [catagory, setParticular, curCat]);
 
   return (
     <div className="form-row">

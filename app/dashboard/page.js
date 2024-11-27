@@ -49,7 +49,7 @@ function Page() {
     },
   ];
 
-  if (!isLoggedIn) return <div>Unauthorized</div>;
+  // if (!isLoggedIn) return <div>Unauthorized</div>;
 
   return (
     <div className={`layout dashboard`}>
