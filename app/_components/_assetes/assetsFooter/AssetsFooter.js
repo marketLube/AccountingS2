@@ -13,6 +13,7 @@ function AssetsFooter() {
     <>
       <div className={`layout-footer`}>
         <div className="layout-footer-left">
+          <Button>Download Report</Button>
           <Button>Total : {summery?.overallTotal}</Button>
           <Button>Fixed : {summery?.fixedTotal}</Button>
           <Button>Temp : {summery?.tempTotal}</Button>
@@ -23,11 +24,6 @@ function AssetsFooter() {
             setCurrentPage={setAssetsBtnDisable}
             btnDisable={btnDisable}
           />
-        </div>
-      </div>
-      <div className="layout-footer-bottom">
-        <div className="layout-footer-bottom-left">
-          <Button>Download Report</Button>
         </div>
       </div>
     </>
