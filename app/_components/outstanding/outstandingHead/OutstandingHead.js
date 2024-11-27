@@ -83,13 +83,6 @@ function OutstandingHead() {
     return () => dispatch(setOutstandingSelectedDate(range));
   };
 
-  const [selectedOption, setSelectedOption] = useState("All");
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    dispatch(setOutstandingSelectedDate(option));
-  };
-
   const [loading, setLoading] = useState(false);
   const onSubmit = async () => {
     const id = selectedItems?._id;
@@ -120,8 +113,8 @@ function OutstandingHead() {
                 try {
                   setLoading(true);
                   await apiClient.delete(`/liability/${id}`);
-                  toast.success("Successfully Liability Deleted");
-                  refreshLiability();
+                  toast.success("Successfully Deleted");
+                  refreshOutstanding();
                 } catch (e) {
                   console.log(e);
                   toast.error(

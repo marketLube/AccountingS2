@@ -6,8 +6,8 @@ import ReminderTable from "../_components/reminder/ReminderTable/ReminderTable";
 import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
-  // const isLoggedIn = useAuthorize();
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   return (
     <div className={`layout outstanding`}>

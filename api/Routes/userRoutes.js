@@ -8,7 +8,14 @@ import {
   verify,
   resetPassword,
   protect,
+  updateMe,
 } from "../Controller/authController.js";
+import {
+  deleteUser,
+  getAllUsers,
+  getUser,
+  updateUser,
+} from "../Controller/userController.js";
 
 const router = express.Router();
 
@@ -19,5 +26,11 @@ router.post("/login-otp", loginByOtp);
 router.post("/verify-otp", verifyOtp);
 router.post("/logout", logout);
 router.post("/resetPassword", protect, resetPassword);
+router.patch("/update-me", updateMe);
+
+router.get("/", getAllUsers);
+router.get("/:id", getUser);
+router.patch("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 export default router;

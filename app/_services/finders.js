@@ -64,8 +64,11 @@ export const getBranchNames = (branches) => {
   return branches.map((branch) => branch?.branch?.name);
 };
 
-export const dateFinder = (selectedDate) => {
+export const dateFinder = (selectedDate, type = "") => {
+  // If the type is 'reminder', set all endDate values to the last day of the year
+
   if (selectedDate === "Custom") return {};
+
   const date = today();
   let startDate = new Date(date);
   let endDate = new Date(date);
@@ -96,7 +99,10 @@ export const dateFinder = (selectedDate) => {
     }
     case "All": {
       startDate = new Date(new Date().getFullYear(), 0, 1);
-      endDate = new Date(today());
+      endDate =
+        type === "reminder"
+          ? new Date(new Date().getFullYear(), 11, 31)
+          : new Date(today());
       break;
     }
     default: {
@@ -104,5 +110,6 @@ export const dateFinder = (selectedDate) => {
       endDate = new Date(new Date(new Date().getFullYear(), 0, 1));
     }
   }
+
   return { startDate, endDate };
 };

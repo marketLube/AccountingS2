@@ -13,8 +13,8 @@ import { getCurrentMonthName } from "../_services/helpers";
 import useDashboardTotals, { useDashboardChart } from "../_hooks/useDashboard";
 import { Skeleton } from "antd";
 import { useRouter } from "next/navigation";
+import Login from "../_components/LoginPage/Login";
 import { useEffect } from "react";
-import { isCookiePresent } from "../_services/smallHelpers";
 
 function Page() {
   const { isAllTime, debits, credits, branchNames } = useSelector(
@@ -29,10 +29,10 @@ function Page() {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (isLoggedIn) return;
-  //   router.push("/login");
-  // }, []);
+  useEffect(() => {
+    if (isLoggedIn) return;
+    router.push("/login");
+  }, []);
 
   const datasets = [
     {
@@ -49,7 +49,7 @@ function Page() {
     },
   ];
 
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  if (!isLoggedIn) return <Login />;
 
   return (
     <div className={`layout dashboard`}>

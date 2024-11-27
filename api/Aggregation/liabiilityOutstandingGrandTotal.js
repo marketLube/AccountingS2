@@ -16,9 +16,16 @@ export const getLiabilityOutstandingTotal = async (req) => {
 
   // Handle date range if present
   if (query.startDate && query.endDate) {
+    // Parse dates and set to start of start date and end of end date
+    const startDate = new Date(query.startDate);
+    startDate.setHours(0, 0, 0, 0);
+
+    const endDate = new Date(query.endDate);
+    endDate.setHours(23, 59, 59, 999);
+
     matchStage.date = {
-      $gte: new Date(query.startDate),
-      $lte: new Date(query.endDate),
+      $gte: startDate,
+      $lte: endDate,
     };
   }
 

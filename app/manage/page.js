@@ -11,8 +11,8 @@ function Page() {
   const [catagory, setCatagory] = useState("");
   const [particular, setParticular] = useState("");
 
-  // const isLoggedIn = useAuthorize();
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
   return (
     <div className={`layout manage`}>
       <h1 className={`main-head`}>Manage</h1>

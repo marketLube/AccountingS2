@@ -84,17 +84,56 @@ function Assetshead() {
 
   const onSubmit = async () => {
     const id = selectedItems?._id;
-    try {
-      setLoading(true);
-      await apiClient.delete(`/assets/${id}`);
-      toast.success("Successfully Assets Deleted");
-      refreshAssets();
-    } catch (e) {
-      console.log(e);
-      toast.error(e.response.data.message);
-    } finally {
-      setLoading(false);
+
+    if (!id) {
+      toast.error("No item selected to delete.");
+      return;
     }
+
+    toast(
+      (t) => (
+        <div>
+          <p>This action cannot be undone.</p>
+          <div
+            style={{
+              marginTop: "8px",
+              display: "flex",
+              gap: "8px",
+            }}
+          >
+            <button
+              className="btn dltprimary"
+              onClick={async () => {
+                toast.dismiss(t.id);
+                try {
+                  setLoading(true);
+                  await apiClient.delete(`/assets/${id}`);
+                  toast.success("Successfully Deleted");
+                  refreshAssets();
+                } catch (e) {
+                  console.log(e);
+                  toast.error(
+                    e.response?.data?.message ||
+                      "An error occurred while deleting."
+                  );
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            >
+              Confirm
+            </button>
+            <button
+              className="btn secondary"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity }
+    );
   };
   const handleClear = () => {
     dispatch(setResetAssetDate());
@@ -122,7 +161,7 @@ function Assetshead() {
           </Button>
           <Button
             onClick={onSubmit}
-            type={selectedItems?._id ? "primary" : "secondary"}
+            type={selectedItems?._id ? "dltprimary" : "secondary"}
             disabled={!selectedItems?._id}
           >
             Delete

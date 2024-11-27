@@ -118,7 +118,7 @@ function LiabilityHead() {
                 try {
                   setLoading(true);
                   await apiClient.delete(`/liability/${id}`);
-                  toast.success("Successfully Liability Deleted");
+                  toast.success("Successfully Deleted");
                   refreshLiability();
                 } catch (e) {
                   console.log(e);

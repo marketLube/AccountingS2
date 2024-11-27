@@ -6,8 +6,8 @@ import DaybookTable from "../_components/daybook/daybookTable/DaybookTable";
 import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
-  // const isLoggedIn = useAuthorize();
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   return (
     <div className={`layout daybook`}>

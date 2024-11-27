@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../Models/userModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
+import { updateOne } from "./handlerFactory.js";
 
 const KEY = process.env.JWT_SECRET;
 
@@ -25,6 +26,8 @@ const sendToken = (user, statusCode, res) => {
     phone: user.phone,
     image: user.image,
     name: user.name,
+    role: user.role,
+    _id: user._id,
   };
 
   res.status(statusCode).json({
@@ -183,3 +186,5 @@ export const logout = catchAsync(async (req, res, next) => {
     .status(200)
     .json({ status: "Success", message: "Logged out, cookie cleared" });
 });
+
+export const updateMe = updateOne(User);

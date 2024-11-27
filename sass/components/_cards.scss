@@ -316,6 +316,11 @@
   overflow: hidden;
   position: relative;
 
+  & img {
+    width: 100%;
+    object-fit: cover;
+  }
+
   & button {
     position: absolute;
     height: 3rem;
@@ -339,6 +344,7 @@
     background-color: #276678;
     border-radius: 50%;
     margin: 0 auto 1.5rem;
+    overflow: hidden;
   }
 
   &-field {

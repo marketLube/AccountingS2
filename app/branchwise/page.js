@@ -34,8 +34,8 @@ function Page() {
   const totalIncome = data?.map((val) => val.totalIncome);
   const totalExpence = data?.map((val) => val.totalExpense);
 
-  // const isLoggedIn = useAuthorize();
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   // Reordered datasets to show Expense first, then Income
   const datasets = [

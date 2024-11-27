@@ -69,28 +69,60 @@ function Capitalhead() {
     return () => dispatch(setCapitalSelectedDate(range));
   };
 
-  const [selectedOption, setSelectedOption] = useState("All");
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    dispatch(setCapitalSelectedDate(option));
-  };
-
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
     const id = selectedItems?._id;
-    try {
-      setLoading(true);
-      await apiClient.delete(`/capital/${id}`);
-      toast.success("Successfully Liability Deleted");
-      refreshCapital();
-    } catch (e) {
-      console.log(e);
-      toast.error(e.response.data.message);
-    } finally {
-      setLoading(false);
+
+    if (!id) {
+      toast.error("No item selected to delete.");
+      return;
     }
+
+    toast(
+      (t) => (
+        <div>
+          <p>This action cannot be undone.</p>
+          <div
+            style={{
+              marginTop: "8px",
+              display: "flex",
+              gap: "8px",
+            }}
+          >
+            <button
+              className="btn dltprimary"
+              onClick={async () => {
+                toast.dismiss(t.id);
+                try {
+                  setLoading(true);
+                  await apiClient.delete(`/capital/${id}`);
+                  toast.success("Successfully Deleted");
+                  refreshCapital();
+                } catch (e) {
+                  console.log(e);
+                  toast.error(
+                    e.response?.data?.message ||
+                      "An error occurred while deleting."
+                  );
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            >
+              Confirm
+            </button>
+            <button
+              className="btn secondary"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity }
+    );
   };
   const handleClear = () => {
     dispatch(setResetCapitalDate());
@@ -120,7 +152,7 @@ function Capitalhead() {
           </Button>
           <Button
             onClick={onSubmit}
-            type={selectedItems?._id ? "primary" : "secondary"}
+            type={selectedItems?._id ? "dltprimary" : "secondary"}
             disabled={!selectedItems?._id}
           >
             Delete

@@ -38,12 +38,16 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, "User must have a password"],
-      minlength: [8, "Password must have at least 8 characters"],
+      minlength: [1, "Password must have at least 8 characters"],
     },
     role: {
       type: String,
-      enum: ["accountant"],
       default: "accountant",
+    },
+    image: {
+      type: String,
+      default:
+        "https://cbbstwltufvzpsqvnahz.supabase.co/storage/v1/object/public/avatars/public/logoipsum.png",
     },
     changePasswordDate: Date,
     passwordResetOtp: String,
