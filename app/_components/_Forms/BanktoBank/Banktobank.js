@@ -17,6 +17,14 @@ function Banktobank() {
   const [loading, setLoading] = useState(false);
   const { banks, branches } = useSelector((state) => state.general);
   const dispatch = useDispatch();
+
+  const defaultValues = {
+    toBank: "",
+    toBranch: "",
+    fromBank: "",
+    fromBranch: "",
+  };
+
   const {
     register,
     handleSubmit,
@@ -25,19 +33,14 @@ function Banktobank() {
     setError,
     clearErrors,
   } = useForm({
-    defaultValues: {
-      toBank: "",
-      toBranch: "",
-      fromBank: "",
-      fromBranch: "",
-    },
+    defaultValues,
   });
 
   const onSubmit = async (data) => {
     if (data.fromBank === data.toBank && data.toBank === data.fromBank) {
       return toast.error("Invalid transaction..");
     }
-    
+
     data.fromBank = bankIdFiner(banks, data.fromBank);
     data.fromBranch = branchFinder(data.fromBranch, branches)?._id;
     data.toBank = bankIdFiner(banks, data.toBank);
@@ -61,6 +64,10 @@ function Banktobank() {
       setLoading(false);
     }
     return;
+  };
+
+  const handleClear = () => {
+    reset(defaultValues);
   };
 
   return (
@@ -91,7 +98,9 @@ function Banktobank() {
         <Amount register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button type="submit">Transfer</Button>
       </div>
     </form>

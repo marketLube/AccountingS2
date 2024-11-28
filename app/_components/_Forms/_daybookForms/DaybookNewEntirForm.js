@@ -118,6 +118,22 @@ function DaybookNewEntirForm() {
 
     return;
   };
+
+  const handleClear = () => {
+    reset({
+      date: "",
+      remark: "",
+      bank: "",
+      type: "",
+      purpose: "",
+      tds: "",
+      gstPercent: "",
+      gstType: "",
+    });
+    setSelectedBranches([]);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Daybook New Entry Form</h2>
@@ -157,7 +173,9 @@ function DaybookNewEntirForm() {
         <GstPercent register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

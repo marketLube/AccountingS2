@@ -373,10 +373,7 @@ export function BranchSelector({ register, errors, val = "branch" }) {
       <label htmlFor="branchselector" className="form-group-formlabel">
         Branch
       </label>
-      <select
-        id={val}
-        {...register(val, { required: "GST Percent is required" })}
-      >
+      <select id={val} {...register(val, { required: val + " is required" })}>
         <option value="">Select a branch</option>
         {branchNames?.map((branch, i) => (
           <option key={i} value={branch}>

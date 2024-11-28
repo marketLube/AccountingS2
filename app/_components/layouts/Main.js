@@ -24,32 +24,19 @@ function Main({ children }) {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const router = useRouter();
   const dispatch = useDispatch();
-
-  useDashboardTotals();
-  useTransactions();
-  useLiability();
-  useOutstanding();
-  useReminders();
-  useBranchWise();
-  useAssets();
-  useBudgetPlanner();
-  useCapitals();
-  useLedgers();
-
   useEffect(() => {
     dispatch(fetchCategory());
     dispatch(fetchBranches());
     dispatch(fetchBanks());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   console.log(isLoggedIn, "login");
-  //   if (!isLoggedIn) {
-  //     router.push("/login");
-  //   } else {
-  //     router.push("/dashboard");
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      router.push("/dashboard");
+    }
+  }, [isLoggedIn]);
 
   return <main className="main">{children}</main>;
 }

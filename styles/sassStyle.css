@@ -711,11 +711,6 @@ body {
   color: rgb(53, 49, 49);
 }
 
-.gst,
-.tds {
-  flex: 0.5;
-}
-
 .table-check {
   width: 2.5rem;
   height: 100%;

@@ -32,7 +32,7 @@ const transactionSchema = mongoose.Schema(
     remark: {
       type: String,
       trim: true,
-      minlength: [3, "Description must be at least 3 characters long"],
+      minlength: [1, "Description must be at least 3 characters long"],
     },
     type: {
       type: String,
