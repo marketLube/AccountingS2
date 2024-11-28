@@ -94,6 +94,7 @@ liabilityAndOutstandingSchema.pre(/^find/, function (next) {
 
 liabilityAndOutstandingSchema.pre("save", function (next) {
   this.formattedDate = this.date.toISOString().split("T")[0];
+  next();
 });
 
 liabilityAndOutstandingSchema.pre("findOneAndUpdate", async function (next) {
