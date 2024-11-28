@@ -26,7 +26,6 @@ import toast from "react-hot-toast";
 
 import { refreshLiability } from "@/app/_hooks/useLiability";
 import { refreshLedger } from "@/app/_hooks/useLedgers";
-import { Hanken_Grotesk } from "next/font/google";
 import { refreshDashboardTotals } from "@/app/_hooks/useDashboard";
 
 function LiabilityEditForm() {

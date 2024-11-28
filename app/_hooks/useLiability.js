@@ -37,7 +37,7 @@ export function useLiability() {
     setLiabilityParticular,
     setLiabilityCurParticular
   );
-  let endpoint = `/liability?type=liability&page=${page}&sort=-date`;
+  let endpoint = `/liability?type=liability&page=${page}&sort=-date -updatedAt`;
 
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
