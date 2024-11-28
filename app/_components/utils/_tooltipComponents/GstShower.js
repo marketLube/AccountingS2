@@ -11,11 +11,18 @@ function GstShower({ data, amount }) {
     gstAmount = (validAmount * gstPercent) / (100 + gstPercent);
   } else if (data?.gstType === "excl") {
     gstAmount = (validAmount * gstPercent) / 100;
+  } else {
+    gstAmount = 0;
   }
   return (
     <div>
       <span className="small-text table-small-text">
-        {data.gstType === "incl" ? "Incl" : "Excl"} {gstPercent}%
+        {data.gstType === "incl"
+          ? "Incl"
+          : data.gstType === "Excl"
+          ? "Excl"
+          : "No-Gst"}{" "}
+        {gstPercent}%
       </span>
       <span className="small-text table-small-text">
         {gstAmount.toFixed(2)}
