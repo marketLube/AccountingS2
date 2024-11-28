@@ -552,14 +552,16 @@ export function Gst({ register, errors, disabled = false }) {
   return (
     <div className="form-group">
       <label htmlFor="GstType" className="type-option-label">
-        Gst
+        GST
       </label>
       <div className="type-options">
         <label className="type-option">
           <input
             type="radio"
             value="incl"
-            {...register("gstType")}
+            {...register("gstType", {
+              required: !disabled && "GST type is required",
+            })}
             disabled={disabled}
           />
           Inclusive
@@ -568,7 +570,9 @@ export function Gst({ register, errors, disabled = false }) {
           <input
             type="radio"
             value="excl"
-            {...register("gstType")}
+            {...register("gstType", {
+              required: !disabled && "GST type is required",
+            })}
             disabled={disabled}
           />
           Exclusive
@@ -580,7 +584,6 @@ export function Gst({ register, errors, disabled = false }) {
     </div>
   );
 }
-
 export function TdsPercent({ register, errors, disabled = false }) {
   return (
     <div className="form-group">
@@ -592,7 +595,9 @@ export function TdsPercent({ register, errors, disabled = false }) {
           <input
             type="radio"
             value="Payable"
-            {...register("tdsType")}
+            {...register("tdsType", {
+              required: !disabled && "GST type is required",
+            })}
             disabled={disabled}
           />
           Payable
@@ -623,6 +628,7 @@ export function DateSel({ register, errors }) {
       <input
         type="date"
         id="date"
+        max={new Date().toISOString().split("T")[0]}
         {...register("date", { required: "Date is required" })}
       />
       {errors.date && (

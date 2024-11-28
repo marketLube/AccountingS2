@@ -143,6 +143,7 @@ function DaybookEditForm() {
   };
 
   const tdsValue = watch("tds");
+  const gstValue = watch("gstPercent");
 
   const handleClear = () => {
     reset({
@@ -196,7 +197,7 @@ function DaybookEditForm() {
           errors={errors}
           disabled={tdsValue === "0%"}
         />
-        <Gst register={register} errors={errors} />
+        <Gst register={register} errors={errors} disabled={gstValue === "0%"} />
         <GstPercent register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns">

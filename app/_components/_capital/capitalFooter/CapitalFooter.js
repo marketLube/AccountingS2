@@ -9,7 +9,6 @@ function CapitalFooter() {
   const { currentPage, btnDisable, summery } = useSelector(
     (state) => state.capital
   );
-  console.log(summery, "summery");
   return (
     <>
       <div className={`layout-footer`}>

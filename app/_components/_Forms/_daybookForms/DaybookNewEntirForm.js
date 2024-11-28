@@ -30,6 +30,7 @@ import {
   refreshBranchWiseCircle,
 } from "@/app/_hooks/useBranchwise";
 import { fetchBanks } from "@/lib/slices/generalSlice";
+import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
 
 function DaybookNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -43,6 +44,18 @@ function DaybookNewEntirForm() {
   const [catagory, setCatagory] = useState("Select Catagory");
   const [particular, setParticular] = useState("Select Particular");
 
+  const defaultValues = {
+    date: today(),
+    remark: "",
+    bank: "",
+    type: "",
+    purpose: "",
+    tds: "",
+    gstPercent: "",
+    gstType: "",
+    tdsType: "",
+  };
+
   const {
     register,
     handleSubmit,
@@ -52,17 +65,7 @@ function DaybookNewEntirForm() {
     clearErrors,
     watch,
   } = useForm({
-    defaultValues: {
-      date: today(),
-      remark: "",
-      bank: "",
-      type: "",
-      purpose: "",
-      tds: "",
-      gstPercent: "",
-      gstType: "",
-      tdsType: "",
-    },
+    defaultValues,
   });
 
   const tdsValue = watch("tds");
@@ -102,7 +105,10 @@ function DaybookNewEntirForm() {
       refreshBranchWiseCircle();
       dispatch(fetchBanks());
       refreshBalanceSheet();
-      reset();
+      reset(defaultValues);
+      setSelectedBranches([]);
+      setCatagory([]);
+      setParticular([]);
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

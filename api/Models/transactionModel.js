@@ -25,8 +25,9 @@ const transactionSchema = mongoose.Schema(
       type: Number,
     },
     bank: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Bank",
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref: "Bank",
+      type: String,
       required: [true, "Bank must have a name"],
     },
     remark: {
@@ -48,11 +49,11 @@ const transactionSchema = mongoose.Schema(
     },
     tds: {
       type: String,
-      required: [true, "Transaction must have tds"],
+      default: "0%",
     },
     gstPercent: {
       type: String,
-      required: [true, "Transaction must have gst percentage"],
+      default: "0%",
     },
     gstType: {
       type: String,
@@ -62,7 +63,7 @@ const transactionSchema = mongoose.Schema(
     tdsType: {
       type: String,
       enum: ["Payable", "Receivable", "no tds"],
-      default: ["no tds"],
+      default: "no tds",
     },
     branches: [
       {
