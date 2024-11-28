@@ -44,7 +44,6 @@ export const updateTransaction = catchAsync(async (req, res, next) => {
   const { id: transactionId, createdAt } = req.params;
   const updates = req.body;
   updates._id = transactionId;
-  updates.createdAt = createdAt;
 
   const transaction = new Transaction(updates);
 
@@ -133,7 +132,6 @@ export const deleteTransactionByIdMiddleWare = catchAsync(
 
     // Store transaction info for potential use in subsequent middleware
     req.params.id = transactionId;
-    req.params.createdAt = transactionId;
     req.oldTransaction = transaction.toObject();
 
     next();

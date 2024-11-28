@@ -14,6 +14,7 @@ import {
   setLiabilityIsEdit,
   setLiabilityQuery,
   setLiabilitySelectedDate,
+  setLiabilitySelectedItems,
   setLiabilityStartDate,
   setLiabilityStatus,
   setResetLiabilityDate,
@@ -120,6 +121,7 @@ function LiabilityHead() {
                   await apiClient.delete(`/liability/${id}`);
                   toast.success("Successfully Deleted");
                   refreshLiability();
+                  dispatch(setLiabilitySelectedItems({}));
                 } catch (e) {
                   console.log(e);
                   toast.error(
