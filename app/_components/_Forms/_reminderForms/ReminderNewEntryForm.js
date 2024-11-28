@@ -42,6 +42,18 @@ function ReminderNewEntryForm() {
   const [catagory, setCatagory] = useState("Select Catagory");
   const [particular, setParticular] = useState("Select Particular");
 
+  const defaultValues = {
+    date: today(),
+    remark: "",
+    bank: "",
+    type: "",
+    purpose: "",
+    branch: "",
+    adminstatus: "",
+    accountstatus: "",
+    amount: "",
+  };
+
   const {
     register,
     handleSubmit,
@@ -50,18 +62,14 @@ function ReminderNewEntryForm() {
     setError,
     clearErrors,
   } = useForm({
-    defaultValues: {
-      date: today(),
-      remark: "",
-      bank: "",
-      type: "",
-      purpose: "",
-      branch: "",
-      adminstatus: "",
-      accountstatus: "",
-      amount: "",
-    },
+    defaultValues,
   });
+
+  const handleClear = () => {
+    reset(defaultValues);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
 
   const onSubmit = async (data) => {
     data.catagory = catIdFinder(categories, catagory);
@@ -76,7 +84,7 @@ function ReminderNewEntryForm() {
       await apiClient.post("/reminders", data);
       toast.success("Successfully created new Reminder");
       refreshReminders();
-      reset();
+      handleClear();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
@@ -112,7 +120,9 @@ function ReminderNewEntryForm() {
       </div>
 
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

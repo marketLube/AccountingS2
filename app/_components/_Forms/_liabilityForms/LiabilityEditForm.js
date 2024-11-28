@@ -86,6 +86,19 @@ function LiabilityEditForm() {
     );
   }, [selectedItems, reset]);
 
+  const handleClear = () => {
+    reset({
+      date: today(),
+      remark: "",
+      bank: "",
+      purpose: "",
+      status: "",
+    });
+    setSelectedBranches([]);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
+
   const onSubmit = async (data) => {
     const id = selectedItems?._id;
     const branchObjects = selectedBranches.map((branch) => {
@@ -117,21 +130,6 @@ function LiabilityEditForm() {
     } finally {
       setLoading(false);
     }
-
-    return;
-  };
-
-  const handleClear = () => {
-    reset({
-      date: today(),
-      remark: "",
-      bank: "",
-      purpose: "",
-      status: "",
-    });
-    setSelectedBranches([]);
-    setCatagory("Select Catagory");
-    setParticular("Select Particular");
   };
 
   return (

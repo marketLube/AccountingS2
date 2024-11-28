@@ -3,12 +3,13 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { truncate } from "@/app/_services/helpers";
 import apiClient from "@/lib/axiosInstance";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkCaseSensitivity } from "../helper";
+import { fetchCategory } from "@/lib/slices/generalSlice";
 
 function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
   const { categories } = useSelector((state) => state.general);
-
+  const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [pastValue, setPastValue] = useState(value); // Store the original value
   const [localCurValue, setLocalCurValue] = useState(value); // Local editable
@@ -40,6 +41,7 @@ function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
       await apiClient.patch(`/catagory/${id}`, { name: localCurValue.trim() });
       setPastValue(localCurValue.trim());
       setCurValue(localCurValue.trim());
+      dispatch(fetchCategory());
       toast.success("Category updated successfully");
     } catch (err) {
       toast.error("Duplicate category name or error occurred");

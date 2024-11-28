@@ -12,16 +12,17 @@ import { useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
 import ParticularSelector from "../../utils/ParticularSelector";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import { refreshOutstanding } from "@/app/_hooks/useOutstanding";
+import { refreshDashboardTotals } from "@/app/_hooks/useDashboard";
 
 function OutstandingNewEntryForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const { categories, particulars, banks } = useSelector(
     (state) => state.general
   );
@@ -29,6 +30,14 @@ function OutstandingNewEntryForm() {
 
   const [catagory, setCatagory] = useState("Select Catagory");
   const [particular, setParticular] = useState("Select Particular");
+
+  const defaultValues = {
+    date: today(),
+    remark: "",
+    bank: "",
+    purpose: "",
+    status: "",
+  };
 
   const {
     register,
@@ -38,14 +47,15 @@ function OutstandingNewEntryForm() {
     setError,
     clearErrors,
   } = useForm({
-    defaultValues: {
-      date: today(),
-      remark: "",
-      bank: "",
-      purpose: "",
-      status: "",
-    },
+    defaultValues,
   });
+
+  const handleClear = () => {
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+    setSelectedBranches([]);
+    reset(defaultValues);
+  };
 
   const onSubmit = async (data) => {
     const branchObjects = selectedBranches.map((branch) => {
@@ -70,7 +80,8 @@ function OutstandingNewEntryForm() {
       await apiClient.post("/liability", data);
       toast.success("Successfully created new Outstanding");
       refreshOutstanding();
-      reset();
+      refreshDashboardTotals();
+      handleClear();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
@@ -80,6 +91,7 @@ function OutstandingNewEntryForm() {
 
     return;
   };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Outstanding New Entry Form</h2>
@@ -108,7 +120,9 @@ function OutstandingNewEntryForm() {
         register={register}
       />
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

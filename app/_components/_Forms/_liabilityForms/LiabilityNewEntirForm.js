@@ -31,6 +31,14 @@ function LiabilityNewEntirForm() {
   const [catagory, setCatagory] = useState("Select Catagory");
   const [particular, setParticular] = useState("Select Particular");
 
+  const defaultValues = {
+    date: today(),
+    remark: "",
+    bank: "",
+    purpose: "",
+    status: "",
+  };
+
   const {
     register,
     handleSubmit,
@@ -39,14 +47,15 @@ function LiabilityNewEntirForm() {
     setError,
     clearErrors,
   } = useForm({
-    defaultValues: {
-      date: today(),
-      remark: "",
-      bank: "",
-      purpose: "",
-      status: "",
-    },
+    defaultValues,
   });
+
+  const handleClear = () => {
+    reset(defaultValues);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+    setSelectedBranches([]);
+  };
 
   const onSubmit = async (data) => {
     const branchObjects = selectedBranches.map((branch) => {
@@ -73,7 +82,7 @@ function LiabilityNewEntirForm() {
       refreshLiability();
       refreshDashboardTotals();
       refreshLedger();
-      reset();
+      handleClear();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
@@ -81,6 +90,7 @@ function LiabilityNewEntirForm() {
       setLoading(false);
     }
   };
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Liability New Entry Form</h2>
@@ -109,7 +119,9 @@ function LiabilityNewEntirForm() {
         register={register}
       />
       <div className="form-btn-group form-submit-btns">
-        <Button type="clear">Clear</Button>
+        <Button type="clear" onClick={handleClear}>
+          Clear
+        </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}

@@ -14,6 +14,7 @@ import {
   setReminderIsEdit,
   setReminderQuery,
   setReminderSelectedDate,
+  setReminderSelectedItems,
   setReminderStartDate,
   setResetReminderDate,
 } from "@/lib/slices/reminderSlice";
@@ -111,9 +112,10 @@ function Reminderhead() {
                 toast.dismiss(t.id);
                 try {
                   setLoading(true);
-                  await apiClient.delete(`/liability/${id}`);
+                  await apiClient.delete(`/reminders/${id}`);
                   toast.success("Successfully Deleted");
                   refreshReminders();
+                  dispatch(setReminderSelectedItems({}));
                 } catch (e) {
                   console.log(e);
                   toast.error(

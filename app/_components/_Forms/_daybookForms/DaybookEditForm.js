@@ -85,6 +85,7 @@ function DaybookEditForm() {
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
       tds: selectedItems?.tds || "",
+      tdsType: selectedItems?.tdsType || "",
       gstPercent: selectedItems?.gstPercent || "",
       gstType: selectedItems?.gstType || "",
     });

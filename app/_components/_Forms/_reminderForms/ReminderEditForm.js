@@ -52,7 +52,6 @@ function ReminderEditForm() {
     branch: branch || "",
     amount: selectedItems?.amount || "",
   };
-  console.log(selectedItems);
 
   const {
     register,

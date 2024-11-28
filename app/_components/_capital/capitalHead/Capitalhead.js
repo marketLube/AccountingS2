@@ -6,9 +6,11 @@ import Search from "../../utils/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCapitalCurBranch,
+  setCapitalEndDate,
   setCapitalIsEdit,
   setCapitalQuery,
   setCapitalSelectedDate,
+  setCapitalStartDate,
   setCapitalType,
   setIsCapitalNewEntry,
   setResetCapitalDate,
