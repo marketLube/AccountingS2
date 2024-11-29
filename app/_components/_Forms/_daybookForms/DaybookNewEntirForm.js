@@ -97,6 +97,7 @@ function DaybookNewEntirForm() {
     data.catagory = catIdFinder(categories, catagory);
     data.particular = parIdFinder(particulars, particular);
     data.bank = bankIdFiner(banks, data.bank);
+    data.gstPercent = parseFloat(data.gstPercent);
 
     if (!data.gstType) data.gstType = "no-gst";
     if (!data.tdsType) data.tdsType = "no tds";

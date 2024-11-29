@@ -1,5 +1,6 @@
 import LiabilityAndOutstanding from "../Models/liabilityModel.js";
 import mongoose from "mongoose";
+import { matchDates, matchField } from "./features/matchingObj.js";
 
 export const getLiabilityOutstandingTotal = async (req) => {
   const query = { ...req.query };
@@ -13,34 +14,11 @@ export const getLiabilityOutstandingTotal = async (req) => {
 
   // Match stage based on query parameters
   const matchStage = {};
-  // Handle date range if present
-  if (query.startDate && query.endDate) {
-    // Parse dates and set to the start of the day for startDate and end of the day for endDate
-    const startDate = new Date(query.startDate);
-    const endDate = new Date(query.endDate);
+  const matchingArr = ["catagory", "particular"];
 
-    // Validate the dates
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      throw new Error("Invalid date format for startDate or endDate");
-    }
+  matchField(matchingArr, req.query, matchStage);
+  matchDates(query, matchStage);
 
-    // Ensure startDate is set to the start of the day
-    startDate.setUTCHours(0, 0, 0, 0);
-
-    // Ensure endDate is set to the end of the day
-    endDate.setUTCHours(23, 59, 59, 999);
-
-    // Log for debugging
-    console.log(startDate.toISOString(), "startDate");
-    console.log(endDate.toISOString(), "endDate");
-
-    // Build the matchStage query
-
-    matchStage.date = {
-      $gte: startDate,
-      $lte: endDate,
-    };
-  }
   if (
     query.search &&
     typeof query.search === "string" &&
@@ -79,21 +57,6 @@ export const getLiabilityOutstandingTotal = async (req) => {
   if (Object.keys(matchStage).length > 0) {
     pipeline.push({ $match: matchStage });
   }
-  // Add other query parameters to match stage
-  ["type", "catagory", "particular", "status"].forEach((field) => {
-    if (query[field]) {
-      if (["catagory", "particular"].includes(field)) {
-        // Validate and convert ObjectId fields
-        if (mongoose.Types.ObjectId.isValid(query[field])) {
-          matchStage[field] = new mongoose.Types.ObjectId(query[field]);
-        } else {
-          throw new Error(`${field} is not a valid ObjectId`);
-        }
-      } else {
-        matchStage[field] = query[field];
-      }
-    }
-  });
 
   // Add match stage if there are any conditions
   if (Object.keys(matchStage).length > 0) {

@@ -1,63 +1,96 @@
-import catchAsync from "../../Utilities/catchAsync.js";
+import mongoose from "mongoose";
 import Transaction from "../../Models/transactionModel.js";
+import catchAsync from "../../Utilities/catchAsync.js";
+import { matchDates, matchField } from "./matchingObj.js";
 
 export const calculateGSTTotals = catchAsync(async (req, res, next) => {
+  const query = { ...req.query };
+
+  const matchStage = {};
+
+  const matchingArr = ["catagory", "particular", "bank"];
+
+  matchField(matchingArr, query, matchStage);
+  matchDates(query, matchStage);
+
+  if (query.branchId) {
+    matchStage["branches.branch"] = new mongoose.Types.ObjectId(query.branchId);
+  }
+
   const totals = await Transaction.aggregate([
-    {
-      $addFields: {
-        // Calculate GST value based on gstPercent
-        gstValue: {
-          $cond: [
-            { $in: ["$gstType", ["incl", "excl"]] }, // Only calculate GST for 'incl' and 'excl'
-            {
-              $multiply: [
-                "$amount",
-                { $divide: [{ $toDouble: "$gstPercent" }, 100] },
-              ],
-            },
-            0, // No GST for 'no-gst'
-          ],
-        },
-      },
-    },
+    { $match: matchStage },
     {
       $group: {
-        _id: "$gstType", // Group by GST type
-        totalAmount: {
+        _id: null,
+        totalInGst: {
           $sum: {
-            $switch: {
-              branches: [
-                {
-                  case: { $eq: ["$_id", "incl"] },
-                  then: { $subtract: ["$amount", "$gstValue"] }, // Remove GST from inclusive
-                },
-                {
-                  case: { $eq: ["$_id", "excl"] },
-                  then: { $add: ["$amount", "$gstValue"] }, // Add GST to exclusive
-                },
-                {
-                  case: { $eq: ["$_id", "no-gst"] },
-                  then: "$amount", // No adjustment for no-gst
-                },
-              ],
-              default: 0,
-            },
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "Credit"] }, // Condition 1
+                  { $ne: ["$isGstDeduct", true] }, // Condition 2
+                ],
+              },
+              "$gstPercent", // Value if true
+              0, // Value if false
+            ],
+          },
+        },
+        totalCredit: {
+          $sum: {
+            $cond: [{ $eq: ["$type", "Credit"] }, "$amount", 0],
+          },
+        },
+        totalOutGst: {
+          $sum: {
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "Debit"] }, // Condition 1
+                  { $ne: ["$isGstDeduct", true] }, // Condition 2
+                ],
+              },
+              "$gstPercent", // Value if true
+              0, // Value if false
+            ],
+          },
+        },
+        totalDebit: {
+          $sum: {
+            $cond: [{ $eq: ["$type", "Debit"] }, "$amount", 0],
           },
         },
       },
     },
-    {
-      $project: {
-        gstType: "$_id",
-        totalAmount: 1,
-        _id: 0,
-      },
-    },
   ]);
 
+  // Initialize default results
+  const results = {
+    totalCredit: 0,
+    totalInPercent: 0,
+    totalDebit: 0,
+    totalOutPercent: 0,
+  };
+
+  // Check if aggregation returned results
+  if (totals.length > 0) {
+    const totalData = totals[0];
+
+    // Assign values from aggregation results
+    results.totalCredit = totalData.totalCredit;
+    results.totalIn = (totalData.totalCredit * totalData.totalInGst) / 100;
+
+    results.totalInPercent = totalData.totalInGst;
+    results.totalOutPercent = totalData.totalOutGst;
+
+    results.totalDebit = totalData.totalDebit;
+    results.totalOut = (totalData.totalDebit * totalData.totalOutGst) / 100;
+  }
+
+  // Send response
   res.status(200).json({
     message: "Successfully fetched",
     status: "Success",
-    totals,
+    results,
   });
 });

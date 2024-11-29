@@ -4,11 +4,13 @@ import DaybookFooterBtns from "./DaybookFooterBtns";
 import { useSelector } from "react-redux";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
 import { setDaybookCurrentPage } from "@/lib/slices/daybookSlice";
+import { useGstTotals } from "@/app/_hooks/useTransactions";
 
 function DaybookFooter() {
   const { currentPage, btnDisable, summery } = useSelector(
     (state) => state.daybook
   );
+
   return (
     <>
       <div className={`layout-footer`}>

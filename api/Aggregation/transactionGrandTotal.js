@@ -31,7 +31,6 @@ export const getTransactionTotal = async (req) => {
     // Ensure endDate is set to the end of the day
     endDate.setUTCHours(23, 59, 59, 999);
 
-
     // Build the matchStage query
 
     matchStage.date = {

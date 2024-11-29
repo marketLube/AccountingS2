@@ -92,6 +92,52 @@ export default function useTransactions() {
   };
 }
 
+export function useGstTotals() {
+  const {
+    type,
+    curBranch,
+    curCat,
+    curParticular,
+    curBank,
+    startDate,
+    endDate,
+    query,
+  } = useSelector((state) => state.daybook) || {};
+
+  const branchId = useBranchIdFinder(curBranch)?._id || null;
+  const catagory = useCategoryNameFinder(curCat) || {};
+  const particular = useParticularNameFinder(curParticular) || {};
+  const bank = useBankIdFinder(curBank) || {};
+
+  let endpoint = "/stats/gst?limit=500";
+
+  if (type && type !== "All Status") endpoint += `&type=${type}`;
+  if (branchId) endpoint += `&branchId=${branchId}`;
+  if (catagory._id) endpoint += `&catagory=${catagory._id}`;
+  if (particular._id) endpoint += `&particular=${particular._id}`;
+  if (bank._id) endpoint += `&bank=${bank._id}`;
+  if (startDate) endpoint += `&startDate=${startDate}`;
+  if (endDate) endpoint += `&endDate=${endDate}`;
+  if (query.trim()) endpoint += `&search=${query}`;
+
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ["gst", endpoint],
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data.result),
+  });
+
+  return {
+    isLoading,
+    isError,
+    error,
+    refetch,
+    data,
+  };
+}
+
+export function refreshGstTotals() {
+  queryClient.invalidateQueries("gst");
+}
+
 export function refreshTransaction() {
   queryClient.invalidateQueries("transactions");
 }

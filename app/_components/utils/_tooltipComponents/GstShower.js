@@ -1,4 +1,5 @@
 "use client";
+
 function GstShower({ data, amount }) {
   if (!data || !amount) return null;
 
@@ -14,14 +15,15 @@ function GstShower({ data, amount }) {
   } else {
     gstAmount = 0;
   }
+
   return (
     <div>
       <span className="small-text table-small-text">
         {data.gstType === "incl"
           ? "Incl"
-          : data.gstType === "Excl"
+          : data.gstType === "excl"
           ? "Excl"
-          : "No-Gst"}{" "}
+          : "No-Gst"}
         {gstPercent}%
       </span>
       <span className="small-text table-small-text">

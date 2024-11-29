@@ -2,7 +2,6 @@ import APIFeatures from "../APIFeatures/APIFeatures.js";
 import Bank from "../Models/bankModel.js";
 import Branch from "../Models/branchModel.js";
 import Transaction from "../Models/transactionModel.js";
-import Liability from "../Models/liabilityModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
 

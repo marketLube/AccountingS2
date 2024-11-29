@@ -51,8 +51,8 @@ const transactionSchema = mongoose.Schema(
       default: "0%",
     },
     gstPercent: {
-      type: String,
-      default: "0%",
+      type: Number,
+      default: 0,
     },
     gstType: {
       type: String,
@@ -64,6 +64,11 @@ const transactionSchema = mongoose.Schema(
       enum: ["Payable", "Receivable", "no tds"],
       default: "no tds",
     },
+    isGstDeduct: {
+      type: Boolean,
+      default: false,
+    },
+
     branches: [
       {
         branch: {
@@ -83,6 +88,11 @@ transactionSchema.pre(/^find/, function (next) {
   this.populate({ path: "branches.branch", select: "name" });
   next();
 });
+transactionSchema.pre("save", function (next) {
+  this.transactionTOtalsum = this;
+  next();
+});
+
 // Pre-save middleware
 transactionSchema.pre("save", async function (next) {
   try {

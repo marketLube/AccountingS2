@@ -7,9 +7,11 @@ import { balanceSheet } from "../Aggregation/balanceSheetAggregate.js";
 import { wholeYearPnl } from "../Aggregation/wholeYearPnl.js";
 import { branchWiseCircleCharts } from "../Aggregation/branchWiseCircleCharts.js";
 import { migrate } from "../Controller/dataMigrateController.js";
+import { calculateGSTTotals } from "../Aggregation/features/totalGst.js";
 
 const router = express.Router();
 
+router.get("/gst", calculateGSTTotals);
 router.get("/totals", getTotals);
 router.get("/branchwise-total", getBranchTotalsForChart);
 router.get("/balance-sheet", balanceSheet);
