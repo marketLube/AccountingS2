@@ -92,7 +92,7 @@ function ReminderEditForm() {
     try {
       setLoading(true);
       await apiClient.patch(`/reminders/${id}`, data);
-      toast.success("Successfully created new Reminder");
+      toast.success("Successfully Edited");
       refreshReminders();
     } catch (e) {
       console.log(e);

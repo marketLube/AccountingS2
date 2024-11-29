@@ -74,7 +74,7 @@ function BudgetplannerEditForm() {
         ...data,
         property: propertyToUse,
       });
-      toast.success("Successfully created new Event");
+      toast.success("Successfully Edited");
       refreshBudgetPlanner();
     } catch (e) {
       console.log(e);

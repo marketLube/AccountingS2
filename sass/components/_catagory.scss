@@ -4,12 +4,16 @@
 .catagory-selector {
   flex: 1;
   &-select {
-    background-color: variables.$color-light-gray;
-
-    padding: 0.9rem 1rem;
+    padding: 0.5rem 0.7rem;
     width: 100%;
-    border-radius: variables.$small-radius;
+
+    background-color: variables.$color-light-gray;
   }
+}
+.cat-div {
+  padding: 0.2rem 1rem;
+  background-color: variables.$color-light-gray;
+  border-radius: variables.$small-radius;
 }
 .catagory-container {
   width: 70%;

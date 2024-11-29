@@ -71,6 +71,13 @@ function DaybookNewEntirForm() {
   const tdsValue = watch("tds");
   const gstValue = watch("gstPercent");
 
+  const handleClear = () => {
+    reset(defaultValues);
+    setSelectedBranches([]);
+    setCatagory("Select Catagory");
+    setParticular("Select Particular");
+  };
+
   const onSubmit = async (data) => {
     if (selectedBranches.length <= 0)
       return toast.error("Please Select atleast one branch");
@@ -105,13 +112,13 @@ function DaybookNewEntirForm() {
       refreshBranchWiseCircle();
       dispatch(fetchBanks());
       refreshBalanceSheet();
-      reset(defaultValues);
+      handleClear();
       setSelectedBranches([]);
       setCatagory([]);
       setParticular([]);
     } catch (e) {
       console.log(e);
-      toast.error(e.response.data.message);
+      toast.error(e?.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -119,21 +126,6 @@ function DaybookNewEntirForm() {
     return;
   };
 
-  const handleClear = () => {
-    reset({
-      date: "",
-      remark: "",
-      bank: "",
-      type: "",
-      purpose: "",
-      tds: "",
-      gstPercent: "",
-      gstType: "",
-    });
-    setSelectedBranches([]);
-    setCatagory("Select Catagory");
-    setParticular("Select Particular");
-  };
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Daybook New Entry Form</h2>

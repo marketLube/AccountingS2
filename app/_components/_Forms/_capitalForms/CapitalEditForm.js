@@ -75,7 +75,7 @@ function CapitalEditForms() {
     try {
       setLoading(true);
       await apiClient.patch(`/capital/${id}`, data);
-      toast.success("Successfully created new Capital");
+      toast.success("Successfully Edited");
       refreshCapital();
       reset();
     } catch (e) {

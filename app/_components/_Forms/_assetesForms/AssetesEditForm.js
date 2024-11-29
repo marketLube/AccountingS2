@@ -66,7 +66,7 @@ function AssetesEditForms() {
     try {
       setLoading(true);
       await apiClient.patch(`/assets/${id}`, data);
-      toast.success("Successfully created new Asset");
+      toast.success("Successfully Edited");
       refreshAssets();
     } catch (e) {
       console.log(e);

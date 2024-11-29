@@ -24,18 +24,20 @@ function CatagorySelector({
   return (
     <div className="form-row">
       <div className="catagory-selector">
-        <select
-          className="catagory-selector-select"
-          value={catagory}
-          onChange={(e) => setCatagory(e.target.value)}
-        >
-          <option value="">Select Catagory</option>
-          {categories?.map((cat) => (
-            <option value={cat.name} key={cat._id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+        <div className="cat-div">
+          <select
+            className="catagory-selector-select"
+            value={catagory}
+            onChange={(e) => setCatagory(e.target.value)}
+          >
+            <option value="">Select Catagory</option>
+            {categories?.map((cat) => (
+              <option value={cat.name} key={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <ParticularSelector
         particulars={particulars}

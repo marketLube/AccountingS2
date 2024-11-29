@@ -105,7 +105,7 @@ function OutstandingEditForm() {
     try {
       setLoading(true);
       await apiClient.patch(`/liability/${id}`, data);
-      toast.success("Successfully created new Liability");
+      toast.success("Successfully Edited");
       refreshLiability();
     } catch (e) {
       console.log(e);

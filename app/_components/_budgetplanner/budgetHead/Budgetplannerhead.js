@@ -11,6 +11,7 @@ import {
   setBudgetplannerEndDate,
   setBudgetplannerIsEdit,
   setBudgetplannerSelectedDate,
+  setBudgetplannerSelectedItems,
   setBudgetplannerStartDate,
   setBudgetQuery,
   setCurRange,
@@ -112,6 +113,7 @@ function Budgetplannerhead() {
                   await apiClient.delete(`/event/${id}`);
                   toast.success("Successfully Deleted");
                   refreshBudgetPlanner();
+                  dispatch(setBudgetplannerSelectedItems({}));
                 } catch (e) {
                   console.log(e);
                   toast.error(

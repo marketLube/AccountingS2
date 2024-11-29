@@ -125,7 +125,7 @@ function DaybookEditForm() {
         `/transaction/${selectedItems._id}`,
         data
       );
-      toast.success("Successfully edited new Transaction");
+      toast.success("Successfully Edited");
       refreshTransaction();
       refreshDashboardTotals();
       refreshDashboardChartData();

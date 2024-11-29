@@ -11,6 +11,7 @@ import {
   setAssetsIsEdit,
   setAssetsQuery,
   setAssetsSelectedDate,
+  setAssetsSelectedItems,
   setAssetsStartDate,
   setAssetsType,
   setIsAssetsNewEntry,
@@ -110,6 +111,7 @@ function Assetshead() {
                   await apiClient.delete(`/assets/${id}`);
                   toast.success("Successfully Deleted");
                   refreshAssets();
+                  dispatch(setAssetsSelectedItems({}));
                 } catch (e) {
                   console.log(e);
                   toast.error(

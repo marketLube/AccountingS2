@@ -10,6 +10,7 @@ import {
   setCapitalIsEdit,
   setCapitalQuery,
   setCapitalSelectedDate,
+  setCapitalSelectedItems,
   setCapitalStartDate,
   setCapitalType,
   setIsCapitalNewEntry,
@@ -101,6 +102,7 @@ function Capitalhead() {
                   await apiClient.delete(`/capital/${id}`);
                   toast.success("Successfully Deleted");
                   refreshCapital();
+                  dispatch(setCapitalSelectedItems({}));
                 } catch (e) {
                   console.log(e);
                   toast.error(
