@@ -24,7 +24,7 @@ function LoginSection() {
       setLoading(true);
       const res = await apiClient.post("/user/login", { email, password });
       const user = res.data.envelop.currentUser;
-      console.log(user, "user");
+
       // Update Redux state
       dispatch(setIsLoggedIn(true));
       dispatch(setUser(user));

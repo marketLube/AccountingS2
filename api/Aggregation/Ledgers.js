@@ -49,7 +49,6 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
       endDate.setUTCHours(23, 59, 59, 999);
 
       // Build the matchStage query
-
       matchStage.date = {
         $gte: startDate,
         $lte: endDate,
@@ -209,8 +208,84 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
       },
     ];
 
+    // Overall Totals Aggregation Pipeline
+    const overallTotalsPipeline = [
+      { $match: catagoryMatch },
+      { $match: matchStage },
+      { $match: dateMatch },
+      { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
+      { $match: branchMatch },
+      {
+        $group: {
+          _id: null,
+          totalCredit: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", "Credit"] },
+                { $ifNull: ["$branches.amount", 0] },
+                0,
+              ],
+            },
+          },
+          totalDebit: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", "Debit"] },
+                { $ifNull: ["$branches.amount", 0] },
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ];
+
     // Liability and Outstanding Aggregation Pipeline
     const liabilityPipeline = [
+      { $match: catagoryMatch },
+      { $match: { ...dateMatch, status: status || { $ne: "Paid" } } },
+      { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
+      { $match: branchMatch },
+      {
+        $lookup: {
+          from: "particulars",
+          let: { particularId: "$particular" },
+          pipeline: [
+            { $match: { $expr: { $eq: ["$_id", "$$particularId"] } } },
+          ],
+          as: "particularInfo",
+        },
+      },
+      {
+        $unwind: { path: "$particularInfo", preserveNullAndEmptyArrays: true },
+      },
+      {
+        $group: {
+          _id: null,
+          totalLiability: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", "liability"] },
+                { $ifNull: ["$branches.amount", 0] },
+                0,
+              ],
+            },
+          },
+          totalOutstanding: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", "outstanding"] },
+                { $ifNull: ["$branches.amount", 0] },
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ];
+
+    // Liability Details Pipeline
+    const liabilityDetailsPipeline = [
       { $match: catagoryMatch },
       { $match: { ...dateMatch, status: status || { $ne: "Paid" } } },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
@@ -289,11 +364,26 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
       },
     ];
 
-    // Execute both pipelines
-    const transactionData = await Transaction.aggregate(transactionPipeline);
-    const liabilityData = await LiabilityAndOutstanding.aggregate(
-      liabilityPipeline
-    );
+    // Execute all pipelines
+    const [
+      transactionData,
+      overallTotalsData,
+      liabilityTotalsData,
+      liabilityDetailsData,
+    ] = await Promise.all([
+      Transaction.aggregate(transactionPipeline),
+      Transaction.aggregate(overallTotalsPipeline),
+      LiabilityAndOutstanding.aggregate(liabilityPipeline),
+      LiabilityAndOutstanding.aggregate(liabilityDetailsPipeline),
+    ]);
+
+    // Extract overall totals
+    const overallTotals = {
+      totalCredit: overallTotalsData[0]?.totalCredit || 0,
+      totalDebit: overallTotalsData[0]?.totalDebit || 0,
+      totalLiability: liabilityTotalsData[0]?.totalLiability || 0,
+      totalOutstanding: liabilityTotalsData[0]?.totalOutstanding || 0,
+    };
 
     // Combine data by particular
     const particularMap = new Map();
@@ -316,7 +406,7 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
       });
     });
 
-    liabilityData.forEach((item) => {
+    liabilityDetailsData.forEach((item) => {
       const key = item.particularId.toString();
       if (!particularMap.has(key)) {
         particularMap.set(key, {
@@ -360,6 +450,8 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
         totalPages: Math.ceil(totalRecords / pageLimit),
         currentPage: pageNumber,
         particulars: paginatedData,
+        overallTotals, // Add the overall totals to the response
+        liabilityDetails: liabilityDetailsData, // Optional: include full liability details
       },
     });
   } catch (error) {

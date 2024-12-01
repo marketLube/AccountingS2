@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const dev = process.env.NODE_ENV !== "production";
-console.log(dev, "dev");
 const app = next({ dev });
 const handle = app.getRequestHandler();
 

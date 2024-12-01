@@ -10,8 +10,6 @@ function BranchWIseChartBox() {
   const currentYear = new Date().getFullYear();
   const { stats, isError, isLoading } = useBranchWiseCircle();
 
-  console.log(stats, "stats");
-
   if (isLoading) {
     return <div className="branchwise-chart">Loading...</div>;
   }
@@ -25,7 +23,6 @@ function BranchWIseChartBox() {
     );
   }
   const sortedStats = [...stats].sort((a, b) => b.year - a.year);
-  console.log(sortedStats, "s");
   return (
     <div className="branchwise-chart">
       <div className="branchwise-chart-details">

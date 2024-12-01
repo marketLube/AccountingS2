@@ -70,6 +70,17 @@
       border-radius: variables.$small-radius;
     }
   }
+
+  &-catagory-container {
+    & .catagory {
+      display: flex;
+      justify-content: space-between;
+    }
+    & .catagory-creator-box {
+      flex: 1;
+      height: 5rem;
+    }
+  }
 }
 .branch-group {
   display: flex;

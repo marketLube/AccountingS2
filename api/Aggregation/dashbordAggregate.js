@@ -93,9 +93,9 @@ export const getTotals = catchAsync(async (req, res, next) => {
   // Process transaction totals
   transactionTotals[0].creditDebitTotals.forEach((item) => {
     if (item.type === "Credit") {
-      result.transactions.totalCredit = item.total;
+      result.transactions.totalCredit = Math.abs(item.total);
     } else if (item.type === "Debit") {
-      result.transactions.totalDebit = item.total;
+      result.transactions.totalDebit = Math.abs(item.total);
     }
   });
 

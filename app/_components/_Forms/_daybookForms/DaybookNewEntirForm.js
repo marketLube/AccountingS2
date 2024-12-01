@@ -13,14 +13,17 @@ import {
   TdsPercent,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import {
+  refreshGstTotals,
+  refreshTransaction,
+} from "@/app/_hooks/useTransactions";
 import {
   refreshDashboardChartData,
   refreshDashboardTotals,
@@ -31,6 +34,9 @@ import {
 } from "@/app/_hooks/useBranchwise";
 import { fetchBanks } from "@/lib/slices/generalSlice";
 import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
+import { DataArray } from "@mui/icons-material";
+import { refreshLedger } from "@/app/_hooks/useLedgers";
+import Catagory from "../../CatagorySelector/Catagory";
 
 function DaybookNewEntirForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -43,15 +49,16 @@ function DaybookNewEntirForm() {
 
   const [catagory, setCatagory] = useState("Select Catagory");
   const [particular, setParticular] = useState("Select Particular");
+  const [amount, setAmount] = useState("");
 
   const defaultValues = {
     date: today(),
-    remark: "",
+    remark: "Something",
     bank: "",
     type: "",
-    purpose: "",
-    tds: "",
-    gstPercent: "",
+    purpose: "New",
+    tds: "10%",
+    gstPercent: "2%",
     gstType: "",
     tdsType: "",
   };
@@ -70,6 +77,23 @@ function DaybookNewEntirForm() {
 
   const tdsValue = watch("tds");
   const gstValue = watch("gstPercent");
+  const data = watch();
+
+  useEffect(() => {
+    let amount = selectedBranches.reduce((acc, val) => {
+      if (!data[val]) return acc;
+      return acc + parseFloat(data[val]);
+    }, 0);
+
+    if (tdsValue !== "0%" && tdsValue) {
+      const tdsRate = parseFloat(tdsValue) / 100;
+      const tdsDeduction = amount * tdsRate;
+      amount = amount - tdsDeduction;
+      setAmount(amount);
+    } else {
+      setAmount(amount);
+    }
+  }, [data]);
 
   const handleClear = () => {
     reset(defaultValues);
@@ -94,14 +118,14 @@ function DaybookNewEntirForm() {
     });
 
     data.branches = branchObjects;
-    data.catagory = catIdFinder(categories, catagory);
+    data.catagory = catagory;
     data.particular = parIdFinder(particulars, particular);
     data.bank = bankIdFiner(banks, data.bank);
     data.gstPercent = parseFloat(data.gstPercent);
 
     if (!data.gstType) data.gstType = "no-gst";
     if (!data.tdsType) data.tdsType = "no tds";
-
+    console.log(data, "data");
     try {
       setLoading(true);
       await apiClient.post("/transaction", data);
@@ -113,10 +137,12 @@ function DaybookNewEntirForm() {
       refreshBranchWiseCircle();
       dispatch(fetchBanks());
       refreshBalanceSheet();
+      refreshLedger();
       handleClear();
       setSelectedBranches([]);
       setCatagory([]);
       setParticular([]);
+      refreshGstTotals();
     } catch (e) {
       console.log(e);
       toast.error(e?.response?.data?.message);
@@ -127,14 +153,19 @@ function DaybookNewEntirForm() {
     return;
   };
 
+  console.log(catagory, "catagory");
+  console.log(particular, "particular");
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Daybook New Entry Form</h2>
-      <div className="form-section">
-        <CatagorySelector
-          catagory={catagory}
+
+      <div className="form-catagory-container">
+        <Catagory
           setCatagory={setCatagory}
           setParticular={setParticular}
+          particular={particular}
+          catagory={catagory}
         />
 
         <div className="form-row">
@@ -165,18 +196,25 @@ function DaybookNewEntirForm() {
         <Gst register={register} errors={errors} disabled={gstValue === "0%"} />
         <GstPercent register={register} errors={errors} />
       </div>
-      <div className="form-btn-group form-submit-btns">
+      <div className="form-btn-group form-submit-btns relative">
         <Button type="clear" onClick={handleClear}>
           Clear
         </Button>
         <Button
           type="submit"
           style={loading ? { opacity: 0.5 } : {}}
-          className={`btn primary-blue-btn form-submit`}
+          className="btn primary-blue-btn form-submit"
           disabled={loading}
         >
           {loading ? "Submitting..." : "Submit"}
         </Button>
+
+        <div
+          className="absolute left-1/2 transform -translate-x-1/2 bottom-2 text-sm font-medium text-gray-700"
+          aria-label="Total amount for the transaction"
+        >
+          Amount : {amount || 0}
+        </div>
       </div>
     </form>
   );

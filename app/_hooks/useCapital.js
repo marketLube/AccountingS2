@@ -14,9 +14,6 @@ export default function useCapitals() {
   );
   const capitalCurBranch = useBranchIdFinder(curBranch);
 
-  console.log(startDate, "startDate");
-  console.log(endDate, "endDate");
-
   let endpoint = `/capital?page=${page}&sort=-date`;
 
   if (capitalCurBranch) {

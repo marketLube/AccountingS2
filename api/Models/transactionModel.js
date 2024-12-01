@@ -8,7 +8,7 @@ const transactionSchema = mongoose.Schema(
     catagory: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Catagory",
-      required: [true, "Transaction Must have a Catagory"],
+      required: [true, "Transaction Must have a Category"],
     },
     particular: {
       type: mongoose.Schema.Types.ObjectId,
@@ -59,6 +59,9 @@ const transactionSchema = mongoose.Schema(
       enum: ["incl", "excl", "no-gst"],
       default: "no-gst",
     },
+    totalAmt: {
+      type: Number,
+    },
     tdsType: {
       type: String,
       enum: ["Payable", "Receivable", "no tds"],
@@ -79,6 +82,9 @@ const transactionSchema = mongoose.Schema(
           type: Number,
           required: [true, "Trancsaction branches must have amount"],
         },
+        branchTotalAmt: {
+          type: Number,
+        },
       },
     ],
   },
@@ -86,10 +92,6 @@ const transactionSchema = mongoose.Schema(
 );
 transactionSchema.pre(/^find/, function (next) {
   this.populate({ path: "branches.branch", select: "name" });
-  next();
-});
-transactionSchema.pre("save", function (next) {
-  this.transactionTOtalsum = this;
   next();
 });
 
@@ -124,23 +126,45 @@ transactionSchema.pre("save", async function (next) {
           (account) => account.bank.toString() === this.bank.toString()
         );
 
-        if (!bankAccount)
-          return next(new AppError("Failed to fetch Bank Accounts", 404));
+        if (!bankAccount) {
+          return next(new AppError("Failed to fetch Bank Accounts", 400));
+        }
 
-        // Update existing bank account balance
-        bankAccount.branchBalance += amount;
+        if (this.tdsType !== "no tds") {
+          // Calculate TDS value
+          const tdsRate = parseFloat(this.tds) / 100;
+          const tdsDeduction = amount * tdsRate;
 
-        // Update total branch balance
-        branch.totalBranchBalance += amount;
+          // Update existing bank account balance with TDS applied
+          bankAccount.branchBalance += amount - tdsDeduction;
+          branchData.amount = Math.abs(amount - tdsDeduction);
+          branchData.branchTotalAmt = Math.abs(amount);
+
+          // Update total branch balance with TDS applied
+          branch.totalBranchBalance += amount - tdsDeduction;
+        } else {
+          // If no TDS, update balances normally
+          bankAccount.branchBalance += amount;
+          branch.totalBranchBalance += amount;
+        }
 
         // Save branch updates
         await branch.save();
       })
     );
 
-    // 3. Update bank balance
-    bank.balance += totalAmount;
-    this.amount = Math.abs(totalAmount);
+    if (this.tdsType !== "no tds") {
+      const tdsRate = parseFloat(this.tds) / 100;
+      const tdsDeduction = totalAmount * tdsRate;
+
+      // 3. Update bank balance
+      bank.balance += totalAmount - tdsDeduction;
+      this.amount = Math.abs(totalAmount - tdsDeduction);
+    } else {
+      bank.balance += totalAmount;
+      this.amount = Math.abs(totalAmount);
+    }
+    this.totalAmt = Math.abs(totalAmount);
 
     // Save bank updates
     await bank.save();
@@ -150,6 +174,7 @@ transactionSchema.pre("save", async function (next) {
 
     next();
   } catch (error) {
+    console.log(error);
     next(new AppError("Failed to create transaction", 404));
   }
 });

@@ -81,7 +81,7 @@ function InvoiceDownloader() {
     try {
       setIsLoading(true);
       const res = await apiClient.post("/invoice", data);
-      console.log(res, "res");
+ 
       toast.success("Success");
     } catch (e) {
       console.log(e, "e");

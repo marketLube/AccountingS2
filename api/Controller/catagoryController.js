@@ -57,7 +57,7 @@ export const addParticular = catchAsync(async (req, res, next) => {
 export const updateParticular = catchAsync(async (req, res, next) => {
   const { catagoryName, particularName } = req.query;
   const { particular } = req.body;
-  console.log(particular, "par");
+
   if (!catagoryName)
     return next(new AppError("Catagory name is required", 400));
 

@@ -9,7 +9,7 @@ import {
 
 import { truncate } from "@/app/_services/helpers";
 import Tooltip from "../../utils/Tooltip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ParticularNameShower from "../../utils/_tooltipComponents/ParticularNameShower";
 import BranchShower from "../../utils/_tooltipComponents/BranchShower";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,14 +17,22 @@ import { setDaybookSelectedItems } from "@/lib/slices/daybookSlice";
 import GstShower from "../../utils/_tooltipComponents/GstShower";
 
 function DaybookTableItem({ transaction }) {
-  const { selectedItems } = useSelector((state) => state.daybook);
+  const { selectedItems, curBranch } = useSelector((state) => state.daybook);
   const particular = useParticularFinder(transaction.particular);
   const category = useCategoryFinder(transaction.catagory);
   const [isParTooltip, setIsPartooltip] = useState(false);
   const [isRemarkTooltip, setIsRemarkTooltip] = useState(false);
   const [isBranchesTooltip, setIsBranchesTooltip] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [tdsPercentage, setTdsPercentage] = useState(0);
+  const [tdsAmount, setTdsAmount] = useState(0);
+
   const branchNames = getBranchNames(transaction?.branches);
   const bank = useBankFinder(transaction?.bank);
+
+  const branchAmt = transaction?.branches?.find(
+    (branch) => branch.branch.name === curBranch
+  )?.branchTotalAmt;
 
   const dispatch = useDispatch();
 
@@ -36,9 +44,22 @@ function DaybookTableItem({ transaction }) {
     }
   };
 
-  const amount = parseFloat(transaction?.amount) || 0;
-  const tdsPercentage = parseFloat(transaction?.tds) || 0;
-  const tdsAmount = (amount * tdsPercentage) / 100;
+  useEffect(() => {
+    // Initialize TDS values based on current branch
+    let computedAmount = parseFloat(transaction?.totalAmt) || 0;
+    const computedTdsPercentage = parseFloat(transaction?.tds) || 0;
+
+    if (!curBranch.startsWith("All") && branchAmt) {
+      computedAmount = parseFloat(branchAmt) || 0;
+    }
+
+    const computedTdsAmount = (computedAmount * computedTdsPercentage) / 100;
+
+    // Update state
+    setAmount(computedAmount);
+    setTdsPercentage(computedTdsPercentage);
+    setTdsAmount(computedTdsAmount);
+  }, [curBranch, branchAmt, transaction?.totalAmt, transaction?.tds]);
 
   return (
     <>
@@ -67,7 +88,11 @@ function DaybookTableItem({ transaction }) {
           {transaction?.formattedDate}
         </span>
         <span className="table-col amount table-body-col">
-          {transaction?.amount}
+          {!curBranch.startsWith("All")
+            ? transaction?.branches?.find(
+                (branch) => branch.branch.name === curBranch
+              )?.amount
+            : transaction?.amount}
         </span>
         <span
           className="table-col remark table-body-col"
@@ -86,13 +111,14 @@ function DaybookTableItem({ transaction }) {
           onMouseEnter={() => setIsBranchesTooltip(true)}
           onMouseLeave={() => setIsBranchesTooltip(false)}
         >
-          <BranchShower branches={branchNames} />
-
-          <Tooltip
-            type="branches"
-            isVisible={isBranchesTooltip}
-            branches={branchNames}
-          />
+          <>
+            <BranchShower branches={branchNames} curBranch={curBranch} />
+            <Tooltip
+              type="branches"
+              isVisible={isBranchesTooltip}
+              branches={branchNames}
+            />
+          </>
         </span>
         <span className="table-col bank table-body-col">{bank?.name}</span>
         <span className="table-col debit table-body-col">
@@ -104,7 +130,6 @@ function DaybookTableItem({ transaction }) {
         <span className="table-col gst table-body-col">
           <GstShower data={transaction} amount={transaction.amount} />
         </span>
-
         <span
           className="table-col tds table-body-col"
           style={{
@@ -116,7 +141,7 @@ function DaybookTableItem({ transaction }) {
           }}
         >
           <div>{tdsPercentage}%</div>
-          <div>{tdsAmount}</div>
+          <div>{tdsAmount.toFixed(2)}</div>
         </span>
       </div>
     </>

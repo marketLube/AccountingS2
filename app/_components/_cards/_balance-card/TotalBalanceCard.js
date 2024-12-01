@@ -11,8 +11,6 @@ function TotalBalanceCard() {
     setIsBalanceVisible((prev) => !prev);
   };
 
-  console.log(banks, "banks");
-
   let total = 0;
 
   return (

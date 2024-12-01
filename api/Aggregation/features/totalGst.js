@@ -36,6 +36,20 @@ export const calculateGSTTotals = catchAsync(async (req, res, next) => {
             ],
           },
         },
+        totalInGstPaid: {
+          $sum: {
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "Credit"] }, // Condition 1
+                  { $ne: ["$isGstDeduct", false] }, // Condition 2
+                ],
+              },
+              "$gstPercent", // Value if true
+              0, // Value if false
+            ],
+          },
+        },
         totalCredit: {
           $sum: {
             $cond: [{ $eq: ["$type", "Credit"] }, "$amount", 0],
@@ -52,6 +66,20 @@ export const calculateGSTTotals = catchAsync(async (req, res, next) => {
               },
               "$gstPercent", // Value if true
               0, // Value if false
+            ],
+          },
+        },
+        totalOutGstPaid: {
+          $sum: {
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "Debit"] }, // Condition 1
+                  { $ne: ["$isGstDeduct", false] }, // Condition 2
+                ],
+              },
+              "$gstPercent",
+              0,
             ],
           },
         },
@@ -85,6 +113,9 @@ export const calculateGSTTotals = catchAsync(async (req, res, next) => {
 
     results.totalDebit = totalData.totalDebit;
     results.totalOut = (totalData.totalDebit * totalData.totalOutGst) / 100;
+
+    results.totalOutGstPaid = totalData.totalOutGstPaid;
+    results.totalInGstPaid = totalData.totalInGstPaid;
   }
 
   // Send response

@@ -36,8 +36,6 @@ export default function useTransactions() {
 
   const bank = useBankIdFinder(curBank);
 
-  // console.log(startDate, endDate, "cl");
-
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
   let endpoint = `/transaction?page=${page}&sort=-date -createdAt`;
@@ -122,7 +120,7 @@ export function useGstTotals() {
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["gst", endpoint],
-    queryFn: () => apiClient.get(endpoint).then((res) => res.data.result),
+    queryFn: () => apiClient.get(endpoint).then((res) => res.data.results),
   });
 
   return {
@@ -137,11 +135,9 @@ export function useGstTotals() {
 export function refreshGstTotals() {
   queryClient.invalidateQueries("gst");
 }
-
 export function refreshTransaction() {
   queryClient.invalidateQueries("transactions");
 }
-
 export function transactionRefreshers() {
   refreshTransaction();
 }

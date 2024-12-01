@@ -6,7 +6,6 @@ import { setIsAllTime } from "@/lib/slices/dashboardSlice";
 function ToggleSwitch() {
   const { isAllTime } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
-  console.log(isAllTime, "isAll time");
   return (
     <div>
       <input

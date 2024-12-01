@@ -152,7 +152,6 @@ class APIFeatures {
 
   filterByBranch() {
     if (this.queryStr.branchId) {
-      console.log("working"); // this log is working
       const branchId = this.queryStr.branchId;
 
       this.query = this.query.find({

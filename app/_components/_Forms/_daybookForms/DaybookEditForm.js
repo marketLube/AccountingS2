@@ -14,7 +14,6 @@ import {
 } from "../_FormComponents/FormSmallComponents";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
-import CatagorySelector from "../../utils/CatagorySelector";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
@@ -26,7 +25,10 @@ import {
   useParticularFinder,
 } from "@/app/_services/finders";
 import toast from "react-hot-toast";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
+import {
+  refreshGstTotals,
+  refreshTransaction,
+} from "@/app/_hooks/useTransactions";
 import {
   refreshDashboardChartData,
   refreshDashboardTotals,
@@ -37,6 +39,8 @@ import {
 } from "@/app/_hooks/useBranchwise";
 import { fetchBanks } from "@/lib/slices/generalSlice";
 import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
+import { refreshLedger } from "@/app/_hooks/useLedgers";
+import Catagory from "../../CatagorySelector/Catagory";
 
 function DaybookEditForm() {
   const { selectedItems } = useSelector((state) => state.daybook);
@@ -47,7 +51,7 @@ function DaybookEditForm() {
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
   const defaultAmounts = selectedItems?.branches?.map(
-    (branch) => branch?.amount
+    (branch) => branch?.branchTotalAmt
   );
 
   const [loading, setLoading] = useState(false);
@@ -62,6 +66,7 @@ function DaybookEditForm() {
 
   const [catagory, setCatagory] = useState(curCat);
   const [particular, setParticular] = useState(curPart);
+  const [amount, setAmount] = useState("");
 
   const {
     register,
@@ -86,7 +91,7 @@ function DaybookEditForm() {
       purpose: selectedItems?.purpose || "",
       tds: selectedItems?.tds || "",
       tdsType: selectedItems?.tdsType || "",
-      gstPercent: selectedItems?.gstPercent || "",
+      gstPercent: String(selectedItems?.gstPercent) + "%" || "",
       gstType: selectedItems?.gstType || "",
     });
     setCatagory(curCat);
@@ -95,6 +100,26 @@ function DaybookEditForm() {
       selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
     );
   }, [selectedItems, reset]);
+
+  const tdsValue = watch("tds");
+  const gstValue = watch("gstPercent");
+  const data = watch();
+
+  useEffect(() => {
+    let amount = selectedBranches.reduce((acc, val) => {
+      if (!data[val]) return acc;
+      return acc + parseFloat(data[val]);
+    }, 0);
+
+    if (tdsValue !== "0%" && tdsValue) {
+      const tdsRate = parseFloat(tdsValue) / 100;
+      const tdsDeduction = amount * tdsRate;
+      amount = amount - tdsDeduction;
+      setAmount(amount);
+    } else {
+      setAmount(amount);
+    }
+  }, [data]);
 
   const onSubmit = async (data) => {
     try {
@@ -113,18 +138,21 @@ function DaybookEditForm() {
       });
 
       data.branches = branchObjects;
-      data.catagory = catIdFinder(categories, catagory);
+      data.catagory = catagory;
       data.particular = parIdFinder(particulars, particular);
       data.bank = bankIdFiner(banks, data.bank);
+      data.gstPercent = parseFloat(data.gstPercent);
 
       if (!data.gstType) data.gstType = "no-gst";
       if (!data.tdsType) data.tdsType = "no tds";
 
       setLoading(true);
+
       const res = await apiClient.patch(
         `/transaction/${selectedItems._id}`,
         data
       );
+
       toast.success("Successfully Edited");
       refreshTransaction();
       refreshDashboardTotals();
@@ -133,18 +161,15 @@ function DaybookEditForm() {
       refreshBranchWiseCircle();
       dispatch(fetchBanks());
       refreshBalanceSheet();
+      refreshGstTotals();
+      refreshLedger();
     } catch (e) {
       console.log(e, "ee");
       toast.error(e);
     } finally {
       setLoading(false);
     }
-
-    return;
   };
-
-  const tdsValue = watch("tds");
-  const gstValue = watch("gstPercent");
 
   const handleClear = () => {
     reset({
@@ -165,13 +190,15 @@ function DaybookEditForm() {
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="form-head-text">Daybook Edit Form</h2>
-      <div className="form-section">
-        <CatagorySelector
-          catagory={catagory}
+      <div className="form-catagory-container">
+        <Catagory
           setCatagory={setCatagory}
+          setParticular={setParticular}
           particular={particular}
+          catagory={catagory}
         />
-
+      </div>
+      <div className="form-section">
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Remark register={register} errors={errors} />
@@ -213,6 +240,13 @@ function DaybookEditForm() {
         >
           {loading ? "Submitting..." : "Submit"}
         </Button>
+
+        <div
+          className="absolute left-1/2 transform bottom-2 text-sm font-medium text-gray-700"
+          aria-label="Total amount for the transaction"
+        >
+          Amount : {amount || 0}
+        </div>
       </div>
     </form>
   );

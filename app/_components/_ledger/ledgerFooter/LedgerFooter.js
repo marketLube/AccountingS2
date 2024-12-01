@@ -4,29 +4,22 @@ import { useSelector } from "react-redux";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
 import { setLedgerBtnDisable } from "@/lib/slices/ledgerSlice";
 import BottomCard from "../../_cards/_bottomCards/BottomCard";
+import useLedgers from "@/app/_hooks/useLedgers";
 
 function LedgerFooter() {
   const { currentPage, btnDisable } = useSelector((state) => state.ledger);
 
-  const { totals } = useSelector((state) => state.general);
-  const { liabilityAndOutstanding, transactions } = totals || {};
+  const { totals } = useLedgers();
 
   return (
     <div className={`layout-footer`}>
       <div className="layout-footer-left">
-        <BottomCard type="Credit" value={transactions?.totalCredit} />
-        <BottomCard
-          type="Debit"
-          value={transactions?.totalDebit}
-          setIsDown={true}
-        />
-        <BottomCard
-          type="Outstanding"
-          value={liabilityAndOutstanding?.totalOutstanding}
-        />
+        <BottomCard type="Debit" value={totals?.totalDebit} setIsDown={true} />
+        <BottomCard type="Credit" value={totals?.totalCredit} />
+        <BottomCard type="Outstanding" value={totals?.totalOutstanding} />
         <BottomCard
           type="Liability"
-          value={liabilityAndOutstanding?.totalLiability}
+          value={totals?.totalLiability}
           setIsDown={true}
         />
       </div>

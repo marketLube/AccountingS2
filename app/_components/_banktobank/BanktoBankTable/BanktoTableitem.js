@@ -10,11 +10,6 @@ function BanktoTableitem({ banktobank }) {
   const tobranch = useBranchNameFinder(banktobank.toBranch);
   const date = formatDate(new Date(banktobank.createdAt));
 
-  console.log(tobank, "tobank");
-  console.log(frombank, "tobank");
-  console.log(frombranch, "tobank");
-  console.log(tobranch, "tobank");
-
   return (
     <>
       <div className="table-col">

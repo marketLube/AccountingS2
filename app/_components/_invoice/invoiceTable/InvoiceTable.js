@@ -13,7 +13,6 @@ function InvoiceTable() {
   const { startPage } = useSelector((state) => state.invoice);
   const { invoice, isError, isLoading } = useInvoice();
 
-  console.log(invoice, "invoice");
   const veiwEight = useViewEight(invoice, startPage, setInvoiceBtnDisable);
 
   return (

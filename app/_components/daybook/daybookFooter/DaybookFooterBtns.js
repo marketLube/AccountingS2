@@ -38,8 +38,8 @@ function DaybookFooterBtns() {
       </Button>
       {data && (
         <>
-          <Button>Incl : {data[1]?.totalAmount || 0}</Button>
-          <Button>Excl : {data[2]?.totalAmount || 0}</Button>
+          <Button>In : {data?.totalIn || 0}</Button>
+          <Button>Out : {data?.totalOut || 0}</Button>
         </>
       )}
     </>

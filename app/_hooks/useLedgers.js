@@ -34,6 +34,7 @@ export default function useLedgers() {
     error,
     refetch,
     ledger: data?.data?.particulars,
+    totals: data?.data?.overallTotals,
   };
 }
 export function refreshLedger() {

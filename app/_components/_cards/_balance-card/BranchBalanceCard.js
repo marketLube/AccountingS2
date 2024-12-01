@@ -15,7 +15,6 @@ function BranchBalanceCard({ branch }) {
 
   const banks = [...(branch?.accounts || [])].reverse().map((bank) => {
     const name = bankFinder(bank.bank, totalBanks);
-    console.log(name, "name");
     return { name, balance: bank.branchBalance };
   });
 
