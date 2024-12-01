@@ -9,7 +9,7 @@ const app = express();
 // Compression
 app.use(compression({ threshold: 512 }));
 
-app.use("/v2", versionOne);
+app.use("/api/v2", versionOne);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Cannot find the ${req.originalUrl} on the page!`, 404));

@@ -15,23 +15,21 @@ async function startServer() {
   try {
     await app.prepare();
     const server = express();
+
     // Middleware
     server.use(express.json({ limit: "10kb" }));
     server.use(cookieParser());
     server.use(cors());
 
-    // Import API routes
-    const apiRoutes = await import("./api/index.js");
-
-    // Important: Handle API routes before Next.js routes
-    server.use("/api", apiRoutes.default);
+    // Consolidate API routes into a single endpoint
+    server.all("/api/*", async (req, res) => {
+      const { default: apiRoutes } = await import("./api/index.js");
+      apiRoutes(req, res);
+    });
 
     // Handle Next.js pages
     server.all("*", (req, res) => {
-      // Only pass to Next.js if it's not an API route
-      if (!req.url.startsWith("/api/")) {
-        return handle(req, res);
-      }
+      return handle(req, res);
     });
 
     const PORT = process.env.PORT || 3000;
