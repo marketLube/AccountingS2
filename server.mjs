@@ -1,48 +1,76 @@
-// server.mjs
-import next from "next";
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import compression from "compression";
+import mongoose from "mongoose";
+import app from "./app.js";
 
-dotenv.config();
+const Db = process.env.CONNECTION_STR;
 
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+let cachedConnection = null;
 
-async function startServer() {
+async function connectToDatabase() {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
   try {
-    await app.prepare();
-    const server = express();
-
-    // Middleware
-    server.use(compression({ threshold: 512 }));
-    server.use(express.json({ limit: "10kb" }));
-    // server.use(cookieParser());
-    server.use(cors());
-
-    // Consolidate API routes into a single endpoint
-    server.all("/api/*", async (req, res) => {
-      const { default: apiRoutes } = await import("./api/index.js");
-      apiRoutes(req, res);
+    const connection = await mongoose.connect(Db, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
 
-    // Handle Next.js pages
-    server.all("*", (req, res) => {
-      return handle(req, res);
-    });
-
-    const PORT = process.env.PORT || 3000;
-    server.listen(PORT, (err) => {
-      if (err) throw err;
-      console.log(`Server is running on Port ${PORT}`);
-    });
+    cachedConnection = connection;
+    console.log("Connected to Database");
+    return connection;
   } catch (err) {
-    console.error("Error starting server:", err);
-    process.exit(1);
+    console.error("Detailed Database Connection Error:", err);
+    throw err;
   }
 }
 
-startServer();
+export default async function handler(req, res) {
+  // Enable CORS
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+
+  // Handle OPTIONS request
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
+  try {
+    // Establish database connection
+    await connectToDatabase();
+
+    // Create a promise-based wrapper for the Express app
+    return new Promise((resolve, reject) => {
+      app(req, res, (err) => {
+        if (err) {
+          console.error("Express App Error:", err);
+          res.status(500).json({
+            error: "Internal Server Error",
+            details: err.message,
+          });
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  } catch (err) {
+    console.error("Request Handling Error:", err);
+    res.status(500).json({
+      error: "Internal Server Error",
+      details: err.message,
+    });
+  }
+}
