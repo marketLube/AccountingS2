@@ -13,10 +13,7 @@ async function connectToDatabase() {
   }
 
   try {
-    const dbConnection = await mongoose.connect(Db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const dbConnection = await mongoose.connect(Db);
     isConnected = dbConnection.connections[0].readyState === 1;
     console.log("Connected to Database");
   } catch (err) {

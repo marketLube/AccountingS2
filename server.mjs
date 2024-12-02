@@ -4,6 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import compression from "compression";
 
 dotenv.config();
 
@@ -17,8 +18,9 @@ async function startServer() {
     const server = express();
 
     // Middleware
+    server.use(compression({ threshold: 512 }));
     server.use(express.json({ limit: "10kb" }));
-    server.use(cookieParser());
+    // server.use(cookieParser());
     server.use(cors());
 
     // Consolidate API routes into a single endpoint
