@@ -36,7 +36,7 @@ function LoginSection() {
       dispatch(setIsLoggedIn(false));
       dispatch(setUser({ name: null, email: null }));
       setError("Login Failed. Please check your credentials.");
-      console.error("Error logging in:", e);
+      console.log("Error logging in:", e);
     } finally {
       setLoading(false);
     }
