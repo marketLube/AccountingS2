@@ -1,4 +1,4 @@
-function Branches({ branch, register, errors, defaultAmount = 0 }) {
+function Branches({ branch, register, errors, defaultAmount = null }) {
   return (
     <div key={branch} className="form-amount-container">
       <label htmlFor={`amount_${branch}`} className="form-group-formlabel">
