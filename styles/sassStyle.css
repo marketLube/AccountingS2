@@ -1682,6 +1682,9 @@ body {
   flex-direction: column;
   gap: 0.3rem;
 }
+.form-group-errornote {
+  padding-left: 7rem;
+}
 .form-group-formlabel {
   color: gray;
   font-size: small;

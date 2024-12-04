@@ -107,6 +107,8 @@ function DaybookHead() {
     dispatch(setDaybookQuery(e.target.value));
   };
 
+  console.log(branchNames, "Ls");
+
   return (
     <>
       <LayoutHead>

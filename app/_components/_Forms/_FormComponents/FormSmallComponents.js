@@ -495,7 +495,7 @@ export function Radio({ register, errors, label = "Type" }) {
         </label>
       </div>
       {errors.type && (
-        <span className="form-group-error">{errors.type.message}</span>
+        <span className="form-group-errornote">{errors.type.message}</span>
       )}
     </div>
   );

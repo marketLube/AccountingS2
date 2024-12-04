@@ -36,6 +36,10 @@
     flex-direction: column;
     gap: 0.3rem;
 
+    &-errornote {
+      padding-left: 7rem;
+    }
+
     &-formlabel {
       color: gray;
       font-size: small;
