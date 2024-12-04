@@ -26,6 +26,7 @@ function Catagory({
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
+  console.log(curValue, "sl");
 
   useEffect(() => {
     setCurValue(defaultValue);
