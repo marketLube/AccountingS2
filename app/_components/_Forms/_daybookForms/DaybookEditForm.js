@@ -196,6 +196,8 @@ function DaybookEditForm() {
           setParticular={setParticular}
           particular={particular}
           catagory={catagory}
+          defaultParticular={particular}
+          defaultValue={catagory}
         />
       </div>
       <div className="form-section">

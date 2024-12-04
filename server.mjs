@@ -20,7 +20,7 @@ async function startServer() {
     // Middleware
     server.use(compression({ threshold: 512 }));
     server.use(express.json({ limit: "10kb" }));
-    // server.use(cookieParser());
+    server.use(cookieParser());
     server.use(cors());
 
     // Consolidate API routes into a single endpoint
