@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import Branches from "./Branches";
 import BranchGroup from "./BranchGroup";
+import FormToggle from "../../utils/ToggleSwitch/FormToggle";
 
 export function Purpose({ register, errors }) {
   return (
@@ -550,7 +551,9 @@ export function Gst({ register, errors, disabled = false }) {
     <div className="form-group">
       <label htmlFor="GstType" className="type-option-label">
         GST
+        <FormToggle />
       </label>
+
       <div className="type-options">
         <label className="type-option">
           <input
