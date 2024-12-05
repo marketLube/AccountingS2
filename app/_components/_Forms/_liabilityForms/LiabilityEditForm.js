@@ -11,7 +11,6 @@ import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 import {
@@ -34,6 +33,7 @@ function LiabilityEditForm() {
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
+
   const defaultAmounts = selectedItems?.branches?.map(
     (branch) => branch?.amount
   );
@@ -131,6 +131,7 @@ function LiabilityEditForm() {
       setLoading(false);
     }
   };
+  console.log(selectedBranches, "set b");
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>

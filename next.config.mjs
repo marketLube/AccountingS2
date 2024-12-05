@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: "standalone", // Enables standalone server mode for Vercel
-};
+const nextConfig = {};
 
 export default nextConfig;

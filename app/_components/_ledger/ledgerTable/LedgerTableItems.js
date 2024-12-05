@@ -16,6 +16,12 @@ function LedgerTableItems({ item }) {
         <span className="table-col credit table-body-col">
           {item?.transactions?.totalCredit}
         </span>
+        <span className="table-col credit table-body-col">
+          {item?.transactions?.totalCredit}
+        </span>
+        <span className="table-col credit table-body-col">
+          {item?.transactions?.totalCredit}
+        </span>
         <span className="table-col liability table-body-col">
           {item?.liabilityOutstanding?.totalLiability}
         </span>
