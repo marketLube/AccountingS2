@@ -26,8 +26,8 @@ function DaybookFooter() {
       </div>
       <div className="layout-footer-bottom">
         <div className="layout-footer-bottom-left">
-          <Button>Total Credit : {summery?.totalCredit}</Button>
-          <Button>Total Debit : {summery?.totalDebit}</Button>
+          <Button>Total Credit : {summery?.totalCredit?.toFixed(2)}</Button>
+          <Button>Total Debit : {summery?.totalDebit?.toFixed(2)}</Button>
         </div>
         <Button>Download Report</Button>
       </div>

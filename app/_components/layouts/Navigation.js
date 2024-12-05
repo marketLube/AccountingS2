@@ -19,7 +19,7 @@ import NavItem from "./NavItem";
 const routes = [
   { path: "/dashboard", icon: GoHomeFill, name: "Dashboard" },
   { path: "/daybook", icon: MdDateRange, name: "Daybook" },
-  { path: "/balance-sheet", icon: BiSolidBarChartAlt2, name: "Balance Sheet" },
+  { path: "/balance-sheet", icon: BiSolidBarChartAlt2, name: "Summary" },
   { path: "/liability", icon: MdLocalPhone, name: "Liability" },
   { path: "/outstanding", icon: SiBlockchaindotcom, name: "Receivables" },
   { path: "/reminder", icon: AiFillBell, name: "Reminder" },

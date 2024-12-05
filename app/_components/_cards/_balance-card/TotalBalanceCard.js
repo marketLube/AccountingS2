@@ -37,7 +37,7 @@ function TotalBalanceCard() {
                     color: isBalanceVisible && bank?.balance < 0 ? "red" : "",
                   }}
                 >
-                  {isBalanceVisible ? `${bank?.balance} ₹` : "****"}
+                  {isBalanceVisible ? `${bank?.balance?.toFixed(2)} ₹` : "****"}
                 </span>
               </div>
             );
@@ -50,7 +50,7 @@ function TotalBalanceCard() {
           color: isBalanceVisible && total < 0 ? "red" : "",
         }}
       >
-        {isBalanceVisible ? `${total} ` : "****"}
+        {isBalanceVisible ? `${total?.toFixed(2)} ` : "****"}
       </div>
     </div>
   );

@@ -42,7 +42,9 @@ function CapitalTableItems({ item }) {
         <span className="table-col date table-body-col">
           {item?.formattedDate}
         </span>
-        <span className="table-col amount table-body-col">{item?.amount}</span>
+        <span className="table-col amount table-body-col">
+          {item?.amount?.toFixed(2)}
+        </span>
         <span
           className="table-col remark table-body-col"
           onMouseEnter={() => setIsRemarkTooltip(true)}

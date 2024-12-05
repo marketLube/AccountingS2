@@ -9,7 +9,7 @@ function DashboardReminderItems({ item }) {
           <PiAlarmFill className="clockset" />
         </div>
         <div>
-          <div className="amount">₹{item?.amount}</div>
+          <div className="amount">₹{item?.amount?.toFixed(2)}</div>
           <div className="descripton">{item?.purpose}</div>
         </div>
       </div>

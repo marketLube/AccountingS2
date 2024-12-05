@@ -1,22 +1,22 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./ToggleSwitch.module.css";
+import "./ToggleSwitch.css";
 import { setIsAllTime } from "@/lib/slices/dashboardSlice";
 
 function ToggleSwitch() {
   const { isAllTime } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
   return (
-    <div>
+    <label class="toggle-switch">
       <input
-        id="checkboxInput"
-        className={styles.checkboxInput}
-        checked={isAllTime}
-        onChange={() => dispatch(setIsAllTime(!isAllTime))}
         type="checkbox"
+        checked={isAllTime}
+        onChange={(e) => dispatch(setIsAllTime(!isAllTime))}
       />
-      <label className={styles.toggleSwitch} htmlFor="checkboxInput"></label>
-    </div>
+      <div class="toggle-switch-background">
+        <div class="toggle-switch-handle"></div>
+      </div>
+    </label>
   );
 }
 
