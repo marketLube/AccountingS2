@@ -12,6 +12,7 @@ app.use(compression({ threshold: 512 }));
 app.use("/api/v2", versionOne);
 
 app.all("*", (req, res, next) => {
+  console.log("h");
   next(new AppError(`Cannot find the ${req.originalUrl} on the page!`, 404));
 });
 

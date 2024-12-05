@@ -50,8 +50,7 @@ export const updateTransaction = catchAsync(async (req, res, next) => {
     await transaction.save({ runValidators: true });
   } catch (err) {
     await Transaction.create(req.oldTransaction);
-
-    next(new AppError("Failed to create transactionsss", 400));
+    return next(new AppError("Failed to create transactions", 400));
   }
   res.status(200).json({
     status: "success",

@@ -34,7 +34,6 @@ import {
 } from "@/app/_hooks/useBranchwise";
 import { fetchBanks } from "@/lib/slices/generalSlice";
 import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
-import { DataArray } from "@mui/icons-material";
 import { refreshLedger } from "@/app/_hooks/useLedgers";
 import Catagory from "../../CatagorySelector/Catagory";
 
@@ -125,7 +124,7 @@ function DaybookNewEntirForm() {
 
     if (!data.gstType) data.gstType = "no-gst";
     if (!data.tdsType) data.tdsType = "no tds";
-    console.log(data, "data");
+
     try {
       setLoading(true);
       await apiClient.post("/transaction", data);
@@ -152,9 +151,6 @@ function DaybookNewEntirForm() {
 
     return;
   };
-
-  console.log(catagory, "catagory");
-  console.log(particular, "particular");
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>

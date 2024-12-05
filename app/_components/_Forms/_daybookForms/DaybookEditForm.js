@@ -104,7 +104,7 @@ function DaybookEditForm() {
   const tdsValue = watch("tds");
   const gstValue = watch("gstPercent");
   const data = watch();
-
+  console.log(catagory, "cats");
   useEffect(() => {
     let amount = selectedBranches.reduce((acc, val) => {
       if (!data[val]) return acc;
@@ -138,7 +138,7 @@ function DaybookEditForm() {
       });
 
       data.branches = branchObjects;
-      data.catagory = catagory;
+      data.catagory = catIdFinder(categories, curCat);
       data.particular = parIdFinder(particulars, particular);
       data.bank = bankIdFiner(banks, data.bank);
       data.gstPercent = parseFloat(data.gstPercent);

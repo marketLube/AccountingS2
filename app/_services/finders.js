@@ -44,7 +44,7 @@ export const catIdFinder = (catagories, name) => {
   return catagories.find((cat) => cat.name === name)?._id;
 };
 export const parIdFinder = (particulars, name) => {
-  return particulars.find((par) => par.name === name)?._id;
+  return particulars?.find((par) => par.name === name)?._id;
 };
 export const bankIdFiner = (banks, bankName) => {
   return banks?.find((bank) => bank.name === bankName)?._id;
