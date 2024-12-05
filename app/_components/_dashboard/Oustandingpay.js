@@ -6,7 +6,7 @@ function Oustandingpay({ outstanding, isLoading, isError }) {
   const isNegative = outstanding < 0;
   return (
     <div className="outstandingcard">
-      <div className="outstandingtext">Outstanding Peyments</div>
+      <div className="outstandingtext">Receivable Payments</div>
       <div className={`outstandingamount`}>
         {" "}
         {isNegative ? "-" : ""} ₹

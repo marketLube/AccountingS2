@@ -53,7 +53,7 @@ function BudgetplannerTableItems({ item }) {
         {item?.percentageDifference}
       </span>
       <span className="table-col total table-body-col">
-        {item?.totalAmount}
+        {item?.totalAmount?.toFixed(2)}
       </span>
       <span className="table-col branch table-body-col">{branch}</span>
     </div>

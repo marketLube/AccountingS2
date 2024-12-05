@@ -15,7 +15,7 @@ function Page() {
 
   return (
     <div className={`layout balance-sheet`}>
-      <h1 className={`main-head`}>Summery</h1>
+      <h1 className={`main-head`}>Summary</h1>
       <div className={`balance-sheet-body`}>
         <div className="balance-sheet-head">
           <Button type="thertiary">All Month</Button>
@@ -27,7 +27,7 @@ function Page() {
         <div className="balance-sheet-footer">
           <BottomCard
             value={liabilityAndOutstanding?.totalOutstanding}
-            type={"Outstanding"}
+            type={"Receivable"}
           />
           <BottomCard
             value={liabilityAndOutstanding?.totalLiability}

@@ -5,6 +5,7 @@ import PageNavigate from "../../utils/_pagination/PageNavigate";
 import { setLedgerBtnDisable } from "@/lib/slices/ledgerSlice";
 import BottomCard from "../../_cards/_bottomCards/BottomCard";
 import useLedgers from "@/app/_hooks/useLedgers";
+import Button from "../../utils/Button";
 
 function LedgerFooter() {
   const { currentPage, btnDisable } = useSelector((state) => state.ledger);
@@ -14,14 +15,10 @@ function LedgerFooter() {
   return (
     <div className={`layout-footer`}>
       <div className="layout-footer-left">
-        <BottomCard type="Debit" value={totals?.totalDebit} setIsDown={true} />
-        <BottomCard type="Credit" value={totals?.totalCredit} />
-        <BottomCard type="Outstanding" value={totals?.totalOutstanding} />
-        <BottomCard
-          type="Liability"
-          value={totals?.totalLiability}
-          setIsDown={true}
-        />
+        <Button>Debit: {totals?.totalDebit?.toFixed(2) || 0}</Button>
+        <Button>Credit: {totals?.totalCredit?.toFixed(2) || 0}</Button>
+        <Button>Receivable: {totals?.totalOutstanding?.toFixed(2) || 0}</Button>
+        <Button>Liability: {totals?.totalLiability?.toFixed(2) || 0}</Button>
       </div>
       <div className="layout-footer-right">
         <PageNavigate

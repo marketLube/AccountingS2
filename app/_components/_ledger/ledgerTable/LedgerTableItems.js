@@ -11,22 +11,22 @@ function LedgerTableItems({ item }) {
           {item?.particularName}
         </span>
         <span className="table-col debit table-body-col">
-          {item?.transactions?.totalDebit}
+          {item?.transactions?.totalDebit?.toFixed(2)}
         </span>
         <span className="table-col credit table-body-col">
-          {item?.transactions?.totalCredit}
+          {item?.transactions?.totalCredit?.toFixed(2)}
         </span>
         <span className="table-col liability table-body-col">
-          {item?.liabilityOutstanding?.totalLiability}
+          {item?.liabilityOutstanding?.totalLiability?.toFixed(2)}
         </span>
         <span className="table-col liability table-body-col">
-          {item?.liabilityOutstanding?.totalOutstanding}
+          {item?.liabilityOutstanding?.totalOutstanding?.toFixed(2)}
         </span>
         <span className="table-col branch table-body-col">
-          {item?.transactions?.tdsPayable}
+          {item?.transactions?.tdsPayable?.toFixed(2)}
         </span>
         <span className="table-col branch table-body-col">
-          {item?.transactions?.tdsReceivable}
+          {item?.transactions?.tdsReceivable?.toFixed(2)}
         </span>
       </div>
     </>

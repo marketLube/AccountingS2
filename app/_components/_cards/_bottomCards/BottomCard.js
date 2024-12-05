@@ -1,7 +1,7 @@
 import { formatWithCommas } from "@/app/_services/helpers";
 import Arrow from "../../utils/Arrow";
 
-function BottomCard({ type = "Liability", value = 39823958, setIsDown }) {
+function BottomCard({ type = "Receivable", value = 39823958, setIsDown }) {
   const isDown = value <= 0;
   return (
     <div className="bottom">

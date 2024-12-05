@@ -92,7 +92,7 @@ function DaybookTableItem({ transaction }) {
             ? transaction?.branches?.find(
                 (branch) => branch.branch.name === curBranch
               )?.amount
-            : transaction?.amount}
+            : transaction?.amount?.toFixed(2)}
         </span>
         <span
           className="table-col remark table-body-col"

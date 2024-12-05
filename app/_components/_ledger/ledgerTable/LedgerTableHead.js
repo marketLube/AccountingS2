@@ -8,8 +8,8 @@ function LedgerTableHead() {
       <span className="table-col particular">Particular</span>
       <span className="table-col debit">Debited</span>
       <span className="table-col credit">Credited</span>
-      <span className="table-col liability">Liabilty</span>
-      <span className="table-col liability">Outstanding</span>
+      <span className="table-col liability">Liability</span>
+      <span className="table-col liability">Receivables</span>
       <span className="table-col branch">Tds Paid</span>
       <span className="table-col branch">Tds Recieved</span>
     </div>
