@@ -22,32 +22,9 @@ $small-padding: 0.2rem;
     font-family: Arial, Helvetica, sans-serif, Nunito
   }
 
-  &-upload-logo-section{
-      width: 50%;
-      display: contents;
-
-  }
-
-  &-add-logo{
-    padding: 20px 20px 15px;
-    border: 1px dashed #dbe8fd;
-    display: block;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    width: 20%;
-    color: #5b9aff;
-    cursor: pointer;
-    text-align: center;
-    background: #4d556f92;
-    width: 129.24px;
-    height: 88.2px;
-    
-  }
   
   &-add-logo-label{
     margin: 0;
     padding: 0;
   }
-
 }

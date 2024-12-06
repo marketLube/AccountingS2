@@ -15,15 +15,16 @@ function Page() {
 
   const { isInVoice } = useSelector((state) => state.invoice);
   return isInVoice ? (
-    <InvoiceDownloader />
+    // <InvoiceDownloader />
+    <InvoicePage />
+
   ) : (
     <div className="layout invoice">
       <h1 className="main-head">Invoice</h1>
       <div className="layout-body">
-        {/* <Invoicehead /> */}
-        {/* <InvoiceTable /> */}
-        {/* <InvoiceFooter /> */}
-        <InvoicePage />
+        <Invoicehead />
+        <InvoiceTable />
+        <InvoiceFooter />
       </div>
     </div>
   );
