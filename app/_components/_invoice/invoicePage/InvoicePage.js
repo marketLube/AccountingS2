@@ -132,6 +132,8 @@ const InvoicePage = () => {
         format: [cardWidthInMM, cardHeightInMM], // Set PDF size to match card dimensions
       });
 
+      
+
       pdf.addImage(imgData, 'PNG', 0, 0, cardWidthInMM, cardHeightInMM);
       pdf.save('card.pdf');
     }
@@ -142,10 +144,11 @@ const InvoicePage = () => {
   
   return (
     <>
-      <div className="flex justify-between items-center ">
+      <div className="flex items-center ">
         <button onClick={downloadCardAsPDF} >Download PDF</button>
-        <div className="invoice p-4" ref={cardRef}>
-          <div className="flex mb-2">
+        <button variant='primary' type='submit' className="d-block w-100">Review Invoice</button>
+        <div className="invoice bg-white shadow-lg rounded-lg border border-blue-200 p-6 w-[800.66px] mt-11 ml-11 items-center justify-center" ref={cardRef}>
+          <div className="flex mb-2 items-center">
             {isUploaded && logo ? (
               <div className="flex items-center justify-center">
                 <img
@@ -177,7 +180,7 @@ const InvoicePage = () => {
                   id="dropzone-file"
                   type="file"
                   className="hidden"
-                  onChange={handleImageUpload} // Trigger the image upload handler
+                  onChange={handleImageUpload} 
                 />
               </label>
             )}
