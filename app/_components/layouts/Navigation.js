@@ -28,7 +28,7 @@ const routes = [
   { path: "/capital", icon: IoWalletOutline, name: "Capital" },
   { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
   { path: "/budgetplanner", icon: BiSolidPlusSquare, name: "Budget Planner" },
-  // { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
+  { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
   // { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
   { path: "/manage", icon: RiFolderSettingsFill, name: "Manage" },
 ];

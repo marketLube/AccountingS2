@@ -3,232 +3,51 @@
 
 $small-padding: 0.2rem;
 
+
+
 .invoice {
   &-container {
-    background-color: rgb(86, 86, 60);
-    height: 100vh;
-    width: 100%;
-    overflow-y: scroll;
-
-    & .input-head {
-      font-weight: 600;
-      color: variables.$color-dark;
-    }
-
-    & label {
-      margin-right: 1rem;
-      font-size: 0.9rem;
-      @include mixins.flex(center);
-      justify-content: start;
-      width: 8rem;
-    }
-  }
-
-  &-body {
-    height: fit-content;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-  }
-
-  &-actions {
-    background-color: variables.$color-light-gray;
-    position: relative;
-    @include mixins.flex(center);
-    &-btns {
-      @include mixins.flex(center);
-      width: 20rem;
-      height: 20rem;
-      position: absolute;
-      top: 10rem;
-      gap: 1rem;
-    }
-    &-back-btn {
-      width: 100%;
-      @include mixins.flex(center);
-      position: absolute;
-      top: 10rem;
-    }
-  }
-
-  &-form {
-    background-color: variables.$color-white;
-
-    &-content-box {
-      width: 70vw;
-
-      max-width: 210mm;
-      min-height: 297mm;
-      margin: 10rem auto;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    &-head {
-      height: 5rem;
-      width: 100%;
-      padding: 0 $small-padding;
-      @include mixins.flex(between);
-
-      & h3 {
-        font-size: 2rem;
-        font-weight: 600;
-      }
-    }
-
-    &-from {
-      height: fit-content;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    &-payment {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: end;
-
-      & .invoice-input {
-        text-align: right;
-      }
-    }
-
-    &-to-container {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    &-to-input-container {
-      display: flex;
-      margin-bottom: 0.5rem;
-      font-size: 0.8rem;
-    }
-
-    &-to {
-      height: 10rem;
-    }
-
-    &-place {
-      height: 2.5rem;
-    }
-
-    &-table {
-      width: 100%;
-      &-head {
-        height: 2rem;
-        background-color: variables.$color-primary;
-        border-radius: variables.$large-radius;
-        display: flex;
-        width: 100%;
-        overflow: hidden;
-        & input {
-          color: rgb(233, 228, 228);
-        }
-      }
-
-      &-itemContainer {
-        display: flex;
-        flex-direction: column;
-        height: fit-content;
-      }
-
-      &-item-box {
-        flex: 1;
-        height: 2rem;
-        padding: 0 0.5rem;
-        overflow: hidden;
-
-        & input {
-          height: 100%;
-          width: 100%;
-          background-color: transparent;
-          padding: 0 1rem;
-          font-size: 0.9rem;
-
-          &:focus {
-            background-color: variables.$color-white;
-            color: variables.$color-dark;
-          }
-        }
-      }
-
-      &-item-content {
-        display: flex;
-        height: 5rem;
-        border-bottom: 0.2px solid lightgray;
-        position: relative;
-
-        & .invoice-form-table-item-box {
-          height: 100%;
-        }
-        textarea {
-          height: 100%;
-          width: 100%;
-          padding: 1rem;
-          text-align: left; /* Horizontal alignment */
-          resize: none; /* Disable resizing */
-          overflow: hidden;
-          line-height: normal; /* Use default line height */
-          vertical-align: middle;
-        }
-
-        & .icons {
-          position: absolute;
-          top: 50%; /* Vertically center */
-          right: 0rem; /* Adjust the distance from the right edge */
-          transform: translateY(
-            -50%
-          ); /* Align properly to the vertical center */
-          cursor: pointer; /* Add pointer cursor for better UX */
-        }
-      }
-    }
-
-    &-footer {
-      height: 8rem;
-
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  &-total-container {
-    @include mixins.flex(center);
-    align-items: start;
-    flex-direction: column;
-    justify-content: end;
-    padding-right: 0.5rem;
-  }
-
-  &-total-item {
+    width: 900.66px;
+    margin: 45px;
+    padding: 40px 33px 0px 35px;
+    box-sizing: border-box;
+    background-color: #f3f4f6;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid #bfc8de;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    padding: 1em 0;
-    border-bottom: 0.2px solid lightgray;
+    align-items: center;
+    align-items: flex-start; 
+    font-family: Arial, Helvetica, sans-serif, Nunito
   }
-  &-all-sum {
-    width: 100%;
-    padding: 1rem 0;
-    @include mixins.flex(center);
-    border-bottom: 1px solid black;
-  }
-}
-.i-item-desc {
-  flex: 2;
-}
 
-.invoice-input {
-  width: 15rem;
-  padding: $small-padding;
-  color: variables.$color-gray;
-  font-size: 0.8rem;
+  &-upload-logo-section{
+      width: 50%;
+      display: contents;
 
-  &:focus {
-    outline: 0.5px solid variables.$color-gray;
-    border-radius: variables.$small-radius;
   }
+
+  &-add-logo{
+    padding: 20px 20px 15px;
+    border: 1px dashed #dbe8fd;
+    display: block;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    width: 20%;
+    color: #5b9aff;
+    cursor: pointer;
+    text-align: center;
+    background: #4d556f92;
+    width: 129.24px;
+    height: 88.2px;
+    
+  }
+  
+  &-add-logo-label{
+    margin: 0;
+    padding: 0;
+  }
+
 }
