@@ -9,10 +9,12 @@ import { branchWiseCircleCharts } from "../Aggregation/branchWiseCircleCharts.js
 import { migrate } from "../Controller/dataMigrateController.js";
 import { calculateGSTTotals } from "../Aggregation/features/totalGst.js";
 import { particularWiseGst } from "../Aggregation/features/particularWiseGst.js";
+import { getParticularDetails } from "../Aggregation/details/getParticularDetails.js";
 
 const router = express.Router();
 
 router.get("/gst", calculateGSTTotals);
+router.get("/particular-detail", getParticularDetails);
 router.get("/totals", getTotals);
 router.get("/branchwise-total", getBranchTotalsForChart);
 router.get("/balance-sheet", balanceSheet);

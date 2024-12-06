@@ -25,7 +25,7 @@ function LedgerTableItems({ item }) {
 
   const handleClicked = () => {
     dispatch(setIsSelected(true));
-    setClickedParticular(setClickedParticular(item));
+    dispatch(setClickedParticular(item));
   };
 
   return (

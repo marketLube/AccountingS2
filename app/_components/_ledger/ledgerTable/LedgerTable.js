@@ -15,6 +15,7 @@ function LedgerTable() {
   const { refetch, ledger, isError, isLoading, error } = useLedgers();
   const veiwEight = useViewEight(ledger, startPage, setLedgerBtnDisable);
   const { isSelected } = useSelector((state) => state.ledger);
+
   return (
     <div className="table">
       <LedgerTableHead />

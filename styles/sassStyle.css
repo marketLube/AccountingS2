@@ -2345,10 +2345,16 @@ body {
   width: auto;
 }
 .ledger-particular {
-  background-color: yellow !important;
   width: 100%;
   height: 100%;
   grid-row: span 8 !important;
+  overflow: scroll;
+}
+.ledger-particular .table-col {
+  height: 5rem;
+}
+.ledger-particular-item-container {
+  height: fit-content;
 }
 
 .commition-table {

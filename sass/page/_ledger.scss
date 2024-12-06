@@ -16,9 +16,16 @@
   }
 
   &-particular {
-    background-color: yellow !important;
     width: 100%;
     height: 100%;
     grid-row: span 8 !important;
+    overflow: scroll;
+    & .table-col {
+      height: 5rem;
+    }
+
+    &-item-container {
+      height: fit-content;
+    }
   }
 }
