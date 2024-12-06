@@ -7,10 +7,14 @@ import CountryDropdown from "../invoiceData/CountryDropdown";
 import StateDropdown from "../invoiceData/StateDropdown";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { Button } from "@material-tailwind/react";
+import InvoicePdf from "../invoicePdf/InvoicePdf";
 
-const InvoicePage = () => {
-  const [logo, setLogo] = useState(null); 
-  const [imageError, setImageError] = useState("");
+
+
+const Invoice = () => {
+  const [logo, setLogo] = useState(null); // To store the logo image URL
+  const [imageError, setImageError] = useState(""); // To store error message if image is too large
   const [isUploaded, setIsUploaded] = useState(false);
 
   const [notes, setNotes] = useState("Notes");
@@ -38,6 +42,8 @@ const InvoicePage = () => {
   const dueDateInputRef = useRef(null); 
   const calendarIconRefInvoice = useRef(null); 
   const calendarIconRefDue = useRef(null); 
+
+
 
 
   const [selectedState, setSelectedState] = useState("");
@@ -92,6 +98,42 @@ const InvoicePage = () => {
     };
   }, []);
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    const invoiceData = {
+      notes,
+      terms,
+      businessText,
+      paymentText,
+      header,
+      invoice,
+      date,
+      DueDate
+    };
+  
+    // Save invoice data to localStorage
+    localStorage.setItem('invoiceData', JSON.stringify(invoiceData));
+  
+    // Generate PDF
+    const doc = new jsPDF();
+  
+    doc.text(`Invoice Number: ${invoiceData.invoice}`, 10, 10);
+    doc.text(`Date: ${invoiceData.date}`, 10, 20);
+    doc.text(`Due Date: ${invoiceData.DueDate}`, 10, 30);
+    doc.text(`Notes: ${invoiceData.notes}`, 10, 40);
+    doc.text(`Terms: ${invoiceData.terms}`, 10, 50);
+    doc.text(`Business Text: ${invoiceData.businessText}`, 10, 60);
+    doc.text(`Payment Text: ${invoiceData.paymentText}`, 10, 70);
+  
+    // Save PDF to disk
+    doc.save('invoice.pdf');
+  
+    // Navigate to the display page
+    // navigate('/display');
+  };
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0]; // Get the file
 
@@ -132,23 +174,18 @@ const InvoicePage = () => {
         format: [cardWidthInMM, cardHeightInMM], // Set PDF size to match card dimensions
       });
 
-      
-
       pdf.addImage(imgData, 'PNG', 0, 0, cardWidthInMM, cardHeightInMM);
       pdf.save('card.pdf');
     }
   };
 
 
-
-  
   return (
     <>
-      <div className="flex items-center ">
+      <div className="flex justify-between items-center ">
         <button onClick={downloadCardAsPDF} >Download PDF</button>
-        <button variant='primary' type='submit' className="d-block w-100">Review Invoice</button>
-        <div className="invoice bg-white shadow-lg rounded-lg border border-blue-200 p-6 w-[800.66px] mt-11 ml-11 items-center justify-center" ref={cardRef}>
-          <div className="flex mb-2 items-center">
+        <form className="invoice p-4" onSubmit={handleSubmit}>
+          <div className="flex mb-2">
             {isUploaded && logo ? (
               <div className="flex items-center justify-center">
                 <img
@@ -180,7 +217,7 @@ const InvoicePage = () => {
                   id="dropzone-file"
                   type="file"
                   className="hidden"
-                  onChange={handleImageUpload} 
+                  onChange={handleImageUpload} // Trigger the image upload handler
                 />
               </label>
             )}
@@ -454,11 +491,11 @@ const InvoicePage = () => {
             />
 
           </div>
-          
-        </div>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </>
   );
 };
 
-export default InvoicePage;
+export default Invoice;
