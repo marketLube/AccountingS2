@@ -549,10 +549,10 @@ export function AssetsType({ register, errors }) {
 export function Gst({ register, errors, disabled = false }) {
   return (
     <div className="form-group">
-      <label htmlFor="GstType" className="type-option-label">
-        GST
+      <div className="type-option-label">
+        <label htmlFor="GstType">GST</label>
         <FormToggle />
-      </label>
+      </div>
 
       <div className="type-options">
         <label className="type-option">
