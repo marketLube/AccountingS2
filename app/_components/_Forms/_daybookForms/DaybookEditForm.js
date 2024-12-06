@@ -244,7 +244,7 @@ function DaybookEditForm() {
         </Button>
 
         <div
-          className="absolute left-1/2 transform bottom-2 text-sm font-medium text-gray-700"
+          className="absolute left-1/2 transform -translate-x-1/2 bottom-2 text-sm font-medium text-gray-700 mb-14"
           aria-label="Total amount for the transaction"
         >
           Amount : {amount || 0}
