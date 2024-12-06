@@ -13,14 +13,14 @@ function LedgerTable() {
 
   const { refetch, ledger, isError, isLoading, error } = useLedgers();
   const veiwEight = useViewEight(ledger, startPage, setLedgerBtnDisable);
-
+  const { isSelected } = useSelector((state) => state.ledger);
   return (
     <div className="table">
       <LedgerTableHead />
-      {isLoading ? (
+      {isLoading || isError ? (
         <TableLoader />
-      ) : isError ? (
-        <TableLoader error="Something Went Wrong..." />
+      ) : isSelected ? (
+        <div>Hello world</div>
       ) : (
         veiwEight?.map((liab, i) => (
           <LedgerTableItems key={i} item={liab}></LedgerTableItems>

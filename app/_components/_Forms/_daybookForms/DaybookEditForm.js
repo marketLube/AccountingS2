@@ -104,7 +104,7 @@ function DaybookEditForm() {
   const tdsValue = watch("tds");
   const gstValue = watch("gstPercent");
   const data = watch();
-  console.log(catagory, "cats");
+
   useEffect(() => {
     let amount = selectedBranches.reduce((acc, val) => {
       if (!data[val]) return acc;
@@ -122,6 +122,7 @@ function DaybookEditForm() {
   }, [data]);
 
   const onSubmit = async (data) => {
+    console.log(data, "data");
     try {
       if (selectedBranches.length <= 0)
         return toast.error("Please Select atleast one branch");
@@ -139,7 +140,7 @@ function DaybookEditForm() {
 
       data.branches = branchObjects;
       data.catagory = catIdFinder(categories, curCat);
-      data.particular = parIdFinder(particulars, particular);
+      data.particular = parIdFinder(particulars, curPart);
       data.bank = bankIdFiner(banks, data.bank);
       data.gstPercent = parseFloat(data.gstPercent);
 

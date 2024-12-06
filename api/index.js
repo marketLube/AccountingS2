@@ -15,10 +15,7 @@ async function connectToDatabase() {
 
   try {
     // Connect to the database
-    const dbConnection = await mongoose.connect(Db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const dbConnection = await mongoose.connect(Db);
 
     // Set connection state
     isConnected = dbConnection.connections[0].readyState === 1;

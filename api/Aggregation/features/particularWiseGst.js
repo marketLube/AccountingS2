@@ -1,22 +1,29 @@
-import mongoose from "mongoose";
-import Transaction from "../../Models/transactionModel.js";
 import catchAsync from "../../Utilities/catchAsync.js";
+import AppError from "../../Utilities/appError.js";
+import Transaction from "../../Models/transactionModel.js";
+import mongoose from "mongoose";
 import { matchDates, matchField } from "./matchingObj.js";
 
-export const calculateGSTTotals = catchAsync(async (req, res, next) => {
+export const particularWiseGst = catchAsync(async (req, res, next) => {
+  const { particular } = req.query;
   const query = { ...req.query };
-
-  const matchStage = {};
-  const matchingArr = ["catagory", "particular", "bank"];
-  matchField(matchingArr, query, matchStage);
-  matchDates(query, matchStage);
-
-  if (query.branchId) {
-    matchStage["branches.branch"] = new mongoose.Types.ObjectId(query.branchId);
+  // Validate particular query parameter
+  if (!particular) {
+    return next(new AppError("Please provide the 'particular' parameter", 400));
   }
 
-  const totals = await Transaction.aggregate([
-    { $match: matchStage },
+  // Validate ObjectId format
+  if (!mongoose.Types.ObjectId.isValid(particular)) {
+    return next(new AppError("Invalid 'particular' ID format", 400));
+  }
+
+  const particularId = new mongoose.Types.ObjectId(particular);
+
+  // Perform aggregation
+  const result = await Transaction.aggregate([
+    {
+      $match: { particular: particularId },
+    },
     {
       $addFields: {
         // Ensure numeric conversion
@@ -103,31 +110,19 @@ export const calculateGSTTotals = catchAsync(async (req, res, next) => {
     },
   ]);
 
-  // Initialize default results
-  const results = {
-    totalCredit: 0,
-    totalInPercent: 0,
-    totalDebit: 0,
-    totalOutPercent: 0,
-  };
-
-  // Check if aggregation returned results
-  if (totals.length > 0) {
-    const totalData = totals[0];
-
-    // Assign values from aggregation results
-    results.totalCredit = totalData.totalCredit || 0;
-    results.totalDebit = totalData.totalDebit || 0;
-    results.totalInPercent = totalData.totalInGst || 0;
-    results.totalOutPercent = totalData.totalOutGst || 0;
-    results.totalOut = totalData.totalInGst || 0;
-    results.totalIn = totalData.totalOutGst || 0;
+  // Handle empty results
+  if (!result.length) {
+    return res.status(404).json({
+      message: "No data found for the specified 'particular'",
+      status: "Failure",
+      result,
+    });
   }
 
-  // Send response
+  // Respond with the result
   res.status(200).json({
     message: "Successfully fetched",
     status: "Success",
-    results,
+    result,
   });
 });

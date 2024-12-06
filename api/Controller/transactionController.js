@@ -47,8 +47,9 @@ export const updateTransaction = catchAsync(async (req, res, next) => {
   const transaction = new Transaction(updates);
 
   try {
-    await transaction.save({ runValidators: true });
+    await transaction.save();
   } catch (err) {
+    console.log(err, "err");
     await Transaction.create(req.oldTransaction);
     return next(new AppError("Failed to create transactions", 400));
   }

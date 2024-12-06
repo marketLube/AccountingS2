@@ -128,7 +128,7 @@ function DaybookTableItem({ transaction }) {
           {transaction?.type === "Credit" ? "Credit" : "--"}
         </span>
         <span className="table-col gst table-body-col">
-          <GstShower data={transaction} amount={transaction.amount} />
+          <GstShower data={transaction} amount={transaction?.totalAmt} />
         </span>
         <span
           className="table-col tds table-body-col"
