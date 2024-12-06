@@ -1,8 +1,7 @@
 "use client";
 
 import apiClient from "@/lib/axiosInstance";
-import { setIsSelected } from "@/lib/slices/ledgerSlice";
-import { useQuery } from "@tanstack/react-query";
+import { setClickedParticular, setIsSelected } from "@/lib/slices/ledgerSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -24,8 +23,13 @@ function LedgerTableItems({ item }) {
     gstTotals();
   }, [item]);
 
+  const handleClicked = () => {
+    dispatch(setIsSelected(true));
+    setClickedParticular(setClickedParticular(item));
+  };
+
   return (
-    <div className="table-col" onClick={() => dispatch(setIsSelected(true))}>
+    <div className="table-col" onClick={handleClicked}>
       <span className="table-check">
         <input type="checkbox" style={{ opacity: "0" }} />
       </span>

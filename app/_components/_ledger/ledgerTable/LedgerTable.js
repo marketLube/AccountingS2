@@ -7,6 +7,7 @@ import { useViewEight } from "@/app/_services/helpers";
 import TableLoader from "../../_loader/TableLoader";
 import { setLedgerBtnDisable } from "@/lib/slices/ledgerSlice";
 import useLedgers from "@/app/_hooks/useLedgers";
+import LedgerParticular from "./LedgerParticular";
 
 function LedgerTable() {
   const { startPage } = useSelector((state) => state.ledger);
@@ -20,7 +21,7 @@ function LedgerTable() {
       {isLoading || isError ? (
         <TableLoader />
       ) : isSelected ? (
-        <div>Hello world</div>
+        <LedgerParticular />
       ) : (
         veiwEight?.map((liab, i) => (
           <LedgerTableItems key={i} item={liab}></LedgerTableItems>
