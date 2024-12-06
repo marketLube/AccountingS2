@@ -182,9 +182,9 @@ const Invoice = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center ">
+      <div className=" items-center ">
         <button onClick={downloadCardAsPDF} >Download PDF</button>
-        <form className="invoice p-4" onSubmit={handleSubmit}>
+        <form className="invoice p-4 w-[800.66px] m-[45px] p-[40px_33px_0_35px] box-border bg-white shadow-lg rounded-lg border border-[#bfc8de]" onSubmit={handleSubmit}>
           <div className="flex mb-2">
             {isUploaded && logo ? (
               <div className="flex items-center justify-center">
