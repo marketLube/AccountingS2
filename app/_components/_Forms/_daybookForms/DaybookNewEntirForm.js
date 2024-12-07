@@ -49,6 +49,7 @@ function DaybookNewEntirForm() {
   const [catagory, setCatagory] = useState("Select Catagory");
   const [particular, setParticular] = useState("Select Particular");
   const [amount, setAmount] = useState("");
+  const [isBalanceEffect, setIsBalanceEffect] = useState(false);
 
   const defaultValues = {
     date: today(),
@@ -58,7 +59,7 @@ function DaybookNewEntirForm() {
     purpose: "New",
     tds: "10%",
     gstPercent: "2%",
-    gstType: "",
+    gstType: "excl",
     tdsType: "",
   };
 
@@ -78,20 +79,29 @@ function DaybookNewEntirForm() {
   const gstValue = watch("gstPercent");
   const data = watch();
 
+  const handleBalanceEffect = (val) => {
+    return () => setIsBalanceEffect(val);
+  };
+  console.log(isBalanceEffect, "bal effect");
   useEffect(() => {
     let amount = selectedBranches.reduce((acc, val) => {
       if (!data[val]) return acc;
       return acc + parseFloat(data[val]);
     }, 0);
 
+    let tdsDeduction = 0;
     if (tdsValue !== "0%" && tdsValue) {
       const tdsRate = parseFloat(tdsValue) / 100;
-      const tdsDeduction = amount * tdsRate;
-      amount = amount - tdsDeduction;
-      setAmount(amount);
-    } else {
-      setAmount(amount);
+      tdsDeduction = amount * tdsRate;
     }
+
+    let gstAmount = 0;
+    if (data.gstType === "excl" && gstValue !== "0%") {
+      const gstRate = parseFloat(data.gstPercent || 0) / 100;
+      gstAmount = amount * gstRate;
+    }
+    const calculatedAmt = amount - tdsDeduction + gstAmount;
+    setAmount(calculatedAmt);
   }, [data]);
 
   const handleClear = () => {
@@ -104,6 +114,11 @@ function DaybookNewEntirForm() {
   const onSubmit = async (data) => {
     if (selectedBranches.length <= 0)
       return toast.error("Please Select atleast one branch");
+
+    let amount = selectedBranches.reduce((acc, val) => {
+      if (!data[val]) return acc;
+      return acc + parseFloat(data[val]);
+    }, 0);
 
     const branchObjects = selectedBranches.map((branch) => {
       const branchObj = branches.find(
@@ -124,6 +139,17 @@ function DaybookNewEntirForm() {
 
     if (!data.gstType) data.gstType = "no-gst";
     if (!data.tdsType) data.tdsType = "no tds";
+
+    if (isBalanceEffect && data.gstPercent && data.gstType === "excl") {
+      data.isGstDeduct = true;
+      const gstRate = parseFloat(data.gstPercent || 0) / 100;
+      data.gstAmount = amount * gstRate;
+    } else {
+      data.isGstDeduct = false;
+      data.gstAmount = 0;
+    }
+
+    console.log(data, "data");
 
     try {
       setLoading(true);
@@ -189,7 +215,13 @@ function DaybookNewEntirForm() {
           errors={errors}
           disabled={tdsValue === "0%"}
         />
-        <Gst register={register} errors={errors} disabled={gstValue === "0%"} />
+        <Gst
+          register={register}
+          errors={errors}
+          disabled={gstValue === "0%"}
+          isBalanceEffect={isBalanceEffect}
+          setIsBalanceEffect={setIsBalanceEffect}
+        />
         <GstPercent register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns relative">

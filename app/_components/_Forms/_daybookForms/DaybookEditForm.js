@@ -67,6 +67,9 @@ function DaybookEditForm() {
   const [catagory, setCatagory] = useState(curCat);
   const [particular, setParticular] = useState(curPart);
   const [amount, setAmount] = useState("");
+  const [isBalanceEffect, setIsBalanceEffect] = useState(
+    selectedItems?.isGstDeduct
+  );
 
   const {
     register,
@@ -111,21 +114,31 @@ function DaybookEditForm() {
       return acc + parseFloat(data[val]);
     }, 0);
 
+    let tdsDeduction = 0;
     if (tdsValue !== "0%" && tdsValue) {
       const tdsRate = parseFloat(tdsValue) / 100;
-      const tdsDeduction = amount * tdsRate;
-      amount = amount - tdsDeduction;
-      setAmount(amount);
-    } else {
-      setAmount(amount);
+      tdsDeduction = amount * tdsRate;
     }
+
+    let gstAmount = 0;
+    if (data.gstType === "excl" && gstValue !== "0%") {
+      const gstRate = parseFloat(data.gstPercent || 0) / 100;
+      gstAmount = amount * gstRate;
+    }
+
+    const calculatedAmt = amount - tdsDeduction + gstAmount;
+    setAmount(calculatedAmt);
   }, [data]);
 
   const onSubmit = async (data) => {
-    console.log(data, "data");
     try {
       if (selectedBranches.length <= 0)
         return toast.error("Please Select atleast one branch");
+
+      let amount = selectedBranches.reduce((acc, val) => {
+        if (!data[val]) return acc;
+        return acc + parseFloat(data[val]);
+      }, 0);
 
       const branchObjects = selectedBranches.map((branch) => {
         const branchObj = branches.find(
@@ -154,7 +167,17 @@ function DaybookEditForm() {
         data
       );
 
+      if (isBalanceEffect) {
+        data.isGstDeduct = true;
+        const gstRate = parseFloat(data.gstPercent || 0) / 100;
+        data.gstAmount = amount * gstRate;
+      } else {
+        data.isGstDeduct = false;
+        data.gstAmount = 0;
+      }
+
       toast.success("Successfully Edited");
+
       refreshTransaction();
       refreshDashboardTotals();
       refreshDashboardChartData();
@@ -228,7 +251,13 @@ function DaybookEditForm() {
           errors={errors}
           disabled={tdsValue === "0%"}
         />
-        <Gst register={register} errors={errors} disabled={gstValue === "0%"} />
+        <Gst
+          register={register}
+          errors={errors}
+          disabled={gstValue === "0%"}
+          isBalanceEffect={isBalanceEffect}
+          setIsBalanceEffect={setIsBalanceEffect}
+        />
         <GstPercent register={register} errors={errors} />
       </div>
       <div className="form-btn-group form-submit-btns">

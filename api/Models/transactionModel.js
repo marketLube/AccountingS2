@@ -71,7 +71,10 @@ const transactionSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    gstAmount: {
+      type: Number,
+      default: 0,
+    },
     branches: [
       {
         branch: {
@@ -104,6 +107,8 @@ transactionSchema.pre("save", async function (next) {
       return next(new AppError("Bank not found", 404));
     }
 
+    console.log(this.gstAmount, "amt");
+
     // 2. Calculate total transaction amount and update branches
     let totalAmount = 0;
 
@@ -130,22 +135,24 @@ transactionSchema.pre("save", async function (next) {
           return next(new AppError("Failed to fetch Bank Accounts", 400));
         }
 
+        let tdsDeduction = 0;
+
         if (this.tdsType !== "no tds") {
           // Calculate TDS value
           const tdsRate = parseFloat(this.tds) / 100;
-          const tdsDeduction = amount * tdsRate;
+          tdsDeduction = amount * tdsRate;
 
           // Update existing bank account balance with TDS applied
-          bankAccount.branchBalance += amount - tdsDeduction;
-          branchData.amount = Math.abs(amount - tdsDeduction);
+          bankAccount.branchBalance += amount - tdsDeduction + this.gstAmount;
+          branchData.amount = Math.abs(amount - tdsDeduction + this.gstAmount);
           branchData.branchTotalAmt = Math.abs(amount);
 
           // Update total branch balance with TDS applied
-          branch.totalBranchBalance += amount - tdsDeduction;
+          branch.totalBranchBalance += amount - tdsDeduction + this.gstAmount;
         } else {
           // If no TDS, update balances normally
-          bankAccount.branchBalance += amount;
-          branch.totalBranchBalance += amount;
+          bankAccount.branchBalance += amount + this.gstAmount;
+          branch.totalBranchBalance += amount + this.gstAmount;
         }
 
         // Save branch updates
@@ -159,12 +166,12 @@ transactionSchema.pre("save", async function (next) {
 
       // 3. Update bank balance
       bank.balance += totalAmount - tdsDeduction;
-      this.amount = Math.abs(totalAmount - tdsDeduction);
+      this.amount = Math.abs(totalAmount - tdsDeduction + this.gstAmount);
     } else {
-      bank.balance += totalAmount;
-      this.amount = Math.abs(totalAmount);
+      bank.balance += totalAmount + this.gstAmount;
+      this.amount = Math.abs(totalAmount + this.gstAmount);
     }
-    this.totalAmt = Math.abs(totalAmount);
+    this.totalAmt = Math.abs(totalAmount + this.gstAmount);
 
     // Save bank updates
     await bank.save();

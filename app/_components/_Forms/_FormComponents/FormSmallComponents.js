@@ -546,12 +546,21 @@ export function AssetsType({ register, errors }) {
 }
 
 // Gst Component for "GST Type" Selection
-export function Gst({ register, errors, disabled = false }) {
+export function Gst({
+  register,
+  errors,
+  disabled = false,
+  isBalanceEffect,
+  setIsBalanceEffect,
+}) {
   return (
     <div className="form-group">
       <div className="type-option-label">
         <label htmlFor="GstType">GST</label>
-        <FormToggle />
+        <FormToggle
+          isBalanceEffect={isBalanceEffect}
+          setIsBalanceEffect={setIsBalanceEffect}
+        />
       </div>
 
       <div className="type-options">

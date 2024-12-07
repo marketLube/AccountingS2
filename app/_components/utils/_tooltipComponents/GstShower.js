@@ -3,15 +3,13 @@
 function GstShower({ data, amount }) {
   if (!data || !amount) return null;
 
-  console.log(amount, "amt");
   const validAmount = parseFloat(amount) || 0;
   const gstPercent = parseFloat(data.gstPercent) || 0;
 
   let gstAmount = 0;
-
-  if (data?.gstType === "incl") {
-    console.log(amount, "amt");
-    console.log(gstPercent, "percent");
+  if (data?.isGstDeduct) {
+    gstAmount = data?.gstAmount;
+  } else if (data?.gstType === "incl") {
     gstAmount = (validAmount * gstPercent) / (100 + gstPercent);
   } else if (data?.gstType === "excl") {
     gstAmount = (validAmount * gstPercent) / 100;

@@ -3,6 +3,8 @@ import User from "../Models/userModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 import AppError from "../Utilities/appError.js";
 import { updateOne } from "./handlerFactory.js";
+import mongoose from "mongoose";
+import { connectToDatabase } from "../index.js";
 
 const KEY = process.env.JWT_SECRET;
 
@@ -92,7 +94,7 @@ export const verify = catchAsync(async (req, res, next) => {
   });
 });
 
-const mails = ["skymarkdubai@gmail.com"];
+const mails = ["skymarkdubai@gmail.com", "arjun7180@gmail.com"];
 
 export const signUp = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -128,6 +130,21 @@ export const login = catchAsync(async (req, res, next) => {
 
   // restricting password going to frontend
   user.password = undefined;
+
+  // disconnect the current database and make new connection
+
+  if (email === "arjun7180@gmail.com") {
+    await mongoose.disconnect();
+    console.log("Disconnected from the main database.");
+
+    const newDbUri =
+      "mongodb+srv://marketLube:lmfao@marketlubecluster.hkc38.mongodb.net/?retryWrites=true&w=majority&appName=MarketlubeCluster";
+
+    await mongoose
+      .connect(newDbUri)
+      .then((res) => console.log("connected"))
+      .catch((e) => console.log("Error conntection"));
+  }
 
   sendToken(user, 200, res);
 });
@@ -165,6 +182,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
 
   sendToken(user, 200, res);
 });
+
 export const resetPassword = catchAsync(async (req, res, next) => {
   const { password } = req.body;
   if (!password) return next(new AppError("Please provide the password", 400));
