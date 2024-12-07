@@ -2,15 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import InvoiceTable from "./InvoiceTable";
-import Logo from '../../../../public/logo1.png';
+import Logo from "../../../../public/logo1.png";
 import CountryDropdown from "../invoiceData/CountryDropdown";
 import StateDropdown from "../invoiceData/StateDropdown";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { Button } from "@material-tailwind/react";
 import InvoicePdf from "../invoicePdf/InvoicePdf";
-
-
 
 const Invoice = () => {
   const [logo, setLogo] = useState(null); // To store the logo image URL
@@ -38,25 +36,10 @@ const Invoice = () => {
   const handleDate = (e) => setDate(e.target.value);
   const handleDueDate = (e) => setDueDate(e.target.value);
 
-  const invoiceDateInputRef = useRef(null); 
-  const dueDateInputRef = useRef(null); 
-  const calendarIconRefInvoice = useRef(null); 
-  const calendarIconRefDue = useRef(null); 
-
-
-
-
-  const [selectedState, setSelectedState] = useState("");
-
-  const handleStateChange = (state) => {
-    setSelectedState(state);
-  };
-
-  const [selectedCountry, setSelectedCountry] = useState("India");
-
-  const handleCountryChange = (e) => {
-    setSelectedCountry(e.target.value);
-  };
+  const invoiceDateInputRef = useRef(null);
+  const dueDateInputRef = useRef(null);
+  const calendarIconRefInvoice = useRef(null);
+  const calendarIconRefDue = useRef(null);
 
   useEffect(() => {
     // Initialize flatpickr for both inputs
@@ -98,40 +81,41 @@ const Invoice = () => {
     };
   }, []);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const invoiceData = {
+      logo,
+      header,
+      yourCompany,
+      yourName,
+      companyGstin,
+      companyAddress,
+      city,
+      companySelectedState,
+      companySelectedCountry,
+      billTo,
+      clientCompany,
+      clientGstin,
+      clientAddress,
+      clientCity,
+      clientState,
+      clientCountry,
+      invoice,
+      date,
+      DueDate,
+
       notes,
       terms,
       businessText,
       paymentText,
-      header,
-      invoice,
-      date,
-      DueDate
     };
-  
+
     // Save invoice data to localStorage
-    localStorage.setItem('invoiceData', JSON.stringify(invoiceData));
-  
-    // Generate PDF
+    localStorage.setItem("invoiceData", JSON.stringify(invoiceData));
+
     const doc = new jsPDF();
-  
-    doc.text(`Invoice Number: ${invoiceData.invoice}`, 10, 10);
-    doc.text(`Date: ${invoiceData.date}`, 10, 20);
-    doc.text(`Due Date: ${invoiceData.DueDate}`, 10, 30);
-    doc.text(`Notes: ${invoiceData.notes}`, 10, 40);
-    doc.text(`Terms: ${invoiceData.terms}`, 10, 50);
-    doc.text(`Business Text: ${invoiceData.businessText}`, 10, 60);
-    doc.text(`Payment Text: ${invoiceData.paymentText}`, 10, 70);
-  
-    // Save PDF to disk
-    doc.save('invoice.pdf');
-  
-    // Navigate to the display page
-    // navigate('/display');
+    InvoicePdf(invoiceData).generatePDF(doc);
   };
 
   const handleImageUpload = (e) => {
@@ -153,38 +137,47 @@ const Invoice = () => {
     }
   };
 
-  
-  const cardRef = useRef(null);
-  const downloadCardAsPDF = async () => {
-    if (cardRef.current) {
-      const canvas = await html2canvas(cardRef.current, { scale: 2 });
+  const [yourCompany, setYourCompany] = useState("");
+  const [yourName, setYourName] = useState("");
+  const [companyGstin, setCompanyGstin] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [companySelectedCountry, setCompanySelectedCountry] = useState("");
+  const [companySelectedState, setCompanySelectedState] = useState("");
 
-      // Get the actual width and height of the card
-      const cardWidth = cardRef.current.offsetWidth;
-      const cardHeight = cardRef.current.offsetHeight;
+  const [billTo, setBillTo] = useState("");
+  const [clientCompany, setClientCompany] = useState("");
+  const [clientGstin, setClientGstin] = useState("");
+  const [clientAddress, setClientAddress] = useState("");
+  const [clientCity, setClientCity] = useState("");
+  const [clientState, setClientState] = useState("");
+  const [clientCountry, setClientCountry] = useState("India");
 
-      // Convert the width and height to mm (for jsPDF)
-      const cardWidthInMM = (cardWidth * 25.4) / 96; // 1px = 25.4/96 mm
-      const cardHeightInMM = (cardHeight * 25.4) / 96;
+  const handleYourCompanyChange = (e) => setYourCompany(e.target.value);
+  const handleYourNameChange = (e) => setYourName(e.target.value);
+  const handleCompanyGstinChange = (e) => setCompanyGstin(e.target.value);
+  const handleCompanyAddressChange = (e) => setCompanyAddress(e.target.value);
+  const handleCityChange = (e) => setCity(e.target.value);
+  const handleCompanySelectedCountryChange = (e) =>
+    setCompanySelectedCountry(e.target.value);
+  const handleCompanySelectedStateChange = (e) =>
+    setCompanySelectedState(e.target.value);
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: cardWidthInMM > cardHeightInMM ? 'landscape' : 'portrait',
-        unit: 'mm',
-        format: [cardWidthInMM, cardHeightInMM], // Set PDF size to match card dimensions
-      });
-
-      pdf.addImage(imgData, 'PNG', 0, 0, cardWidthInMM, cardHeightInMM);
-      pdf.save('card.pdf');
-    }
-  };
-
+  const handleBillToChange = (e) => setBillTo(e.target.value);
+  const handleClientCompanyChange = (e) => setClientCompany(e.target.value);
+  const handleClientGstinChange = (e) => setClientGstin(e.target.value);
+  const handleClientAddressChange = (e) => setClientAddress(e.target.value);
+  const handleClientCityChange = (e) => setClientCity(e.target.value);
+  const handleClientStateChange = (e) => setClientState(e.target.value);
+  const handleClientCountryChange = (e) => setClientCountry(e.target.value);
 
   return (
     <>
       <div className=" items-center ">
-        <button onClick={downloadCardAsPDF} >Download PDF</button>
-        <form className="invoice p-4 w-[800.66px] m-[45px] p-[40px_33px_0_35px] box-border bg-white shadow-lg rounded-lg border border-[#bfc8de]" onSubmit={handleSubmit}>
+        <form
+          className="invoice p-4 w-[800.66px] m-[45px] p-[40px_33px_0_35px] box-border bg-white shadow-lg rounded-lg border border-[#bfc8de]"
+          onSubmit={handleSubmit}
+        >
           <div className="flex mb-2">
             {isUploaded && logo ? (
               <div className="flex items-center justify-center">
@@ -255,38 +248,51 @@ const Invoice = () => {
               <input
                 type="text"
                 placeholder="Your Company"
+                value={yourCompany}
+                onChange={handleYourCompanyChange}
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-your-company"
               />
               <input
                 type="text"
                 placeholder="Your Name"
+                value={yourName}
+                onChange={handleYourNameChange}
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-your-name"
               />
               <input
                 type="text"
                 placeholder="Company's GSTIN"
+                value={companyGstin}
+                onChange={handleCompanyGstinChange}
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-gstin"
               />
               <input
                 type="text"
                 placeholder="Company's Address"
+                value={companyAddress}
+                onChange={handleCompanyAddressChange}
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-address"
               />
               <input
                 type="text"
                 placeholder="City"
+                value={city}
+                onChange={handleCityChange}
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-city"
               />
 
-              <CountryDropdown
-                value={selectedCountry}
-                onChange={handleCountryChange}
+              <input
+                type="text"
+                value={companySelectedCountry}
+                onChange={handleCompanySelectedCountryChange}
+                placeholder="Enter Company Country"
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767]"
               />
-              <StateDropdown
-                country={selectedCountry}
-                state={selectedState}
-                onChange={handleStateChange}
+              <input
+                type="text"
+                value={companySelectedState}
+                onChange={handleCompanySelectedStateChange}
+                placeholder="Enter Company State"
                 className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767]"
               />
             </div>
@@ -302,47 +308,51 @@ const Invoice = () => {
                 <input
                   type="text"
                   placeholder="Bill To"
-                  className=" w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#000] input-country font-bold"
+                  value={billTo}
+                  onChange={handleBillToChange}
+                  className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#000] input-country font-bold"
                 />
                 <input
                   type="text"
                   placeholder="Your Client's Company"
+                  value={clientCompany}
+                  onChange={handleClientCompanyChange}
                   className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
                 />
                 <input
                   type="text"
                   placeholder="Client's GSTIN"
+                  value={clientGstin}
+                  onChange={handleClientGstinChange}
                   className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
                 />
                 <input
                   type="text"
                   placeholder="Client's Address"
+                  value={clientAddress}
+                  onChange={handleClientAddressChange}
                   className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
                 />
                 <input
                   type="text"
                   placeholder="City"
+                  value={clientCity}
+                  onChange={handleClientCityChange}
                   className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
                 />
-                {/* <input
-              type="text"
-              placeholder="State"
-              className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
-            /> */}
-                {/* <input
-              type="text"
-              placeholder="India"
-              className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
-            /> */}
-                <CountryDropdown
-                  value={selectedCountry}
-                  onChange={handleCountryChange}
-                  className="mr-0"
+                <input
+                  type="text"
+                  placeholder="State"
+                  value={clientState}
+                  onChange={handleClientStateChange}
+                  className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
                 />
-                <StateDropdown
-                  country={selectedCountry}
-                  state={selectedState}
-                  onChange={handleStateChange}
+                <input
+                  type="text"
+                  placeholder="India"
+                  value={clientCountry}
+                  onChange={handleClientCountryChange}
+                  className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-country"
                 />
               </div>
             </div>
@@ -489,7 +499,6 @@ const Invoice = () => {
               className="text-[13px] h-[48px] resizable-input w-full p-2  rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] resize-y"
               rows="3"
             />
-
           </div>
           <button type="submit">Submit</button>
         </form>

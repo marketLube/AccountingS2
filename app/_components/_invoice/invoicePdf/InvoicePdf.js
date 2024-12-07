@@ -1,42 +1,92 @@
-const InvoicePdf = ({ invoiceData, onClose }) => {
-  const handleDownloadPdf = () => {
-    const doc = new jsPDF();
-    doc.text(`Invoice Number: ${invoiceData.invoice}`, 10, 10);
-    doc.text(`Date: ${invoiceData.date}`, 10, 20);
-    doc.text(`Due Date: ${invoiceData.DueDate}`, 10, 30);
-    doc.text(`Notes: ${invoiceData.notes}`, 10, 40);
-    doc.text(`Terms: ${invoiceData.terms}`, 10, 50);
-    doc.text(`Business Text: ${invoiceData.businessText}`, 10, 60);
-    doc.text(`Payment Text: ${invoiceData.paymentText}`, 10, 70);
-    doc.save('invoice.pdf');
-    onClose();
+import React from "react";
+import jsPDF from "jspdf";
+
+const InvoicePdf = (invoiceData) => {
+  const generatePDF = (doc) => {
+    let yPosition = 20;
+
+    // Add the logo if it exists
+    if (invoiceData.logo) {
+      const img = new Image();
+      img.src = invoiceData.logo;
+      img.onload = () => {
+        doc.addImage(img, "PNG", 10, yPosition, 50, 30);
+        yPosition += 40;
+
+        // Continue with the PDF content
+        addInvoiceContent(doc, invoiceData, yPosition);
+      };
+    } else {
+      // Skip logo and directly add the rest of the content
+      addInvoiceContent(doc, invoiceData, yPosition);
+    }
   };
 
-  return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg w-[500px] shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Invoice Details</h2>
-        <div>
-          <p><strong>Invoice Number:</strong> {invoiceData.invoiceNumber}</p>
-          <p><strong>Date:</strong> {invoiceData.date}</p>
-          <p><strong>Due Date:</strong> {invoiceData.dueDate}</p>
-          <p><strong>Notes:</strong> {invoiceData.notes}</p>
-          <p><strong>Terms:</strong> {invoiceData.terms}</p>
-          <p><strong>Business Text:</strong> {invoiceData.businessText}</p>
-          <p><strong>Payment Text:</strong> {invoiceData.paymentText}</p>
-        </div>
-        <div className="flex justify-end mt-4">
-          <button onClick={handleDownloadPdf} className="bg-blue-500 text-white py-2 px-4 rounded mr-2">
-            Download PDF
-          </button>
-          <button onClick={onClose} className="bg-red-500 text-white py-2 px-4 rounded">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+  const addInvoiceContent = (doc, invoiceData, yPosition) => {
+    // Add the header and details
+    doc.setFontSize(18);
+    doc.text(invoiceData.header || "Invoice", 105, yPosition, { align: "center" });
+    yPosition += 20;
 
+    // Company details (Your company)
+    doc.setFontSize(12);
+    doc.text(`Your Company: ${invoiceData.yourCompany || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Your Name: ${invoiceData.yourName || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Company GSTIN: ${invoiceData.companyGstin || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Company Address: ${invoiceData.companyAddress || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`${invoiceData.city || ""}, ${invoiceData.companySelectedState || ""}, ${invoiceData.companySelectedCountry || ""}`, 10, yPosition);
+    yPosition += 20;
+
+    // Bill To (Client details)
+    doc.text("Bill To:", 10, yPosition);
+    yPosition += 10;
+    doc.text(`Client Company: ${invoiceData.clientCompany || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Client GSTIN: ${invoiceData.clientGstin || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Client Address: ${invoiceData.clientAddress || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`${invoiceData.clientCity || ""}, ${invoiceData.clientState || ""}, ${invoiceData.clientCountry || ""}`, 10, yPosition);
+    yPosition += 20;
+
+    // Invoice details
+    doc.text(`Invoice Number: ${invoiceData.invoice || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Date: ${invoiceData.date || ""}`, 10, yPosition);
+    yPosition += 10;
+    doc.text(`Due Date: ${invoiceData.DueDate || ""}`, 10, yPosition);
+    yPosition += 20;
+
+    // Notes and terms
+    doc.text("Notes:", 10, yPosition);
+    yPosition += 10;
+    doc.text(invoiceData.notes || "", 10, yPosition);
+    yPosition += 20;
+
+    doc.text("Terms and Conditions:", 10, yPosition);
+    yPosition += 10;
+    doc.text(invoiceData.terms || "", 10, yPosition);
+    yPosition += 20;
+
+    // Business and payment text
+    doc.text("Business Text:", 10, yPosition);
+    yPosition += 10;
+    doc.text(invoiceData.businessText || "", 10, yPosition);
+    yPosition += 20;
+
+    doc.text("Payment Instructions:", 10, yPosition);
+    yPosition += 10;
+    doc.text(invoiceData.paymentText || "", 10, yPosition);
+
+    // Save the PDF
+    doc.save("invoice.pdf");
+  };
+
+  return { generatePDF };
+};
 
 export default InvoicePdf;
