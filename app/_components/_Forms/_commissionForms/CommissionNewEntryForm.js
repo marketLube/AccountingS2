@@ -21,18 +21,16 @@ import {
   IntakeSelector,
   MonthSelector,
   StatusSel,
+  CourseFee,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
 import Button from "../../utils/Button";
-import CatagorySelector from "../../utils/CatagorySelector";
-import ParticularSelector from "../../utils/ParticularSelector";
+
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
+
 import toast from "react-hot-toast";
-import { queryClient } from "../../layouts/AppLayout";
-import { refreshTransaction } from "@/app/_hooks/useTransactions";
 
 function CommissionNewEntryForm() {
   const [selectedBranches, setSelectedBranches] = useState([]);
@@ -43,50 +41,30 @@ function CommissionNewEntryForm() {
   );
   const { branches } = useSelector((state) => state.general);
 
-  const [catagory, setCatagory] = useState("Select Catagory");
-  const [particular, setParticular] = useState("Select Particular");
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
     setError,
     clearErrors,
   } = useForm({
     defaultValues: {
       date: today(),
       remark: "",
-      bank: "",
       type: "",
-      purpose: "",
-      tds: "",
-      gstPercent: "",
-      gstType: "",
+      intake: "",
     },
   });
 
+  const intake = watch("intake");
+
   const onSubmit = async (data) => {
-    const branchObjects = selectedBranches.map((branch) => {
-      const branchObj = branches.find(
-        (branchObjs) => branchObjs.name === branch
-      );
-
-      return {
-        branch: branchObj._id,
-        amount: parseFloat(data[branchObj.name]),
-      };
-    });
-
-    data.branches = branchObjects;
-    data.catagory = catIdFinder(categories, catagory);
-    data.particular = parIdFinder(particulars, particular);
-    data.bank = bankIdFiner(banks, data.bank);
-
     try {
-      await apiClient.post("/transaction", data);
+      await apiClient.post("/university", data);
       toast.success("Successfully created new Transaction");
-      refreshTransaction();
+
       reset();
     } catch (e) {
       console.log(e);
@@ -122,9 +100,15 @@ function CommissionNewEntryForm() {
         <div className="form-row">
           <Agent register={register} errors={errors} />
           <IntakeSelector register={register} errors={errors} />
-          <MonthSelector register={register} errors={errors} />
+          <MonthSelector
+            register={register}
+            errors={errors}
+            isApril={intake === "April-October"}
+            disabled={!intake}
+          />
         </div>
         <div className="form-row">
+          <CourseFee register={register} errors={errors} />
           <StatusSel register={register} errors={errors} />
           <Remark register={register} errors={errors} />
         </div>

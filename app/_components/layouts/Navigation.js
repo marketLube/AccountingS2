@@ -29,7 +29,7 @@ const routes = [
   { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
   { path: "/budgetplanner", icon: BiSolidPlusSquare, name: "Budget Planner" },
   // { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
-  // { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
+  { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
   { path: "/manage", icon: RiFolderSettingsFill, name: "Manage" },
 ];
 

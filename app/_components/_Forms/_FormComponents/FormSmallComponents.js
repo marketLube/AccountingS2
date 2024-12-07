@@ -50,7 +50,7 @@ export function Country({ register, errors }) {
       <input
         type="text"
         id="Country"
-        {...register("Country", {
+        {...register("country", {
           required: "Country is required",
         })}
       />
@@ -89,7 +89,7 @@ export function Commission({ register, errors }) {
       <input
         type="text"
         id="Commission"
-        {...register("Commission", {
+        {...register("commition", {
           required: "Commission is required",
         })}
       />
@@ -109,7 +109,7 @@ export function INR({ register, errors }) {
       <input
         type="number"
         id="INR"
-        {...register("INR", {
+        {...register("inr", {
           required: "INR is required",
         })}
       />
@@ -129,7 +129,7 @@ export function Agent({ register, errors }) {
       <input
         type="text"
         id="Agent"
-        {...register("Agent", {
+        {...register("agent", {
           required: "Agent is required",
         })}
       />
@@ -367,6 +367,38 @@ export function Tds({ register, errors }) {
   );
 }
 
+export function CourseFee({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="coursefee" className="form-group-formlabel">
+        Course Fee
+      </label>
+      <div className="formcors">
+        <input
+          type="text"
+          id="courseFee"
+          {...register("courseFee", {
+            required: "Stuent is required",
+          })}
+        />
+        <select
+          id="courseFee"
+          {...register("courseFee", { required: "TDS is required" })}
+        >
+          <option value="">Select currency</option>
+          <option value="CAD">CAD</option>
+          <option value="USD">USD</option>
+          <option value="Pound">Pound</option>
+          <option value="Euro">Euro</option>
+        </select>
+        {errors.tds && (
+          <span className="form-group-error">{errors.tds.message}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function BranchSelector({ register, errors, val = "branch" }) {
   const { branchNames } = useSelector((state) => state.general);
   return (
@@ -390,7 +422,7 @@ export function BranchSelector({ register, errors, val = "branch" }) {
 }
 
 export function IntakeSelector({ register, errors }) {
-  const { intake } = useSelector((state) => state.general);
+  const intake = ["April-October", "November-March"];
   return (
     <div className="form-group">
       <label htmlFor="intakeselector" className="form-group-formlabel">
@@ -411,14 +443,29 @@ export function IntakeSelector({ register, errors }) {
   );
 }
 
-export function MonthSelector({ register, errors }) {
-  const { month } = useSelector((state) => state.general);
+export function MonthSelector({ register, errors, isApril, disabled = true }) {
+  const april = [
+    "April",
+    "May",
+    "June",
+    "July",
+    "Aguest",
+    "September",
+    "October",
+  ];
+  const november = ["November", "December", "Januvary", "February", "March"];
+
+  const month = isApril ? april : november;
   return (
     <div className="form-group">
       <label htmlFor="monthselector" className="form-group-formlabel">
         Intake Month
       </label>
-      <select id="month" {...register("month", { required: " required" })}>
+      <select
+        id="month"
+        {...register("month", { required: " required" })}
+        disabled={disabled}
+      >
         <option value="">Select Intake Month</option>
         {month?.map((month, i) => (
           <option key={i} value={month}>
