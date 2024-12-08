@@ -15,10 +15,9 @@ import {
 import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
-import CatagorySelector from "../../utils/CatagorySelector";
 import { useDispatch, useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
-import { bankIdFiner, catIdFinder, parIdFinder } from "@/app/_services/finders";
+import { bankIdFiner, parIdFinder } from "@/app/_services/finders";
 import toast from "react-hot-toast";
 import {
   refreshGstTotals,
@@ -33,7 +32,10 @@ import {
   refreshBranchWiseCircle,
 } from "@/app/_hooks/useBranchwise";
 import { fetchBanks } from "@/lib/slices/generalSlice";
-import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
+import {
+  refreshBalanceSheet,
+  refreshBalanceSheetAll,
+} from "@/app/_hooks/useBalanceSheet";
 import { refreshLedger } from "@/app/_hooks/useLedgers";
 import Catagory from "../../CatagorySelector/Catagory";
 
@@ -143,7 +145,7 @@ function DaybookNewEntirForm() {
     if (isBalanceEffect && data.gstPercent && data.gstType === "excl") {
       data.isGstDeduct = true;
       const gstRate = parseFloat(data.gstPercent || 0) / 100;
-      data.gstAmount = amount * gstRate;
+      data.gstAmount = Math.abs(amount * gstRate);
     } else {
       data.isGstDeduct = false;
       data.gstAmount = 0;
@@ -168,6 +170,7 @@ function DaybookNewEntirForm() {
       setCatagory([]);
       setParticular([]);
       refreshGstTotals();
+      refreshBalanceSheetAll();
     } catch (e) {
       console.log(e);
       toast.error(e?.response?.data?.message);

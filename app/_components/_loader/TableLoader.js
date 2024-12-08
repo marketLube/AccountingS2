@@ -6,7 +6,12 @@ function TableLoader({ error = "", style, className }) {
   if (error)
     return (
       <div className={`table-loader ${className}`} style={style}>
-        <div className="error-message">{error}</div>
+        <div
+          className="error-message"
+          style={{ fontWeight: "700", color: "black" }}
+        >
+          NO DATA FOUND
+        </div>
       </div>
     );
   return (

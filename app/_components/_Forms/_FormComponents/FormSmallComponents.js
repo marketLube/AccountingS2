@@ -492,7 +492,7 @@ export function GstPercent({ register, errors }) {
       >
         <option value="">Select GST Percent %</option>
         <option value="0%">0%</option>
-        <option value="2%">5%</option>
+        <option value="2%">2%</option>
         <option value="5%">5%</option>
         <option value="12%">12%</option>
         <option value="18%">18%</option>
@@ -509,15 +509,7 @@ export function GstPercent({ register, errors }) {
 export function Radio({ register, errors, label = "Type" }) {
   return (
     <div className="form-group">
-      <label
-        htmlFor="Type"
-        className="type-option-label"
-        style={{
-          textWrap: "nowrap",
-          width: "100%",
-          textAlign: "center",
-        }}
-      >
+      <label htmlFor="Type" className="type-option-label">
         {label}
       </label>
       <div className="type-options">

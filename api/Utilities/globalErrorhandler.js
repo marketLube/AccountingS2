@@ -37,6 +37,8 @@ export default function globalErrorHandler(err, req, res, next) {
   err.status = err.status || "error";
   err.isOperational = err.isOperational || false;
 
+  console.log(err);
+
   //   catching invalid id
   if (err.name === "CastError") err = handleInvalidId(err);
 

@@ -8,7 +8,9 @@ export const TopPerformer = () => {
   return (
     <div className="topperformercard">
       <div className="topperformerhead">Top performer</div>
-      <div className="topperformerdistrict">{topPerformer?.name}</div>
+      <div className="topperformerdistrict">
+        {topPerformer?.name || "No Performer"}
+      </div>
       <div className="topperformerprofit">
         <span style={isNegative ? { color: "red" } : {}}>
           {isNegative ? "-" : ""}₹{" "}

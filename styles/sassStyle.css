@@ -1652,15 +1652,15 @@ body {
   font-size: 0.9rem;
 }
 .form .type-options {
-  margin-top: 1rem; /* Add space below the toggle */
   display: flex; /* Keep radio buttons in a row */
   gap: 1.5rem; /* Space between radio options */
+  justify-content: center;
 }
 .form .type-option-label {
   font-size: 1rem; /* Adjust label font size */
   display: flex; /* Ensure inline layout for the label */
   align-items: center; /* Vertically center the text */
-  gap: 0.5rem; /* Space between "GST" and toggle */
+  justify-content: center;
 }
 .form .type-option {
   display: flex;

@@ -5,6 +5,7 @@ import TotalBalanceCard from "../_components/_cards/_balance-card/TotalBalanceCa
 import BottomCard from "../_components/_cards/_bottomCards/BottomCard";
 import BalanceSheetTable from "../_components/balance-sheet/balancesheetTable/BalanceSheetTable";
 import Button from "../_components/utils/Button";
+import { useGstBalanceSheet } from "../_hooks/useBalanceSheet";
 
 function Page() {
   const { totals } = useSelector((state) => state.general);
@@ -12,6 +13,10 @@ function Page() {
 
   // const isLoggedIn = useAuthorize();
   // if (!isLoggedIn) return <div>Unauthorized</div>;
+
+  const { data, isError, isLoading } = useGstBalanceSheet();
+
+  console.log(data, "data");
 
   return (
     <div className={`layout balance-sheet`}>
@@ -28,10 +33,17 @@ function Page() {
           <BottomCard
             value={liabilityAndOutstanding?.totalOutstanding}
             type={"Receivable"}
+            setIsDown={false}
           />
           <BottomCard
             value={liabilityAndOutstanding?.totalLiability}
             type={"Liability"}
+            setIsDown={true}
+          />
+          <BottomCard value={data?.totalIn} type={"GST-IN"} setIsDown={true} />
+          <BottomCard
+            value={data?.totalOut}
+            type={"GST-OUT"}
             setIsDown={true}
           />
         </div>

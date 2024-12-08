@@ -29,6 +29,7 @@ const sendToken = (user, statusCode, res) => {
     image: user.image,
     name: user.name,
     role: user.role,
+    count: user.count,
     _id: user._id,
   };
 
@@ -40,6 +41,27 @@ const sendToken = (user, statusCode, res) => {
     },
   });
 };
+
+// const mails = ["skymarkdubai@gmail.com", "arjun7180@gmail.com"];
+
+export const signUp = catchAsync(async (req, res, next) => {
+  const { name, email, password, phone } = req.body;
+
+  // if (!mails.includes(email)) {
+  //   return next(new AppError("You are not Authorized", 401));
+  // }
+
+  // Create the user first
+  const newUser = await User.create({
+    name,
+    email,
+    password,
+    phone,
+  });
+
+  // Send the token
+  sendToken(newUser, 201, res);
+});
 
 export const protect = catchAsync(async (req, res, next) => {
   // 1) Get the token and check its there
@@ -94,26 +116,6 @@ export const verify = catchAsync(async (req, res, next) => {
   });
 });
 
-const mails = ["skymarkdubai@gmail.com", "arjun7180@gmail.com"];
-
-export const signUp = catchAsync(async (req, res, next) => {
-  const { name, email, password } = req.body;
-
-  if (!mails.includes(email)) {
-    return next(new AppError("You are not Authorized", 401));
-  }
-
-  // Create the user first
-  const newUser = await User.create({
-    name,
-    email,
-    password,
-  });
-
-  // Send the token
-  sendToken(newUser, 201, res);
-});
-
 export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password)
@@ -133,18 +135,18 @@ export const login = catchAsync(async (req, res, next) => {
 
   // disconnect the current database and make new connection
 
-  if (email === "arjun7180@gmail.com") {
-    await mongoose.disconnect();
-    console.log("Disconnected from the main database.");
+  await mongoose.disconnect();
+  console.log("Disconnected from the main database.");
 
-    const newDbUri =
-      "mongodb+srv://marketLube:lmfao@marketlubecluster.hkc38.mongodb.net/?retryWrites=true&w=majority&appName=MarketlubeCluster";
+  const connections = process.env.CONNECTIONS.split(",,,");
+  const count = parseFloat(user.count);
 
-    await mongoose
-      .connect(newDbUri)
-      .then((res) => console.log("connected"))
-      .catch((e) => console.log("Error conntection"));
-  }
+  const newDbUri = connections[count - 1];
+
+  await mongoose
+    .connect(newDbUri)
+    .then((res) => console.log("connected"))
+    .catch((e) => console.log("Error conntection"));
 
   sendToken(user, 200, res);
 });

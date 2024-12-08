@@ -38,7 +38,10 @@ import {
   refreshBranchWiseCircle,
 } from "@/app/_hooks/useBranchwise";
 import { fetchBanks } from "@/lib/slices/generalSlice";
-import { refreshBalanceSheet } from "@/app/_hooks/useBalanceSheet";
+import {
+  refreshBalanceSheet,
+  refreshBalanceSheetAll,
+} from "@/app/_hooks/useBalanceSheet";
 import { refreshLedger } from "@/app/_hooks/useLedgers";
 import Catagory from "../../CatagorySelector/Catagory";
 
@@ -162,19 +165,16 @@ function DaybookEditForm() {
 
       setLoading(true);
 
-      const res = await apiClient.patch(
-        `/transaction/${selectedItems._id}`,
-        data
-      );
-
       if (isBalanceEffect) {
         data.isGstDeduct = true;
         const gstRate = parseFloat(data.gstPercent || 0) / 100;
-        data.gstAmount = amount * gstRate;
+        data.gstAmount = Math.abs(amount * gstRate);
       } else {
         data.isGstDeduct = false;
         data.gstAmount = 0;
       }
+
+      await apiClient.patch(`/transaction/${selectedItems._id}`, data);
 
       toast.success("Successfully Edited");
 
@@ -185,8 +185,13 @@ function DaybookEditForm() {
       refreshBranchWiseCircle();
       dispatch(fetchBanks());
       refreshBalanceSheet();
-      refreshGstTotals();
       refreshLedger();
+      handleClear();
+      setSelectedBranches([]);
+      setCatagory([]);
+      setParticular([]);
+      refreshGstTotals();
+      refreshBalanceSheetAll();
     } catch (e) {
       console.log(e, "ee");
       toast.error(e);
@@ -194,6 +199,8 @@ function DaybookEditForm() {
       setLoading(false);
     }
   };
+
+  console.log(isBalanceEffect, "balEffect");
 
   const handleClear = () => {
     reset({

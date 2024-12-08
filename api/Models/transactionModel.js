@@ -98,7 +98,6 @@ transactionSchema.pre(/^find/, function (next) {
   next();
 });
 
-// Pre-save middleware
 transactionSchema.pre("save", async function (next) {
   try {
     // 1. Validate bank exists
@@ -107,81 +106,88 @@ transactionSchema.pre("save", async function (next) {
       return next(new AppError("Bank not found", 404));
     }
 
-    console.log(this.gstAmount, "amt");
-
-    // 2. Calculate total transaction amount and update branches
     let totalAmount = 0;
+    let totalTdsDeduction = 0;
+    let totalGstAmount = 0;
 
-    // Use Promise.all for parallel processing of branches
-    await Promise.all(
-      this.branches.map(async (branchData) => {
-        // Validate branch exists
-        const branch = await Branch.findById(branchData.branch);
-        if (!branch) {
-          throw new AppError(`Branch ${branchData.branch} not found`, 404);
-        }
+    // 2. Process branches sequentially to avoid race conditions
+    for (const branchData of this.branches) {
+      // Validate branch exists
+      const branch = await Branch.findById(branchData.branch);
+      if (!branch) {
+        return next(new AppError(`Branch ${branchData.branch} not found`, 404));
+      }
 
-        // Convert amount based on transaction type
-        const amount =
-          this.type === "Credit" ? branchData.amount : -branchData.amount;
-        totalAmount += amount;
+      // Convert amount based on transaction type
+      const amount =
+        this.type === "Credit" ? branchData.amount : -branchData.amount;
+      totalAmount += amount;
 
-        // Find and update the branch's bank account
-        const bankAccount = branch.accounts.find(
-          (account) => account.bank.toString() === this.bank.toString()
-        );
+      // Find branch's bank account
+      const bankAccount = branch.accounts.find(
+        (account) => account.bank.toString() === this.bank.toString()
+      );
 
-        if (!bankAccount) {
-          return next(new AppError("Failed to fetch Bank Accounts", 400));
-        }
+      if (!bankAccount) {
+        return next(new AppError("Failed to fetch Bank Accounts", 400));
+      }
 
-        let tdsDeduction = 0;
+      // TDS Calculation
+      let branchTdsDeduction = 0;
+      let branchGstAmount = 0;
 
-        if (this.tdsType !== "no tds") {
-          // Calculate TDS value
-          const tdsRate = parseFloat(this.tds) / 100;
-          tdsDeduction = amount * tdsRate;
+      if (this.tdsType !== "no tds") {
+        const tdsRate = parseFloat(this.tds) / 100;
+        branchTdsDeduction = amount * tdsRate;
+        totalTdsDeduction += branchTdsDeduction;
+      }
 
-          // Update existing bank account balance with TDS applied
-          bankAccount.branchBalance += amount - tdsDeduction + this.gstAmount;
-          branchData.amount = Math.abs(amount - tdsDeduction + this.gstAmount);
-          branchData.branchTotalAmt = Math.abs(amount);
+      // GST Calculation
+      if (this.gstType === "excl") {
+        const gstRate = this.gstPercent / 100;
+        branchGstAmount = amount * gstRate;
+        totalGstAmount += branchGstAmount;
+      }
 
-          // Update total branch balance with TDS applied
-          branch.totalBranchBalance += amount - tdsDeduction + this.gstAmount;
-        } else {
-          // If no TDS, update balances normally
-          bankAccount.branchBalance += amount + this.gstAmount;
-          branch.totalBranchBalance += amount + this.gstAmount;
-        }
+      let finalBranchAmount = amount - branchTdsDeduction;
 
-        // Save branch updates
-        await branch.save();
-      })
-    );
+      // Update branch and bank account balances
+      if (this.isGstDeduct) {
+        finalBranchAmount = amount + branchGstAmount;
+      }
+      bankAccount.branchBalance += finalBranchAmount;
+      branch.totalBranchBalance += finalBranchAmount;
 
-    if (this.tdsType !== "no tds") {
-      const tdsRate = parseFloat(this.tds) / 100;
-      const tdsDeduction = totalAmount * tdsRate;
+      // Update branch data
+      branchData.amount = Math.abs(finalBranchAmount);
+      branchData.branchTotalAmt = Math.abs(amount);
 
-      // 3. Update bank balance
-      bank.balance += totalAmount - tdsDeduction;
-      this.amount = Math.abs(totalAmount - tdsDeduction + this.gstAmount);
-    } else {
-      bank.balance += totalAmount + this.gstAmount;
-      this.amount = Math.abs(totalAmount + this.gstAmount);
+      // Save branch updates
+      await branch.save();
     }
-    this.totalAmt = Math.abs(totalAmount + this.gstAmount);
 
-    // Save bank updates
-    await bank.save();
+    // 3. Update bank balance
+    let finalBankAmount = totalAmount - totalTdsDeduction;
+    if (this.isGstDeduct) {
+      finalBankAmount = totalAmount + totalGstAmount;
+    }
+    bank.balance += finalBankAmount;
+
+    // Update transaction amounts
+    this.amount = Math.abs(finalBankAmount);
+    this.totalAmt = Math.abs(totalAmount);
+    this.tdsDeduction = totalTdsDeduction;
+    this.gstAmount = totalGstAmount;
 
     // 4. Set formatted date
     this.formattedDate = this.date.toISOString().split("T")[0];
 
+    // Save bank updates
+    await bank.save();
+
     next();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     next(new AppError("Failed to create transaction", 404));
   }
 });

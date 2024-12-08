@@ -7,7 +7,7 @@ const Db = process.env.PRIMERY_STR;
 let isConnected = false;
 
 // Function to connect to the database
-export async function connectToDatabase(Db = process.env.CONNECTION_STR) {
+export async function connectToDatabase() {
   if (isConnected) {
     console.log("Using existing database connection");
     return;
@@ -22,7 +22,7 @@ export async function connectToDatabase(Db = process.env.CONNECTION_STR) {
     console.log("Connected to Database");
   } catch (err) {
     console.error("Error connecting to database:", err.message);
-    throw new Error("Failed to connect to the database");
+    throw new Error("Failed to connect to the databases");
   }
 }
 

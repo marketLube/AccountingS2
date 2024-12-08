@@ -28,13 +28,8 @@ const routes = [
   { path: "/capital", icon: IoWalletOutline, name: "Capital" },
   { path: "/ledger", icon: PiNotebookBold, name: "Ledger" },
   { path: "/budgetplanner", icon: BiSolidPlusSquare, name: "Budget Planner" },
-<<<<<<< HEAD
   // { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
   { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
-=======
-  { path: "/invoice", icon: PiFilesDuotone, name: "Invoice" },
-  // { path: "/commission", icon: RiMoneyDollarBoxFill, name: "Commission" },
->>>>>>> ACCOUNTINGS2
   { path: "/manage", icon: RiFolderSettingsFill, name: "Manage" },
 ];
 

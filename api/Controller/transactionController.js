@@ -91,38 +91,34 @@ export const deleteTransactionByIdMiddleWare = catchAsync(
       if (!branchAccount) {
         return next(
           new AppError(
-            `Bank account not found in branch ${branchDoc.name}`,
+            `Bank account not found in branch ${curBranch.name}`,
             404
           )
         );
       }
 
-      // Update branch account balance
+      // Reverse the balance update based on transaction type
       if (type === "Credit") {
+        // If it was originally a credit, subtract now
         branchAccount.branchBalance -= branchAmount;
+        curBranch.totalBranchBalance -= branchAmount;
       } else if (type === "Debit") {
+        // If it was originally a debit, add back
         branchAccount.branchBalance += branchAmount;
+        curBranch.totalBranchBalance += branchAmount;
       }
 
-      // Recalculate total branch balance
-      branchDoc.totalBranchBalance = curBranch.accounts.reduce(
-        (total, account) => total + account.branchBalance,
-        0
-      );
-
-      await branchDoc.save();
+      await curBranch.save();
     }
 
     const curBank = await Bank.findById(bank);
-    // Bank should already be populated from the initial query
-    if (!bank) {
-      return next(new AppError(`Bank not found`, 404));
-    }
 
-    // Update bank balance
+    // Reverse bank balance update
     if (type === "Credit") {
+      // If it was originally a credit, subtract from bank balance
       curBank.balance -= amount;
     } else if (type === "Debit") {
+      // If it was originally a debit, add to bank balance
       curBank.balance += amount;
     }
 

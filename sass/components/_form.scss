@@ -1,18 +1,19 @@
 @use "../abstract/variables";
 @use "../abstract/mixins";
+
 .form {
   margin: 2rem;
   font-size: 0.9rem;
   .type-options {
-    margin-top: 1rem; /* Add space below the toggle */
     display: flex; /* Keep radio buttons in a row */
     gap: 1.5rem; /* Space between radio options */
+    justify-content: center;
   }
   .type-option-label {
     font-size: 1rem; /* Adjust label font size */
     display: flex; /* Ensure inline layout for the label */
     align-items: center; /* Vertically center the text */
-    gap: 0.5rem; /* Space between "GST" and toggle */
+    justify-content: center;
   }
   .type-option {
     @include mixins.flex(center);
