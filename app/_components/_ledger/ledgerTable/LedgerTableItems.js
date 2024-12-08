@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 
 function LedgerTableItems({ item }) {
   const dispatch = useDispatch();
-  if (!item) return;
 
   const [gstTotals, setGstTotals] = useState({});
 
@@ -28,6 +27,7 @@ function LedgerTableItems({ item }) {
     dispatch(setClickedParticular(item));
   };
 
+  if (!item) return;
   return (
     <div className="table-col" onClick={handleClicked}>
       <span className="table-check">
