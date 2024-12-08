@@ -1,21 +1,71 @@
 import { useEffect, useRef, useState } from "react";
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
+import { useDispatch } from "react-redux";
 import InvoiceTable from "./InvoiceTable";
 import Logo from "../../../../public/logo1.png";
-import CountryDropdown from "../invoiceData/CountryDropdown";
-import StateDropdown from "../invoiceData/StateDropdown";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { Button } from "@material-tailwind/react";
+import { downloadCardAsPDF } from '../invoicePdf/InvoicePdf'
 import InvoicePdf from "../invoicePdf/InvoicePdf";
 
-const Invoice = () => {
-  const [logo, setLogo] = useState(null); // To store the logo image URL
-  const [imageError, setImageError] = useState(""); // To store error message if image is too large
-  const [isUploaded, setIsUploaded] = useState(false);
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { setInvoiceData, updateField } from "@/lib/slices/invoicePdfSlice";
 
-  const [notes, setNotes] = useState("Notes");
+const Invoice = () => {
+  const pdfDownloadRef = useRef();
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
+  // This will call the download function in PDFDownloadComponent when clicked
+  const handleDownload = () => {
+    setIsGeneratingPDF(true); // Set the state to true to make the component visible temporarily
+    pdfDownloadRef.current.downloadPDF();
+  };
+
+  const dispatch = useDispatch();
+
+  const [tableData, setTableData] = useState([
+    {
+      itemDescription: "",
+      hsxSac: "",
+      qty: 1,
+      rate: 0.0,
+      sgst: 0,
+      cgst: 0,
+      cess: 0,
+      amount: 0.0,
+    },
+  ]);
+
+  const [logo, setLogo] = useState(null);
+  const [imageError, setImageError] = useState("");
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [header, setHeader] = useState("TAX INVOICE");
+  const [yourCompany, setYourCompany] = useState(""); //company details
+  const [yourName, setYourName] = useState("");
+  const [companyGstin, setCompanyGstin] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [companySelectedCountry, setCompanySelectedCountry] = useState("");
+  const [companySelectedState, setCompanySelectedState] = useState("");
+  const [receiverName, setReceiverName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [ifsc, setIfsc] = useState("");
+  const [branch, setBranch] = useState("");
+  const [billTo, setBillTo] = useState(""); // client details
+  const [clientCompany, setClientCompany] = useState("");
+  const [clientGstin, setClientGstin] = useState("");
+  const [clientAddress, setClientAddress] = useState("");
+  const [clientCity, setClientCity] = useState("");
+  const [clientState, setClientState] = useState("");
+  const [clientCountry, setClientCountry] = useState("India");
+  const [invoice, setInvoice] = useState("#Invoice"); //invoice details
+  const [date, setDate] = useState("Invoice Date");
+  const [DueDate, setDueDate] = useState("Due Date");
+  const invoiceDateInputRef = useRef(null);
+  const dueDateInputRef = useRef(null);
+  const calendarIconRefInvoice = useRef(null);
+  const calendarIconRefDue = useRef(null);
+  const [notes, setNotes] = useState("Notes"); //feedback
   const [terms, setTerms] = useState("Terms and conditions");
   const [businessText, setBusinessText] = useState(
     "It was great doing business with you"
@@ -23,23 +73,44 @@ const Invoice = () => {
   const [paymentText, setPaymentText] = useState(
     "Please make the payment by the due date"
   );
-  const [header, setHeader] = useState("TAX INVOICE");
-  const [invoice, setInvoice] = useState("#Invoice");
-  const [date, setDate] = useState("Invoice Date");
-  const [DueDate, setDueDate] = useState("Due Date");
 
-  // Handlers for editable fields
+  const handleYourCompanyChange = (e) => setYourCompany(e.target.value);
+  const handleYourNameChange = (e) => setYourName(e.target.value);
+  const handleCompanyGstinChange = (e) => setCompanyGstin(e.target.value);
+  const handleCompanyAddressChange = (e) => setCompanyAddress(e.target.value);
+  const handleCityChange = (e) => setCity(e.target.value);
+  const handleCompanySelectedCountryChange = (e) =>
+    setCompanySelectedCountry(e.target.value);
+  const handleCompanySelectedStateChange = (e) =>
+    setCompanySelectedState(e.target.value);
+  const handleBillToChange = (e) => setBillTo(e.target.value);
+  const handleClientCompanyChange = (e) => setClientCompany(e.target.value);
+  const handleClientGstinChange = (e) => setClientGstin(e.target.value);
+  const handleClientAddressChange = (e) => setClientAddress(e.target.value);
+  const handleClientCityChange = (e) => setClientCity(e.target.value);
+  const handleClientStateChange = (e) => setClientState(e.target.value);
+  const handleClientCountryChange = (e) => setClientCountry(e.target.value);
   const handleNotesChange = (e) => setNotes(e.target.value);
   const handleTermsChange = (e) => setTerms(e.target.value);
   const handleheaderChange = (e) => setHeader(e.target.value);
   const handleInvoice = (e) => setInvoice(e.target.value);
   const handleDate = (e) => setDate(e.target.value);
   const handleDueDate = (e) => setDueDate(e.target.value);
+  const handleReceiverNameChange = (e) => {
+    setReceiverName(e.target.value);
+  };
 
-  const invoiceDateInputRef = useRef(null);
-  const dueDateInputRef = useRef(null);
-  const calendarIconRefInvoice = useRef(null);
-  const calendarIconRefDue = useRef(null);
+  const handleAccountNumberChange = (e) => {
+    setAccountNumber(e.target.value);
+  };
+
+  const handleIfscChange = (e) => {
+    setIfsc(e.target.value);
+  };
+
+  const handleBranchChange = (e) => {
+    setBranch(e.target.value);
+  };
 
   useEffect(() => {
     // Initialize flatpickr for both inputs
@@ -104,76 +175,53 @@ const Invoice = () => {
       invoice,
       date,
       DueDate,
-
       notes,
       terms,
       businessText,
       paymentText,
+      tableData, 
     };
 
     // Save invoice data to localStorage
-    localStorage.setItem("invoiceData", JSON.stringify(invoiceData));
+    // localStorage.setItem("invoiceData", JSON.stringify(invoiceData));
+    dispatch(setInvoiceData(invoiceData));
+    console.log(invoiceData);
 
     const doc = new jsPDF();
     InvoicePdf(invoiceData).generatePDF(doc);
   };
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0]; // Get the file
+    const file = e.target.files[0];
 
     if (file) {
-      const fileSize = file.size / 1024 / 1024; // Convert size to MB
-
-      // Check if the file size is greater than 1MB
+      const fileSize = file.size / 1024 / 1024; // Size in MB
       if (fileSize > 1) {
         setImageError("File size must be less than 1MB");
-        setIsUploaded(false); // Set uploaded flag to false
-        setLogo(null); // Clear the logo URL state
+        setIsUploaded(false);
+        dispatch(updateField({ field: "logo", value: null }));
       } else {
-        setImageError(""); // Clear any previous errors
-        setLogo(URL.createObjectURL(file)); // Set the logo image URL
-        setIsUploaded(true); // Set uploaded flag to true
+        setImageError("");
+        const logoURL = URL.createObjectURL(file);
+        dispatch(updateField({ field: "logo", value: logoURL })); // Update logo field
+        setIsUploaded(true);
       }
     }
   };
 
-  const [yourCompany, setYourCompany] = useState("");
-  const [yourName, setYourName] = useState("");
-  const [companyGstin, setCompanyGstin] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [companySelectedCountry, setCompanySelectedCountry] = useState("");
-  const [companySelectedState, setCompanySelectedState] = useState("");
-
-  const [billTo, setBillTo] = useState("");
-  const [clientCompany, setClientCompany] = useState("");
-  const [clientGstin, setClientGstin] = useState("");
-  const [clientAddress, setClientAddress] = useState("");
-  const [clientCity, setClientCity] = useState("");
-  const [clientState, setClientState] = useState("");
-  const [clientCountry, setClientCountry] = useState("India");
-
-  const handleYourCompanyChange = (e) => setYourCompany(e.target.value);
-  const handleYourNameChange = (e) => setYourName(e.target.value);
-  const handleCompanyGstinChange = (e) => setCompanyGstin(e.target.value);
-  const handleCompanyAddressChange = (e) => setCompanyAddress(e.target.value);
-  const handleCityChange = (e) => setCity(e.target.value);
-  const handleCompanySelectedCountryChange = (e) =>
-    setCompanySelectedCountry(e.target.value);
-  const handleCompanySelectedStateChange = (e) =>
-    setCompanySelectedState(e.target.value);
-
-  const handleBillToChange = (e) => setBillTo(e.target.value);
-  const handleClientCompanyChange = (e) => setClientCompany(e.target.value);
-  const handleClientGstinChange = (e) => setClientGstin(e.target.value);
-  const handleClientAddressChange = (e) => setClientAddress(e.target.value);
-  const handleClientCityChange = (e) => setClientCity(e.target.value);
-  const handleClientStateChange = (e) => setClientState(e.target.value);
-  const handleClientCountryChange = (e) => setClientCountry(e.target.value);
-
+  // const handleDownload = async () => {
+  //   try {
+  //     await downloadCardAsPDF("invoice-content");
+  //     toast.success("Invoice downloaded successfully!");
+  //   } catch (error) {
+  //     toast.error("Failed to download invoice");
+  //   }
+  // };
   return (
     <>
       <div className=" items-center ">
+      {/* <button onClick={handleDownload}>Download Invoice</button> */}
+      
         <form
           className="invoice p-4 w-[800.66px] m-[45px] p-[40px_33px_0_35px] box-border bg-white shadow-lg rounded-lg border border-[#bfc8de]"
           onSubmit={handleSubmit}
@@ -245,60 +293,93 @@ const Invoice = () => {
           {/* INPUT SECTION OF THE COMPANY */}
           <div className="w-[647.06px] h-[216px] mb-14">
             <div className="w-full flex flex-wrap">
-              <input
-                type="text"
-                placeholder="Your Company"
-                value={yourCompany}
-                onChange={handleYourCompanyChange}
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-your-company"
-              />
-              <input
-                type="text"
-                placeholder="Your Name"
-                value={yourName}
-                onChange={handleYourNameChange}
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-your-name"
-              />
-              <input
-                type="text"
-                placeholder="Company's GSTIN"
-                value={companyGstin}
-                onChange={handleCompanyGstinChange}
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-gstin"
-              />
-              <input
-                type="text"
-                placeholder="Company's Address"
-                value={companyAddress}
-                onChange={handleCompanyAddressChange}
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-address"
-              />
-              <input
-                type="text"
-                placeholder="City"
-                value={city}
-                onChange={handleCityChange}
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-city"
-              />
+              {/* Left Side Inputs */}
+              <div className="w-1/2 pr-4">
+                <input
+                  type="text"
+                  placeholder="Your Company"
+                  value={yourCompany}
+                  onChange={handleYourCompanyChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-your-company"
+                />
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={yourName}
+                  onChange={handleYourNameChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-your-name"
+                />
+                <input
+                  type="text"
+                  placeholder="Company's GSTIN"
+                  value={companyGstin}
+                  onChange={handleCompanyGstinChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-gstin"
+                />
+                <input
+                  type="text"
+                  placeholder="Company's Address"
+                  value={companyAddress}
+                  onChange={handleCompanyAddressChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-address"
+                />
+                <input
+                  type="text"
+                  placeholder="City"
+                  value={city}
+                  onChange={handleCityChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-city"
+                />
+                <input
+                  type="text"
+                  value={companySelectedCountry}
+                  onChange={handleCompanySelectedCountryChange}
+                  placeholder="Enter Company Country"
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767]"
+                />
+                <input
+                  type="text"
+                  value={companySelectedState}
+                  onChange={handleCompanySelectedStateChange}
+                  placeholder="Enter Company State"
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767]"
+                />
+              </div>
 
-              <input
-                type="text"
-                value={companySelectedCountry}
-                onChange={handleCompanySelectedCountryChange}
-                placeholder="Enter Company Country"
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767]"
-              />
-              <input
-                type="text"
-                value={companySelectedState}
-                onChange={handleCompanySelectedStateChange}
-                placeholder="Enter Company State"
-                className="w-[350px] p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767]"
-              />
+              {/* Right Side Inputs */}
+              <div className="w-1/2 pl-4">
+                <input
+                  type="text"
+                  placeholder="Receiver Name"
+                  value={receiverName}
+                  onChange={handleReceiverNameChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-receiver-name"
+                />
+                <input
+                  type="text"
+                  placeholder="Account Number"
+                  value={accountNumber}
+                  onChange={handleAccountNumberChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-account-number"
+                />
+                <input
+                  type="text"
+                  placeholder="IFSC"
+                  value={ifsc}
+                  onChange={handleIfscChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-ifsc"
+                />
+                <input
+                  type="text"
+                  placeholder="Branch"
+                  value={branch}
+                  onChange={handleBranchChange}
+                  className="w-full p-[2px] rounded-[3px] text-[#615454] border-none bg-transparent outline-none text-inherit focus:ring-1 focus:ring-[#5B9AFF] hover:ring-1 placeholder:text-[#676767] input-branch"
+                />
+              </div>
             </div>
           </div>
-
-          {/*END  INPUT SECTION OF THE COMPANY */}
+          {/* END INPUT SECTION OF THE COMPANY */}
 
           {/* USER INPUT SECTION */}
           <div className="w-[647.06px] h-[191px] flex">
@@ -455,7 +536,7 @@ const Invoice = () => {
             </div>
           </div>
           {/* END USER INPUT SECTION */}
-          <InvoiceTable />
+          <InvoiceTable setTableData={setTableData}  />
 
           {/* Editable Notes Field */}
           <div className="form-group mb-1 -mt-64">
@@ -502,6 +583,15 @@ const Invoice = () => {
           </div>
           <button type="submit">Submit</button>
         </form>
+        <div style={{
+          visibility: isGeneratingPDF ? "visible" : "hidden", // Make content visible temporarily
+          position: "absolute", // Ensures it's off-screen when hidden
+          top: "-9999px",
+        }}>
+          <InvoicePdf ref={pdfDownloadRef} />
+        </div>
+        <button onClick={handleDownload}>Download PDF</button>
+
       </div>
     </>
   );

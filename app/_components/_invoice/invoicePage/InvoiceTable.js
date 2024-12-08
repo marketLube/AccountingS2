@@ -1,13 +1,15 @@
 import  { useState, useEffect } from "react";
 import Remove from "../../../../public/remove.svg";
 
-function InvoiceTable() {
-  const [tableData, setTableData] = useState([
+
+
+function InvoiceTable({ setTableData,}) {
+  const [tableData, setLocalTableData] = useState([
     {
       itemDescription: "",
       hsxSac: "",
       qty: 1,
-      rate: 0.0,
+      rate: 0,
       sgst: 0,
       cgst: 0,
       cess: 0,
@@ -15,13 +17,12 @@ function InvoiceTable() {
     },
   ]);
   const [row, setRow] = useState({
-    sgst: 0.0,
-    cgst: 0.0,
-    cess: 0.0,
+    sgst: 0,
+    cgst: 0,
+    cess: 0,
   });
 
-  const [sub, setsub] = useState(0.0);
-  const [tot, settot] = useState(0.0);
+  
 
   const [Description, setdescription] = useState("Item Description");
   const [Qty, setQty] = useState("Qty");
@@ -75,7 +76,7 @@ function InvoiceTable() {
         itemDescription: "",
         hsxSac: "",
         qty: 1,
-        rate: 0.0,
+        rate: 0,
         sgst: 0,
         cgst: 0,
         cess: 0,
@@ -304,7 +305,7 @@ function InvoiceTable() {
         {/* Right Section for Amounts */}
         <div className="flex flex-col justify-center items-end w-1/2 p-4">
           <div className="mb-4">
-            <p className="text-sm font-bold">10.00</p>
+            <p className="text-sm font-bold">{subTotal.toFixed(2)}</p>
           </div>
           {row.sgst > 0 && (
             <div className="mb-4">
