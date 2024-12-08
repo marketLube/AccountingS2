@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 
-const Db = process.env.CONNECTION_STR;
+const Db = process.env.PRIMERY_STR;
 
 // Use a global variable to maintain a MongoDB connection across invocations
 let isConnected = false;
