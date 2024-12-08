@@ -155,6 +155,10 @@ body {
   padding-bottom: 1rem;
 }
 
+.formcors {
+  display: flex;
+}
+
 .nav {
   background-color: rgb(7, 0, 87);
   width: 5rem;

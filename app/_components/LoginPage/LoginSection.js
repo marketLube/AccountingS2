@@ -6,6 +6,11 @@ import toast from "react-hot-toast";
 import apiClient from "@/lib/axiosInstance";
 import { setIsLoggedIn, setUser } from "@/lib/slices/authSlice";
 import { useRouter } from "next/navigation";
+import {
+  fetchBanks,
+  fetchBranches,
+  fetchCategory,
+} from "@/lib/slices/generalSlice";
 
 function LoginSection() {
   const [email, setEmail] = useState("");
@@ -28,6 +33,9 @@ function LoginSection() {
       // Update Redux state
       dispatch(setIsLoggedIn(true));
       dispatch(setUser(user));
+      dispatch(fetchCategory());
+      dispatch(fetchBranches());
+      dispatch(fetchBanks());
 
       // Navigate to dashboard on successful login
       router.push("/dashboard");
@@ -35,6 +43,7 @@ function LoginSection() {
       // Log out the user and set an error message
       dispatch(setIsLoggedIn(false));
       dispatch(setUser({ name: null, email: null }));
+
       setError("Login Failed. Please check your credentials.");
       console.log("Error logging in:", e);
     } finally {
