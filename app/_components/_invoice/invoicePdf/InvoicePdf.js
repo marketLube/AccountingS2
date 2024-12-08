@@ -1,7 +1,3 @@
-import React, { useRef, useImperativeHandle } from "react";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-
 const InvoicePdf = React.forwardRef((_, ref) => {
   const cardRef = useRef(null);
 
@@ -19,7 +15,8 @@ const InvoicePdf = React.forwardRef((_, ref) => {
 
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF({
-          orientation: cardWidthInMM > cardHeightInMM ? "landscape" : "portrait",
+          orientation:
+            cardWidthInMM > cardHeightInMM ? "landscape" : "portrait",
           unit: "mm",
           format: [cardWidthInMM, cardHeightInMM], // PDF size should match card dimensions
         });
@@ -43,5 +40,6 @@ const InvoicePdf = React.forwardRef((_, ref) => {
   );
 });
 
+InvoicePdf.displayName = "InvoicePdf"; // Set display name
 
-export default InvoicePdf
+export default InvoicePdf;
