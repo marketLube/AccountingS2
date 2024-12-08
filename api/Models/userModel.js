@@ -44,6 +44,9 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "accountant",
     },
+    count: {
+      type: String,
+    },
     image: {
       type: String,
       default:
@@ -56,6 +59,19 @@ const userSchema = mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+userSchema.pre("save", async function (next) {
+  try {
+    // Ensure this middleware doesn't affect updated users unnecessarily
+    if (!this.isNew) return next();
+
+    // Get the total count of User documents in the database
+    const totalUsers = await this.constructor.countDocuments();
+    this.count = totalUsers + 1;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 userSchema.pre("save", async function (next) {
   //check the password is modified or not for when we update
   if (!this.isModified("password")) return next();

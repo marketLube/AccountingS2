@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 
-const Db = process.env.CONNECTION_STR;
+const Db = process.env.PRIMERY_STR;
 
 // Use a global variable to maintain a MongoDB connection across invocations
 let isConnected = false;
@@ -15,10 +15,7 @@ async function connectToDatabase() {
 
   try {
     // Connect to the database
-    const dbConnection = await mongoose.connect(Db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const dbConnection = await mongoose.connect(Db);
 
     // Set connection state
     isConnected = dbConnection.connections[0].readyState === 1;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import InvoiceTable from "./InvoiceTable";
 import Logo from "../../../../public/logo1.png";
-import { downloadCardAsPDF } from '../invoicePdf/InvoicePdf'
+import { downloadCardAsPDF } from "../invoicePdf/InvoicePdf";
 import InvoicePdf from "../invoicePdf/InvoicePdf";
 
 import flatpickr from "flatpickr";
@@ -17,7 +17,7 @@ const Invoice = () => {
 
   // This will call the download function in PDFDownloadComponent when clicked
   const handleDownload = () => {
-    setIsGeneratingPDF(true); // Set the state to true to make the component visible temporarily
+    setIsGeneratingPDF(true);
     pdfDownloadRef.current.downloadPDF();
   };
 
@@ -96,6 +96,7 @@ const Invoice = () => {
   const handleInvoice = (e) => setInvoice(e.target.value);
   const handleDate = (e) => setDate(e.target.value);
   const handleDueDate = (e) => setDueDate(e.target.value);
+
   const handleReceiverNameChange = (e) => {
     setReceiverName(e.target.value);
   };
@@ -179,7 +180,7 @@ const Invoice = () => {
       terms,
       businessText,
       paymentText,
-      tableData, 
+      tableData,
     };
 
     // Save invoice data to localStorage
@@ -220,10 +221,10 @@ const Invoice = () => {
   return (
     <>
       <div className=" items-center ">
-      {/* <button onClick={handleDownload}>Download Invoice</button> */}
-      
+        {/* <button onClick={handleDownload}>Download Invoice</button> */}
+
         <form
-          className="invoice p-4 w-[800.66px] m-[45px] p-[40px_33px_0_35px] box-border bg-white shadow-lg rounded-lg border border-[#bfc8de]"
+          className="invoice w-[800.66px] m-[45px] p-[40px_33px_0_35px] box-border bg-white shadow-lg rounded-lg border border-[#bfc8de]"
           onSubmit={handleSubmit}
         >
           <div className="flex mb-2">
@@ -536,7 +537,7 @@ const Invoice = () => {
             </div>
           </div>
           {/* END USER INPUT SECTION */}
-          <InvoiceTable setTableData={setTableData}  />
+          <InvoiceTable setTableData={setTableData} />
 
           {/* Editable Notes Field */}
           <div className="form-group mb-1 -mt-64">
@@ -583,15 +584,16 @@ const Invoice = () => {
           </div>
           <button type="submit">Submit</button>
         </form>
-        <div style={{
-          visibility: isGeneratingPDF ? "visible" : "hidden", // Make content visible temporarily
-          position: "absolute", // Ensures it's off-screen when hidden
-          top: "-9999px",
-        }}>
+        <div
+          style={{
+            visibility: isGeneratingPDF ? "visible" : "hidden", // Make content visible temporarily
+            position: "absolute", // Ensures it's off-screen when hidden
+            top: "-9999px",
+          }}
+        >
           <InvoicePdf ref={pdfDownloadRef} />
         </div>
         <button onClick={handleDownload}>Download PDF</button>
-
       </div>
     </>
   );
