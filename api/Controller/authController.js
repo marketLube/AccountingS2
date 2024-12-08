@@ -123,6 +123,12 @@ export const login = catchAsync(async (req, res, next) => {
       new AppError("User must give email and password to login", 400)
     );
 
+  await mongoose.disconnect();
+  await mongoose
+    .connect(process.env.PRIMERY_STR)
+    .then((res) => console.log("connected primary"))
+    .catch((e) => console.log("Error conntection"));
+
   const user = await User.findOne({ email });
   if (!user) return next(new AppError("Unauthorized...", 404));
 
@@ -135,14 +141,13 @@ export const login = catchAsync(async (req, res, next) => {
 
   // disconnect the current database and make new connection
 
-  await mongoose.disconnect();
   console.log("Disconnected from the main database.");
 
   const connections = process.env.CONNECTIONS.split(",,,");
   const count = parseFloat(user.count);
 
   const newDbUri = connections[count - 1];
-
+  await mongoose.disconnect();
   await mongoose
     .connect(newDbUri)
     .then((res) => console.log("connected"))
