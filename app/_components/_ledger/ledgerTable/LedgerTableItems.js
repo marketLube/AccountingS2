@@ -15,7 +15,6 @@ function LedgerTableItems({ item }) {
       const res = await apiClient
         .get(`/stats/particular-wise-gst?particular=${item?.particularId}`)
         .then((res) => res.data.result);
-
       const [result] = res;
       setGstTotals(result);
     }
