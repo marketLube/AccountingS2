@@ -55,13 +55,13 @@ function DaybookNewEntirForm() {
 
   const defaultValues = {
     date: today(),
-    remark: "Something",
+    remark: "",
     bank: "",
     type: "",
-    purpose: "New",
-    tds: "10%",
-    gstPercent: "2%",
-    gstType: "excl",
+    purpose: "",
+    tds: "",
+    gstPercent: "",
+    gstType: "",
     tdsType: "",
   };
 
@@ -81,10 +81,6 @@ function DaybookNewEntirForm() {
   const gstValue = watch("gstPercent");
   const data = watch();
 
-  const handleBalanceEffect = (val) => {
-    return () => setIsBalanceEffect(val);
-  };
-  console.log(isBalanceEffect, "bal effect");
   useEffect(() => {
     let amount = selectedBranches.reduce((acc, val) => {
       if (!data[val]) return acc;
@@ -150,8 +146,6 @@ function DaybookNewEntirForm() {
       data.isGstDeduct = false;
       data.gstAmount = 0;
     }
-
-    console.log(data, "data");
 
     try {
       setLoading(true);

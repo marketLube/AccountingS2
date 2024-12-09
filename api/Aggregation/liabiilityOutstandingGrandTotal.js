@@ -18,6 +18,7 @@ export const getLiabilityOutstandingTotal = async (req) => {
 
   matchField(matchingArr, req.query, matchStage);
   matchDates(query, matchStage);
+  matchStage.type = query.type;
 
   if (
     query.search &&
