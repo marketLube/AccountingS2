@@ -105,8 +105,8 @@ function DaybookNewEntirForm() {
   const handleClear = () => {
     reset(defaultValues);
     setSelectedBranches([]);
-    setCatagory("Select Catagory");
-    setParticular("Select Particular");
+    // setCatagory("Select Catagory");
+    // setParticular("Select Particular");
   };
 
   const onSubmit = async (data) => {
@@ -161,8 +161,6 @@ function DaybookNewEntirForm() {
       refreshLedger();
       handleClear();
       setSelectedBranches([]);
-      setCatagory([]);
-      setParticular([]);
       refreshGstTotals();
       refreshBalanceSheetAll();
     } catch (e) {
@@ -180,12 +178,7 @@ function DaybookNewEntirForm() {
       <h2 className="form-head-text">Daybook New Entry Form</h2>
 
       <div className="form-catagory-container">
-        <Catagory
-          setCatagory={setCatagory}
-          setParticular={setParticular}
-          particular={particular}
-          catagory={catagory}
-        />
+        <Catagory setCatagory={setCatagory} setParticular={setParticular} />
 
         <div className="form-row">
           <Purpose register={register} errors={errors} />

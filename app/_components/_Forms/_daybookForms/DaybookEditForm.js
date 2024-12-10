@@ -67,7 +67,7 @@ function DaybookEditForm() {
   const curPart = useParticularFinder(selectedItems?.particular)?.name;
   const curBank = bankFinder(selectedItems?.bank, banks);
 
-  const [catagory, setCatagory] = useState(curCat);
+  const [catagory, setCatagory] = useState(selectedItems?.catagory);
   const [particular, setParticular] = useState(curPart);
   const [amount, setAmount] = useState("");
   const [isBalanceEffect, setIsBalanceEffect] = useState(
@@ -100,7 +100,7 @@ function DaybookEditForm() {
       gstPercent: String(selectedItems?.gstPercent) + "%" || "",
       gstType: selectedItems?.gstType || "",
     });
-    setCatagory(curCat);
+    setCatagory(selectedItems?.catagory);
     setParticular(curPart);
     setSelectedBranches(
       selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
@@ -155,8 +155,8 @@ function DaybookEditForm() {
       });
 
       data.branches = branchObjects;
-      data.catagory = catIdFinder(categories, curCat);
-      data.particular = parIdFinder(particulars, curPart);
+      data.catagory = catagory;
+      data.particular = parIdFinder(particulars, particular);
       data.bank = bankIdFiner(banks, data.bank);
       data.gstPercent = parseFloat(data.gstPercent);
 
@@ -186,8 +186,6 @@ function DaybookEditForm() {
       dispatch(fetchBanks());
       refreshBalanceSheet();
       refreshLedger();
-      handleClear();
-      setSelectedBranches([]);
       setCatagory([]);
       setParticular([]);
       refreshGstTotals();
@@ -199,8 +197,6 @@ function DaybookEditForm() {
       setLoading(false);
     }
   };
-
-  console.log(isBalanceEffect, "balEffect");
 
   const handleClear = () => {
     reset({

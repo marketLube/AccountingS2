@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 export function matchField(arr, query, matchStage = {}) {
   // Add other query parameters to match stage
   arr.forEach((field) => {

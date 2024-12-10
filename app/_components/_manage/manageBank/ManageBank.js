@@ -24,16 +24,19 @@ function ManageBank({ type = "Bank" }) {
   const handleSaveBank = async () => {
     try {
       setIsLoading(true);
-      await apiClient.post("/bank", {
+      const res = await apiClient.post("/bank", {
         name: bankName,
         balance: 0,
       });
+
+      console.log(res);
       dispatch(fetchBanks());
       dispatch(fetchBranches());
       setIsAdding(false);
       setBankName("");
       toast.success("Successful");
     } catch (e) {
+      console.log(e);
       toast.error("Duplicate Key");
     } finally {
       setIsLoading(false);
