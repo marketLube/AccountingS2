@@ -66,63 +66,63 @@ export const deleteTransactionByIdMiddleWare = catchAsync(
     const { id: transactionId } = req.params;
     const transaction = await Transaction.findById(transactionId);
 
-    // If the transaction does not exist, return an error
-    if (!transaction) {
-      return next(new AppError("Transaction not found", 404));
-    }
+    // // If the transaction does not exist, return an error
+    // if (!transaction) {
+    //   return next(new AppError("Transaction not found", 404));
+    // }
 
-    const { branches, bank, amount, type } = transaction;
+    // const { branches, bank, amount, type } = transaction;
 
-    // Update each branch's balance
-    for (const branchTransaction of branches) {
-      const { amount: branchAmount, branch: branchDoc } = branchTransaction;
+    // // Update each branch's balance
+    // for (const branchTransaction of branches) {
+    //   const { amount: branchAmount, branch: branchDoc } = branchTransaction;
 
-      if (!branchDoc) {
-        return next(new AppError(`Branch not found`, 404));
-      }
+    //   if (!branchDoc) {
+    //     return next(new AppError(`Branch not found`, 404));
+    //   }
 
-      // Find the account for this bank in the branch's accounts array
-      const curBranch = await Branch.findById(branchDoc);
+    //   // Find the account for this bank in the branch's accounts array
+    //   const curBranch = await Branch.findById(branchDoc);
 
-      const branchAccount = curBranch.accounts?.find(
-        (account) => account.bank.toString() === bank._id.toString()
-      );
+    //   const branchAccount = curBranch.accounts?.find(
+    //     (account) => account.bank.toString() === bank._id.toString()
+    //   );
 
-      if (!branchAccount) {
-        return next(
-          new AppError(
-            `Bank account not found in branch ${curBranch.name}`,
-            404
-          )
-        );
-      }
+    //   if (!branchAccount) {
+    //     return next(
+    //       new AppError(
+    //         `Bank account not found in branch ${curBranch.name}`,
+    //         404
+    //       )
+    //     );
+    //   }
 
-      // Reverse the balance update based on transaction type
-      if (type === "Credit") {
-        // If it was originally a credit, subtract now
-        branchAccount.branchBalance -= branchAmount;
-        curBranch.totalBranchBalance -= branchAmount;
-      } else if (type === "Debit") {
-        // If it was originally a debit, add back
-        branchAccount.branchBalance += branchAmount;
-        curBranch.totalBranchBalance += branchAmount;
-      }
+    //   // Reverse the balance update based on transaction type
+    //   if (type === "Credit") {
+    //     // If it was originally a credit, subtract now
+    //     branchAccount.branchBalance -= branchAmount;
+    //     curBranch.totalBranchBalance -= branchAmount;
+    //   } else if (type === "Debit") {
+    //     // If it was originally a debit, add back
+    //     branchAccount.branchBalance += branchAmount;
+    //     curBranch.totalBranchBalance += branchAmount;
+    //   }
 
-      await curBranch.save();
-    }
+    //   await curBranch.save();
+    // }
 
-    const curBank = await Bank.findById(bank);
+    // const curBank = await Bank.findById(bank);
 
-    // Reverse bank balance update
-    if (type === "Credit") {
-      // If it was originally a credit, subtract from bank balance
-      curBank.balance -= amount;
-    } else if (type === "Debit") {
-      // If it was originally a debit, add to bank balance
-      curBank.balance += amount;
-    }
+    // // Reverse bank balance update
+    // if (type === "Credit") {
+    //   // If it was originally a credit, subtract from bank balance
+    //   curBank.balance -= amount;
+    // } else if (type === "Debit") {
+    //   // If it was originally a debit, add to bank balance
+    //   curBank.balance += amount;
+    // }
 
-    await curBank.save();
+    // await curBank.save();
 
     // Delete the transaction after updates are successful
     await Transaction.findByIdAndDelete(transactionId);

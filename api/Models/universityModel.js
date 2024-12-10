@@ -11,7 +11,7 @@ const universitySchema = mongoose.Schema(
       type: String,
       required: [true, "University Data must have student name"],
     },
-    branchName: {
+    branch: {
       type: String,
       required: [true, "Branch must have a name"],
     },

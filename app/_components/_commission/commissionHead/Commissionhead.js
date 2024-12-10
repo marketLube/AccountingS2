@@ -29,33 +29,6 @@ function Commissionhead() {
     dispatch(setCommissionCurBranch(e.target.value));
   };
 
-  const handleSetStartDate = (date) => {
-    setSelectedOption("Custom");
-    dispatch(setReminderStartDate(date));
-  };
-
-  const handleSetEndDate = (date) => {
-    setSelectedOption("Custom");
-    dispatch(setReminderEndDate(date));
-  };
-
-  // Date modal
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleDateModal = () => {
-    setIsOpen((open) => !open);
-  };
-
-  const handleSelectChange = (range) => {
-    return () => dispatch(setReminderSelectedDate(range));
-  };
-
-  const [selectedOption, setSelectedOption] = useState("All");
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    dispatch(setCommissionSelectedDate(option));
-  };
   return (
     <>
       <LayoutHead>
@@ -70,67 +43,17 @@ function Commissionhead() {
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
           />
-          <Search />
-          <Button type="filter" onClick={handleDateModal}>
-            <GiSettingsKnobs />
-          </Button>
+          <Selector
+            options={[
+              "All Status",
+              "Invoice Shared",
+              "Mail Pending",
+              "Received",
+              "Pending",
+            ]}
+          />
         </>
       </LayoutHead>
-
-      <DateModal
-        dateOptions={dateOptions}
-        isOpen={isOpen}
-        handleDateModal={handleDateModal}
-        handleSelectChange={handleSelectChange}
-      >
-        <div className="date_container">
-          <div className="date_popup_selector">
-            <MaterialDatePicker
-              date={startDate}
-              setDate={handleSetStartDate}
-              label={"Select Start Date"}
-            />
-          </div>
-          <div className="date_popup_selector">
-            <MaterialDatePicker
-              date={endDate}
-              setDate={handleSetEndDate}
-              label={"Select End Date"}
-            />
-          </div>
-          <div className="date_custom">
-            <ul>
-              {[
-                "All",
-                "Today",
-                "Yesterday",
-                "Last 30 Days",
-                "Last 60 Days",
-              ].map((option) => (
-                <li
-                  key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div
-            className="form-btn-group form-submit-btns"
-            style={{ padding: "0 4rem" }}
-          >
-            <Button
-              type="clear"
-              onClick={() => dispatch(setResetCommissionDate())}
-            >
-              Clear
-            </Button>
-            <Button type="submit">Submit</Button>
-          </div>
-        </div>
-      </DateModal>
 
       <FsModal isOpen={isNewEntry} setIsCancel={setIsCommissionNewEntry}>
         <CommissionNewEntryForm />

@@ -137,7 +137,7 @@ function Particular({
         {isCurEdit && (
           <input
             className="show-cat-input"
-            style={isCurEdit ? { color: "black" } : {}}
+            style={isCurEdit ? { color: "black !important" } : {}}
             type="text"
             value={curEditValue}
             onChange={handleCurEditValue}

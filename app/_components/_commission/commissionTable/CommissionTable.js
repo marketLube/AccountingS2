@@ -7,17 +7,13 @@ import TableLoader from "../../_loader/TableLoader";
 import { setCommissionBtnDisable } from "@/lib/slices/CommissionSlice";
 import CommissionTableHead from "./CommissionTableHead";
 import CommissionTableItems from "./CommissionTableItems";
+import useUniv from "@/app/_hooks/useUnic";
 
 function CommissionTable() {
   const { startPage } = useSelector((state) => state.commission);
 
-  const { refetch, reminders, isError, isLoading, error } = useReminders();
-  const veiwEight = useViewEight(
-    reminders,
-    startPage,
-    setCommissionBtnDisable,
-    5
-  );
+  const { refetch, data, isError, isLoading, error } = useUniv();
+  const veiwEight = useViewEight(data, startPage, setCommissionBtnDisable, 5);
 
   return (
     <div className="table commition-table">
@@ -29,7 +25,7 @@ function CommissionTable() {
       ) : veiwEight?.length === 0 ? (
         <div className="no-datafound">No Data Found</div>
       ) : (
-        veiwEight?.map((liab, i) => (
+        data?.map((liab, i) => (
           <CommissionTableItems key={i} item={liab}></CommissionTableItems>
         ))
       )}

@@ -51,9 +51,10 @@ function ParticularItemBox({
       setCurValue(localCurValue.trim());
       toast.success("Success");
     } catch (err) {
+      console.log(err, "err");
       setLocalCurValue(pastValue);
       setCurValue(pastValue);
-      toast.error("Duplicate category name or error occurred");
+      toast.error("Duplicate Particular name or error occurred");
     }
   };
 
@@ -75,7 +76,7 @@ function ParticularItemBox({
         className="cat-item-input"
         value={truncate(localCurValue, 23)}
         readOnly={!isEdit}
-        style={isEdit ? { backgroundColor: "white" } : {}}
+        style={isEdit ? { backgroundColor: "white", color: "black" } : {}}
         onChange={handleChange}
       />
       <div className="cat-icon-box">

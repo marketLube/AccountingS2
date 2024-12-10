@@ -53,8 +53,12 @@ function DaybookEditForm() {
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
+
+  // const defaultAmounts = selectedItems?.branches?.map(
+  //   (branch) => branch?.branchTotalAmt
+  // );
   const defaultAmounts = selectedItems?.branches?.map(
-    (branch) => branch?.branchTotalAmt
+    (branch) => branch?.amount
   );
 
   const [loading, setLoading] = useState(false);
