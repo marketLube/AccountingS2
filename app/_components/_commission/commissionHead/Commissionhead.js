@@ -7,6 +7,9 @@ import {
   setCommissionCurBranch,
   setIsCommissionNewEntry,
   setResetCommissionDate,
+  setCommissionIsEdit,
+  setCommissionSelectedItems,
+  setCommissionSelectedDate,
 } from "@/lib/slices/CommissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FsModal from "../../utils/FsModal";
@@ -19,9 +22,15 @@ import { useState } from "react";
 
 function Commissionhead() {
   const dispatch = useDispatch();
-  const { isNewEntry, startDate, endDate, selectedDate } = useSelector(
-    (state) => state.commission
-  );
+  const {
+    isNewEntry,
+    startDate,
+    selectedItems,
+    endDate,
+    isEdit,
+    query,
+    selectedDate,
+  } = useSelector((state) => state.commission);
 
   const { branchNames } = useSelector((state) => state.general);
 
@@ -56,6 +65,73 @@ function Commissionhead() {
     setSelectedOption(option);
     dispatch(setCommissionSelectedDate(option));
   };
+
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async () => {
+    const id = selectedItems?._id;
+
+    if (!id) {
+      toast.error("No item selected to delete.");
+      return;
+    }
+
+    toast(
+      (t) => (
+        <div>
+          <p>This action cannot be undone.</p>
+          <div
+            style={{
+              marginTop: "8px",
+              display: "flex",
+              gap: "8px",
+            }}
+          >
+            <button
+              className="btn dltprimary"
+              onClick={async () => {
+                toast.dismiss(t.id);
+                try {
+                  setLoading(true);
+                  await apiClient.delete(`/assets/${id}`);
+                  toast.success("Successfully Deleted");
+                  dispatch(setCommissionSelectedItems({}));
+                } catch (e) {
+                  console.log(e);
+                  toast.error(
+                    e.response?.data?.message ||
+                      "An error occurred while deleting."
+                  );
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            >
+              Confirm
+            </button>
+            <button
+              className="btn secondary"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity }
+    );
+  };
+
+  const handleClear = () => {
+    dispatch(setResetCommissionDate());
+    dispatch(setCommissionSelectedDate("All"));
+  };
+  const handleSubmit = () => {
+    setIsOpen(false);
+  };
+  const handleQuery = (e) => {
+    dispatch(setAssetsQuery(e.target.value));
+  };
   return (
     <>
       <LayoutHead>
@@ -63,8 +139,21 @@ function Commissionhead() {
           <Button onClick={() => dispatch(setIsCommissionNewEntry(true))}>
             + New Entry
           </Button>
-          <Button type="secondary">Edit</Button>
+          <Button
+            onClick={() => dispatch(setCommissionIsEdit(true))}
+            type={selectedItems?._id ? "primary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Edit
+          </Button>
         </>
+        <Button
+          onClick={onSubmit}
+          type={selectedItems?._id ? "dltprimary" : "secondary"}
+          disabled={!selectedItems?._id}
+        >
+          Delete
+        </Button>
         <>
           <Selector
             options={["All Branches", ...branchNames]}
@@ -110,7 +199,7 @@ function Commissionhead() {
                 <li
                   key={option}
                   onClick={() => handleOptionClick(option)}
-                  className={selectedOption === option ? "selected" : ""}
+                  className={selectedDate === option ? "selected" : ""}
                 >
                   {option}
                 </li>
@@ -121,19 +210,21 @@ function Commissionhead() {
             className="form-btn-group form-submit-btns"
             style={{ padding: "0 4rem" }}
           >
-            <Button
-              type="clear"
-              onClick={() => dispatch(setResetCommissionDate())}
-            >
+            <Button type="clear" onClick={handleClear}>
               Clear
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </DateModal>
 
       <FsModal isOpen={isNewEntry} setIsCancel={setIsCommissionNewEntry}>
         <CommissionNewEntryForm />
+      </FsModal>
+      <FsModal isOpen={isEdit} setIsCancel={setCommissionIsEdit}>
+        <AssetesEditForms />
       </FsModal>
     </>
   );
