@@ -18,6 +18,16 @@ export const wholeYearPnl = catchAsync(async (req, res, next) => {
         "branches.branch": new mongoose.Types.ObjectId(branch),
       },
     },
+    // Unwind the branches array to work with individual branch transactions
+    {
+      $unwind: "$branches",
+    },
+    // Match again to ensure we're only looking at the specific branch
+    {
+      $match: {
+        "branches.branch": new mongoose.Types.ObjectId(branch),
+      },
+    },
     // Add fields for the month and year of the transaction date
     {
       $addFields: {
@@ -25,7 +35,7 @@ export const wholeYearPnl = catchAsync(async (req, res, next) => {
         year: { $year: "$date" },
       },
     },
-    // Group by month and year, calculate total income and expense
+    // Group by month and year, calculate total income and expense using branches amount
     {
       $group: {
         _id: {
@@ -34,12 +44,40 @@ export const wholeYearPnl = catchAsync(async (req, res, next) => {
         },
         totalIncome: {
           $sum: {
-            $cond: [{ $eq: ["$type", "Credit"] }, "$amount", 0],
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "Credit"] },
+                  {
+                    $eq: [
+                      "$branches.branch",
+                      new mongoose.Types.ObjectId(branch),
+                    ],
+                  },
+                ],
+              },
+              "$branches.amount",
+              0,
+            ],
           },
         },
         totalExpense: {
           $sum: {
-            $cond: [{ $eq: ["$type", "Debit"] }, "$amount", 0],
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "Debit"] },
+                  {
+                    $eq: [
+                      "$branches.branch",
+                      new mongoose.Types.ObjectId(branch),
+                    ],
+                  },
+                ],
+              },
+              "$branches.amount",
+              0,
+            ],
           },
         },
       },

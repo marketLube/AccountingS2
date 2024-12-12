@@ -51,7 +51,7 @@ function DaybookEditForm() {
   const dispatch = useDispatch();
 
   const [selectedBranches, setSelectedBranches] = useState(
-    selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
+    selectedItems?.branches?.map((branch) => branch?.branchName) || []
   );
 
   // const defaultAmounts = selectedItems?.branches?.map(
@@ -96,7 +96,7 @@ function DaybookEditForm() {
           ? new Date(selectedItems.date).toISOString().split("T")[0]
           : "", // Handle invalid or missing date
       remark: selectedItems?.remark || "",
-      bank: curBank || "",
+      bank: selectedItems?.bank || "",
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
       tds: selectedItems?.tds || "",
@@ -107,7 +107,7 @@ function DaybookEditForm() {
     setCatagory(selectedItems?.catagory);
     setParticular(curPart);
     setSelectedBranches(
-      selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
+      selectedItems?.branches?.map((branch) => branch?.branchName) || []
     );
   }, [selectedItems, reset]);
 
