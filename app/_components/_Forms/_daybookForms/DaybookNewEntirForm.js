@@ -55,13 +55,13 @@ function DaybookNewEntirForm() {
 
   const defaultValues = {
     date: today(),
-    remark: "Something",
+    remark: "",
     bank: "",
     type: "",
-    purpose: "New",
-    tds: "10%",
-    gstPercent: "2%",
-    gstType: "excl",
+    purpose: "",
+    tds: "",
+    gstPercent: "",
+    gstType: "",
     tdsType: "",
   };
 
@@ -81,10 +81,6 @@ function DaybookNewEntirForm() {
   const gstValue = watch("gstPercent");
   const data = watch();
 
-  const handleBalanceEffect = (val) => {
-    return () => setIsBalanceEffect(val);
-  };
-  console.log(isBalanceEffect, "bal effect");
   useEffect(() => {
     let amount = selectedBranches.reduce((acc, val) => {
       if (!data[val]) return acc;
@@ -109,8 +105,8 @@ function DaybookNewEntirForm() {
   const handleClear = () => {
     reset(defaultValues);
     setSelectedBranches([]);
-    setCatagory("Select Catagory");
-    setParticular("Select Particular");
+    // setCatagory("Select Catagory");
+    // setParticular("Select Particular");
   };
 
   const onSubmit = async (data) => {
@@ -151,8 +147,6 @@ function DaybookNewEntirForm() {
       data.gstAmount = 0;
     }
 
-    console.log(data, "data");
-
     try {
       setLoading(true);
       await apiClient.post("/transaction", data);
@@ -165,10 +159,8 @@ function DaybookNewEntirForm() {
       dispatch(fetchBanks());
       refreshBalanceSheet();
       refreshLedger();
-      handleClear();
+      // handleClear();
       setSelectedBranches([]);
-      setCatagory([]);
-      setParticular([]);
       refreshGstTotals();
       refreshBalanceSheetAll();
     } catch (e) {
@@ -186,12 +178,7 @@ function DaybookNewEntirForm() {
       <h2 className="form-head-text">Daybook New Entry Form</h2>
 
       <div className="form-catagory-container">
-        <Catagory
-          setCatagory={setCatagory}
-          setParticular={setParticular}
-          particular={particular}
-          catagory={catagory}
-        />
+        <Catagory setCatagory={setCatagory} setParticular={setParticular} />
 
         <div className="form-row">
           <Purpose register={register} errors={errors} />
@@ -244,7 +231,7 @@ function DaybookNewEntirForm() {
           className="absolute left-1/2 transform -translate-x-1/2 bottom-2 text-sm font-medium text-gray-700"
           aria-label="Total amount for the transaction"
         >
-          Amount : {amount || 0}
+          Amount: {Number(amount || 0).toFixed(2)}
         </div>
       </div>
     </form>

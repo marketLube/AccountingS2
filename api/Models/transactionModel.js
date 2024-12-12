@@ -153,7 +153,7 @@ transactionSchema.pre("save", async function (next) {
 
       // Update branch and bank account balances
       if (this.isGstDeduct) {
-        finalBranchAmount = amount + branchGstAmount;
+        finalBranchAmount = amount + branchGstAmount - branchTdsDeduction;
       }
       bankAccount.branchBalance += finalBranchAmount;
       branch.totalBranchBalance += finalBranchAmount;
@@ -168,8 +168,9 @@ transactionSchema.pre("save", async function (next) {
 
     // 3. Update bank balance
     let finalBankAmount = totalAmount - totalTdsDeduction;
+
     if (this.isGstDeduct) {
-      finalBankAmount = totalAmount + totalGstAmount;
+      finalBankAmount = totalAmount + totalGstAmount - totalTdsDeduction;
     }
     bank.balance += finalBankAmount;
 

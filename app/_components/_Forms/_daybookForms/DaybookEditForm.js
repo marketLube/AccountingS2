@@ -53,8 +53,12 @@ function DaybookEditForm() {
   const [selectedBranches, setSelectedBranches] = useState(
     selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
   );
+
+  // const defaultAmounts = selectedItems?.branches?.map(
+  //   (branch) => branch?.branchTotalAmt
+  // );
   const defaultAmounts = selectedItems?.branches?.map(
-    (branch) => branch?.branchTotalAmt
+    (branch) => branch?.amount
   );
 
   const [loading, setLoading] = useState(false);
@@ -67,7 +71,7 @@ function DaybookEditForm() {
   const curPart = useParticularFinder(selectedItems?.particular)?.name;
   const curBank = bankFinder(selectedItems?.bank, banks);
 
-  const [catagory, setCatagory] = useState(curCat);
+  const [catagory, setCatagory] = useState(selectedItems?.catagory);
   const [particular, setParticular] = useState(curPart);
   const [amount, setAmount] = useState("");
   const [isBalanceEffect, setIsBalanceEffect] = useState(
@@ -100,7 +104,7 @@ function DaybookEditForm() {
       gstPercent: String(selectedItems?.gstPercent) + "%" || "",
       gstType: selectedItems?.gstType || "",
     });
-    setCatagory(curCat);
+    setCatagory(selectedItems?.catagory);
     setParticular(curPart);
     setSelectedBranches(
       selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
@@ -155,8 +159,8 @@ function DaybookEditForm() {
       });
 
       data.branches = branchObjects;
-      data.catagory = catIdFinder(categories, curCat);
-      data.particular = parIdFinder(particulars, curPart);
+      data.catagory = catagory;
+      data.particular = parIdFinder(particulars, particular);
       data.bank = bankIdFiner(banks, data.bank);
       data.gstPercent = parseFloat(data.gstPercent);
 
@@ -186,8 +190,6 @@ function DaybookEditForm() {
       dispatch(fetchBanks());
       refreshBalanceSheet();
       refreshLedger();
-      handleClear();
-      setSelectedBranches([]);
       setCatagory([]);
       setParticular([]);
       refreshGstTotals();
@@ -199,8 +201,6 @@ function DaybookEditForm() {
       setLoading(false);
     }
   };
-
-  console.log(isBalanceEffect, "balEffect");
 
   const handleClear = () => {
     reset({
@@ -284,7 +284,7 @@ function DaybookEditForm() {
           className="absolute left-1/2 transform -translate-x-1/2 bottom-2 text-sm font-medium text-gray-700 mb-14"
           aria-label="Total amount for the transaction"
         >
-          Amount : {amount || 0}
+          Amount: {Number(amount || 0).toFixed(2)}
         </div>
       </div>
     </form>

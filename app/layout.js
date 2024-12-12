@@ -1,6 +1,7 @@
 import AppLayout from "@/app/_components/layouts/AppLayout";
 import "@/styles/globals.css";
 import "@/styles/sassStyle.css";
+import { arr } from "@/Trans";
 
 export const metadata = {
   title: {

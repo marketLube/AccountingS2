@@ -123,7 +123,6 @@ function DaybookHead() {
           >
             Edit
           </Button>
-          <Button type="thertiary">Log</Button>
         </>
         <>
           <Selector

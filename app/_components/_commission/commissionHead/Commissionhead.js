@@ -10,6 +10,7 @@ import {
   setCommissionIsEdit,
   setCommissionSelectedItems,
   setCommissionSelectedDate,
+  setCommitionStatus,
 } from "@/lib/slices/CommissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FsModal from "../../utils/FsModal";
@@ -19,6 +20,9 @@ import DateModal from "../../utils/DateModal/DateModal";
 import { dateOptions } from "@/app/data/generalDatas";
 import MaterialDatePicker from "../../utils/DateModal/MateriealDatePicker";
 import { useState } from "react";
+import CommissionEditForm from "../../_Forms/_commissionForms/CommissionEditForm";
+import toast from "react-hot-toast";
+import apiClient from "@/lib/axiosInstance";
 
 function Commissionhead() {
   const dispatch = useDispatch();
@@ -29,6 +33,8 @@ function Commissionhead() {
     endDate,
     isEdit,
     query,
+    curStatus,
+    curBranch,
     selectedDate,
   } = useSelector((state) => state.commission);
 
@@ -68,6 +74,10 @@ function Commissionhead() {
 
   const [loading, setLoading] = useState(false);
 
+  const handleStatusChange = (e) => {
+    dispatch(setCommitionStatus(e.target.value));
+  };
+
   const onSubmit = async () => {
     const id = selectedItems?._id;
 
@@ -93,12 +103,12 @@ function Commissionhead() {
                 toast.dismiss(t.id);
                 try {
                   setLoading(true);
-                  await apiClient.delete(`/assets/${id}`);
+                  await apiClient.delete(`/university/${id}`);
                   toast.success("Successfully Deleted");
                   dispatch(setCommissionSelectedItems({}));
                 } catch (e) {
                   console.log(e);
-                  toast.error(
+                  toast?.error(
                     e.response?.data?.message ||
                       "An error occurred while deleting."
                   );
@@ -146,23 +156,32 @@ function Commissionhead() {
           >
             Edit
           </Button>
+          <Button
+            onClick={onSubmit}
+            type={selectedItems?._id ? "dltprimary" : "secondary"}
+            disabled={!selectedItems?._id}
+          >
+            Delete
+          </Button>
         </>
-        <Button
-          onClick={onSubmit}
-          type={selectedItems?._id ? "dltprimary" : "secondary"}
-          disabled={!selectedItems?._id}
-        >
-          Delete
-        </Button>
+
         <>
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
+            curValue={curBranch}
           />
-          <Search />
-          <Button type="filter" onClick={handleDateModal}>
-            <GiSettingsKnobs />
-          </Button>
+          <Selector
+            options={[
+              "All Status",
+              "Invoice Shared",
+              "Mail Pending",
+              "Received",
+              "Pending",
+            ]}
+            callback={handleStatusChange}
+            curValue={curStatus}
+          />
         </>
       </LayoutHead>
 
@@ -224,7 +243,7 @@ function Commissionhead() {
         <CommissionNewEntryForm />
       </FsModal>
       <FsModal isOpen={isEdit} setIsCancel={setCommissionIsEdit}>
-        <AssetesEditForms />
+        <CommissionEditForm />
       </FsModal>
     </>
   );

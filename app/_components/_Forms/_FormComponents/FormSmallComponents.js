@@ -32,7 +32,7 @@ export function Student({ register, errors }) {
         type="text"
         id="student"
         {...register("student", {
-          required: "Stuent is required",
+          required: "Student is required",
         })}
       />
       {errors.student && (
@@ -70,7 +70,7 @@ export function University({ register, errors }) {
       <input
         type="text"
         id="University"
-        {...register("University", {
+        {...register("university", {
           required: "University is required",
         })}
       />
@@ -87,7 +87,7 @@ export function Commission({ register, errors }) {
         Commission
       </label>
       <input
-        type="text"
+        type="number"
         id="Commission"
         {...register("commition", {
           required: "Commission is required",
@@ -373,28 +373,40 @@ export function CourseFee({ register, errors }) {
       <label htmlFor="coursefee" className="form-group-formlabel">
         Course Fee
       </label>
-      <div className="formcors">
-        <input
-          type="text"
-          id="courseFee"
-          {...register("courseFee", {
-            required: "Stuent is required",
-          })}
-        />
-        <select
-          id="courseFee"
-          {...register("courseFee", { required: "TDS is required" })}
-        >
-          <option value="">Select currency</option>
-          <option value="CAD">CAD</option>
-          <option value="USD">USD</option>
-          <option value="Pound">Pound</option>
-          <option value="Euro">Euro</option>
-        </select>
-        {errors.tds && (
-          <span className="form-group-error">{errors.tds.message}</span>
-        )}
-      </div>
+
+      <input
+        type="text"
+        id="courseFee"
+        {...register("courseFee", {
+          required: "Stuent is required",
+        })}
+      />
+      {errors.tds && (
+        <span className="form-group-error">{errors.tds.message}</span>
+      )}
+    </div>
+  );
+}
+export function Currency({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="coursefee" className="form-group-formlabel">
+        Course Fee
+      </label>
+
+      <select
+        id="courseFee"
+        {...register("currency", { required: "Course fee is required" })}
+      >
+        <option value="">Select currency</option>
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+        <option value="Pound">Pound</option>
+        <option value="Euro">Euro</option>
+      </select>
+      {errors.tds && (
+        <span className="form-group-error">{errors.tds.message}</span>
+      )}
     </div>
   );
 }
@@ -428,7 +440,7 @@ export function IntakeSelector({ register, errors }) {
       <label htmlFor="intakeselector" className="form-group-formlabel">
         Intake
       </label>
-      <select id="intake" {...register("intake", { required: " required" })}>
+      <select id="intake" {...register("intake", { required: "required" })}>
         <option value="">Select intake</option>
         {intake?.map((intake, i) => (
           <option key={i} value={intake}>
@@ -463,7 +475,7 @@ export function MonthSelector({ register, errors, isApril, disabled = true }) {
       </label>
       <select
         id="month"
-        {...register("month", { required: " required" })}
+        {...register("intakeMonth", { required: " required" })}
         disabled={disabled}
       >
         <option value="">Select Intake Month</option>
@@ -700,6 +712,28 @@ export function StatusSel({ register, errors }) {
         <option value="Paid">Paid</option>
         <option value="Unpaid">Unpaid</option>
         <option value="Postponed">Postponed</option>
+        <option value="Pending">Pending</option>
+      </select>
+      {errors.status && (
+        <span className="form-group-error">{errors.status.message}</span>
+      )}
+    </div>
+  );
+}
+export function StatusCom({ register, errors }) {
+  return (
+    <div className="form-group">
+      <label htmlFor="status" className="form-group-formlabel">
+        Status
+      </label>
+      <select
+        id="status"
+        {...register("status", { required: "Select a status" })}
+      >
+        <option value="">Select Status</option>
+        <option value="Invoice Shared">Invoice Shared</option>
+        <option value="Mail Pending">Mail Pending</option>
+        <option value="Received">Received</option>
         <option value="Pending">Pending</option>
       </select>
       {errors.status && (

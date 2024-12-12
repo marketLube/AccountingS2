@@ -22,6 +22,8 @@ import {
   MonthSelector,
   StatusSel,
   CourseFee,
+  StatusCom,
+  Currency,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
 import { useState } from "react";
@@ -31,9 +33,9 @@ import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 
 import toast from "react-hot-toast";
+import { refreshUniv } from "@/app/_hooks/useUnic";
 
 function CommissionNewEntryForm() {
-  const [selectedBranches, setSelectedBranches] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { categories, particulars, banks } = useSelector(
@@ -55,6 +57,11 @@ function CommissionNewEntryForm() {
       remark: "",
       type: "",
       intake: "",
+      commtion: "",
+      status: "",
+      agent: "",
+      currency: "",
+      inr: "",
     },
   });
 
@@ -62,13 +69,16 @@ function CommissionNewEntryForm() {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       await apiClient.post("/university", data);
       toast.success("Successfully created new Transaction");
-
+      refreshUniv();
       reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+    } finally {
+      setLoading(false);
     }
 
     return;
@@ -92,7 +102,6 @@ function CommissionNewEntryForm() {
         </div>
 
         <div className="form-row">
-          <Bank register={register} errors={errors} />
           <Commission register={register} errors={errors} />
           <INR register={register} errors={errors} />
         </div>
@@ -109,8 +118,8 @@ function CommissionNewEntryForm() {
         </div>
         <div className="form-row">
           <CourseFee register={register} errors={errors} />
-          <StatusSel register={register} errors={errors} />
-          <Remark register={register} errors={errors} />
+          <Currency register={register} errors={errors} />
+          <StatusCom register={register} errors={errors} />
         </div>
         <div className="form-btn-group form-submit-btns">
           <Button type="clear">Clear</Button>

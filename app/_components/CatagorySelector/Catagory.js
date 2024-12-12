@@ -10,16 +10,17 @@ import { truncate } from "@/app/_services/helpers";
 import apiClient from "@/lib/axiosInstance";
 import { fetchCategory } from "@/lib/slices/generalSlice";
 import { checkCaseSensitivity } from "./helper";
+import { useCategoryFinder } from "@/app/_services/finders";
 
 function Catagory({
   defaultValue = "Select Category",
   setCatagory,
   setParticular,
-  defaultParticular,
+  defaultParticular = "Select Particular",
 }) {
   const [isCat, setIsCat] = useState(false);
-  const [curValue, setCurValue] = useState(defaultValue);
   const { categories: catagories } = useSelector((state) => state.general);
+  const [curValue, setCurValue] = useState(defaultValue);
   const [stopDropdown, setStopDropdown] = useState(false);
   const [isCurEdit, setIsCurEdit] = useState(false);
   const [curEditValue, setCurEditValue] = useState("");

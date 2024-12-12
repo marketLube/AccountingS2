@@ -31,7 +31,7 @@ function DaybookTableItem({ transaction }) {
   const bank = useBankFinder(transaction?.bank);
 
   const branchAmt = transaction?.branches?.find(
-    (branch) => branch.branch.name === curBranch
+    (branch) => branch?.branch?.name === curBranch
   )?.branchTotalAmt;
 
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ function DaybookTableItem({ transaction }) {
         <span className="table-col amount table-body-col">
           {!curBranch.startsWith("All")
             ? transaction?.branches?.find(
-                (branch) => branch.branch.name === curBranch
+                (branch) => branch?.branch?.name === curBranch
               )?.amount
             : transaction?.amount?.toFixed(2)}
         </span>

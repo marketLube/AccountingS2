@@ -9,7 +9,6 @@ function CommissionTableHead() {
       <span className="table-col date"> Date</span>
       <span className="table-col branch">Branch</span>
       <span className="table-col course-fee">Course fee</span>
-      <span className="table-col remark">Remark</span>
       <span className="table-col receivable">Receivable</span>
       <span className="table-col status">Status</span>
       <span className="table-col agent">Agent</span>
