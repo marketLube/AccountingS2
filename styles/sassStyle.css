@@ -50,14 +50,7 @@
 }
 
 body {
-  background: linear-gradient(
-    to top,
-    rgb(201, 200, 254),
-    rgba(201, 200, 254, 0.8) 40%,
-    rgba(201, 200, 254, 0.6) 60%,
-    rgba(201, 200, 254, 0.3) 80%,
-    white
-  );
+  background: linear-gradient(to top, rgb(201, 200, 254), rgba(201, 200, 254, 0.8) 40%, rgba(201, 200, 254, 0.6) 60%, rgba(201, 200, 254, 0.3) 80%, white);
 }
 
 .app {
@@ -409,8 +402,7 @@ body {
   justify-content: space-between;
   gap: 1.2rem;
 }
-.branchwise-chart,
-.branchwise-total-bal {
+.branchwise-chart, .branchwise-total-bal {
   flex: 1;
   height: 100%;
   border-radius: 1rem;
@@ -781,7 +773,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-/* 
+
 .loader {
   --background: linear-gradient(135deg, rgb(7, 0, 87), rgb(201, 200, 254));
   --shadow: rgb(7, 0, 87);
@@ -956,7 +948,7 @@ body {
   95%, 100% {
     transform: rotateY(0deg);
   }
-} */
+}
 /* From Uiverse.io by adamgiebl */
 .dots-container {
   display: flex;
@@ -1285,11 +1277,7 @@ body {
   transition: 0.4s;
   border-radius: 34px;
 }
-.manage-bcontainer
-  .branches-list
-  .branch-item
-  .branch-switch
-  .branch-slider:before {
+.manage-bcontainer .branches-list .branch-item .branch-switch .branch-slider:before {
   position: absolute;
   content: "";
   height: 14px;
@@ -1300,20 +1288,10 @@ body {
   transition: 0.4s;
   border-radius: 50%;
 }
-.manage-bcontainer
-  .branches-list
-  .branch-item
-  .branch-switch
-  input:checked
-  + .slider {
+.manage-bcontainer .branches-list .branch-item .branch-switch input:checked + .slider {
   background-color: #4caf50;
 }
-.manage-bcontainer
-  .branches-list
-  .branch-item
-  .branch-switch
-  input:checked
-  + .slider:before {
+.manage-bcontainer .branches-list .branch-item .branch-switch input:checked + .slider:before {
   transform: translateX(14px);
 }
 .manage-bcontainer .branch-button {
@@ -1407,8 +1385,7 @@ body {
 .pagination .button:hover {
   background-color: rgb(193, 193, 193);
 }
-.pagination .button.disabled,
-.pagination .button:disabled {
+.pagination .button.disabled, .pagination .button:disabled {
   background-color: rgb(226, 225, 225);
   color: white;
   cursor: not-allowed;
@@ -1955,16 +1932,12 @@ body {
   position: relative;
   overflow: hidden; /* Ensure content doesn't overflow the rounded shape */
 }
-.material-datepicker
-  .my-datepicker
-  .rdp-button:hover:not(:disabled):not(.rdp-day_selected) {
+.material-datepicker .my-datepicker .rdp-button:hover:not(:disabled):not(.rdp-day_selected) {
   background-color: rgba(28, 101, 126, 0.1);
   color: var(--color-primary);
   border-radius: 50%;
 }
-.material-datepicker .my-datepicker .rdp-button:focus,
-.material-datepicker .my-datepicker .rdp-button:focus-visible,
-.material-datepicker .my-datepicker .rdp-button:focus-within {
+.material-datepicker .my-datepicker .rdp-button:focus, .material-datepicker .my-datepicker .rdp-button:focus-visible, .material-datepicker .my-datepicker .rdp-button:focus-within {
   outline: none !important;
   box-shadow: none !important;
   background-color: rgba(28, 101, 126, 0.05);
@@ -2037,8 +2010,7 @@ body {
 .material-datepicker .rdp-nav_button:hover {
   background-color: rgba(28, 101, 126, 0.1);
 }
-.material-datepicker .rdp-nav_button:focus,
-.material-datepicker .rdp-nav_button:focus-visible {
+.material-datepicker .rdp-nav_button:focus, .material-datepicker .rdp-nav_button:focus-visible {
   border-radius: 50%;
   background-color: rgba(28, 101, 126, 0.1);
   outline: none !important;
@@ -2069,6 +2041,219 @@ body {
 .rdp-day_button {
   border-radius: 1rem !important;
   display: none;
+}
+
+.invoice-container {
+  background-color: rgb(86, 86, 60);
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+}
+.invoice-container .input-head {
+  font-weight: 600;
+  color: rgb(53, 49, 49);
+}
+.invoice-container label {
+  margin-right: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: start;
+  width: 8rem;
+}
+.invoice-body {
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.invoice-actions {
+  background-color: rgb(226, 225, 225);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.invoice-actions-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20rem;
+  height: 20rem;
+  position: absolute;
+  top: 10rem;
+  gap: 1rem;
+}
+.invoice-actions-back-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10rem;
+}
+.invoice-form {
+  background-color: white;
+}
+.invoice-form-content-box {
+  width: 70vw;
+  max-width: 210mm;
+  min-height: 297mm;
+  margin: 10rem auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.invoice-form-head {
+  height: 5rem;
+  width: 100%;
+  padding: 0 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.invoice-form-head h3 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.invoice-form-from {
+  height: fit-content;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.invoice-form-payment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.invoice-form-payment .invoice-input {
+  text-align: right;
+}
+.invoice-form-to-container {
+  display: flex;
+  justify-content: space-between;
+}
+.invoice-form-to-input-container {
+  display: flex;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+.invoice-form-to {
+  height: 10rem;
+}
+.invoice-form-place {
+  height: 2.5rem;
+}
+.invoice-form-table {
+  width: 100%;
+}
+.invoice-form-table-head {
+  height: 2rem;
+  background-color: rgb(7, 0, 87);
+  border-radius: 1rem;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+.invoice-form-table-head input {
+  color: rgb(233, 228, 228);
+}
+.invoice-form-table-itemContainer {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+.invoice-form-table-item-box {
+  flex: 1;
+  height: 2rem;
+  padding: 0 0.5rem;
+  overflow: hidden;
+}
+.invoice-form-table-item-box input {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+}
+.invoice-form-table-item-box input:focus {
+  background-color: white;
+  color: rgb(53, 49, 49);
+}
+.invoice-form-table-item-content {
+  display: flex;
+  height: 5rem;
+  border-bottom: 0.2px solid lightgray;
+  position: relative;
+}
+.invoice-form-table-item-content .invoice-form-table-item-box {
+  height: 100%;
+}
+.invoice-form-table-item-content textarea {
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  text-align: left; /* Horizontal alignment */
+  resize: none; /* Disable resizing */
+  overflow: hidden;
+  line-height: normal; /* Use default line height */
+  vertical-align: middle;
+}
+.invoice-form-table-item-content .icons {
+  position: absolute;
+  top: 50%; /* Vertically center */
+  right: 0rem; /* Adjust the distance from the right edge */
+  transform: translateY(-50%); /* Align properly to the vertical center */
+  cursor: pointer; /* Add pointer cursor for better UX */
+}
+.invoice-form-footer {
+  height: 8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.invoice-total-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  justify-content: end;
+  padding-right: 0.5rem;
+}
+.invoice-total-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1em 0;
+  border-bottom: 0.2px solid lightgray;
+}
+.invoice-all-sum {
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid black;
+}
+
+.i-item-desc {
+  flex: 2;
+}
+
+.invoice-input {
+  width: 15rem;
+  padding: 0.2rem;
+  color: gray;
+  font-size: 0.8rem;
+}
+.invoice-input:focus {
+  outline: 0.5px solid gray;
+  border-radius: 0.3rem;
 }
 
 .manage-body {
@@ -2206,12 +2391,7 @@ body {
   width: 100%;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
-  background: linear-gradient(
-    to bottom,
-    rgb(201, 200, 254),
-    rgb(7, 0, 87),
-    gray
-  );
+  background: linear-gradient(to bottom, rgb(201, 200, 254), rgb(7, 0, 87), gray);
 }
 
 .auth-box {
@@ -2317,6 +2497,157 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.page-wrapper {
+  background-color: #f9fafb;
+  padding: 1rem;
+  width: 210mm;
+  height: 297mm;
+  max-width: 994px;
+  max-height: 2123px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-wrapper .invoice {
+  width: 210mm;
+  height: 297mm;
+  max-width: 794px;
+  max-height: 1123px;
+  margin: 0;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.page-wrapper .invoice__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+.page-wrapper .invoice__tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.page-wrapper .invoice__tags .tag {
+  padding: 0.25rem 1rem;
+  background-color: #dbeafe;
+  color: #1e40af;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.page-wrapper .invoice__company {
+  margin-top: 1.5rem;
+}
+.page-wrapper .invoice__company h3 {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.page-wrapper .invoice__company p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+.page-wrapper .invoice__title {
+  text-align: right;
+}
+.page-wrapper .invoice__title h1 {
+  font-size: 2.25rem;
+  font-family: serif;
+  margin-bottom: 1.5rem;
+}
+.page-wrapper .invoice__title p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+.page-wrapper .invoice__billing {
+  margin-bottom: 3rem;
+}
+.page-wrapper .invoice__billing h3 {
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+.page-wrapper .invoice__billing p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+.page-wrapper .invoice__payment {
+  margin-bottom: 2rem;
+}
+.page-wrapper .invoice__payment h3 {
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.page-wrapper .invoice__payment p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+.page-wrapper .invoice__items {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 2rem;
+}
+.page-wrapper .invoice__items table {
+  width: 100%;
+  text-align: left;
+}
+.page-wrapper .invoice__items table th {
+  padding-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.page-wrapper .invoice__items table td {
+  padding: 1rem 0;
+}
+.page-wrapper .invoice__items table td p:first-child {
+  font-weight: 500;
+}
+.page-wrapper .invoice__items table td p:last-child {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+.page-wrapper .invoice__items table td:last-child {
+  text-align: right;
+  font-family: ui-monospace, monospace;
+}
+.page-wrapper .invoice__totals {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+.page-wrapper .invoice__totals .total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+.page-wrapper .invoice__totals .total-row:last-child {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  font-weight: 500;
+}
+.page-wrapper .invoice__totals .total-row span:last-child {
+  font-family: ui-monospace, monospace;
+}
+
+@media print {
+  .page-wrapper {
+    background-color: white;
+    padding: 0;
+  }
+  .invoice {
+    box-shadow: none;
+    margin: 0;
+    width: 100%;
+    height: auto;
+  }
 }
 
 /*# sourceMappingURL=sassStyle.css.map */

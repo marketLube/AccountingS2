@@ -12,12 +12,14 @@ import { useDispatch } from "react-redux";
 import { setIsInvoice } from "@/lib/slices/invoiceSlice";
 import apiClient from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
+import InvoiceDownldForm from "./InvoiceDownldForm";
 
 function InvoiceDownloader() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
     reset,
@@ -30,8 +32,8 @@ function InvoiceDownloader() {
       quantity: "Qty",
       gst: "",
       rate: "Rate",
-      sgst: "SGST",
-      cgst: "CGST",
+      sgst: "0",
+      cgst: "0",
       amount: "Amount",
       address: "",
       city: "",
@@ -58,30 +60,60 @@ function InvoiceDownloader() {
       country2: "",
     },
   });
+  const data = watch();
   const formRef = useRef();
   const [tableItems, setTableItems] = useState([]);
+  const downloadRef = useRef(null);
+  // const handleDownloadPdf = async (data) => {
+  //   console.log(data, "000000");
+  //   // const element = formRef.current;
+
+  //   // // Capture the component as a canvas
+  //   // const canvas = await html2canvas(element);
+  //   // const data = canvas.toDataURL("image/png");
+
+  //   // // Create a new PDF document
+  //   // const pdf = new jsPDF("p", "mm", "a4");
+  //   // const imgWidth = 210;
+  //   // const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  //   // pdf.addImage(data, "PNG", 0, 0, imgWidth, imgHeight);
+  //   // pdf.save("invoice.pdf");
+  // };
   const handleDownloadPdf = async () => {
-    const element = formRef.current;
+    const element = downloadRef.current; // Access the InvoiceDownldForm component
+    if (!element) return;
 
-    // Capture the component as a canvas
-    const canvas = await html2canvas(element);
-    const data = canvas.toDataURL("image/png");
+    // Temporarily make the hidden element visible
+    element.style.display = "block";
 
-    // Create a new PDF document
-    const pdf = new jsPDF("p", "mm", "a4");
-    const imgWidth = 210;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    try {
+      const canvas = await html2canvas(element, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true, // Handles cross-origin resources
+      });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    pdf.addImage(data, "PNG", 0, 0, imgWidth, imgHeight);
-    pdf.save("invoice.pdf");
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("invoice.pdf");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      // Hide the element again
+      element.style.display = "none";
+    }
   };
 
   const onSubmit = async (data) => {
+    console.log(data, ".........");
     data.items = tableItems;
     try {
       setIsLoading(true);
       const res = await apiClient.post("/invoice", data);
- 
+
       toast.success("Success");
     } catch (e) {
       console.log(e, "e");
@@ -92,32 +124,37 @@ function InvoiceDownloader() {
   };
 
   return (
-    <div className="invoice-container">
-      <div className="invoice-body">
-        <InvoiceForm
-          ref={formRef}
-          register={register}
-          errors={errors}
-          setTableItems={setTableItems}
-          tableItems={tableItems}
-        />
-        <div className="invoice-actions">
-          <div className="invoice-actions-back-btn">
-            <BackButton onClick={() => dispatch(setIsInvoice(false))} />
-          </div>
+    <>
+      <div className="invoice-container">
+        <div className="invoice-body">
+          <InvoiceForm
+            ref={formRef}
+            register={register}
+            errors={errors}
+            setTableItems={setTableItems}
+            tableItems={tableItems}
+          />
+          <div className="invoice-actions">
+            <div className="invoice-actions-back-btn">
+              <BackButton onClick={() => dispatch(setIsInvoice(false))} />
+            </div>
 
-          <div className="invoice-actions-btns">
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              style={isLoading ? { opacity: "0.5" } : { opacity: "1" }}
-            >
-              {!isLoading ? "Save invoice" : "Saving.."}
-            </Button>
-            <Button onClick={handleDownloadPdf}>Download Invoice</Button>
+            <div className="invoice-actions-btns">
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                style={isLoading ? { opacity: "0.5" } : { opacity: "1" }}
+              >
+                {!isLoading ? "Save invoice" : "Saving.."}
+              </Button>
+              <Button onClick={handleDownloadPdf}>Download Invoice</Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div ref={downloadRef}>
+        <InvoiceDownldForm data={data} tableItems={tableItems} />
+      </div>
+    </>
   );
 }
 
