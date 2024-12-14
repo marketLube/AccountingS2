@@ -7,6 +7,7 @@ class APIFeatures {
 
   filter() {
     const queryObj = { ...this.queryStr };
+
     const excludedFields = [
       "page",
       "sort",
@@ -16,6 +17,7 @@ class APIFeatures {
       "startDate",
       "endDate",
       "search",
+      "gstType",
     ];
 
     excludedFields.forEach((el) => delete queryObj[el]);
@@ -149,6 +151,19 @@ class APIFeatures {
     this.query = this.query.skip(skip).limit(limit);
     return this;
   }
+  gstType() {
+    const gstType = this.queryStr.gstType;
+
+    if (!gstType) return this;
+
+    if (gstType === "no-gst") {
+      this.query.find({ gstType: "no-gst" });
+    } else if (gstType === "gst") {
+      this.query.find({ gstType: { $ne: "no-gst" } });
+    }
+
+    return this;
+  }
 
   filterByBranch() {
     if (this.queryStr.branchId) {
@@ -167,12 +182,16 @@ class APIFeatures {
 
       // Convert strings to Date objects for proper MongoDB comparison
       if (this.queryStr.startDate) {
-        dateFilter.$gte = new Date(this.queryStr.startDate);
+        // Set the time to the start of the day
+        const startDate = new Date(this.queryStr.startDate);
+        startDate.setHours(0, 0, 0, 0);
+        dateFilter.$gte = startDate;
       }
+
       if (this.queryStr.endDate) {
+        // Set the time to the end of the day
         let endDate = new Date(this.queryStr.endDate);
-        endDate.setDate(endDate.getDate() + 1); // Add one extra day
-        // endDate.setHours(23, 59, 59, 999); // Set time to the end of the next day
+        endDate.setHours(23, 59, 59, 999);
         dateFilter.$lte = endDate;
       }
 
@@ -181,6 +200,7 @@ class APIFeatures {
         date: dateFilter,
       });
     }
+
     return this;
   }
 }

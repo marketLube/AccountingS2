@@ -66,10 +66,10 @@ export const deleteTransactionByIdMiddleWare = catchAsync(
     const { id: transactionId } = req.params;
     const transaction = await Transaction.findById(transactionId);
 
-    // // If the transaction does not exist, return an error
-    // if (!transaction) {
-    //   return next(new AppError("Transaction not found", 404));
-    // }
+    // If the transaction does not exist, return an error
+    if (!transaction) {
+      return next(new AppError("Transaction not found", 404));
+    }
 
     // const { branches, bank, amount, type } = transaction;
 

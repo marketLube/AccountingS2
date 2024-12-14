@@ -7,11 +7,7 @@ import {
   setLiabilitySummery,
 } from "@/lib/slices/liabilitySlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useBranchIdFinder,
-  useCategoryNameFinder,
-  useParticularNameFinder,
-} from "../_services/finders";
+import { useBranchIdFinder, useCategoryNameFinder } from "../_services/finders";
 import useCatToParticular from "./useCatToParticular";
 import { useEffect } from "react";
 
@@ -29,8 +25,11 @@ export function useLiability() {
   } = useSelector((state) => state.liability);
 
   const branchId = useBranchIdFinder(curBranch)?._id;
+
   const catagory = useCategoryNameFinder(curCat);
-  const particular = useParticularNameFinder(curParticular);
+  const particular = catagory?.particulars?.find(
+    (obj) => obj.name === curParticular
+  );
 
   useCatToParticular(
     catagory,
