@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../utils/Button";
 import {
@@ -11,12 +12,16 @@ import toast from "react-hot-toast";
 import apiClient from "@/lib/axiosInstance";
 
 function ManageProfileCard() {
+  const fileInputRef = useRef(null);
+
   const { user, email, phone, position, image, id } = useSelector(
     (state) => state.auth
   );
+
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(image);
 
   const handleSave = async () => {
     try {
@@ -37,13 +42,31 @@ function ManageProfileCard() {
     }
   };
 
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+    }
+  };
+
   return (
     <div className="profile-card">
       <h2 className="profile-card-title">Profile</h2>
-      <div className="profile-card-avatar">
-        <img src={image} alt="company-logo" />
+      <div className="profile-card-avatar" onClick={handleImageClick}>
+        <img src={selectedImage} alt="company-logo" />
       </div>
-
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
       <div className="profile-card-field">
         <label>Name</label>
         <input

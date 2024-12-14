@@ -1,7 +1,9 @@
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Branches from "./Branches";
 import BranchGroup from "./BranchGroup";
 import FormToggle from "../../utils/ToggleSwitch/FormToggle";
+import Tooltip from "../../utils/Tooltip";
 
 export function Purpose({ register, errors }) {
   return (
@@ -604,14 +606,32 @@ export function Gst({
   isBalanceEffect,
   setIsBalanceEffect,
 }) {
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    if (!isBalanceEffect) {
+      setIsTooltipVisible(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsTooltipVisible(false);
+  };
   return (
     <div className="form-group">
       <div className="type-option-label">
         <label htmlFor="GstType">GST</label>
-        <FormToggle
-          isBalanceEffect={isBalanceEffect}
-          setIsBalanceEffect={setIsBalanceEffect}
-        />
+        <span onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <FormToggle
+            isBalanceEffect={isBalanceEffect}
+            setIsBalanceEffect={setIsBalanceEffect}
+          />
+          <Tooltip
+            type="remark"
+            remark="This will affect the bank balance."
+            isVisible={isTooltipVisible}
+          />
+        </span>
       </div>
 
       <div className="type-options">
