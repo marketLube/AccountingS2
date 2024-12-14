@@ -4,12 +4,26 @@ import { queryClient } from "../_components/layouts/AppLayout";
 import { setCommitionSummery } from "@/lib/slices/CommissionSlice";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useBranchIdFinder } from "../_services/finders";
 
 export default function useUniv() {
   const dispatch = useDispatch();
-  const { page } = useSelector((state) => state.commission);
+  const { page, curStatus, curBranch } = useSelector(
+    (state) => state.commission
+  );
+
+  console.log(curStatus, "curSTat");
+
+  const branchId = useBranchIdFinder(curBranch);
 
   let endpoint = `/university?page=${page}&sort=-date`;
+
+  if (!curStatus?.startsWith("All")) {
+    endpoint += `&status=${curStatus}`;
+  }
+  if (branchId) {
+    endpoint += `&branch=${curBranch}`;
+  }
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["commition", endpoint],

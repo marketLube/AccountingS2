@@ -231,7 +231,7 @@ function DaybookNewEntirForm() {
           className="absolute left-1/2 transform -translate-x-1/2 bottom-2 text-sm font-medium text-gray-700"
           aria-label="Total amount for the transaction"
         >
-          Amount : {amount || 0}
+          Amount: {Number(amount || 0).toFixed(2)}
         </div>
       </div>
     </form>

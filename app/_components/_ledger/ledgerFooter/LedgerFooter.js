@@ -13,8 +13,8 @@ function LedgerFooter() {
   const { totals } = useLedgers();
 
   return (
-    <div className={`layout-footer`}>
-      <div className="layout-footer-left">
+    <div className={`layout-footer-bottom`}>
+      <div className="layout-footer-bottom-left">
         <Button>Debit: {totals?.totalDebit?.toFixed(2) || 0}</Button>
         <Button>Credit: {totals?.totalCredit?.toFixed(2) || 0}</Button>
         <Button>Receivable: {totals?.totalOutstanding?.toFixed(2) || 0}</Button>

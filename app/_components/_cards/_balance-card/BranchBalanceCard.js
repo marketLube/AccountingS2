@@ -44,7 +44,9 @@ function BranchBalanceCard({ branch }) {
                     color: isBalanceVisible && bank?.balance < 0 ? "red" : "",
                   }}
                 >
-                  {isBalanceVisible ? `${bank?.balance} ₹` : "****"}
+                  {isBalanceVisible
+                    ? `${Number(bank?.balance).toFixed(2)} ₹`
+                    : "****"}
                 </span>
               </div>
             );
@@ -57,7 +59,7 @@ function BranchBalanceCard({ branch }) {
           color: isBalanceVisible && total < 0 ? "red" : "",
         }}
       >
-        {isBalanceVisible ? `${total} ` : "****"}
+        {isBalanceVisible ? `${Number(total).toFixed(2)} ` : "****"}
       </div>
     </div>
   );

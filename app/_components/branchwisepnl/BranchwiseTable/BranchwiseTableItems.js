@@ -58,11 +58,11 @@ function BranchwiseTableItems({ transaction }) {
           {transaction?.formattedDate}
         </span>
         <span className="table-col amount table-body-col">
-          {
+          {Number(
             transaction?.branches?.find(
               (obj) => obj?.branch?.name === curBranch
-            )?.amount
-          }
+            )?.amount || 0
+          ).toFixed(2)}
         </span>
         <span
           className="table-col remark table-body-col"

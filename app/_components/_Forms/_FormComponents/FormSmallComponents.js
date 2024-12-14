@@ -1,7 +1,9 @@
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Branches from "./Branches";
 import BranchGroup from "./BranchGroup";
 import FormToggle from "../../utils/ToggleSwitch/FormToggle";
+import Tooltip from "../../utils/Tooltip";
 
 export function Purpose({ register, errors }) {
   return (
@@ -32,7 +34,7 @@ export function Student({ register, errors }) {
         type="text"
         id="student"
         {...register("student", {
-          required: "Stuent is required",
+          required: "Student is required",
         })}
       />
       {errors.student && (
@@ -373,18 +375,17 @@ export function CourseFee({ register, errors }) {
       <label htmlFor="coursefee" className="form-group-formlabel">
         Course Fee
       </label>
-      <div className="formcors">
-        <input
-          type="text"
-          id="courseFee"
-          {...register("courseFee", {
-            required: "Stuent is required",
-          })}
-        />
-        {errors.tds && (
-          <span className="form-group-error">{errors.tds.message}</span>
-        )}
-      </div>
+
+      <input
+        type="text"
+        id="courseFee"
+        {...register("courseFee", {
+          required: "Stuent is required",
+        })}
+      />
+      {errors.tds && (
+        <span className="form-group-error">{errors.tds.message}</span>
+      )}
     </div>
   );
 }
@@ -394,21 +395,20 @@ export function Currency({ register, errors }) {
       <label htmlFor="coursefee" className="form-group-formlabel">
         Course Fee
       </label>
-      <div className="formcors">
-        <select
-          id="courseFee"
-          {...register("currency", { required: "Course fee is required" })}
-        >
-          <option value="">Select currency</option>
-          <option value="CAD">CAD</option>
-          <option value="USD">USD</option>
-          <option value="Pound">Pound</option>
-          <option value="Euro">Euro</option>
-        </select>
-        {errors.tds && (
-          <span className="form-group-error">{errors.tds.message}</span>
-        )}
-      </div>
+
+      <select
+        id="courseFee"
+        {...register("currency", { required: "Course fee is required" })}
+      >
+        <option value="">Select currency</option>
+        <option value="CAD">CAD</option>
+        <option value="USD">USD</option>
+        <option value="Pound">Pound</option>
+        <option value="Euro">Euro</option>
+      </select>
+      {errors.tds && (
+        <span className="form-group-error">{errors.tds.message}</span>
+      )}
     </div>
   );
 }
@@ -606,14 +606,32 @@ export function Gst({
   isBalanceEffect,
   setIsBalanceEffect,
 }) {
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    if (!isBalanceEffect) {
+      setIsTooltipVisible(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsTooltipVisible(false);
+  };
   return (
     <div className="form-group">
       <div className="type-option-label">
         <label htmlFor="GstType">GST</label>
-        <FormToggle
-          isBalanceEffect={isBalanceEffect}
-          setIsBalanceEffect={setIsBalanceEffect}
-        />
+        <span onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <FormToggle
+            isBalanceEffect={isBalanceEffect}
+            setIsBalanceEffect={setIsBalanceEffect}
+          />
+          <Tooltip
+            type="remark"
+            remark="This will affect the bank balance."
+            isVisible={isTooltipVisible}
+          />
+        </span>
       </div>
 
       <div className="type-options">

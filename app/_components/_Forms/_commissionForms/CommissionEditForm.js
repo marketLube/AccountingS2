@@ -2,14 +2,8 @@
 import { useForm } from "react-hook-form";
 import {
   Bank,
-  BranchComponent,
   DateSel,
-  Purpose,
-  Radio,
   Remark,
-  Gst,
-  Tds,
-  GstPercent,
   BranchSelector,
   Student,
   Counsillor,
@@ -22,26 +16,43 @@ import {
   MonthSelector,
   StatusSel,
   CourseFee,
-  StatusCom,
   Currency,
+  StatusCom,
 } from "../_FormComponents/FormSmallComponents";
 import { today } from "@/app/_services/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 
 import { useSelector } from "react-redux";
 import apiClient from "@/lib/axiosInstance";
 
 import toast from "react-hot-toast";
-import { refreshUniv } from "@/app/_hooks/useUnic";
+import { branchFinder, useBranchNameFinder } from "@/app/_services/finders";
 
-function CommissionNewEntryForm() {
+function CommissionEditForm() {
   const [loading, setLoading] = useState(false);
+  const { selectedItems } = useSelector((state) => state.commission);
 
-  const { categories, particulars, banks } = useSelector(
-    (state) => state.general
-  );
   const { branches } = useSelector((state) => state.general);
+  const curBranch = useBranchNameFinder(selectedItems?._id);
+
+  const defaultValues = {
+    date: selectedItems?.date,
+    status: selectedItems?.status,
+    branch: selectedItems?.branch,
+    amount: selectedItems?.amount,
+    student: selectedItems?.student,
+    counsillor: selectedItems?.counsillor,
+    country: selectedItems?.country,
+    university: selectedItems?.university,
+    agent: selectedItems?.agent,
+    courseFee: selectedItems?.courseFee,
+    commition: selectedItems?.commition,
+    inr: selectedItems?.inr,
+    currency: selectedItems?.currency,
+    intake: selectedItems?.intake,
+    intakeMonth: selectedItems?.intakeMonth,
+  };
 
   const {
     register,
@@ -51,41 +62,60 @@ function CommissionNewEntryForm() {
     watch,
     setError,
     clearErrors,
-  } = useForm({
-    defaultValues: {
-      date: today(),
-      remark: "",
-      type: "",
-      intake: "",
-      commtion: "",
-      status: "",
-      agent: "",
-      currency: "",
-      inr: "",
-    },
-  });
+  } = useForm({ defaultValues });
+
+  useEffect(() => {
+    // Reset form values based on the latest selectedItems
+    reset({
+      date:
+        selectedItems?.date && !isNaN(new Date(selectedItems.date))
+          ? new Date(selectedItems.date).toISOString().split("T")[0]
+          : "",
+      status: selectedItems?.status || "",
+      branch: selectedItems?.branch || "",
+      amount: selectedItems?.amount || "",
+      student: selectedItems?.student || "",
+      counsillor: selectedItems?.counsillor || "",
+      country: selectedItems?.country || "",
+      university: selectedItems?.university || "",
+      courseFee: selectedItems?.courseFee || "",
+      commition: selectedItems?.commition || "",
+      inr: selectedItems?.inr || "",
+      agent: selectedItems?.agent || "",
+      currency: selectedItems?.currency || "",
+      intake: selectedItems?.intake || "",
+      intakeMonth: selectedItems?.intakeMonth || "",
+    });
+  }, [selectedItems, reset]);
 
   const intake = watch("intake");
 
   const onSubmit = async (data) => {
+    const id = selectedItems?._id;
+    const branch = branchFinder(data.branch, branches);
+    if (!branch) return toast.error("Something went wrong..");
+    data.branch = branch?._id;
+    console.log(data, "sl");
     try {
       setLoading(true);
-      await apiClient.post("/university", data);
-      toast.success("Successfully created new Transaction");
-      refreshUniv();
+      await apiClient.patch(`/university/${id}`, data);
+      toast.success("Successfully edited");
       reset();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);
+      setLoading(false);
     } finally {
       setLoading(false);
     }
 
     return;
   };
+  console.log(selectedItems, "iiiiiiiiii");
+
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="form-head-text">Commission New Entry Form</h2>
+      <h2 className="form-head-text">Commission Edited Form</h2>
       <div className="form-section">
         <div className="form-row">
           <DateSel register={register} errors={errors} />
@@ -137,4 +167,4 @@ function CommissionNewEntryForm() {
   );
 }
 
-export default CommissionNewEntryForm;
+export default CommissionEditForm;
