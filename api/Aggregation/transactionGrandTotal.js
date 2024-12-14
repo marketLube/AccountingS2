@@ -21,8 +21,6 @@ export const getTransactionTotal = async (req) => {
     } else if (query.gstType === "gst") {
       matchStage.gstType = { $ne: "no-gst" };
     }
-
-    console.log("GST Match Stage:", matchStage);
   }
 
   if (query.startDate && query.endDate) {
