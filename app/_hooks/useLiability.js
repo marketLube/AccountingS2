@@ -30,7 +30,9 @@ export function useLiability() {
 
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
-  const particular = useParticularNameFinder(curParticular);
+  const particular = catagory?.particulars?.find(
+    (obj) => obj.name === curParticular
+  );
 
   useCatToParticular(
     catagory,

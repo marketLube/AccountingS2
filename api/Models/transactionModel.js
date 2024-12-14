@@ -94,6 +94,7 @@ const transactionSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
 transactionSchema.pre(/^find/, function (next) {
   this.populate({ path: "branches.branch", select: "name" });
   next();
@@ -189,7 +190,6 @@ transactionSchema.pre("save", async function (next) {
 
     next();
   } catch (error) {
-    console.error(error);
     next(new AppError("Failed to create transaction", 404));
   }
 });

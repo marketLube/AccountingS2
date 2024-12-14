@@ -16,6 +16,7 @@ import {
   setDayBookSelectedDate,
   setDaybookSelectedItems,
   setDayBookStartDate,
+  setGstFileter,
   setIsDaybookNewEntri,
 } from "@/lib/slices/daybookSlice";
 
@@ -45,6 +46,7 @@ function DaybookHead() {
     endDate,
     type,
     query,
+    gstFilter,
     selectedDate,
   } = useSelector((state) => state.daybook);
 
@@ -58,6 +60,7 @@ function DaybookHead() {
     dispatch(setDaybookCurBranch(e.target.value));
   };
   const handleCatChange = (e) => {
+    dispatch(setDaybookCurParticular("All Particular"));
     dispatch(setDaybookCurCat(e.target.value));
   };
   const handleParticularChange = (e) => {
@@ -106,8 +109,9 @@ function DaybookHead() {
   const handleQuery = (e) => {
     dispatch(setDaybookQuery(e.target.value));
   };
-
-  console.log(branchNames, "Ls");
+  const handleGstChange = (e) => {
+    dispatch(setGstFileter(e.target.value));
+  };
 
   return (
     <>
@@ -126,9 +130,13 @@ function DaybookHead() {
         </>
         <>
           <Selector
+            options={["All Type", "no-gst", "gst"]}
+            callback={handleGstChange}
+            curValue={gstFilter}
+          />
+          <Selector
             options={["All Categories", ...categoryNames]}
             callback={handleCatChange}
-            disabled={type?.startsWith("Bank")}
             curValue={curCat}
           />
           <Selector
@@ -140,13 +148,11 @@ function DaybookHead() {
           <Selector
             options={["All Branches", ...branchNames]}
             callback={handleBranchChange}
-            disabled={type?.startsWith("Bank")}
             curValue={curBranch}
           />
           <Selector
             options={["All Banks", ...bankNames]}
             callback={handlebankChange}
-            disabled={type?.startsWith("Bank")}
             curValue={curBank}
           />
           <Search query={query} handleQuery={handleQuery} />

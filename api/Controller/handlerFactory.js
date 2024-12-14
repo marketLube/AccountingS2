@@ -19,6 +19,7 @@ export const getAll = (Model) => {
       .paginate(await Model.countDocuments())
       .filterByBranch()
       .filterByDateRange()
+      .gstType()
       .search();
 
     const docs = await features.query;

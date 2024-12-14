@@ -14,8 +14,19 @@ export const getTransactionTotal = async (req) => {
   // Match stage based on query parameters
   const matchStage = {};
 
-  // Handle date range if present
+  if (query.gstType) {
+    if (query.gstType === "no-gst") {
+      // Strictly match transactions with no GST
+      matchStage.gstType = "no-gst";
+    } else if (query.gstType === "gst") {
+      matchStage.gstType = { $ne: "no-gst" };
+    }
+
+    console.log("GST Match Stage:", matchStage);
+  }
+
   if (query.startDate && query.endDate) {
+    // Handle date range if present
     // Parse dates and set to the start of the day for startDate and end of the day for endDate
     const startDate = new Date(query.startDate);
     const endDate = new Date(query.endDate);
@@ -40,7 +51,7 @@ export const getTransactionTotal = async (req) => {
   }
 
   // Add other query parameters to match stage
-  ["type", "catagory", "particular", "bank", "gstType"].forEach((field) => {
+  ["catagory", "particular", "bank"].forEach((field) => {
     if (query[field]) {
       // Convert to ObjectId if needed
       if (["catagory", "particular", "bank"].includes(field)) {

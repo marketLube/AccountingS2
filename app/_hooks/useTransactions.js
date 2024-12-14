@@ -27,12 +27,16 @@ export default function useTransactions() {
     curBank,
     page,
     startDate,
+    gstFilter,
     endDate,
     query,
   } = useSelector((state) => state.daybook);
   const branchId = useBranchIdFinder(curBranch)?._id;
   const catagory = useCategoryNameFinder(curCat);
-  const particular = useParticularNameFinder(curParticular);
+
+  const particular = catagory?.particulars?.find(
+    (obj) => obj.name === curParticular
+  );
 
   const bank = useBankIdFinder(curBank);
 
@@ -43,16 +47,21 @@ export default function useTransactions() {
   if (type !== "All Status") {
     endpoint += `&type=${type}`;
   }
-
+  if (!gstFilter?.startsWith("All")) {
+    endpoint += `&gstType=${gstFilter}`;
+  }
   if (branchId) {
     endpoint += `&branchId=${branchId}`;
   }
   if (catagory?._id) {
     endpoint += `&catagory=${catagory?._id}`;
+    console.log(particular, "particular");
+    console.log(catagory, "catagory");
+    if (particular?._id) {
+      endpoint += `&particular=${particular?._id}`;
+    }
   }
-  if (particular?._id) {
-    endpoint += `&particular=${particular?._id}`;
-  }
+
   if (bank?._id) {
     endpoint += `&bank=${bank?._id}`;
   }
@@ -65,6 +74,8 @@ export default function useTransactions() {
   if (query) {
     endpoint += `&search=${query}`;
   }
+
+  console.log(endpoint, "enpoint");
 
   const {
     data: transactions,

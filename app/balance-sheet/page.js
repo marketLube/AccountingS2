@@ -31,18 +31,22 @@ function Page() {
         </div>
         <div className="balance-sheet-footer">
           <BottomCard
-            value={liabilityAndOutstanding?.totalOutstanding}
+            value={liabilityAndOutstanding?.totalOutstanding?.toFixed(2)}
             type={"Receivable"}
             setIsDown={false}
           />
           <BottomCard
-            value={liabilityAndOutstanding?.totalLiability}
+            value={liabilityAndOutstanding?.totalLiability?.toFixed(2)}
             type={"Liability"}
             setIsDown={true}
           />
-          <BottomCard value={data?.totalIn} type={"GST-IN"} setIsDown={true} />
           <BottomCard
-            value={data?.totalOut}
+            value={data?.totalIn?.toFixed(2)}
+            type={"GST-IN"}
+            setIsDown={true}
+          />
+          <BottomCard
+            value={data?.totalOut?.toFixed(2)}
             type={"GST-OUT"}
             setIsDown={true}
           />
