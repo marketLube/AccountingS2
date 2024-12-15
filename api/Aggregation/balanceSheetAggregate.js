@@ -9,23 +9,23 @@ export const balanceSheet = catchAsync(async (req, res, next) => {
       // Match transactions that fall within the current year
       $match: {
         date: {
-          $gte: new Date(new Date().getFullYear(), 0, 1), // Start of current year
-          $lte: new Date(new Date().getFullYear(), 11, 31), // End of current year
+          $gte: new Date(new Date().getFullYear(), 0, 1),
+          $lte: new Date(new Date().getFullYear(), 11, 31),
         },
       },
     },
     {
       // Group transactions by month
       $group: {
-        _id: { month: { $month: "$date" } }, // Group by month extracted from date
+        _id: { month: { $month: "$date" } },
         income: {
           $sum: {
-            $cond: [{ $eq: ["$type", "Credit"] }, "$amount", 0], // Sum amounts where type is Credit
+            $cond: [{ $eq: ["$type", "Credit"] }, "$amount", 0],
           },
         },
         expense: {
           $sum: {
-            $cond: [{ $eq: ["$type", "Debit"] }, "$amount", 0], // Sum amounts where type is Debit
+            $cond: [{ $eq: ["$type", "Debit"] }, "$amount", 0],
           },
         },
       },
@@ -62,12 +62,30 @@ export const balanceSheet = catchAsync(async (req, res, next) => {
         _id: { month: { $month: "$date" } }, // Group by month extracted from date
         liability: {
           $sum: {
-            $cond: [{ $eq: ["$type", "liability"] }, "$amount", 0], // Sum amounts where type is liability
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "liability"] },
+                  { $ne: ["$status", "Paid"] },
+                ],
+              },
+              "$amount",
+              0,
+            ],
           },
         },
         outstanding: {
           $sum: {
-            $cond: [{ $eq: ["$type", "outstanding"] }, "$amount", 0], // Sum amounts where type is outstanding
+            $cond: [
+              {
+                $and: [
+                  { $eq: ["$type", "outstanding"] },
+                  { $ne: ["$status", "Paid"] },
+                ],
+              },
+              "$amount",
+              0,
+            ],
           },
         },
       },
