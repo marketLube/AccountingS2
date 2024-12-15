@@ -81,29 +81,61 @@ function InvoiceDownloader() {
   //   // pdf.save("invoice.pdf");
   // };
   const handleDownloadPdf = async () => {
-    const element = downloadRef.current; // Access the InvoiceDownldForm component
+    const element = downloadRef.current;
     if (!element) return;
 
-    // Temporarily make the hidden element visible
-    element.style.display = "block";
+    element.style.display = "block"; // Make sure the element is visible for rendering
 
     try {
+      // Capture the content of the component as a canvas
       const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
+        scale: 2, // Increase resolution for better image quality
+        useCORS: true, // Allow cross-origin images
       });
+
       const imgData = canvas.toDataURL("image/jpeg", 0.8);
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-      pdf.save("invoice.pdf");
+      const pdfWidth = 210; // A4 width in mm
+      const pdfHeight = 297; // A4 height in mm
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+
+      // Calculate the height of the image after scaling
+      const imgHeight = (pdfWidth / canvasWidth) * canvasHeight;
+
+      let position = 0; // Track the position on the page
+
+      // First page
+      pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, imgHeight);
+
+      position += pdfHeight;
+
+      // Add subsequent pages if the content overflows
+      while (position < imgHeight) {
+        const remainingHeight = imgHeight - position;
+
+        // Add the remaining content to the next page
+        pdf.addImage(
+          imgData,
+          "JPEG",
+          0,
+          0,
+          pdfWidth,
+          Math.min(pdfHeight, remainingHeight)
+        );
+
+        position += pdfHeight; // Move to the next page
+        if (position < imgHeight) {
+          pdf.addPage(); // Only add a new page if there's more content
+        }
+      }
+
+      pdf.save("invoice.pdf"); // Save the PDF
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
-      // Hide the element again
-      element.style.display = "none";
+      element.style.display = "none"; // Hide the element after rendering
     }
   };
 
