@@ -32,8 +32,8 @@ function InvoiceDownloader() {
       quantity: "Qty",
       gst: "",
       rate: "Rate",
-      sgst: "0",
-      cgst: "0",
+      sgst: "SGST",
+      cgst: "CGST",
       amount: "Amount",
       address: "",
       city: "",
@@ -89,15 +89,15 @@ function InvoiceDownloader() {
 
     try {
       const canvas = await html2canvas(element, {
-        scale: 2, // Higher scale for better quality
-        useCORS: true, // Handles cross-origin resources
+        scale: 2,
+        useCORS: true,
       });
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL("image/jpeg", 0.8);
       const pdf = new jsPDF("p", "mm", "a4");
       const imgWidth = 210;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
       pdf.save("invoice.pdf");
     } catch (error) {
       console.error("Error generating PDF:", error);

@@ -1,23 +1,18 @@
 .page-wrapper {
-  background-color: #f9fafb;
+  background-color: #f6b9b9;
   padding: 1rem;
-  width: 210mm; // A4 width in millimeters
-  height: 297mm; // A4 height in millimeters
-  max-width: 994px;
-  max-height: 2123px;
-  // Center invoice on the page
+  width: 100%; /* A4 width */
+  height: 100%; /* A4 height */
   display: flex;
   justify-content: center;
   align-items: center;
 
   .invoice {
     // A4 dimensions
-    width: 210mm;
-    height: 297mm;
-    max-width: 794px;
-    max-height: 1123px;
-    margin: 0; // Center using flexbox
-    padding: 2rem;
+    width: 100%; /* Ensure it fills the wrapper */
+    height: 100%; /* Ensure it fills the wrapper */
+    margin: 0;
+    padding: 2rem; /* Add internal spacing */
     background-color: #ffffff;
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -171,14 +166,14 @@
 // Print-specific adjustments
 @media print {
   .page-wrapper {
-    background-color: white;
+    width: 210mm;
+    height: 297mm;
     padding: 0;
   }
 
   .invoice {
-    box-shadow: none; // Remove shadows for print
-    margin: 0; // Ensure no extra spacing
     width: 100%;
-    height: auto; // Allow natural height
+    height: auto; /* Adjust height dynamically */
+    box-shadow: none; /* Remove shadows */
   }
 }
