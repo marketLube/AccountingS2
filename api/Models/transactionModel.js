@@ -25,10 +25,9 @@ const transactionSchema = mongoose.Schema(
       type: Number,
     },
     bank: {
-      // type: mongoose.Schema.Types.ObjectId,
-      // ref: "Bank",
-      // required: [true, "Bank must have a name"],
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Bank",
+      required: [true, "Bank must have a name"],
     },
     remark: {
       type: String,
