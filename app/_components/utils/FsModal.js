@@ -11,10 +11,12 @@ function FsModal({
   callback = () => {},
 }) {
   const dispatch = useDispatch();
+
   const handleCancel = () => {
     dispatch(setIsCancel(false));
     callback();
   };
+
   return (
     <Modal
       open={isOpen}
@@ -28,5 +30,4 @@ function FsModal({
     </Modal>
   );
 }
-
 export default FsModal;

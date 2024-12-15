@@ -23,7 +23,7 @@ function LoginSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Reset error state before making a new request
+    setError(null);
 
     try {
       setLoading(true);

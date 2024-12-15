@@ -1,5 +1,7 @@
 "use client";
-import { setIsNewPassword } from "@/lib/slices/authSlice";
+import apiClient from "@/lib/axiosInstance";
+import { setIsForgot, setIsLoggedIn, setUser } from "@/lib/slices/authSlice";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -15,6 +17,7 @@ function ForgotPassword() {
   const [isVerifying, setIsVerifying] = useState(false);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // Start countdown timer after OTP is sent
   useEffect(() => {
@@ -36,6 +39,8 @@ function ForgotPassword() {
     const loadingToastId = toast.loading("Sending OTP..."); // Show loading toast
     try {
       toast.success("OTP sent to your email", { id: loadingToastId });
+      const res = await apiClient.post("/user/login-otp", { email });
+      console.log(res, "res");
       setIsOtpSent(true);
       setIsResendAvailable(false);
       setSeconds(600);
@@ -49,16 +54,23 @@ function ForgotPassword() {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setIsVerifying(true);
-    const loadingToastId = toast.loading("Verifying OTP..."); // Show loading toast
+    const loadingToastId = toast.loading("Verifying OTP...");
     try {
       toast.success("OTP Verified!", { id: loadingToastId });
-      dispatch(setIsNewPassword(true));
-
+      const res = await apiClient.post("/user/verify-otp", { email, otp });
+      const user = res?.data?.envelop?.currentUser;
+      dispatch(setIsForgot(true));
+      dispatch(setIsLoggedIn(true));
+      dispatch(setUser(user));
+      dispatch(fetchCategory());
+      dispatch(fetchBranches());
+      dispatch(fetchBanks());
       setIsOtpVerified(true);
     } catch (err) {
       toast.error(err.response.data.message, { id: loadingToastId });
     } finally {
       setIsVerifying(false);
+      setIsLoggedIn(true);
     }
   };
 
