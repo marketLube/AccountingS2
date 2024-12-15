@@ -1,27 +1,19 @@
 "use client";
 
-import useAssets from "@/app/_hooks/useAssets";
-import useBranchWise from "@/app/_hooks/useBranchwise";
-import useBudgetPlanner from "@/app/_hooks/useBudgetPlanner";
-import useCapitals from "@/app/_hooks/useCapital";
-import useDashboardTotals from "@/app/_hooks/useDashboard";
-import useLedgers from "@/app/_hooks/useLedgers";
-import { useLiability } from "@/app/_hooks/useLiability";
-import useOutstanding from "@/app/_hooks/useOutstanding";
-import useReminders from "@/app/_hooks/useReminders";
-import useTransactions from "@/app/_hooks/useTransactions";
-import { clearCookie } from "@/app/_services/smallHelpers";
 import {
   fetchBanks,
   fetchBranches,
   fetchCategory,
 } from "@/lib/slices/generalSlice";
+import { Modal } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ChangePasswordModal from "../utils/ChangePasswordModal";
+import { setIsForgot } from "@/lib/slices/authSlice";
 
 function Main({ children }) {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, isForgot } = useSelector((state) => state.auth);
   const router = useRouter();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -38,7 +30,14 @@ function Main({ children }) {
     }
   }, [isLoggedIn]);
 
-  return <main className="main">{children}</main>;
+  return (
+    <>
+      <main className="main">
+        {children}
+        <ChangePasswordModal isOpen={isForgot} setIsOpen={setIsForgot} />
+      </main>
+    </>
+  );
 }
 
 export default Main;
