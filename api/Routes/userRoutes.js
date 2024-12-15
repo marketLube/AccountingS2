@@ -25,7 +25,7 @@ router.post("/login", login);
 router.post("/login-otp", loginByOtp);
 router.post("/verify-otp", verifyOtp);
 router.post("/logout", logout);
-router.post("/resetPassword", protect, resetPassword);
+router.post("/resetPassword", resetPassword);
 router.patch("/update-me", updateMe);
 
 router.get("/", getAllUsers);

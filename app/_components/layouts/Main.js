@@ -5,7 +5,6 @@ import {
   fetchBranches,
   fetchCategory,
 } from "@/lib/slices/generalSlice";
-import { Modal } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
