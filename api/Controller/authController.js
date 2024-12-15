@@ -171,9 +171,9 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
 });
 
 export const resetPassword = catchAsync(async (req, res, next) => {
-  const { password } = req.body;
+  const { password, userId } = req.body;
   if (!password) return next(new AppError("Please provide the password", 400));
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(userId);
   user.password = password;
   user.save();
   res.status(200).json("Successfully updated password");

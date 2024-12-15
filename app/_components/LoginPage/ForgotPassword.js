@@ -67,7 +67,7 @@ function ForgotPassword() {
       dispatch(fetchBanks());
       setIsOtpVerified(true);
     } catch (err) {
-      toast.error(err.response.data.message, { id: loadingToastId });
+      toast.error("Login Failed", { id: loadingToastId });
     } finally {
       setIsVerifying(false);
       setIsLoggedIn(true);
