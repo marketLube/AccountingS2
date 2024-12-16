@@ -4,9 +4,11 @@ import Arrow from "../utils/Arrow";
 import { formatWithCommas } from "@/app/_services/helpers";
 
 function DashboardCurrentbalance({ transaction }) {
-  const { percentHike } = useSelector((state) => state.general);
+  const { percentHike, bankBalance: balance } = useSelector(
+    (state) => state.general
+  );
 
-  const bankBalance = transaction?.totalCredit - transaction?.totalDebit || 0;
+  const bankBalance = balance || 0;
   const isNegative = bankBalance < 0;
   const isPercentNeg = percentHike < 0;
 

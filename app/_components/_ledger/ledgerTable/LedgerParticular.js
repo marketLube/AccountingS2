@@ -15,8 +15,6 @@ function LedgerParticular() {
         .then((res) => res.data.result),
   });
 
-  console.log(data, "data");
-
   return (
     <div className="ledger-particular">
       <div className="ledger-particular-item-container">

@@ -103,7 +103,7 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
               if: { $gt: ["$tdsPercentage", 0] },
               then: {
                 $multiply: [
-                  "$branches.amount",
+                  "$branches.branchTotalAmt",
                   { $divide: ["$tdsPercentage", 100] },
                 ],
               },

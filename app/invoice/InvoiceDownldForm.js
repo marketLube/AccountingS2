@@ -2,10 +2,6 @@
 import React from "react";
 
 const InvoiceDownldForm = ({ data, tableItems, ref }) => {
-  console.log(data, "...........");
-  console.log(tableItems, "////////////");
-  console.log(ref, "ooooooooo");
-
   // Safely calculate total amount
   const total = tableItems?.reduce(
     (acc, item) => acc + (parseFloat(item?.amount) || 0),
@@ -88,7 +84,7 @@ const InvoiceDownldForm = ({ data, tableItems, ref }) => {
             </thead>
             <tbody>
               {tableItems?.map((data) => (
-                <tr>
+                <tr key={i}>
                   <td>
                     <p>Stage-1</p>
                     <p>{data.desc}</p>

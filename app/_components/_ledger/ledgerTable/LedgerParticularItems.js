@@ -1,5 +1,12 @@
 function LedgerParticularItems({ item }) {
   if (!item) return null;
+
+  const tdsPercent = parseFloat(item?.tds);
+  const totalAmt = item?.totalAmt;
+
+  const tdsPercentAmt = (totalAmt / 100) * tdsPercent;
+  console.log(totalAmt, "amt");
+  console.log(tdsPercentAmt, "amtp");
   return (
     <div className="table-col">
       <span className="table-check">
@@ -31,11 +38,11 @@ function LedgerParticularItems({ item }) {
       </span>
       <span className="table-col branch table-body-col">
         {" "}
-        {item?.type === "Debit" || item?.tds === "Credit" ? item?.amount : "--"}
+        {item?.tdsType === "Payable" ? tdsPercentAmt : "--"}
       </span>
       <span className="table-col branch table-body-col">
         {" "}
-        {item?.type === "Debit" || item?.tds === "Credit" ? item?.amount : "--"}
+        {item?.tdsType === "Receivable" ? tdsPercentAmt : "--"}
       </span>
     </div>
   );
