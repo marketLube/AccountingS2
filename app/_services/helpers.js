@@ -87,5 +87,14 @@ export const calculateDateRange = (daysAgo) => {
 
 export const formatWithCommas = (number) => {
   if (!number) return "0";
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const numStr = number.toString();
+  const afterPoint = numStr.includes(".") ? numStr.split(".")[1] : "";
+  let beforePoint = numStr.split(".")[0];
+
+  // Apply regex for Indian numbering system
+  beforePoint = beforePoint
+    .replace(/\B(?=(\d{2})+(?!\d))/g, ",")
+    .replace(/,\d{3}(?=,)/, (match) => match.replace(",", ""));
+
+  return afterPoint ? `${beforePoint}.${afterPoint}` : beforePoint;
 };
