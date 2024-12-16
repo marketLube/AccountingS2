@@ -10,7 +10,7 @@ export const useViewEight = (data, startPage, setBtnDisable, num = 8) => {
   const dispatch = useDispatch();
   const veiwEight = data?.slice(startPage, startPage + num);
   useEffect(() => {
-    if (veiwEight?.length < 8) {
+    if (veiwEight?.length < num) {
       dispatch(setBtnDisable(true));
     } else {
       dispatch(setBtnDisable(false));

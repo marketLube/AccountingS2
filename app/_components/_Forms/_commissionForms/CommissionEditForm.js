@@ -14,12 +14,10 @@ import {
   Agent,
   IntakeSelector,
   MonthSelector,
-  StatusSel,
   CourseFee,
   Currency,
   StatusCom,
 } from "../_FormComponents/FormSmallComponents";
-import { today } from "@/app/_services/helpers";
 import { useEffect, useState } from "react";
 import Button from "../../utils/Button";
 
@@ -28,6 +26,7 @@ import apiClient from "@/lib/axiosInstance";
 
 import toast from "react-hot-toast";
 import { branchFinder, useBranchNameFinder } from "@/app/_services/finders";
+import { refreshUniv } from "@/app/_hooks/useUnic";
 
 function CommissionEditForm() {
   const [loading, setLoading] = useState(false);
@@ -36,10 +35,12 @@ function CommissionEditForm() {
   const { branches } = useSelector((state) => state.general);
   const curBranch = useBranchNameFinder(selectedItems?._id);
 
+  console.log(curBranch, "branch");
+
   const defaultValues = {
     date: selectedItems?.date,
     status: selectedItems?.status,
-    branch: selectedItems?.branch,
+    branch: selectedItems?.branchName,
     amount: selectedItems?.amount,
     student: selectedItems?.student,
     counsillor: selectedItems?.counsillor,
@@ -72,7 +73,7 @@ function CommissionEditForm() {
           ? new Date(selectedItems.date).toISOString().split("T")[0]
           : "",
       status: selectedItems?.status || "",
-      branch: selectedItems?.branch || "",
+      branch: selectedItems?.branchName || "",
       amount: selectedItems?.amount || "",
       student: selectedItems?.student || "",
       counsillor: selectedItems?.counsillor || "",
@@ -95,12 +96,12 @@ function CommissionEditForm() {
     const branch = branchFinder(data.branch, branches);
     if (!branch) return toast.error("Something went wrong..");
     data.branch = branch?._id;
-    console.log(data, "sl");
+
     try {
       setLoading(true);
       await apiClient.patch(`/university/${id}`, data);
       toast.success("Successfully edited");
-      reset();
+      refreshUniv();
     } catch (e) {
       console.log(e);
       toast.error(e.response.data.message);

@@ -25,7 +25,7 @@ function CommissionTable() {
       ) : veiwEight?.length === 0 ? (
         <div className="no-datafound">No Data Found</div>
       ) : (
-        data?.map((liab, i) => (
+        veiwEight?.map((liab, i) => (
           <CommissionTableItems key={i} item={liab}></CommissionTableItems>
         ))
       )}

@@ -467,7 +467,7 @@ export function MonthSelector({ register, errors, isApril, disabled = true }) {
     "September",
     "October",
   ];
-  const november = ["November", "December", "Januvary", "February", "March"];
+  const november = ["November", "December", "January", "February", "March"];
 
   const month = isApril ? april : november;
   return (

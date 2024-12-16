@@ -139,9 +139,7 @@ function Commissionhead() {
   const handleSubmit = () => {
     setIsOpen(false);
   };
-  const handleQuery = (e) => {
-    dispatch(setAssetsQuery(e.target.value));
-  };
+
   return (
     <>
       <LayoutHead>
