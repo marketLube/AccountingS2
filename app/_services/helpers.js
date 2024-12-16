@@ -86,15 +86,21 @@ export const calculateDateRange = (daysAgo) => {
 };
 
 export const formatWithCommas = (number) => {
-  if (!number) return "0";
-  const numStr = number.toString();
-  const afterPoint = numStr.includes(".") ? numStr.split(".")[1] : "";
-  let beforePoint = numStr.split(".")[0];
+  // Handle null, undefined, or NaN
+  if (number == null || isNaN(number)) return "₹0.00";
 
-  // Apply regex for Indian numbering system
-  beforePoint = beforePoint
-    .replace(/\B(?=(\d{2})+(?!\d))/g, ",")
-    .replace(/,\d{3}(?=,)/, (match) => match.replace(",", ""));
+  // Ensure the number is a number and has two decimal places
+  const numStr = parseFloat(number).toFixed(2);
 
-  return afterPoint ? `${beforePoint}.${afterPoint}` : beforePoint;
+  // Split into integer and decimal parts
+  const [integerPart, decimalPart] = numStr.split(".");
+
+  // Use toLocaleString for Indian number formatting
+  const formattedInteger = parseInt(integerPart).toLocaleString("en-IN", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  // Combine integer part and decimal part with the rupee symbol
+  return `${formattedInteger}.${decimalPart}`;
 };
