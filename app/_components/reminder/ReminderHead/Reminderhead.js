@@ -174,7 +174,7 @@ function Reminderhead() {
           >
             Delete
           </Button>
-          <Button type="thertiary">Log</Button>
+          {/* <Button type="thertiary">Log</Button> */}
         </>
         <>
           <Selector
