@@ -3,42 +3,13 @@ import Transaction from "../Models/transactionModel.js";
 import catchAsync from "../Utilities/catchAsync.js";
 
 const bankMapping = {
-  HDFC: new mongoose.Types.ObjectId("67569de2d1dfd9feee3f94b9"),
+  HDFC: new mongoose.Types.ObjectId("675d4c0ca00eaa374ab86664"),
 };
 
 export const migrate = catchAsync(async (req, res, next) => {
-  // Fetch all transactions where the bank is stored as a string
-  const transactions = await Transaction.find({
-    $or: [{ bank: "HDFC" }], // Add all bank strings you need to migrate
-  });
+  const trans = await Transaction.find({ type: "Debit", bank: "HDFC" });
 
-  if (!transactions.length) {
-    return res.status(200).json({ message: "No transactions to migrate." });
-  }
+  trans.map((t) => (t.bank = "675d4c0ca00eaa374ab86664"));
 
-  // Migrate the `bank` field to ObjectId references
-  const updatedTransactions = await Promise.all(
-    transactions.map(async (transaction) => {
-      const bankString = transaction.bank; // Fetch the current bank string
-
-      // Check if the bank string exists in the mapping
-      if (bankMapping[bankString]) {
-        transaction.bank = bankMapping[bankString]; // Set the ObjectId reference
-        await transaction.save({ validateBeforeSave: false }); // Save without validation
-      } else {
-        console.warn(
-          `Bank '${bankString}' is not recognized for transaction:`,
-          transaction._id
-        );
-      }
-
-      return transaction;
-    })
-  );
-
-  res.status(200).json({
-    message: "Migration completed",
-    updatedCount: updatedTransactions.length,
-    transactions: updatedTransactions,
-  });
+  res.status(200).json({ trans, length: trans.length });
 });

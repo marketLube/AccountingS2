@@ -51,11 +51,11 @@ function DaybookEditForm() {
   const dispatch = useDispatch();
 
   const [selectedBranches, setSelectedBranches] = useState(
-    selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
+    selectedItems?.branches?.map((branch) => branch?.branchName) || []
   );
 
   const [defaultAmounts, setDefaultAmounts] = useState(
-    selectedItems?.branches?.map((branch) => branch?.totalAmt) || []
+    selectedItems?.branches?.map((branch) => branch?.amount) || []
   );
 
   const [loading, setLoading] = useState(false);
@@ -148,7 +148,7 @@ function DaybookEditForm() {
           ? new Date(selectedItems.date).toISOString().split("T")[0]
           : "",
       remark: selectedItems?.remark || "",
-      bank: curBank || "",
+      bank: selectedItems?.bank || "",
       type: selectedItems?.type || "",
       purpose: selectedItems?.purpose || "",
       tds: selectedItems?.tds || "",
@@ -159,10 +159,10 @@ function DaybookEditForm() {
     setCatagory(selectedItems?.catagory);
     setParticular(curPart);
     setSelectedBranches(
-      selectedItems?.branches?.map((branch) => branch?.branch?.name) || []
+      selectedItems?.branches?.map((branch) => branch?.branchName) || []
     );
     setDefaultAmounts(
-      selectedItems?.branches?.map((branch) => branch?.branchTotalAmt) || []
+      selectedItems?.branches?.map((branch) => branch?.amount) || []
     );
     setIsBalanceEffect(selectedItems?.isGstDeduct);
   }, [selectedItems, reset, curBank, curPart]);
@@ -191,8 +191,6 @@ function DaybookEditForm() {
 
       if (!data.gstType) data.gstType = "no-gst";
       if (!data.tdsType) data.tdsType = "no tds";
-
-      console.log(data, "data");
 
       setLoading(true);
 
