@@ -14,8 +14,8 @@ function BranchwiseFooter() {
     <div className={`layout-footer-bottom`}>
       <div className="layout-footer-bottom-left">
         <Button>Download Report</Button>
-        <Button>Expense: {summery?.totalDebit}</Button>
-        <Button>Income: {summery?.totalCredit}</Button>
+        <Button>Expense: {summery?.totalDebit?.toFixed(2)}</Button>
+        <Button>Income: {summery?.totalCredit?.toFixed(2)}</Button>
       </div>
       <div className="layout-footer-right">
         <PageNavigate
