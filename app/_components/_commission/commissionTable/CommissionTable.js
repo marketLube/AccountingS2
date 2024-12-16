@@ -1,6 +1,5 @@
 "use client";
 
-import useReminders from "@/app/_hooks/useReminders";
 import { useSelector } from "react-redux";
 import { useViewEight } from "@/app/_services/helpers";
 import TableLoader from "../../_loader/TableLoader";
