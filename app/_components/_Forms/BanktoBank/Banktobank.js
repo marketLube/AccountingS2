@@ -47,8 +47,6 @@ function Banktobank() {
     data.toBranch = branchFinder(data.toBranch, branches)?._id;
     data.amount = parseFloat(data.amount);
 
-    console.log(data, "data");
-
     try {
       setLoading(true);
       await apiClient.post("/to-bank", data);

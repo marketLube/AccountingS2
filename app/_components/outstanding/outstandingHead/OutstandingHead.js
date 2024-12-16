@@ -173,7 +173,6 @@ function OutstandingHead() {
           >
             Delete
           </Button>
-          <Button type="thertiary">Log</Button>
         </>
         <>
           <Selector

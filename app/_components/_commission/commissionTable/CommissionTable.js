@@ -8,13 +8,15 @@ import { setCommissionBtnDisable } from "@/lib/slices/CommissionSlice";
 import CommissionTableHead from "./CommissionTableHead";
 import CommissionTableItems from "./CommissionTableItems";
 import useUniv from "@/app/_hooks/useUnic";
+import { useAuthorize } from "@/app/_hooks/useAuthorize";
 
 function CommissionTable() {
   const { startPage } = useSelector((state) => state.commission);
+  const isLoggedIn = useAuthorize();
 
   const { refetch, data, isError, isLoading, error } = useUniv();
   const veiwEight = useViewEight(data, startPage, setCommissionBtnDisable, 5);
-
+  if (!isLoggedIn) return <div>Unauthorized</div>;
   return (
     <div className="table commition-table">
       <CommissionTableHead />

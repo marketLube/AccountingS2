@@ -35,8 +35,6 @@ function CommissionEditForm() {
   const { branches } = useSelector((state) => state.general);
   const curBranch = useBranchNameFinder(selectedItems?._id);
 
-  console.log(curBranch, "branch");
-
   const defaultValues = {
     date: selectedItems?.date,
     status: selectedItems?.status,
@@ -112,7 +110,6 @@ function CommissionEditForm() {
 
     return;
   };
-  console.log(selectedItems, "iiiiiiiiii");
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>

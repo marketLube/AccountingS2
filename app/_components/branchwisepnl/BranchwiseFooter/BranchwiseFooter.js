@@ -10,6 +10,7 @@ import Button from "../../utils/Button";
 
 function BranchwiseFooter() {
   const { currentPage, summery } = useSelector((state) => state.branchwise);
+
   return (
     <div className={`layout-footer-bottom`}>
       <div className="layout-footer-bottom-left">

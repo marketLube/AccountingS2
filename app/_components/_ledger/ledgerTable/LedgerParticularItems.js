@@ -5,8 +5,7 @@ function LedgerParticularItems({ item }) {
   const totalAmt = item?.totalAmt;
 
   const tdsPercentAmt = (totalAmt / 100) * tdsPercent;
-  console.log(totalAmt, "amt");
-  console.log(tdsPercentAmt, "amtp");
+
   return (
     <div className="table-col">
       <span className="table-check">

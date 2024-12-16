@@ -11,12 +11,10 @@ function Page() {
   const { totals } = useSelector((state) => state.general);
   const { liabilityAndOutstanding } = totals || {};
 
-  // const isLoggedIn = useAuthorize();
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  const isLoggedIn = useAuthorize();
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   const { data, isError, isLoading } = useGstBalanceSheet();
-
-  console.log(data, "data");
 
   return (
     <div className={`layout balance-sheet`}>
