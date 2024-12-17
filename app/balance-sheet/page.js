@@ -6,17 +6,16 @@ import BottomCard from "../_components/_cards/_bottomCards/BottomCard";
 import BalanceSheetTable from "../_components/balance-sheet/balancesheetTable/BalanceSheetTable";
 import Button from "../_components/utils/Button";
 import { useGstBalanceSheet } from "../_hooks/useBalanceSheet";
+import { useAuthorize } from "../_hooks/useAuthorize";
 
 function Page() {
   const { totals } = useSelector((state) => state.general);
   const { liabilityAndOutstanding } = totals || {};
 
-  // const isLoggedIn = useAuthorize();
-  // if (!isLoggedIn) return <div>Unauthorized</div>;
+  const isLoggedIn = useAuthorize();
 
   const { data, isError, isLoading } = useGstBalanceSheet();
-
-  console.log(data, "data");
+  if (!isLoggedIn) return <div>Unauthorized</div>;
 
   return (
     <div className={`layout balance-sheet`}>

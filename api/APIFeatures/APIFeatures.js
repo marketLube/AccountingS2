@@ -48,8 +48,6 @@ class APIFeatures {
           { item: { $regex: searchRegex } },
           { purchasedBy: { $regex: searchRegex } },
           { invested: { $regex: searchRegex } },
-          { gstPercent: { $regex: searchRegex } },
-          { gstType: { $regex: searchRegex } },
           { tds: { $regex: searchRegex } },
           { tdsType: { $regex: searchRegex } },
           { purpose: { $regex: searchRegex } },

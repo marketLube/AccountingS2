@@ -29,7 +29,6 @@ function ManageBank({ type = "Bank" }) {
         balance: 0,
       });
 
-      console.log(res);
       dispatch(fetchBanks());
       dispatch(fetchBranches());
       setIsAdding(false);

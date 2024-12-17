@@ -12,8 +12,6 @@ export default function useUniv() {
     (state) => state.commission
   );
 
-  console.log(curStatus, "curSTat");
-
   const branchId = useBranchIdFinder(curBranch);
 
   let endpoint = `/university?page=${page}&sort=-date`;

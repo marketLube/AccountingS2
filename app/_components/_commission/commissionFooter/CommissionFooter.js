@@ -1,7 +1,7 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import { setCommisssionBtnDisable } from "@/lib/slices/CommissionSlice";
+import { setCommissionCurrentPage } from "@/lib/slices/CommissionSlice";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
 import CommissionFooterbtns from "./CommissionFooterbtns";
 
@@ -15,7 +15,7 @@ function CommissionFooter() {
       <div className="layout-footer-right">
         <PageNavigate
           currentPage={currentPage}
-          setCurrentPage={setCommisssionBtnDisable}
+          setCurrentPage={setCommissionCurrentPage}
           btnDisable={btnDisable}
         />
       </div>

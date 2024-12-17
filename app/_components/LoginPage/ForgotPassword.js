@@ -40,7 +40,7 @@ function ForgotPassword() {
     try {
       toast.success("OTP sent to your email", { id: loadingToastId });
       const res = await apiClient.post("/user/login-otp", { email });
-      console.log(res, "res");
+
       setIsOtpSent(true);
       setIsResendAvailable(false);
       setSeconds(600);

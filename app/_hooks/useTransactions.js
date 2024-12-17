@@ -55,8 +55,7 @@ export default function useTransactions() {
   }
   if (catagory?._id) {
     endpoint += `&catagory=${catagory?._id}`;
-    console.log(particular, "particular");
-    console.log(catagory, "catagory");
+
     if (particular?._id) {
       endpoint += `&particular=${particular?._id}`;
     }
@@ -74,8 +73,6 @@ export default function useTransactions() {
   if (query) {
     endpoint += `&search=${query}`;
   }
-
-  console.log(endpoint, "enpoint");
 
   const {
     data: transactions,

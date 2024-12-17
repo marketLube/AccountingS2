@@ -2,8 +2,8 @@
 
 import { useSelector } from "react-redux";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
-import { setLedgerBtnDisable } from "@/lib/slices/ledgerSlice";
-import BottomCard from "../../_cards/_bottomCards/BottomCard";
+import { setLedgerCurrentPage } from "@/lib/slices/ledgerSlice";
+
 import useLedgers from "@/app/_hooks/useLedgers";
 import Button from "../../utils/Button";
 
@@ -23,7 +23,7 @@ function LedgerFooter() {
       <div className="layout-footer-right">
         <PageNavigate
           currentPage={currentPage}
-          setCurrentPage={setLedgerBtnDisable}
+          setCurrentPage={setLedgerCurrentPage}
           btnDisable={btnDisable}
         />
       </div>

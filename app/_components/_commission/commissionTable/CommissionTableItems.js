@@ -2,6 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCommissionSelectedItems } from "@/lib/slices/CommissionSlice";
+import { useBranchNameFinder } from "@/app/_services/finders";
 
 function CommissionTableItems({ item }) {
   const { selectedItems } = useSelector((state) => state.commission);
@@ -15,6 +16,8 @@ function CommissionTableItems({ item }) {
       dispatch(setCommissionSelectedItems(item));
     }
   };
+
+  const curBranch = useBranchNameFinder(item?.branch);
 
   return (
     <>
@@ -34,11 +37,16 @@ function CommissionTableItems({ item }) {
           <span style={{ color: "gray" }}>
             {item?.intakeMonth} | {item?.intake}
           </span>
+          <span style={{ color: "gray" }}>{item?.university}</span>
         </div>
-        <span className="table-col date table-body-col">
-          {item?.university}
+        <span className="table-col branch table-body-col">
+          {new Date(item?.date).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}
         </span>
-        <span className="table-col branch table-body-col">{item?.branch}</span>
+        <span className="table-col branch table-body-col">{curBranch}</span>
         <span className="table-col courseFee table-body-col">
           {item?.courseFee}
         </span>

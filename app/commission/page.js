@@ -2,7 +2,7 @@ import CommissionFooter from "../_components/_commission/commissionFooter/Commis
 import Commissionhead from "../_components/_commission/commissionHead/Commissionhead";
 import CommissionTable from "../_components/_commission/commissionTable/CommissionTable";
 
-function page() {
+function Page() {
   return (
     <div className={`layout commition`}>
       <h1 className={`main-head`}>Commission</h1>
@@ -15,4 +15,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

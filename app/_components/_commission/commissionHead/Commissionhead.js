@@ -1,8 +1,7 @@
 "use client";
-import { GiSettingsKnobs } from "react-icons/gi";
+
 import LayoutHead from "../../layouts/LayoutHead";
 import Button from "../../utils/Button";
-import Search from "../../utils/Search";
 import {
   setCommissionCurBranch,
   setIsCommissionNewEntry,
@@ -139,9 +138,7 @@ function Commissionhead() {
   const handleSubmit = () => {
     setIsOpen(false);
   };
-  const handleQuery = (e) => {
-    dispatch(setAssetsQuery(e.target.value));
-  };
+
   return (
     <>
       <LayoutHead>

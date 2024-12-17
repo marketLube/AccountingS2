@@ -140,7 +140,6 @@ function InvoiceDownloader() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data, ".........");
     data.items = tableItems;
     try {
       setIsLoading(true);
@@ -148,7 +147,6 @@ function InvoiceDownloader() {
 
       toast.success("Success");
     } catch (e) {
-      console.log(e, "e");
       toast.error("Failed");
     } finally {
       setIsLoading(false);

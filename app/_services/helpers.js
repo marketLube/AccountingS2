@@ -10,7 +10,7 @@ export const useViewEight = (data, startPage, setBtnDisable, num = 8) => {
   const dispatch = useDispatch();
   const veiwEight = data?.slice(startPage, startPage + num);
   useEffect(() => {
-    if (veiwEight?.length < 8) {
+    if (veiwEight?.length < num) {
       dispatch(setBtnDisable(true));
     } else {
       dispatch(setBtnDisable(false));
@@ -86,6 +86,21 @@ export const calculateDateRange = (daysAgo) => {
 };
 
 export const formatWithCommas = (number) => {
-  if (!number) return "0";
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Handle null, undefined, or NaN
+  if (number == null || isNaN(number)) return "₹0.00";
+
+  // Ensure the number is a number and has two decimal places
+  const numStr = parseFloat(number).toFixed(2);
+
+  // Split into integer and decimal parts
+  const [integerPart, decimalPart] = numStr.split(".");
+
+  // Use toLocaleString for Indian number formatting
+  const formattedInteger = parseInt(integerPart).toLocaleString("en-IN", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  // Combine integer part and decimal part with the rupee symbol
+  return `${formattedInteger}.${decimalPart}`;
 };
