@@ -6,9 +6,6 @@ import globalErrorHandler from "./Utilities/globalErrorhandler.js";
 
 const app = express();
 
-// Compression
-app.use(compression({ threshold: 512 }));
-
 app.use("/api/v2", versionOne);
 
 app.all("*", (req, res, next) => {

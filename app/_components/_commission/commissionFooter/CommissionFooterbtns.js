@@ -6,7 +6,8 @@ function CommissionFooterbtns() {
   return (
     <>
       <Button>Download Report</Button>
-      <Button>Total</Button>
+      <Button>Received</Button>
+      <Button>Pending</Button>
     </>
   );
 }

@@ -3,13 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../_components/layouts/AppLayout";
 import {
   setLiabilityCurParticular,
+  setliabilityCurrentPage,
   setLiabilityParticular,
   setLiabilitySummery,
 } from "@/lib/slices/liabilitySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBranchIdFinder, useCategoryNameFinder } from "../_services/finders";
 import useCatToParticular from "./useCatToParticular";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function useLiability() {
   const dispatch = useDispatch();

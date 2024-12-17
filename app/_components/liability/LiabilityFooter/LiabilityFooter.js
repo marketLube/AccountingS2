@@ -8,6 +8,7 @@ function LiabilityFooter() {
   const { currentPage, btnDisable, summery } = useSelector(
     (state) => state.liability
   );
+
   return (
     <>
       <div className={`layout-footer`}>

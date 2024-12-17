@@ -3,14 +3,18 @@
 import { useSelector } from "react-redux";
 import { setCommissionCurrentPage } from "@/lib/slices/CommissionSlice";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
-import CommissionFooterbtns from "./CommissionFooterbtns";
-
+import Button from "@/app/_components/utils/Button";
 function CommissionFooter() {
-  const { currentPage, btnDisable } = useSelector((state) => state.commission);
+  const { currentPage, btnDisable, summery } = useSelector(
+    (state) => state.commission
+  );
+  console.log(summery, "ooooooooooo");
   return (
     <div className={`layout-footer`}>
       <div className="layout-footer-left">
-        <CommissionFooterbtns />
+        <Button>Download Report</Button>
+        <Button>Total :{summery?.totalExcludingPending}</Button>
+        <Button>Pending :{summery?.totalPending}</Button>
       </div>
       <div className="layout-footer-right">
         <PageNavigate

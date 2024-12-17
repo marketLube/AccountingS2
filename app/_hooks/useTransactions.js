@@ -10,12 +10,14 @@ import {
 } from "../_services/finders";
 
 import {
+  resetDaybookPages,
   setDaybookCurParticular,
+  setDaybookCurrentPage,
   setDaybookParticular,
   setDaybookSummery,
 } from "@/lib/slices/daybookSlice";
 import useCatToParticular from "./useCatToParticular";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function useTransactions() {
   const dispatch = useDispatch();
@@ -97,7 +99,6 @@ export default function useTransactions() {
     transactions: transactions?.data,
   };
 }
-
 export function useGstTotals() {
   const {
     type,
