@@ -104,6 +104,24 @@ function Catagory({
     .slice()
     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
+  const [showCats, setShowCats] = useState(catagories);
+
+  useEffect(() => {
+    if (!isCurEdit) {
+      setShowCats(catagories);
+      return;
+    }
+    if (curEditValue === "") {
+      setShowCats(catagories);
+      return;
+    }
+    const show = catagories.filter((par) =>
+      par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
+    );
+
+    setShowCats(show);
+  }, [curEditValue]);
+
   return (
     <div className="catagory">
       <div className="catagory-creator-box">
@@ -173,7 +191,7 @@ function Catagory({
               isCat ? { transform: "scaleY(1)" } : { transform: "scaleY(0)" }
             }
           >
-            {catagories.map((cat) => (
+            {showCats?.map((cat) => (
               <CatItemBox
                 key={cat._id}
                 id={cat._id}

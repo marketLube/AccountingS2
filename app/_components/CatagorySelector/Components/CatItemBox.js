@@ -18,7 +18,7 @@ function CatItemBox({ value, onClick, setStopDropdown, setCurValue, id }) {
     e.stopPropagation();
     setStopDropdown(true);
     setIsEdit(true);
-    setPastValue(localCurValue); // Capture the current value when entering edit mode
+    setPastValue(localCurValue);
   };
 
   const handleSave = async (e) => {

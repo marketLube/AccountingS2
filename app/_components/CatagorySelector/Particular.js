@@ -120,6 +120,24 @@ function Particular({
     setIsCat(false);
   };
 
+  const [showCats, setShowCats] = useState(particulars);
+
+  useEffect(() => {
+    if (!isCurEdit) {
+      setShowCats(particulars);
+      return;
+    }
+    if (curEditValue === "") {
+      setShowCats(particulars);
+      return;
+    }
+    const show = particulars.filter((par) =>
+      par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
+    );
+
+    setShowCats(show);
+  }, [curEditValue]);
+
   return (
     <div className="catagory-creator-box">
       <div className="show-cat" onClick={handleParticular}>
@@ -131,7 +149,7 @@ function Particular({
             strokeWidth: "4",
           }}
           onClick={handleAddParticular}
-          disabled={isLoading} // Disable Add button while loading
+          disabled={isLoading}
         />
 
         {isCurEdit && (
@@ -142,7 +160,7 @@ function Particular({
             value={curEditValue}
             onChange={handleCurEditValue}
             onClick={(e) => e.stopPropagation()}
-            disabled={isLoading} // Disable input while loading
+            disabled={isLoading}
           />
         )}
         {!isCurEdit && curValue}
@@ -183,9 +201,9 @@ function Particular({
           }
         >
           {particulars.length > 0 &&
-            particulars.map((par) => (
+            showCats.map((par) => (
               <ParticularItemBox
-                particulars={particulars}
+                particulars={showCats}
                 key={par._id}
                 value={par.name}
                 catName={catagoryName}
