@@ -44,6 +44,8 @@ export default function useTransactions() {
 
   useCatToParticular(catagory, setDaybookParticular, setDaybookCurParticular);
 
+  console.log(bank, "bank");
+
   let endpoint = `/transaction?page=${page}&sort=-date -createdAt`;
 
   if (type !== "All Status") {

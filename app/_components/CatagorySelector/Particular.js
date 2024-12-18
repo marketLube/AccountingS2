@@ -137,7 +137,7 @@ function Particular({
         {isCurEdit && (
           <input
             className="show-cat-input"
-            style={isCurEdit ? { color: "black !important" } : {}}
+            style={isCurEdit ? { color: "black" } : { color: "white" }}
             type="text"
             value={curEditValue}
             onChange={handleCurEditValue}
@@ -149,10 +149,7 @@ function Particular({
         {isCurEdit && (
           <div className="show-cat-icon-box">
             {isLoading ? (
-              <CircularProgress
-                size={24} // Small spinner size
-                className="loading-spinner"
-              />
+              <CircularProgress size={24} className="loading-spinner" />
             ) : (
               <Check
                 style={{

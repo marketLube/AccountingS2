@@ -1488,7 +1488,7 @@ body {
   position: absolute;
   left: 1rem;
 }
-.show-cat-input {
+.show-cat-input, .show-cat-input {
   width: 60%;
   border: none;
   outline: none;
@@ -1496,7 +1496,6 @@ body {
   background-color: inherit;
   font-size: inherit;
   font-weight: inherit;
-  color: inherit;
   padding: 0.5rem;
   text-align: center;
   border-radius: 1rem;

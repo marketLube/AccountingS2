@@ -61,6 +61,8 @@
     position: absolute;
     left: 1rem;
   }
+
+  &-input,
   &-input {
     width: 60%;
     border: none;
@@ -69,7 +71,7 @@
     background-color: inherit;
     font-size: inherit;
     font-weight: inherit;
-    color: inherit;
+    // color: inherit;
     padding: 0.5rem;
     text-align: center;
     border-radius: variables.$large-radius;

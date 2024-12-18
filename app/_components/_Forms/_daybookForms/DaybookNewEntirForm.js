@@ -159,7 +159,7 @@ function DaybookNewEntirForm() {
       dispatch(fetchBanks());
       refreshBalanceSheet();
       refreshLedger();
-      // handleClear();
+      handleClear();
       setSelectedBranches([]);
       refreshGstTotals();
       refreshBalanceSheetAll();
