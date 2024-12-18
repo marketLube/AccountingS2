@@ -138,6 +138,9 @@ function DaybookNewEntirForm() {
     if (!data.gstType) data.gstType = "no-gst";
     if (!data.tdsType) data.tdsType = "no tds";
 
+    if (data.gstPercent === 0 || data.gstPercent === "0%") {
+      data.gstType = "no-gst";
+    }
     if (isBalanceEffect && data.gstPercent && data.gstType === "excl") {
       data.isGstDeduct = true;
       const gstRate = parseFloat(data.gstPercent || 0) / 100;

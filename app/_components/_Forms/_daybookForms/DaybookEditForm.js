@@ -192,6 +192,10 @@ function DaybookEditForm() {
       if (!data.gstType) data.gstType = "no-gst";
       if (!data.tdsType) data.tdsType = "no tds";
 
+      if (data.gstPercent === 0 || data.gstPercent === "0%") {
+        data.gstType = "no-gst";
+      }
+
       setLoading(true);
 
       // Handle GST Amount
