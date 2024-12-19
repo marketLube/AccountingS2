@@ -120,23 +120,23 @@ function Particular({
     setIsCat(false);
   };
 
-  const [showCats, setShowCats] = useState(particulars);
+  // const [showCats, setShowCats] = useState(particulars);
 
-  useEffect(() => {
-    if (!isCurEdit) {
-      setShowCats(particulars);
-      return;
-    }
-    if (curEditValue === "") {
-      setShowCats(particulars);
-      return;
-    }
-    const show = particulars.filter((par) =>
-      par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
-    );
+  // useEffect(() => {
+  //   if (!isCurEdit) {
+  //     setShowCats(particulars);
+  //     return;
+  //   }
+  //   if (curEditValue === "") {
+  //     setShowCats(particulars);
+  //     return;
+  //   }
+  //   const show = particulars.filter((par) =>
+  //     par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
+  //   );
 
-    setShowCats(show);
-  }, [curEditValue]);
+  //   setShowCats(show);
+  // }, [curEditValue]);
 
   return (
     <div className="catagory-creator-box">
@@ -201,9 +201,9 @@ function Particular({
           }
         >
           {particulars.length > 0 &&
-            showCats.map((par) => (
+            particulars.map((par) => (
               <ParticularItemBox
-                particulars={showCats}
+                particulars={particulars}
                 key={par._id}
                 value={par.name}
                 catName={catagoryName}
