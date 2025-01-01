@@ -11,11 +11,17 @@ export const wholeYearPnl = catchAsync(async (req, res, next) => {
       new AppError("You must provide the branch to access this route", 400)
     );
 
+  const currentYear = new Date().getFullYear();
+
   const allMonth = await Transaction.aggregate([
-    // Match documents with the specified branch
+    // Match documents with the specified branch and current year
     {
       $match: {
         "branches.branch": new mongoose.Types.ObjectId(branch),
+        date: {
+          $gte: new Date(`${currentYear}-01-01`),
+          $lte: new Date(`${currentYear}-12-31`),
+        },
       },
     },
     // Unwind the branches array to work with individual branch transactions

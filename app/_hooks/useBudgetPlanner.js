@@ -18,6 +18,7 @@ export default function useBudgetPlanner() {
   const dispatch = useDispatch();
 
   let endpoint = `/event?page=${page}?&sort=-date`;
+  console.log(endpoint, "enpoint");
 
   if (branch) {
     endpoint += `&branch=${branch?._id}`;

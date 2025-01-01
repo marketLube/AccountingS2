@@ -14,6 +14,8 @@ function BudgetplannerTable() {
   const { refetch, events, isError, isLoading, error } = useBudgetPlanner();
   const veiwEight = useViewEight(events, startPage, setBudgetplannerBtnDisable);
 
+  console.log(veiwEight, "planner");
+
   return (
     <div className="table">
       <BudgetPlannerTableHead />
