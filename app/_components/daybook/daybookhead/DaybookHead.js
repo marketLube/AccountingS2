@@ -1,5 +1,6 @@
 "use client";
 import { GiSettingsKnobs } from "react-icons/gi";
+import { FiDownload } from "react-icons/fi";
 import LayoutHead from "@/app/_components/layouts/LayoutHead";
 import Button from "@/app/_components/utils/Button";
 import Search from "../../utils/Search";
@@ -113,6 +114,11 @@ function DaybookHead() {
     dispatch(setGstFileter(e.target.value));
   };
 
+  const handleExport = () => {
+    // TODO: Implement export functionality
+    toast.success("Export functionality coming soon!");
+  };
+
   return (
     <>
       <LayoutHead>
@@ -158,6 +164,13 @@ function DaybookHead() {
           <Search query={query} handleQuery={handleQuery} />
           <Button type="filter" onClick={handleDateModal}>
             <GiSettingsKnobs />
+          </Button>
+          <Button
+            onClick={handleExport}
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <FiDownload style={{ marginRight: "5px" }} />
+            Export
           </Button>
         </>
       </LayoutHead>

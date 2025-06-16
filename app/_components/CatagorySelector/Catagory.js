@@ -98,6 +98,32 @@ function Catagory({
     setIsCat(false);
   };
 
+
+  // const findSalaryCatagory = catagories.find((cat) => cat.name === "Salary");
+  // console.log(findSalaryCatagory, "findSalaryCatagory");
+  // const findSalaryParticulars = findSalaryCatagory?.particulars || [];
+  // console.log(findSalaryParticulars, "findSalaryParticulars");
+  // const findIncentivePayable = catagories.find(
+  //   (cat) => cat.name === "Incentive Payable"
+  // );
+  // console.log(findIncentivePayable, "findIncentivePayable");
+  // const findIncentivePayableParticulars =
+  //   findIncentivePayable?.particulars || [];
+  // console.log(
+  //   findIncentivePayableParticulars,
+  //   "findIncentivePayableParticulars"
+  // );
+
+  // const findSameParticulars = findIncentivePayableParticulars.filter(
+  //   (salaryParticular) =>
+  //     findSalaryParticulars.some(
+  //       (incentiveParticular) =>
+  //         incentiveParticular.name === salaryParticular.name
+  //     )
+  // );
+
+  // console.log(findSameParticulars, "dfdfdfdfsfsdrtwerfsdfsd");
+
   const particulars = (
     catagories.find((cat) => cat.name === curValue)?.particulars || []
   )

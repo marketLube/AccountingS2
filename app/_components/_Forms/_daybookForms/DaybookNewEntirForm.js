@@ -182,12 +182,10 @@ function DaybookNewEntirForm() {
 
       <div className="form-catagory-container">
         <Catagory setCatagory={setCatagory} setParticular={setParticular} />
-
         <div className="form-row">
           <Purpose register={register} errors={errors} />
           <Remark register={register} errors={errors} />
         </div>
-
         <div className="form-row">
           <Bank register={register} errors={errors} />
           <Radio register={register} errors={errors} />
