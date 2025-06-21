@@ -5,16 +5,28 @@ import Button from "../../utils/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { setLedgerCurCat } from "@/lib/slices/ledgerSlice";
 import Selector from "../../utils/Selector";
+import apiClient from "@/lib/axiosInstance";
+import { toast } from "react-hot-toast";
+import {
+  useCategoryNameFinder,
+  useBranchNameFinder,
+} from "@/app/_services/finders";
 
 function LedgerHead() {
   const dispatch = useDispatch();
-  const { curCat } = useSelector((state) => state.ledger);
+  const { curCat, curBranch, startDate, endDate, clickedParticular } =
+    useSelector((state) => state.ledger);
 
   const { categoryNames } = useSelector((state) => state.general);
+
+  // Get the actual category and branch objects
+  const category = useCategoryNameFinder(curCat);
+  const branch = useBranchNameFinder(curBranch);
 
   const handleCatChange = (e) => {
     dispatch(setLedgerCurCat(e.target.value));
   };
+
   const handleDownloadReport = async () => {
     try {
       // Build query parameters with all available filters
@@ -46,6 +58,8 @@ function LedgerHead() {
       if (clickedParticular?.particularId) {
         params.append("particular", clickedParticular.particularId);
       }
+
+      console.log("Download params:", params.toString()); // Debug log
 
       // Make API call to download Excel using the general endpoint
       const response = await apiClient.get(
