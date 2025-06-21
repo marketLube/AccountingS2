@@ -80,12 +80,10 @@ export const downloadExcelReport = async (
     // Initialize totals
     let totalCredit = 0;
     let totalDebit = 0;
-    let currentRow = 5; // Starting row for data (after title, date range, empty row, and headers)
+    let currentRow = 5;
 
     // Add transaction data
     filteredTransaction.forEach((transaction) => {
-      // console.log(transaction, "sakgjdhgkasgkgk");
-
       const row = worksheet.addRow([
         transaction.particular,
         transaction.purpose || "",
