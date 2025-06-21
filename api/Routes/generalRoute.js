@@ -1,8 +1,9 @@
 import express from "express";
-import { getAllLedgers } from "../Aggregation/Ledgers.js";
+import { getAllLedgers, downloadLedgerReport } from "../Aggregation/Ledgers.js";
 
 const router = express.Router();
 
+router.get("/download", downloadLedgerReport);
 router.get("/", getAllLedgers);
 
 export default router;

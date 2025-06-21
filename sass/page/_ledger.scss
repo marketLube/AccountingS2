@@ -8,6 +8,14 @@
       flex: 1;
       margin-right: 2rem;
     }
+
+    &-right-custom {
+      flex: 1;
+      margin-right: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-direction: row;
+    }
   }
 
   & .bottom {
