@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Particular from "./Particular";
 import CatItemBox from "./Components/CatItemBox";
 import { useDispatch, useSelector } from "react-redux";
-import { Add, Check, Close } from "@mui/icons-material";
+import { Add, Check, Close, Search } from "@mui/icons-material";
 import toast from "react-hot-toast";
 
 import CircularProgress from "@mui/material/CircularProgress"; // Import MUI's spinner
@@ -25,6 +25,7 @@ function Catagory({
   const [isCurEdit, setIsCurEdit] = useState(false);
   const [curEditValue, setCurEditValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const dispatch = useDispatch();
 
@@ -41,11 +42,17 @@ function Catagory({
     return () => {
       setIsCurEdit(false);
       setCurValue(val);
+      setSearchValue(""); // Clear search when selecting a category
     };
   };
 
   const handleCatagory = () => {
-    if (!stopDropdown) setIsCat((val) => !val);
+    if (!stopDropdown) {
+      setIsCat((val) => !val);
+      if (!isCat) {
+        setSearchValue(""); // Clear search when opening dropdown
+      }
+    }
   };
 
   const handleAddCatagory = (e) => {
@@ -54,9 +61,17 @@ function Catagory({
     setIsCurEdit(true);
     setStopDropdown(false);
     setIsCat(true);
+    setSearchValue(""); // Clear search when starting to add new category
   };
+
   const handleCurEditValue = (e) => {
     setCurEditValue(e.target.value);
+    setStopDropdown(false);
+    setIsCat(true);
+  };
+
+  const handleSearchValue = (e) => {
+    setSearchValue(e.target.value);
     setStopDropdown(false);
     setIsCat(true);
   };
@@ -81,6 +96,7 @@ function Catagory({
       dispatch(fetchCategory());
       toast.success("Catagory added successfully");
       setIsCurEdit(false);
+      setSearchValue(""); // Clear search after adding category
     } catch (err) {
       console.log(err);
       toast.error("Catagory already exist");
@@ -96,8 +112,8 @@ function Catagory({
     setCurEditValue("");
     setIsCurEdit(false);
     setIsCat(false);
+    setSearchValue(""); // Clear search when discarding
   };
-
 
   // const findSalaryCatagory = catagories.find((cat) => cat.name === "Salary");
   // console.log(findSalaryCatagory, "findSalaryCatagory");
@@ -133,20 +149,28 @@ function Catagory({
   const [showCats, setShowCats] = useState(catagories);
 
   useEffect(() => {
-    if (!isCurEdit) {
-      setShowCats(catagories);
-      return;
+    if (isCurEdit) {
+      // When in edit mode, filter by edit value
+      if (curEditValue === "") {
+        setShowCats(catagories);
+        return;
+      }
+      const show = catagories.filter((par) =>
+        par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
+      );
+      setShowCats(show);
+    } else {
+      // When not in edit mode, filter by search value
+      if (searchValue === "") {
+        setShowCats(catagories);
+        return;
+      }
+      const show = catagories.filter((par) =>
+        par?.name?.toLowerCase().includes(searchValue?.toLowerCase())
+      );
+      setShowCats(show);
     }
-    if (curEditValue === "") {
-      setShowCats(catagories);
-      return;
-    }
-    const show = catagories.filter((par) =>
-      par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
-    );
-
-    setShowCats(show);
-  }, [curEditValue]);
+  }, [curEditValue, searchValue, catagories, isCurEdit]);
 
   return (
     <div className="catagory">
@@ -172,7 +196,7 @@ function Catagory({
               onChange={handleCurEditValue}
               onClick={(e) => e.stopPropagation()}
               disabled={isLoading}
-              ing
+              placeholder="Enter category name"
             />
           )}
           {!isCurEdit && truncate(curValue, 20)}
@@ -217,6 +241,35 @@ function Catagory({
               isCat ? { transform: "scaleY(1)" } : { transform: "scaleY(0)" }
             }
           >
+            {!isCurEdit && (
+              <div
+                className="search-container"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <input
+                  className="search-input"
+                  type="text"
+                  value={searchValue}
+                  onChange={handleSearchValue}
+                  placeholder="Search categories..."
+                  disabled={isLoading}
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    background: "transparent",
+                    width: "100%",
+                    padding: "8px 15px",
+                  }}
+                />
+              </div>
+            )}
             {showCats?.map((cat) => (
               <CatItemBox
                 key={cat._id}

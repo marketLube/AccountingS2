@@ -1,4 +1,4 @@
-import { Add, Check, Close } from "@mui/icons-material";
+import { Add, Check, Close, Search } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -23,6 +23,7 @@ function Particular({
   const [isCurEdit, setIsCurEdit] = useState(false);
   const [curEditValue, setCurEditValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -54,6 +55,7 @@ function Particular({
     return () => {
       setIsCurEdit(false);
       setCurValue(val);
+      setSearchValue(""); // Clear search when selecting a particular
     };
   };
 
@@ -63,7 +65,12 @@ function Particular({
       return;
     }
 
-    if (!stopDropdown) setIsCat((val) => !val);
+    if (!stopDropdown) {
+      setIsCat((val) => !val);
+      if (!isCat) {
+        setSearchValue(""); // Clear search when opening dropdown
+      }
+    }
     setIsCatagory(false);
   };
 
@@ -73,10 +80,17 @@ function Particular({
     setCurEditValue("");
     setStopDropdown(false);
     setIsCat(true);
+    setSearchValue(""); // Clear search when starting to add new particular
   };
 
   const handleCurEditValue = (e) => {
     setCurEditValue(e.target.value);
+    setStopDropdown(false);
+    setIsCat(true);
+  };
+
+  const handleSearchValue = (e) => {
+    setSearchValue(e.target.value);
     setStopDropdown(false);
     setIsCat(true);
   };
@@ -102,6 +116,7 @@ function Particular({
       setCurValue(curEditValue);
       toast.success("Particular added successfully");
       setIsCurEdit(false);
+      setSearchValue(""); // Clear search after adding particular
     } catch (err) {
       console.log(err);
       setCurValue(defaultValue);
@@ -118,25 +133,34 @@ function Particular({
     setCurEditValue("");
     setIsCurEdit(false);
     setIsCat(false);
+    setSearchValue(""); // Clear search when discarding
   };
 
-  // const [showCats, setShowCats] = useState(particulars);
+  const [showParticulars, setShowParticulars] = useState(particulars);
 
-  // useEffect(() => {
-  //   if (!isCurEdit) {
-  //     setShowCats(particulars);
-  //     return;
-  //   }
-  //   if (curEditValue === "") {
-  //     setShowCats(particulars);
-  //     return;
-  //   }
-  //   const show = particulars.filter((par) =>
-  //     par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
-  //   );
-
-  //   setShowCats(show);
-  // }, [curEditValue]);
+  useEffect(() => {
+    if (isCurEdit) {
+      // When in edit mode, filter by edit value
+      if (curEditValue === "") {
+        setShowParticulars(particulars);
+        return;
+      }
+      const show = particulars.filter((par) =>
+        par?.name?.toLowerCase().startsWith(curEditValue?.toLowerCase())
+      );
+      setShowParticulars(show);
+    } else {
+      // When not in edit mode, filter by search value
+      if (searchValue === "") {
+        setShowParticulars(particulars);
+        return;
+      }
+      const show = particulars.filter((par) =>
+        par?.name?.toLowerCase().includes(searchValue?.toLowerCase())
+      );
+      setShowParticulars(show);
+    }
+  }, [curEditValue, searchValue, particulars, isCurEdit]);
 
   return (
     <div className="catagory-creator-box">
@@ -161,6 +185,7 @@ function Particular({
             onChange={handleCurEditValue}
             onClick={(e) => e.stopPropagation()}
             disabled={isLoading}
+            placeholder="Enter particular name"
           />
         )}
         {!isCurEdit && curValue}
@@ -200,8 +225,30 @@ function Particular({
             isCat ? { transform: "scaleY(1)" } : { transform: "scaleY(0)" }
           }
         >
-          {particulars.length > 0 &&
-            particulars.map((par) => (
+          {!isCurEdit && particulars.length > 0 && (
+            <div
+              className="search-container"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <input
+                className="search-input"
+                type="text"
+                value={searchValue}
+                onChange={handleSearchValue}
+                placeholder="Search particulars..."
+                disabled={isLoading}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  background: "transparent",
+                  width: "100%",
+                  padding: "8px 15px",
+                }}
+              />
+            </div>
+          )}
+          {showParticulars.length > 0 &&
+            showParticulars.map((par) => (
               <ParticularItemBox
                 particulars={particulars}
                 key={par._id}
