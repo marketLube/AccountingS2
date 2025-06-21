@@ -6,17 +6,29 @@ import mongoose from "mongoose";
 
 export default async function categoryFilterMiddleware(req, res, next) {
   try {
+    console.log("Original query parameters:", req.query);
+    console.log("Decoded parameters:", {
+      catagory: decodeURIComponent(req.query.catagory || ""),
+      particular: decodeURIComponent(req.query.particular || ""),
+      branch: decodeURIComponent(req.query.branch || ""),
+      bank: decodeURIComponent(req.query.bank || ""),
+    });
     // Convert category name to ID if it's not already an ObjectId
     if (req.query.catagory) {
       if (!mongoose.Types.ObjectId.isValid(req.query.catagory)) {
-        // It's a name, convert to ID
+        // It's a name, convert to ID (decode first in case of URL encoding)
+        const categoryName = decodeURIComponent(req.query.catagory);
         const catagoryDoc = await Catagory.findOne({
-          name: req.query.catagory,
+          name: categoryName,
         });
         if (catagoryDoc) {
           req.query.catagory = catagoryDoc._id.toString();
+          console.log(
+            `Category '${catagoryDoc.name}' converted to ID: ${req.query.catagory}`
+          );
         } else {
-          req.query.catagory = null; // Category not found
+          console.log(`Category '${req.query.catagory}' not found`);
+          delete req.query.catagory; // Category not found, remove filter
         }
       }
     }
@@ -24,14 +36,30 @@ export default async function categoryFilterMiddleware(req, res, next) {
     // Convert particular name to ID if it's not already an ObjectId
     if (req.query.particular) {
       if (!mongoose.Types.ObjectId.isValid(req.query.particular)) {
-        // It's a name, convert to ID
-        const particularDoc = await Particulars.findOne({
-          name: req.query.particular,
-        });
+        // It's a name, convert to ID, but consider category context (decode first)
+        const particularName = decodeURIComponent(req.query.particular);
+        let particularQuery = { name: particularName };
+
+        // If category is also being filtered, ensure particular belongs to that category
+        if (req.query.catagory) {
+          particularQuery.catagory = req.query.catagory;
+        }
+
+        const particularDoc = await Particulars.findOne(particularQuery);
         if (particularDoc) {
           req.query.particular = particularDoc._id.toString();
+          console.log(
+            `Particular '${particularDoc.name}' converted to ID: ${req.query.particular}`
+          );
         } else {
-          req.query.particular = null; // Particular not found
+          console.log(
+            `Particular '${particularName}' not found${
+              req.query.catagory
+                ? ` in category ID '${req.query.catagory}'`
+                : ""
+            }`
+          );
+          delete req.query.particular; // Particular not found, remove filter
         }
       }
     }
@@ -39,12 +67,13 @@ export default async function categoryFilterMiddleware(req, res, next) {
     // Convert bank name to ID if it's not already an ObjectId
     if (req.query.bank) {
       if (!mongoose.Types.ObjectId.isValid(req.query.bank)) {
-        // It's a name, convert to ID
-        const bankDoc = await Bank.findOne({ name: req.query.bank });
+        // It's a name, convert to ID (decode first)
+        const bankName = decodeURIComponent(req.query.bank);
+        const bankDoc = await Bank.findOne({ name: bankName });
         if (bankDoc) {
           req.query.bank = bankDoc._id.toString();
         } else {
-          req.query.bank = null; // Bank not found
+          delete req.query.bank; // Bank not found, remove filter
         }
       }
     }
@@ -52,14 +81,14 @@ export default async function categoryFilterMiddleware(req, res, next) {
     // Convert branch name to ID if it's not already an ObjectId
     if (req.query.branch) {
       if (!mongoose.Types.ObjectId.isValid(req.query.branch)) {
-        // It's a name, convert to ID
-        const branchDoc = await Branch.findOne({ name: req.query.branch });
+        // It's a name, convert to ID (decode first)
+        const branchName = decodeURIComponent(req.query.branch);
+        const branchDoc = await Branch.findOne({ name: branchName });
         if (branchDoc) {
           req.query.branchId = branchDoc._id.toString();
           delete req.query.branch; // Remove the original branch parameter
         } else {
-          req.query.branchId = null; // Branch not found
-          delete req.query.branch;
+          delete req.query.branch; // Branch not found, remove filter
         }
       } else {
         // It's already an ObjectId, just rename the parameter
@@ -74,6 +103,7 @@ export default async function categoryFilterMiddleware(req, res, next) {
       delete req.query.gst;
     }
 
+    console.log("Processed query parameters:", req.query);
     next();
   } catch (error) {
     console.error("Error in categoryFilterMiddleware:", error);

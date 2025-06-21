@@ -99,13 +99,14 @@ export const downloadExcelTransaction = catchAsync(async (req, res, next) => {
 
     // Handle branch-specific data when filtered by branch
     if (req.query.branchId) {
-      const filteredBranch = plainObj.branches.find(
-        (branch) => branch.branch._id.toString() === req.query.branchId
+      const filteredBranch = plainObj.branches?.find(
+        (branch) => branch.branch?._id?.toString() === req.query.branchId
       );
       if (filteredBranch) {
-        plainObj.amount = filteredBranch.amount;
-        plainObj.branchTotalAmt = filteredBranch.branchTotalAmt;
-        plainObj.filteredBranchName = filteredBranch.branch.name;
+        plainObj.amount = filteredBranch.amount || plainObj.amount;
+        plainObj.branchTotalAmt =
+          filteredBranch.branchTotalAmt || filteredBranch.amount;
+        plainObj.filteredBranchName = filteredBranch.branch?.name;
       }
     }
 

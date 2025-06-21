@@ -156,9 +156,9 @@ class APIFeatures {
     if (!gstType) return this;
 
     if (gstType === "no-gst") {
-      this.query.find({ gstType: "no-gst" });
+      this.query = this.query.find({ gstType: "no-gst" });
     } else if (gstType === "gst") {
-      this.query.find({ gstType: { $ne: "no-gst" } });
+      this.query = this.query.find({ gstType: { $ne: "no-gst" } });
     }
 
     return this;
