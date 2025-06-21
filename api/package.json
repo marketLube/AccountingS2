@@ -10,5 +10,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
 }

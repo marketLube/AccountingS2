@@ -4,9 +4,9 @@ import Branch from "../Models/branchModel.js";
 import Transaction from "../Models/transactionModel.js";
 import AppError from "../Utilities/appError.js";
 import catchAsync from "../Utilities/catchAsync.js";
-
 import { getAll, getOne, createOne, deleteOne } from "./handlerFactory.js";
 import { downloadReport } from "./Reports/transactionReport.js";
+import { downloadExcelReport } from "./Reports/transactionReportxsl.js";
 
 export const downloadTranscation = catchAsync(async (req, res, next) => {
   const { startDate, endDate } = req.query;
@@ -21,12 +21,21 @@ export const downloadTranscation = catchAsync(async (req, res, next) => {
 
   features.filter().sort().filterByBranch().filterByDateRange();
 
-  const transaction = await features.query;
+  const transaction = await features.query
+    .populate("catagory")
+    .populate("particular")
+    .populate("bank")
+    .populate("branches.branch");
 
   const filteredTransaction = transaction.map((obj) => {
     const plainObj = obj.toObject();
     plainObj.catagory = plainObj.catagory.name;
     plainObj.particular = plainObj.particular.name;
+    plainObj.bank = plainObj.bank.name;
+    // Format date for display
+    if (plainObj.date) {
+      plainObj.formattedDate = new Date(plainObj.date).toLocaleDateString();
+    }
     delete plainObj.updatedAt;
     delete plainObj.createdAt;
     delete plainObj._id;
@@ -37,6 +46,49 @@ export const downloadTranscation = catchAsync(async (req, res, next) => {
     return next(new AppError("Transaction not found", 404));
   }
   downloadReport(filteredTransaction, res, startDate, endDate);
+});
+
+export const downloadExcelTransaction = catchAsync(async (req, res, next) => {
+  const { startDate, endDate } = req.query;
+  if (!startDate || !endDate) {
+    return next(new AppError("Please provide start and end date", 400));
+  }
+  const features = new APIFeatures(
+    Transaction,
+    Transaction.find({}),
+    req.query
+  );
+
+  features.filter().sort().filterByBranch().filterByDateRange();
+
+  const transaction = await features.query
+    .populate("catagory")
+    .populate("particular")
+    .populate("bank")
+    .populate("branches.branch");
+
+  console.log(transaction, "tranfdfdfsaction");
+
+  const filteredTransaction = transaction.map((obj) => {
+    const plainObj = obj.toObject();
+    plainObj.catagory = plainObj.catagory.name;
+    plainObj.particular = plainObj.particular.name;
+    plainObj.bank = plainObj.bank.name;
+    // Format date for display
+    if (plainObj.date) {
+      plainObj.formattedDate = new Date(plainObj.date).toLocaleDateString();
+    }
+    delete plainObj.updatedAt;
+    delete plainObj.createdAt;
+    delete plainObj._id;
+    delete plainObj.remark;
+    return plainObj;
+  });
+
+  if (!transaction) {
+    return next(new AppError("Transaction not found", 404));
+  }
+  await downloadExcelReport(filteredTransaction, res, startDate, endDate);
 });
 
 export const updateTransaction = catchAsync(async (req, res, next) => {

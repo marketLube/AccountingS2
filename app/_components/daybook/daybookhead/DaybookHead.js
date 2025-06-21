@@ -31,6 +31,7 @@ import { dateOptions } from "@/app/data/generalDatas";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Banktobank from "../../_Forms/BanktoBank/Banktobank";
+import apiClient from "@/lib/axiosInstance";
 
 function DaybookHead() {
   const dispatch = useDispatch();
@@ -114,9 +115,60 @@ function DaybookHead() {
     dispatch(setGstFileter(e.target.value));
   };
 
-  const handleExport = () => {
-    // TODO: Implement export functionality
-    toast.success("Export functionality coming soon!");
+  const handleExport = async () => {
+    try {
+      // Build query parameters
+      const params = new URLSearchParams({
+        startDate: startDate,
+        endDate: endDate,
+      });
+
+      // Add filters if they're not "All"
+      if (curBranch && !curBranch.startsWith("All")) {
+        params.append("branch", curBranch);
+      }
+      if (curBank && !curBank.startsWith("All")) {
+        params.append("bank", curBank);
+      }
+      if (curCat && !curCat.startsWith("All")) {
+        params.append("catagory", curCat);
+      }
+      if (curParticular && !curParticular.startsWith("All")) {
+        params.append("particular", curParticular);
+      }
+      if (query) {
+        params.append("search", query);
+      }
+      if (gstFilter && gstFilter !== "All Type") {
+        params.append("gst", gstFilter);
+      }
+
+      // Make API call to download Excel
+      const response = await apiClient.get(
+        `/transaction/download-excel?${params.toString()}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      // Create blob and download
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `transaction-report-${startDate}-to-${endDate}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success("Excel report downloaded successfully!");
+    } catch (error) {
+      console.error("Export error:", error);
+      toast.error("Failed to download Excel report. Please try again.");
+    }
   };
 
   return (
