@@ -19,7 +19,14 @@ export const downloadTranscation = catchAsync(async (req, res, next) => {
     req.query
   );
 
-  features.filter().sort().filterByBranch().filterByDateRange();
+  // Apply ALL available filters comprehensively
+  features
+    .filter() // Basic field filtering (type, category, particular, bank, etc.)
+    .search() // Text search across multiple fields
+    .sort() // Sorting by specified fields
+    .gstType() // GST type filtering (gst/no-gst)
+    .filterByBranch() // Branch-specific filtering
+    .filterByDateRange(); // Date range filtering
 
   const transaction = await features.query
     .populate("catagory")
@@ -59,7 +66,17 @@ export const downloadExcelTransaction = catchAsync(async (req, res, next) => {
     req.query
   );
 
-  features.filter().sort().filterByBranch().filterByDateRange();
+  // Apply ALL available filters comprehensively
+  features
+    .filter() // Basic field filtering (type, category, particular, bank, etc.)
+    .search() // Text search across multiple fields
+    .sort() // Sorting by specified fields
+    .gstType() // GST type filtering (gst/no-gst)
+    .filterByBranch() // Branch-specific filtering
+    .filterByDateRange(); // Date range filtering
+
+  console.log("Query filters applied:", req.query);
+  console.log("Features query object:", features.queryStr);
 
   const transaction = await features.query
     .populate("catagory")
@@ -67,7 +84,7 @@ export const downloadExcelTransaction = catchAsync(async (req, res, next) => {
     .populate("bank")
     .populate("branches.branch");
 
-  console.log(transaction, "tranfdfdfsaction");
+  console.log(transaction, "transaction with all filters applied");
 
   const filteredTransaction = transaction.map((obj) => {
     const plainObj = obj.toObject();

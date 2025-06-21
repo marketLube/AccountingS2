@@ -10,11 +10,16 @@ import {
   downloadExcelTransaction,
 } from "../Controller/transactionController.js";
 import { calculateGSTTotals } from "../Aggregation/features/totalGst.js";
+import categoryFilterMiddleware from "../middlewares/catagoryMiddleWare.js";
 
 const router = express.Router();
 
 router.get("/download", downloadTranscation);
-router.get("/download-excel", downloadExcelTransaction);
+router.get(
+  "/download-excel",
+  categoryFilterMiddleware,
+  downloadExcelTransaction
+);
 router.get("/gst", calculateGSTTotals);
 router.get("/", getAllTransaction);
 router.get("/:id", getTransaction);
