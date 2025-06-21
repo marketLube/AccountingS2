@@ -84,13 +84,31 @@ export const downloadExcelTransaction = catchAsync(async (req, res, next) => {
     .populate("bank")
     .populate("branches.branch");
 
-  console.log(transaction, "transaction with all filters applied");
+  console.log(
+    `Found ${transaction.length} transactions with all filters applied`
+  );
+  if (req.query.branchId) {
+    console.log(`Filtering by branch ID: ${req.query.branchId}`);
+  }
 
   const filteredTransaction = transaction.map((obj) => {
     const plainObj = obj.toObject();
     plainObj.catagory = plainObj.catagory.name;
     plainObj.particular = plainObj.particular.name;
     plainObj.bank = plainObj.bank.name;
+
+    // Handle branch-specific data when filtered by branch
+    if (req.query.branchId) {
+      const filteredBranch = plainObj.branches.find(
+        (branch) => branch.branch._id.toString() === req.query.branchId
+      );
+      if (filteredBranch) {
+        plainObj.amount = filteredBranch.amount;
+        plainObj.branchTotalAmt = filteredBranch.branchTotalAmt;
+        plainObj.filteredBranchName = filteredBranch.branch.name;
+      }
+    }
+
     // Format date for display
     if (plainObj.date) {
       plainObj.formattedDate = new Date(plainObj.date).toLocaleDateString();

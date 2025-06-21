@@ -92,7 +92,9 @@ export const downloadExcelReport = async (
         transaction.bank,
         transaction.amount,
         transaction.remark || "",
-        transaction.branches?.[0]?.branch?.name || transaction.branch,
+        transaction.filteredBranchName ||
+          transaction.branches?.[0]?.branch?.name ||
+          transaction.branch,
         transaction.gstType === "excl"
           ? `${transaction.gstPercent}%`
           : transaction.gstType || "no-gst",

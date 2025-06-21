@@ -1,6 +1,7 @@
 import Catagory from "../Models/catagoryModel.js";
 import Particulars from "../Models/particularsModel.js";
 import Bank from "../Models/bankModel.js";
+import Branch from "../Models/branchModel.js";
 import mongoose from "mongoose";
 
 export default async function categoryFilterMiddleware(req, res, next) {
@@ -46,6 +47,31 @@ export default async function categoryFilterMiddleware(req, res, next) {
           req.query.bank = null; // Bank not found
         }
       }
+    }
+
+    // Convert branch name to ID if it's not already an ObjectId
+    if (req.query.branch) {
+      if (!mongoose.Types.ObjectId.isValid(req.query.branch)) {
+        // It's a name, convert to ID
+        const branchDoc = await Branch.findOne({ name: req.query.branch });
+        if (branchDoc) {
+          req.query.branchId = branchDoc._id.toString();
+          delete req.query.branch; // Remove the original branch parameter
+        } else {
+          req.query.branchId = null; // Branch not found
+          delete req.query.branch;
+        }
+      } else {
+        // It's already an ObjectId, just rename the parameter
+        req.query.branchId = req.query.branch;
+        delete req.query.branch;
+      }
+    }
+
+    // Fix GST parameter naming mismatch
+    if (req.query.gst) {
+      req.query.gstType = req.query.gst;
+      delete req.query.gst;
     }
 
     next();
