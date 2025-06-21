@@ -2,12 +2,15 @@
 import Button from "@/app/_components/utils/Button";
 import DaybookFooterBtns from "./DaybookFooterBtns";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import PageNavigate from "../../utils/_pagination/PageNavigate";
 import { setDaybookCurrentPage } from "@/lib/slices/daybookSlice";
 import apiClient from "@/lib/axiosInstance";
 import { toast } from "react-hot-toast";
 
 function DaybookFooter() {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const {
     currentPage,
     btnDisable,
@@ -23,6 +26,9 @@ function DaybookFooter() {
   } = useSelector((state) => state.daybook);
 
   const handleExport = async () => {
+    if (isDownloading) return; // Prevent multiple downloads
+
+    setIsDownloading(true);
     try {
       // Build query parameters
       const params = new URLSearchParams({
@@ -75,6 +81,8 @@ function DaybookFooter() {
     } catch (error) {
       console.error("Export error:", error);
       toast.error("Failed to download Excel report. Please try again.");
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -97,7 +105,35 @@ function DaybookFooter() {
           <Button>Total Credit : {summery?.totalCredit?.toFixed(2)}</Button>
           <Button>Total Debit : {summery?.totalDebit?.toFixed(2)}</Button>
         </div>
-        <Button onClick={handleExport}>Download Report</Button>
+        <Button onClick={handleExport} disabled={isDownloading}>
+          {isDownloading ? (
+            <div className="flex items-center space-x-2">
+              <svg
+                className="w-4 h-4 animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zM2 12a10 10 0 0110-10v4a6 6 0 00-6 6H2z"
+                ></path>
+              </svg>
+              <span>Downloading...</span>
+            </div>
+          ) : (
+            "Download Report"
+          )}
+        </Button>
       </div>
     </>
   );
