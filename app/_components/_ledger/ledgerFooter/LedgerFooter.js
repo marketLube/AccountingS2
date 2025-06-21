@@ -8,22 +8,58 @@ import useLedgers from "@/app/_hooks/useLedgers";
 import Button from "../../utils/Button";
 import apiClient from "@/lib/axiosInstance";
 import { toast } from "react-hot-toast";
+import {
+  useCategoryNameFinder,
+  useBranchNameFinder,
+} from "@/app/_services/finders";
 
 function LedgerFooter() {
-  const { currentPage, btnDisable, curCat } = useSelector(
-    (state) => state.ledger
-  );
+  const {
+    currentPage,
+    btnDisable,
+    curCat,
+    curBranch,
+    startDate,
+    endDate,
+    clickedParticular,
+  } = useSelector((state) => state.ledger);
 
   const { totals } = useLedgers();
 
+  // Get the actual category and branch objects
+  const category = useCategoryNameFinder(curCat);
+  const branch = useBranchNameFinder(curBranch);
+
   const handleDownloadReport = async () => {
     try {
-      // Build query parameters
+      // Build query parameters with all available filters
       const params = new URLSearchParams();
 
       // Add category filter if selected
-      if (curCat && !curCat.startsWith("All")) {
-        params.append("catagory", curCat);
+      if (category?._id && !curCat.startsWith("All")) {
+        params.append("catagory", category._id);
+      }
+
+      // Add branch filter if selected
+      if (
+        branch?._id &&
+        !curBranch.startsWith("Select") &&
+        !curBranch.startsWith("All")
+      ) {
+        params.append("branchId", branch._id);
+      }
+
+      // Add date filters if available
+      if (startDate) {
+        params.append("startDate", startDate);
+      }
+      if (endDate) {
+        params.append("endDate", endDate);
+      }
+
+      // Add particular filter if a specific particular is selected
+      if (clickedParticular?.particularId) {
+        params.append("particular", clickedParticular.particularId);
       }
 
       // Make API call to download Excel using the general endpoint

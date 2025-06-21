@@ -465,7 +465,8 @@ export const getAllLedgers = catchAsync(async (req, res, next) => {
 });
 
 export const downloadLedgerReport = catchAsync(async (req, res, next) => {
-  const { branchId, startDate, endDate, status, catagory } = req.query;
+  const { branchId, startDate, endDate, status, catagory, particular } =
+    req.query;
 
   try {
     const query = req.query;
@@ -505,9 +506,15 @@ export const downloadLedgerReport = catchAsync(async (req, res, next) => {
       ? { "branches.branch": new mongoose.Types.ObjectId(branchId) }
       : {};
 
-    // Transaction Aggregation Pipeline (same as getAllLedgers)
+    // Add particular filter if provided
+    const particularMatch = particular
+      ? { particular: new mongoose.Types.ObjectId(particular) }
+      : {};
+
+    // Transaction Aggregation Pipeline (same as getAllLedgers but with particular filter)
     const transactionPipeline = [
       { $match: catagoryMatch },
+      { $match: particularMatch },
       { $match: matchStage },
       { $match: dateMatch },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
@@ -653,6 +660,7 @@ export const downloadLedgerReport = catchAsync(async (req, res, next) => {
     // Overall Totals Aggregation Pipeline
     const overallTotalsPipeline = [
       { $match: catagoryMatch },
+      { $match: particularMatch },
       { $match: matchStage },
       { $match: dateMatch },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
@@ -685,6 +693,7 @@ export const downloadLedgerReport = catchAsync(async (req, res, next) => {
     // Liability and Outstanding Aggregation Pipeline
     const liabilityPipeline = [
       { $match: catagoryMatch },
+      { $match: particularMatch },
       { $match: { ...dateMatch, status: status || { $ne: "Paid" } } },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
       { $match: branchMatch },
@@ -729,6 +738,7 @@ export const downloadLedgerReport = catchAsync(async (req, res, next) => {
     // Liability Details Pipeline
     const liabilityDetailsPipeline = [
       { $match: catagoryMatch },
+      { $match: particularMatch },
       { $match: { ...dateMatch, status: status || { $ne: "Paid" } } },
       { $unwind: { path: "$branches", preserveNullAndEmptyArrays: true } },
       { $match: branchMatch },
