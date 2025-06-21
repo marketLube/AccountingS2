@@ -26,31 +26,31 @@ export const downloadExcelReport = async (
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Transaction Report");
 
-    // Set column widths
+    // Set column widths only (without headers)
     worksheet.columns = [
-      { header: "Particulars", key: "particular", width: 25 },
-      { header: "Purpose", key: "purpose", width: 25 },
-      { header: "Date", key: "date", width: 15 },
-      { header: "Type", key: "type", width: 12 },
-      { header: "Bank", key: "bank", width: 15 },
-      { header: "Amount", key: "amount", width: 15 },
-      { header: "Remark", key: "remark", width: 20 },
-      { header: "Branch", key: "branch", width: 15 },
-      { header: "GST Type", key: "gstType", width: 12 },
-      { header: "GST Amount", key: "gstAmount", width: 12 },
-      { header: "TDS Type", key: "tdsType", width: 12 },
-      { header: "TDS", key: "tds", width: 12 },
+      { key: "particular", width: 25 },
+      { key: "purpose", width: 25 },
+      { key: "date", width: 15 },
+      { key: "type", width: 12 },
+      { key: "bank", width: 15 },
+      { key: "amount", width: 15 },
+      { key: "remark", width: 20 },
+      { key: "branch", width: 15 },
+      { key: "gstType", width: 12 },
+      { key: "gstAmount", width: 12 },
+      { key: "tdsType", width: 12 },
+      { key: "tds", width: 12 },
     ];
 
     // Add title
-    worksheet.mergeCells("A1:E1");
+    worksheet.mergeCells("A1:L1");
     const titleCell = worksheet.getCell("A1");
     titleCell.value = "Transaction Report";
     titleCell.font = { size: 18, bold: true };
     titleCell.alignment = { horizontal: "center" };
 
     // Add date range
-    worksheet.mergeCells("A2:E2");
+    worksheet.mergeCells("A2:L2");
     const dateRangeCell = worksheet.getCell("A2");
     dateRangeCell.value = `Date Range: ${startDate} to ${endDate}`;
     dateRangeCell.font = { size: 12 };
